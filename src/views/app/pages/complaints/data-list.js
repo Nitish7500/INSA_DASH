@@ -20,12 +20,13 @@ const getIndex = (value, arr, prop) => {
 
 const apiUrl = `${servicePath}/insurance/`;
 
-const orderOptions = [
-  { column: 'title', label: 'Product Name' },
-  { column: 'category', label: 'Category' },
-  { column: 'status', label: 'Status' },
-];
-const pageSizes = [4, 8, 12, 20];
+// const orderOptions = [
+//   { column: 'title', label: 'Product Name' },
+//   { column: 'category', label: 'Category' },
+//   { column: 'status', label: 'Status' },
+// ];
+
+const pageSizes = [10, 20, 50, 100];
 
 const categories = [
   { label: 'Cakes', value: 'Cakes', key: 0 },
@@ -59,7 +60,8 @@ const DataListPages = ({ match }) => {
     async function fetchData() {
       axios
         .get(
-          `${apiUrl}?pageIndex=${currentPage}&pageSize=${selectedPageSize}&orderBy=${selectedOrderOption.column}&search=${search}`,
+          // `${apiUrl}?pageIndex=${currentPage}&pageSize=${selectedPageSize}&orderBy=${selectedOrderOption.column}&keyword=${search}`,
+          `${apiUrl}?pageIndex=0&pageSize=${selectedPageSize}&orderBy=${selectedOrderOption.column}&keyword=${search}`,
           {
             headers:{
               Authorization:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJlMmY0NzY3Yi0zMWJmLTRmZWYtYjAwMS1hYmY1Mjg3NDdiYTUiLCJleHBpcmVBdCI6MTY2OTMwODY0OCwiaWF0IjoxNjYzMzA4NzA4fQ.NsB7NlN1sWSzAWxPY9Qp3kiqvVqMGLadrugteoS10H8"
@@ -75,7 +77,7 @@ const DataListPages = ({ match }) => {
           // console.log(data.data.list)
           setItems(dataList);
           setSelectedItems([]);
-          setTotalItemCount(data.totalItem);
+          setTotalItemCount(data.data.totalRecords);
           setIsLoaded(true);
         });
     }
@@ -160,52 +162,50 @@ const DataListPages = ({ match }) => {
     <div className="loading" />
   ) : (
     <>
-      <div className="disable-text-selection">
-        <ListPageHeading
-          heading="All Complaints"
-          displayMode={displayMode}
-          changeDisplayMode={setDisplayMode}
-          handleChangeSelectAll={handleChangeSelectAll}
-          changeOrderBy={(column) => {
-            setSelectedOrderOption(
-              orderOptions.find((x) => x.column === column)
-            );
-          }}
-          changePageSize={setSelectedPageSize}
-          selectedPageSize={selectedPageSize}
-          totalItemCount={totalItemCount}
-          selectedOrderOption={selectedOrderOption}
-          match={match}
-          startIndex={startIndex}
-          endIndex={endIndex}
-          selectedItemsLength={selectedItems ? selectedItems.length : 0}
-          itemsLength={items ? items.length : 0}
-          onSearchKey={(e) => {
-            if (e.key === 'Enter') {
-              setSearch(e.target.value.toLowerCase());
-            }
-          }}
-          orderOptions={orderOptions}
-          pageSizes={pageSizes}
-          toggleModal={() => setModalOpen(!modalOpen)}
-        />
-        <AddNewModal
-          modalOpen={modalOpen}
-          toggleModal={() => setModalOpen(!modalOpen)}
-          categories={categories}
-        />
-        <ListPageListing
-          items={items}
-          displayMode={displayMode}
-          selectedItems={selectedItems}
-          onCheckItem={onCheckItem}
-          currentPage={currentPage}
-          totalPage={totalPage}
-          onContextMenuClick={onContextMenuClick}
-          onContextMenu={onContextMenu}
-          onChangePage={setCurrentPage}
-        />
-      </div>
+      <ListPageHeading
+        heading="All Complaints"
+        displayMode={displayMode}
+        changeDisplayMode={setDisplayMode}
+        handleChangeSelectAll={handleChangeSelectAll}
+        // changeOrderBy={(column) => {
+        //   setSelectedOrderOption(
+        //     orderOptions.find((x) => x.column === column)
+        //   );
+        // }}
+        changePageSize={setSelectedPageSize}
+        selectedPageSize={selectedPageSize}
+        totalItemCount={totalItemCount}
+        selectedOrderOption={selectedOrderOption}
+        match={match}
+        startIndex={startIndex}
+        endIndex={endIndex}
+        selectedItemsLength={selectedItems ? selectedItems.length : 0}
+        itemsLength={items ? items.length : 0}
+        onSearchKey={(e) => {
+          if (e.key === 'Enter') {
+            setSearch(e.target.value.toLowerCase());
+          }
+        }}
+        // orderOptions={orderOptions}
+        pageSizes={pageSizes}
+        toggleModal={() => setModalOpen(!modalOpen)}
+      />
+      <AddNewModal
+        modalOpen={modalOpen}
+        toggleModal={() => setModalOpen(!modalOpen)}
+        categories={categories}
+      />
+      <ListPageListing
+        items={items}
+        displayMode={displayMode}
+        selectedItems={selectedItems}
+        onCheckItem={onCheckItem}
+        currentPage={currentPage}
+        totalPage={totalPage}
+        onContextMenuClick={onContextMenuClick}
+        onContextMenu={onContextMenu}
+        onChangePage={setCurrentPage}
+      />
     </>
   );
 };

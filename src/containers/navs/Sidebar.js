@@ -445,7 +445,7 @@ class Sidebar extends Component {
                               ) : sub.subs && sub.subs.length > 0 ? (
                                 <>
                                   <NavLink
-                                    className={`rotate-arrow-icon opacity-50 ${
+                                    className={`rotate-arrow-icon has-subMenu ${
                                       collapsedMenus.indexOf(
                                         `${item.id}_${index}`
                                       ) === -1

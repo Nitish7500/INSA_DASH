@@ -14,7 +14,7 @@ const AppLayout = ({ containerClassnames, children, history }) => {
       <main>
         <div className="container-fluid">{children}</div>
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

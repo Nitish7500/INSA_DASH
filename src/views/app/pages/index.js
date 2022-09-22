@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 const Product = React.lazy(() =>
-  import(/* webpackChunkName: "pages-product" */ './product')
+  import(/* webpackChunkName: "pages-product" */ './complaints')
 );
 const Profile = React.lazy(() =>
   import(/* webpackChunkName: "pages-profile" */ './profile')

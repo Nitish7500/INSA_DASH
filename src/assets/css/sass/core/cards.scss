@@ -37,30 +37,19 @@
   }
 
   .tableRow-card {
-    padding: .75rem;
+    padding: 0 .75rem;
     border: initial;
     width: 100%;
-    background: #242322;
 
-    .columnLead {
-      max-width: 200px;
-      width: 200px !important;
-      padding-left: 20px;
+    // .columnLead {
+    //   max-width: 200px;
+    //   width: 200px !important;
+    //   padding-left: 20px;
 
-      .truncate {
-        width: 200px;
-      }
-    }
-
-    .cardCell {
-      width: 150px !important;
-      margin: 0px 20px;
-      text-align: left;
-
-      .w-100px {
-        width: 100px !important;
-      }
-    }
+    //   .truncate {
+    //     width: 200px;
+    //   }
+    // }
 
   }
 

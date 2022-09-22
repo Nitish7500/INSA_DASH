@@ -373,7 +373,7 @@ p {
   }
 
   button {
-    border-color: $secondary-color;
+    border-color: $primary-color;
     color: $secondary-color;
 
     &:hover {
@@ -397,7 +397,7 @@ p {
     }
 
     .view-icon-svg {
-      fill: $secondary-color;
+      fill: $primary-color;
     }
 
     &:hover,

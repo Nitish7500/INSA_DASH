@@ -126,7 +126,9 @@
   }
 
   .sub-menu {
-    width: $sub-menu-width;
+    // width: $sub-menu-width;
+    min-width: $sub-menu-width;
+    width: max-content;
     background: $foreground-color;
     z-index: 2;
     position: fixed;
@@ -137,7 +139,7 @@
     height: calc(100% - #{$navbar-height});
     padding-top: 10px;
     padding-bottom: 10px;
-    padding-right: 0;
+    padding-right: 15px;
 
     .scroll {
       margin-right: unset;
@@ -244,18 +246,21 @@
     @include respond-below(xl) {
       left: $main-menu-width-lg;
       width: $sub-menu-width-lg;
+      padding-right: 15px;
       height: calc(100% - #{$navbar-height-lg});
     }
 
     @include respond-below(lg) {
       left: $main-menu-width-md;
       width: $sub-menu-width-md;
+      padding-right: 15px;
       height: calc(100% - #{$navbar-height-md});
     }
 
     @include respond-below(sm) {
       left: $main-menu-width-xs;
       width: $sub-menu-width-xs;
+      padding-right: 15px;
       height: calc(100% - #{$navbar-height-xs});
     }
   }
@@ -280,7 +285,7 @@
 .sub-hidden .menu-button,
 .menu-sub-hidden .menu-button {
   .sub {
-    fill: $secondary-color;
+    fill: $primary-color;
   }
 }
 
@@ -288,7 +293,7 @@
 .menu-hidden .menu-button {
   .main,
   .sub {
-    fill: $secondary-color;
+    fill: $primary-color;
   }
 }
 
@@ -730,7 +735,8 @@
 
 .rounded {
   .sub-menu {
-    border-radius: 0 $border-radius-rounded $border-radius-rounded 0;
+    // border-radius: 0 $border-radius-rounded $border-radius-rounded 0;
+    border-radius: 0;
   }
 
   .sub-hidden .main-menu,
