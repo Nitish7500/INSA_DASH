@@ -58,7 +58,7 @@ const ListPageListing = ({
               </div> */}
             </p>
             <p className="cardCell th-column">Name</p>
-            <p className="cardCell th-column">Email ID</p>
+            <p className="cardCell cardCell--250px th-column">Email ID</p>
             <p className="cardCell cardCell--150px th-column">Phone Number</p>
             <p className="cardCell th-column">Status</p>
             <p className="cardCell cardCell--350px th-column">Insurance Company</p>

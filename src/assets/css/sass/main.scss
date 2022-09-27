@@ -45,7 +45,7 @@ html {
 }
 
 .table-scrollable {
-    max-height: 600px;
+    max-height: 650px;
     width: 100%;
     overflow-y: scroll;
     position: relative;
@@ -132,4 +132,10 @@ html {
 .search-sm,
 .search-sm input {
     width: 100%;
+}
+
+.option-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
 }

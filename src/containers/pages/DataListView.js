@@ -14,10 +14,6 @@ const DataListView = ({ complaint, isSelect, collect, onCheckItem ,onSelectedSta
   const [collapse, setCollapse] = useState(false);
   const [modalBasic, setModalBasic] = useState(false);
 
-
-
-
-
   return (
     <>
     <Colxx xxs="12" style={{marginBottom: '10px', paddingLeft: '0px'}}>
@@ -40,7 +36,7 @@ const DataListView = ({ complaint, isSelect, collect, onCheckItem ,onSelectedSta
                   >
                   {/* <IntlMessages id="collapse.toggle" /> */}
                 </Button>
-                <NavLink to={`?p=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
                   <p className="text-primary text-bold mb-0 truncate">
                     {policyNumber}
                   </p>
@@ -48,7 +44,7 @@ const DataListView = ({ complaint, isSelect, collect, onCheckItem ,onSelectedSta
                 <p className="mb-0 cardCell">
                   {userId?.name}
                 </p>
-                <p className="mb-0 cardCell">
+                <p className="mb-0 cardCell cardCell--250px">
                   {email}
                 </p>
                 <p className="mb-0 cardCell--150px cardCell">
@@ -83,9 +79,44 @@ const DataListView = ({ complaint, isSelect, collect, onCheckItem ,onSelectedSta
               </div>
               <Collapse isOpen={collapse}>
                 <div className="p-2 record-options">
-                  <p className="mb-0">
-                    All the options here
-                  </p>
+                  <div className="options-flex">
+                    <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                      <img src="/icons/add-task.png" alt="option" className="option-icon" />
+                    </NavLink>
+                    <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                      <img src="/icons/task-remove.png" alt="option" className="option-icon" />
+                    </NavLink>
+                    <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                      <img src="/icons/list.png" alt="option" className="option-icon" />
+                    </NavLink>
+                    <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                      <img src="/icons/create-list.png" alt="option" className="option-icon" />
+                    </NavLink>
+                    <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                      <img src="/icons/status.png" alt="option" className="option-icon" />
+                    </NavLink>
+                    <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                      <img src="/icons/send.png" alt="option" className="option-icon" />
+                    </NavLink>
+                    <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                      <img src="/icons/edit.png" alt="option" className="option-icon" />
+                    </NavLink>
+                    <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                      <img src="/icons/target.png" alt="option" className="option-icon" />
+                    </NavLink>
+                    <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                      <img src="/icons/warning.png" alt="option" className="option-icon" />
+                    </NavLink>
+                    <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                      <img src="/icons/upload.png" alt="option" className="option-icon" />
+                    </NavLink>
+                    <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                      <img src="/icons/ombudsman.png" alt="option" className="option-icon" />
+                    </NavLink>
+                    <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                      <img src="/icons/cancel.png" alt="option" className="option-icon" />
+                    </NavLink>
+                  </div>
                 </div>
               </Collapse>
             </div>
