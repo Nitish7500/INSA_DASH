@@ -52,6 +52,7 @@ const TopNav = ({
   const [isInFullScreen, setIsInFullScreen] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState('');
 
+
   const search = () => {
     history.push(`${searchPath}?key=${searchKeyword}`);
     setSearchKeyword('');
@@ -174,7 +175,7 @@ const TopNav = ({
     }
     setIsInFullScreen(!isFS);
   };
-
+ 
   const handleLogout = () => {
     logoutUserAction(history);
   };

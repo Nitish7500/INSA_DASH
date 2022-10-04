@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
+import { Route, withRouter, Switch, Redirect, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import AppLayout from 'layout/AppLayout';
@@ -21,8 +21,9 @@ const BlankPage = React.lazy(() =>
 );
 
 const App = ({ match }) => {
+  const history = useHistory();
   return (
-    <AppLayout>
+    <AppLayout history = {history}>
       <div className="dashboard-wrapper">
         <Suspense fallback={<div className="loading" />}>
           <Switch>

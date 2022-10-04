@@ -36,13 +36,18 @@ export const currentUser = {
 };
 
 export const adminRoot = '/app';
+export const authRoot = '/user/login';
 export const buyUrl = 'https://1.envato.market/k4z0';
 export const searchPath = `${adminRoot}/pages/miscellaneous/search`;
 export const servicePath = 'https://api.stage.insurancesamadhan.com';
+export const apiEnpoints = {
+  login:"/admin/login"
+}
+
 
 export const themeColorStorageKey = '__theme_selected_color';
 export const isMultiColorActive = true;
-export const defaultColor = 'light.purplemonster';
+export const defaultColor = 'dark.blueyale';
 export const isDarkSwitchActive = true;
 export const defaultDirection = 'ltr';
 export const themeRadiusStorageKey = '__theme_radius';

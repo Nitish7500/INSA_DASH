@@ -5,14 +5,30 @@
 
   .image-side {
     width: 40%;
-    background: url('/assets/img/login/balloon.jpg') no-repeat center top;
+    background: linear-gradient(135deg, $theme-color-1, $theme-color-2 100%);
     background-size: cover;
     padding: 80px 40px;
-
+    
+    p.h2 {
+      &::after {
+        content: '';
+        display: block;
+        height: 6px;
+        width: 120px;
+        background: $button-text-color;
+        transform: translateX(35deg);
+        z-index: 11;
+        margin-bottom: 20px;
+      }
+    }
+    
     .h3 {
       line-height: 0.8rem;
+
+
     }
   }
+
 
   .form-side {
     width: 60%;

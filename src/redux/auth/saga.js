@@ -1,6 +1,6 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { auth } from 'helpers/Firebase';
-import { adminRoot, currentUser } from 'constants/defaultValues';
+import { adminRoot, apiEnpoints, authRoot, currentUser, servicePath } from 'constants/defaultValues';
 import { setCurrentUser } from 'helpers/Utils';
 import {
   LOGIN_USER,
@@ -20,31 +20,45 @@ import {
   resetPasswordSuccess,
   resetPasswordError,
 } from './actions';
+import axios from 'axios';
 
 export function* watchLoginUser() {
   // eslint-disable-next-line no-use-before-define
   yield takeEvery(LOGIN_USER, loginWithEmailPassword);
 }
 
-const loginWithEmailPasswordAsync = async (email, password) =>
+const loginWithEmailPasswordAsync = async (email, password) =>{
   // eslint-disable-next-line no-return-await
-  await auth
-    .signInWithEmailAndPassword(email, password)
-    .then((user) => user)
-    .catch((error) => error);
+  console.log(email,password)
+  try {
+     const res = await axios({
+      method:"POST",
+      url:servicePath + apiEnpoints.login,
+      data:{
+        email,
+        password
+      }
+    });
+    return res.data;
+  } catch (error) {
+  console.log(error)
+    return error;
+  }
+  
+};
 
 function* loginWithEmailPassword({ payload }) {
   const { email, password } = payload.user;
   const { history } = payload;
   try {
     const loginUser = yield call(loginWithEmailPasswordAsync, email, password);
-    if (!loginUser.message) {
+    if (!loginUser) {
       const item = { uid: loginUser.user.uid, ...currentUser };
       setCurrentUser(item);
       yield put(loginUserSuccess(item));
       history.push(adminRoot);
     } else {
-      yield put(loginUserError(loginUser.message));
+      yield put(loginUserError(loginUser));
     }
   } catch (error) {
     yield put(loginUserError(error));
@@ -91,11 +105,8 @@ export function* watchLogoutUser() {
 }
 
 const logoutAsync = async (history) => {
-  await auth
-    .signOut()
-    .then((user) => user)
-    .catch((error) => error);
-  history.push(adminRoot);
+  console.log(authRoot);
+  history.push(authRoot);
 };
 
 function* logout({ payload }) {
