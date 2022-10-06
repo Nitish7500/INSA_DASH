@@ -13,10 +13,10 @@
       &::after {
         content: '';
         display: block;
-        height: 6px;
-        width: 120px;
+        height: 4px;
+        width: 80px;
         background: $button-text-color;
-        transform: translateX(35deg);
+        // transform: translateX(35deg);
         z-index: 11;
         margin-bottom: 20px;
       }

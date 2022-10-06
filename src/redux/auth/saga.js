@@ -30,20 +30,38 @@ export function* watchLoginUser() {
 const loginWithEmailPasswordAsync = async (email, password) =>{
   // eslint-disable-next-line no-return-await
   console.log(email,password)
-  try {
-     const res = await axios({
-      method:"POST",
-      url:servicePath + apiEnpoints.login,
-      data:{
-        email,
-        password
-      }
-    });
-    return res.data;
-  } catch (error) {
-  console.log(error)
-    return error;
+  if(email == 'ravi@insurancesamadhan.com') {
+    try {
+      const res = await axios({
+        method:"POST",
+        url:servicePath + apiEndpoints.login,
+        data:{
+          email,
+          password
+        }
+      });
+      return res.data;
+    } catch (error) {
+      console.log(error)
+      return error;
+    }
+  } else {
+    try {
+      const res = await axios({
+        method: "POST",
+        url: agentApiPath + apiEndpoints.login,
+        data:{
+          email,
+          password
+        }
+      });
+      return res.data;
+    } catch (error) {
+      console.log(error)
+      return error;
+    }
   }
+
   
 };
 
@@ -52,13 +70,14 @@ function* loginWithEmailPassword({ payload }) {
   const { history } = payload;
   try {
     const loginUser = yield call(loginWithEmailPasswordAsync, email, password);
-    if (!loginUser) {
-      const item = { uid: loginUser.user.uid, ...currentUser };
-      setCurrentUser(item);
-      yield put(loginUserSuccess(item));
-      history.push(adminRoot);
+    console.log(loginUser)
+    
+    if (loginUser.success) {
+      const isAdmin = loginUser.data.userType ==="admin";
+      console.log(isAdmin)
+      // history.push(adminRoot);
     } else {
-      yield put(loginUserError(loginUser));
+      // yield put(loginUserError(loginUser));
     }
   } catch (error) {
     yield put(loginUserError(error));

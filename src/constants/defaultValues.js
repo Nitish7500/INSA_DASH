@@ -1,3 +1,5 @@
+import data from "data/notifications";
+
 export const UserRole = {
   Admin: 0,
   Editor: 1,
@@ -29,19 +31,21 @@ export const firebaseConfig = {
 
 export const currentUser = {
   id: 1,
-  title: 'Sarah Kortney',
+  title: data.userType,
   img: '/assets/img/profiles/l-1.jpg',
-  date: 'Last seen today 15:24',
+  // date: 'Last seen today 15:24',
   role: UserRole.Admin,
 };
 
 export const adminRoot = '/app';
 export const authRoot = '/user/login';
-export const buyUrl = 'https://1.envato.market/k4z0';
+export const buyUrl = '/';
 export const searchPath = `${adminRoot}/pages/miscellaneous/search`;
 export const servicePath = 'https://api.stage.insurancesamadhan.com';
-export const apiEnpoints = {
-  login:"/admin/login"
+export const agentApiPath = 'https://agentapi.stage.insurancesamadhan.com'
+export const apiEndpoints = {
+  login:"/admin/login",
+  createToken: '/createToken'
 }
 
 
