@@ -649,4 +649,8 @@ module.exports = {
   'wizard.prev': 'Back',
   'wizard.registered': 'Your registration completed successfully!',
   'wizard.async': 'Async save for 3 seconds!',
+
+  
+
+
 };

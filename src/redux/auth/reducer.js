@@ -94,7 +94,7 @@ export default (state = INIT_STATE, action) => {
         error: action.payload.message,
       };
     case LOGOUT_USER:
-      return { ...state, currentUser: null, error: '' };
+      return { ...state, currentUser: null, error: '', loading: false };
     default:
       return { ...state };
   }

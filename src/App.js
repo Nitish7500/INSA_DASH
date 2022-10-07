@@ -18,6 +18,7 @@ import {
 } from './constants/defaultValues';
 import { getDirection } from './helpers/Utils';
 import { ProtectedRoute } from './helpers/authHelper';
+import { useSelector } from 'react-redux';
 
 const ViewHome = React.lazy(() =>
   import(/* webpackChunkName: "views" */ './views/home')
@@ -38,6 +39,8 @@ const ViewUnauthorized = React.lazy(() =>
 const App = ({ locale }) => {
   const direction = getDirection();
   const currentAppLocale = AppLocale[locale];
+  // const reduxStore = useSelector((state)=>state);
+  // console.log(reduxStore) 
   useEffect(() => {
     if (direction.isRtl) {
       document.body.classList.add('rtl');

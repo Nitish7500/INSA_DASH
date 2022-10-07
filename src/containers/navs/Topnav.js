@@ -25,7 +25,7 @@ import {
   adminRoot,
 } from 'constants/defaultValues';
 import { MobileMenuIcon, MenuIcon } from 'components/svg';
-import { getDirection, setDirection } from 'helpers/Utils';
+import { getCurrentUser, getDirection, setDirection } from 'helpers/Utils';
 import {
   setContainerClassnames,
   clickOnMobileMenu,
@@ -36,6 +36,7 @@ import {
 import TopnavEasyAccess from './Topnav.EasyAccess';
 import TopnavNotifications from './Topnav.Notifications';
 import TopnavDarkSwitch from './Topnav.DarkSwitch';
+import { capitalizeFirstLetter } from 'helpers/CommonHelper';
 
 const TopNav = ({
   intl,
@@ -201,6 +202,12 @@ const TopNav = ({
   };
 
   const { messages } = intl;
+
+  //logged in user data
+  const loggedInUser = getCurrentUser().data;
+  console.log(loggedInUser);
+
+
   return (
     <nav className="navbar fixed-top">
       <div className="d-flex align-items-center navbar-left">
@@ -294,12 +301,14 @@ const TopNav = ({
         <div className="user d-inline-block">
           <UncontrolledDropdown className="dropdown-menu-right">
             <DropdownToggle className="p-0" color="empty">
-              <span className="name mr-1">Sarah Kortney</span>
+              <span className="name mr-1">{capitalizeFirstLetter(loggedInUser.name)}</span>
               <span>
-                <img alt="Profile" src="/assets/img/profiles/l-1.jpg" />
+                {/* <img alt="Profile" src="/assets/img/profiles/l-1.jpg" /> */}
+                <img alt="Profile" src="/assets/img/profiles/user.png" />
               </span>
             </DropdownToggle>
-            <DropdownMenu className="mt-3" right>
+            <DropdownMenu className="mt-3" left>
+              <DropdownItem>{loggedInUser.email}</DropdownItem>
               <DropdownItem>Account</DropdownItem>
               <DropdownItem>Features</DropdownItem>
               <DropdownItem>History</DropdownItem>

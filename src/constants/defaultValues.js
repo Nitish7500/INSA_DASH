@@ -32,7 +32,7 @@ export const firebaseConfig = {
 export const currentUser = {
   id: 1,
   title: data.userType,
-  img: '/assets/img/profiles/l-1.jpg',
+  img: '/assets/img/profiles/user.png',
   // date: 'Last seen today 15:24',
   role: UserRole.Admin,
 };
@@ -42,7 +42,7 @@ export const authRoot = '/user/login';
 export const buyUrl = '/';
 export const searchPath = `${adminRoot}/pages/miscellaneous/search`;
 export const servicePath = 'https://api.stage.insurancesamadhan.com';
-export const agentApiPath = 'https://agentapi.stage.insurancesamadhan.com'
+export const agentApiPath = 'https://agentapi.stage.insurancesamadhan.com';
 export const apiEndpoints = {
   login:"/admin/login",
   createToken: '/createToken'
@@ -50,7 +50,7 @@ export const apiEndpoints = {
 
 
 export const themeColorStorageKey = '__theme_selected_color';
-export const isMultiColorActive = true;
+export const isMultiColorActive = false;
 export const defaultColor = 'dark.blueyale';
 export const isDarkSwitchActive = true;
 export const defaultDirection = 'ltr';

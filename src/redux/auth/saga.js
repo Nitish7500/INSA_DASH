@@ -1,6 +1,6 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { auth } from 'helpers/Firebase';
-import { adminRoot, apiEnpoints, authRoot, currentUser, servicePath } from 'constants/defaultValues';
+import { adminRoot, agentApiPath, apiEndpoints, authRoot, currentUser, servicePath } from 'constants/defaultValues';
 import { setCurrentUser } from 'helpers/Utils';
 import {
   LOGIN_USER,
@@ -21,6 +21,7 @@ import {
   resetPasswordError,
 } from './actions';
 import axios from 'axios';
+import { loginWithEmailAndPasswordApi } from 'services/auth.services';
 
 export function* watchLoginUser() {
   // eslint-disable-next-line no-use-before-define
@@ -49,7 +50,7 @@ const loginWithEmailPasswordAsync = async (email, password) =>{
     try {
       const res = await axios({
         method: "POST",
-        url: agentApiPath + apiEndpoints.login,
+        url: agentApiPath + '/login',
         data:{
           email,
           password
@@ -69,18 +70,17 @@ function* loginWithEmailPassword({ payload }) {
   const { email, password } = payload.user;
   const { history } = payload;
   try {
-    const loginUser = yield call(loginWithEmailPasswordAsync, email, password);
-    console.log(loginUser)
-    
+    const loginUser = yield call(loginWithEmailAndPasswordApi,{ email, password});
     if (loginUser.success) {
       const isAdmin = loginUser.data.userType ==="admin";
-      console.log(isAdmin)
-      // history.push(adminRoot);
+      yield call(loginUserSuccess, {isAdmin,...loginUser})
+      history.push(adminRoot);
     } else {
-      // yield put(loginUserError(loginUser));
+      yield put(loginUserError(loginUser.msg));
     }
   } catch (error) {
-    yield put(loginUserError(error));
+    const msg = error.response?.data?.message || error.message;
+    yield put(loginUserError(msg));
   }
 }
 
