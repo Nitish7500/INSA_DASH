@@ -1,8 +1,9 @@
 import data from "data/notifications";
+import { getCurrentUser } from "helpers/Utils";
 
 export const UserRole = {
   Admin: 0,
-  Editor: 1,
+  Executive: 1,
 };
 
 /* 
@@ -29,13 +30,15 @@ export const firebaseConfig = {
   messagingSenderId: '216495999563',
 };
 
-export const currentUser = {
-  id: 1,
-  title: data.userType,
-  img: '/assets/img/profiles/user.png',
-  // date: 'Last seen today 15:24',
-  role: UserRole.Admin,
-};
+// export const currentUser = {
+//   id: 1,
+//   title: data.userType,
+//   img: '/assets/img/profiles/user.png',
+//   // date: 'Last seen today 15:24',
+//   role: UserRole.Admin,
+// };
+
+export const currentUser = getCurrentUser();
 
 export const adminRoot = '/app';
 export const authRoot = '/user/login';
@@ -55,7 +58,7 @@ export const defaultColor = 'dark.blueyale';
 export const isDarkSwitchActive = true;
 export const defaultDirection = 'ltr';
 export const themeRadiusStorageKey = '__theme_radius';
-export const isAuthGuardActive = false;
+export const isAuthGuardActive = true;
 export const colors = [
   'bluenavy',
   'blueyale',

@@ -204,8 +204,7 @@ const TopNav = ({
   const { messages } = intl;
 
   //logged in user data
-  const loggedInUser = getCurrentUser().data;
-  console.log(loggedInUser);
+  const loggedInUser = getCurrentUser()?getCurrentUser().data:null;
 
 
   return (
@@ -301,14 +300,14 @@ const TopNav = ({
         <div className="user d-inline-block">
           <UncontrolledDropdown className="dropdown-menu-right">
             <DropdownToggle className="p-0" color="empty">
-              <span className="name mr-1">{capitalizeFirstLetter(loggedInUser.name)}</span>
+              <span className="name mr-1">{capitalizeFirstLetter(loggedInUser ? (loggedInUser.name ? loggedInUser.name : "") : "")}</span>
               <span>
                 {/* <img alt="Profile" src="/assets/img/profiles/l-1.jpg" /> */}
                 <img alt="Profile" src="/assets/img/profiles/user.png" />
               </span>
             </DropdownToggle>
             <DropdownMenu className="mt-3" left>
-              <DropdownItem>{loggedInUser.email}</DropdownItem>
+              <DropdownItem>{loggedInUser ? loggedInUser.email : ""}</DropdownItem>
               <DropdownItem>Account</DropdownItem>
               <DropdownItem>Features</DropdownItem>
               <DropdownItem>History</DropdownItem>
