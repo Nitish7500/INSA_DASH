@@ -2,9 +2,11 @@ import data from "data/notifications";
 import { getCurrentUser } from "helpers/Utils";
 
 export const UserRole = {
-  Admin: 0,
-  Executive: 1,
+  Admin: 1,
+  Executive: 0,
 };
+
+
 
 /* 
 Menu Types:

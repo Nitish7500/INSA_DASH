@@ -650,6 +650,8 @@ module.exports = {
   'wizard.registered': 'Your registration completed successfully!',
   'wizard.async': 'Async save for 3 seconds!',
 
+  // Newly Added Keywords in Langu
+  'menu.complaints': 'Complaints'
   
 
 

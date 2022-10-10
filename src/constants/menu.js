@@ -1,4 +1,4 @@
-import { adminRoot } from './defaultValues';
+import { adminRoot, UserRole } from './defaultValues';
 
 const data = [
   {
@@ -6,93 +6,94 @@ const data = [
     icon: 'iconsminds-shop-4',
     label: 'menu.dashboards',
     to: `${adminRoot}/dashboards`,
-    // roles: [UserRole.Admin, UserRole.Executive],
+    roles: [UserRole.Admin, UserRole.Executive],
     subs: [
       {
         icon: 'simple-icon-briefcase',
         label: 'Leads',
         to: `${adminRoot}/dashboards/default`,
-        // roles: [UserRole.Admin],
+        roles: [UserRole.Admin, UserRole.Executive],
       },
       {
         icon: 'simple-icon-pie-chart',
         label: 'Registration',
         to: `${adminRoot}/dashboards/analytics`,
-        // roles: [UserRole.Admin],
+        roles: [UserRole.Admin, UserRole.Executive],
       },
       {
         icon: 'simple-icon-basket-loaded',
         label: 'Resolution',
         to: `${adminRoot}/dashboards/ecommerce`,
-        // roles: [UserRole.Executive],
+        roles: [UserRole.Admin, UserRole.Executive],
       },
       {
         icon: 'simple-icon-doc',
         label: 'Legal',
         to: `${adminRoot}/dashboards/content`,
-        // roles: [UserRole.Executive],
+        roles: [UserRole.Admin, UserRole.Executive],
       },
       {
         icon: 'simple-icon-user',
         label: 'Ombudsman',
         to: `${adminRoot}/dashboards/ecommerce`,
-        // roles: [UserRole.Executive],
+        roles: [UserRole.Admin, UserRole.Executive],
       },
       {
         icon: 'simple-icon-envelope',
         label: 'Mailing',
         to: `${adminRoot}/dashboards/content`,
-        // roles: [UserRole.Executive],
+        roles: [UserRole.Admin, UserRole.Executive],
       },
     ],
   },
   {
     id: 'complaints',
     icon: 'iconsminds-digital-drawing',
-    label: 'Complaints',
+    label: 'menu.complaints',
     to: `${adminRoot}/pages`,
+    roles: [UserRole.Admin, UserRole.Executive],
     subs: [
       {
         id: '',
         icon: 'iconsminds-digital-drawing',
         label: 'All Complaints',
-        to: `${adminRoot}/pages/product/data-list`
+        to: `${adminRoot}/pages/product/data-list/`
       },
       {
         id: '',
         icon: 'iconsminds-digital-drawing',
         label: 'Pending Complaints',
-        to: `${adminRoot}/pages/product/data-list`
+        to: `${adminRoot}/pages/product/data-list/pending`
       },
       {
         id: '',
         icon: 'iconsminds-digital-drawing',
         label: 'Accept',
-        to: `${adminRoot}/pages/product/data-list`
+        to: `${adminRoot}/pages/product/data-list/accept`
       },
       {
         id: '',
         icon: 'iconsminds-digital-drawing',
         label: 'Accepted with Pendency',
-        to: `${adminRoot}/pages/product/data-list`
+        to: `${adminRoot}/pages/product/data-list/accepted-with-pendency`
       },
       {
         id: '',
         icon: 'iconsminds-digital-drawing',
         label: 'Incomplete Information',
-        to: `${adminRoot}/pages/product/data-list`
+        to: `${adminRoot}/pages/product/data-list/incomplete-information`
       },
       {
         id: '',
         icon: 'iconsminds-digital-drawing',
         label: 'Expert Mail Drafted',
-        to: `${adminRoot}/pages/product/data-list`
+        to: `${adminRoot}/pages/product/data-list/expert-mail-drafted`
       },
       {
         id: '',
         icon: 'iconsminds-digital-drawing',
         label: 'Company Escalation Done',
-        to: `${adminRoot}/pages/product/data-list`
+        to: `${adminRoot}/pages/product/data-list/company-escalation-done`
       },
 
       {

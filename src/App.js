@@ -16,7 +16,7 @@ import {
   adminRoot,
   UserRole,
 } from './constants/defaultValues';
-import { getDirection } from './helpers/Utils';
+import { getCurrentUser, getDirection } from './helpers/Utils';
 import { ProtectedRoute } from './helpers/authHelper';
 import { useSelector } from 'react-redux';
 
@@ -51,6 +51,7 @@ const App = ({ locale }) => {
     }
   }, [direction]);
 
+  
   return (
     <div className="h-100">
       <IntlProvider
@@ -66,7 +67,7 @@ const App = ({ locale }) => {
                 <ProtectedRoute
                   path={adminRoot}
                   component={ViewApp}
-                  roles={[UserRole.Admin, UserRole.Editor]}
+                  roles={[UserRole.Admin, UserRole.Executive]}
                 />
                 <Route
                   path="/user"

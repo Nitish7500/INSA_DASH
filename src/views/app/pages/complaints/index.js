@@ -22,7 +22,11 @@ const PagesProduct = ({ match }) => (
     <Switch>
       <Redirect exact from={`${match.url}/`} to={`${match.url}/data-list`} />
       <Route
-        path={`${match.url}/data-list`}
+        path={`${match.url}/data-list/:id`}
+        render={(props) => <DataList {...props} />}
+      />
+      <Route
+        path={`${match.url}/data-list/`}
         render={(props) => <DataList {...props} />}
       />
       <Route

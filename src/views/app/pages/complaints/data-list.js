@@ -8,6 +8,7 @@ import ListPageHeading from 'containers/pages/ListPageHeading';
 import AddNewModal from 'containers/pages/AddNewModal';
 import ListPageListing from 'containers/pages/ListPageListing';
 import useMousetrap from 'hooks/use-mousetrap';
+import { useParams } from 'react-router-dom';
 
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
@@ -20,11 +21,11 @@ const getIndex = (value, arr, prop) => {
 
 const apiUrl = `${servicePath}/insurance/`;
 
-// const orderOptions = [
-//   { column: 'title', label: 'Product Name' },
-//   { column: 'category', label: 'Category' },
-//   { column: 'status', label: 'Status' },
-// ];
+const orderOptions = [
+  { column: 'title', label: 'Product Name' },
+  { column: 'category', label: 'Category' },
+  { column: 'status', label: 'Status' },
+];
 
 const pageSizes = [10, 20, 50, 100];
 
@@ -37,12 +38,13 @@ const categories = [
 const DataListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('list');
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
   const [selectedPageSize, setSelectedPageSize] = useState(10);
   const [selectedOrderOption, setSelectedOrderOption] = useState({
     column: 'title',
     label: 'Product Name',
   });
+  let { id } = useParams();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [totalItemCount, setTotalItemCount] = useState(0);
@@ -53,15 +55,40 @@ const DataListPages = ({ match }) => {
   const [lastChecked, setLastChecked] = useState(null);
 
   useEffect(() => {
-    setCurrentPage(1);
+    setCurrentPage(0);
   }, [selectedPageSize, selectedOrderOption]);
 
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+  
+  function capitalizeLetter(string) {
+    return string.toUpperCase();
+  }
+  
+ 
   useEffect(() => {
+
+    let statusFilter ="" ;
+    if(id){
+    let words= id.split("-");
+    for(let index = 0; index < words.length; index++) {
+    
+      if(words.length >1){
+        statusFilter=statusFilter+= index?" "+capitalizeLetter(words[index]):capitalizeLetter(words[index]);
+      }else{
+
+        statusFilter=statusFilter+= index?" "+capitalizeFirstLetter(words[index]):capitalizeFirstLetter(words[index]);
+      }
+    };
+    statusFilter= `&status=${statusFilter}`
+  }
     async function fetchData() {
+      
       axios
         .get(
-          // `${apiUrl}?pageIndex=${currentPage}&pageSize=${selectedPageSize}&orderBy=${selectedOrderOption.column}&keyword=${search}`,
-          `${apiUrl}?pageIndex=0&pageSize=${selectedPageSize}&orderBy=${selectedOrderOption.column}&keyword=${search}`,
+          `${apiUrl}?pageIndex=${currentPage}&pageSize=${selectedPageSize}&orderBy=${selectedOrderOption.column}&keyword=${search}${statusFilter}`,
+          // `${apiUrl}?pageIndex=0&pageSize=${selectedPageSize}&orderBy=${selectedOrderOption.column}&keyword=${search}&status=${statusFilter}`,
           {
             headers:{
               Authorization:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJlMmY0NzY3Yi0zMWJmLTRmZWYtYjAwMS1hYmY1Mjg3NDdiYTUiLCJleHBpcmVBdCI6MTY2OTMwODY0OCwiaWF0IjoxNjYzMzA4NzA4fQ.NsB7NlN1sWSzAWxPY9Qp3kiqvVqMGLadrugteoS10H8"
@@ -82,7 +109,7 @@ const DataListPages = ({ match }) => {
         });
     }
     fetchData();
-  }, [selectedPageSize, currentPage, selectedOrderOption, search]);
+  }, [selectedPageSize, currentPage, selectedOrderOption, search,id]);
 
   const onCheckItem = (event, id) => {
     if (
@@ -132,19 +159,19 @@ const DataListPages = ({ match }) => {
     return false;
   };
 
-  const onContextMenuClick = (e, data) => {
-    console.log('onContextMenuClick - selected items', selectedItems);
-    console.log('onContextMenuClick - action : ', data.action);
-  };
+  // const onContextMenuClick = (e, data) => {
+  //   console.log('onContextMenuClick - selected items', selectedItems);
+  //   console.log('onContextMenuClick - action : ', data.action);
+  // };
 
-  const onContextMenu = (e, data) => {
-    const clickedProductId = data.data;
-    if (!selectedItems.includes(clickedProductId)) {
-      setSelectedItems([clickedProductId]);
-    }
+  // const onContextMenu = (e, data) => {
+  //   const clickedProductId = data.data;
+  //   if (!selectedItems.includes(clickedProductId)) {
+  //     setSelectedItems([clickedProductId]);
+  //   }
 
-    return true;
-  };
+  //   return true;
+  // };
 
   useMousetrap(['ctrl+a', 'command+a'], () => {
     handleChangeSelectAll(false);
@@ -167,11 +194,11 @@ const DataListPages = ({ match }) => {
         displayMode={displayMode}
         changeDisplayMode={setDisplayMode}
         handleChangeSelectAll={handleChangeSelectAll}
-        // changeOrderBy={(column) => {
-        //   setSelectedOrderOption(
-        //     orderOptions.find((x) => x.column === column)
-        //   );
-        // }}
+        changeOrderBy={(column) => {
+          setSelectedOrderOption(
+            orderOptions.find((x) => x.column === column)
+          );
+        }}
         changePageSize={setSelectedPageSize}
         selectedPageSize={selectedPageSize}
         totalItemCount={totalItemCount}
@@ -202,8 +229,8 @@ const DataListPages = ({ match }) => {
         onCheckItem={onCheckItem}
         currentPage={currentPage}
         totalPage={totalPage}
-        onContextMenuClick={onContextMenuClick}
-        onContextMenu={onContextMenu}
+        // onContextMenuClick={onContextMenuClick}
+        // onContextMenu={onContextMenu}
         onChangePage={setCurrentPage}
       />
     </>
