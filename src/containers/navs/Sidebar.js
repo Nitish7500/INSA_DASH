@@ -381,7 +381,8 @@ class Sidebar extends Component {
                             target="_blank"
                           >
                             <i className={item.icon} />{' '}
-                            <IntlMessages id={item.label} />
+                            {/* <IntlMessages id={item.label} /> */}
+                            <span>{item.label}</span>
                           </a>
                         ) : (
                           <NavLink
@@ -390,7 +391,8 @@ class Sidebar extends Component {
                             data-flag={item.id}
                           >
                             <i className={item.icon} />{' '}
-                            <IntlMessages id={item.label} />
+                            {/* <IntlMessages id={item.label} /> */}
+                            <span>{item.label}</span>
                           </NavLink>
                         )}
                       </NavItem>
@@ -441,7 +443,8 @@ class Sidebar extends Component {
                                   target="_blank"
                                 >
                                   <i className={sub.icon} />{' '}
-                                  <IntlMessages id={sub.label} />
+                                  {/* <IntlMessages id={sub.label} /> */}
+                                  {sub.label}
                                 </a>
                               ) : sub.subs && sub.subs.length > 0 ? (
                                 <>
@@ -463,7 +466,8 @@ class Sidebar extends Component {
                                     }
                                   >
                                     <i className="simple-icon-arrow-down" />{' '}
-                                    <IntlMessages id={sub.label} />
+                                    {/* <IntlMessages id={sub.label} /> */}
+                                    <span>{sub.label}</span>
                                   </NavLink>
 
                                   <Collapse
@@ -489,18 +493,20 @@ class Sidebar extends Component {
                                                   <i
                                                     className={thirdSub.icon}
                                                   />{' '}
-                                                  <IntlMessages
+                                                  {/* <IntlMessages
                                                     id={thirdSub.label}
-                                                  />
+                                                  /> */}
+                                                  <span>{thirdSub.label}</span>
                                                 </a>
                                               ) : (
                                                 <NavLink to={thirdSub.to}>
                                                   <i
                                                     className={thirdSub.icon}
                                                   />{' '}
-                                                  <IntlMessages
+                                                  {/* <IntlMessages
                                                     id={thirdSub.label}
-                                                  />
+                                                  /> */}
+                                                  <span>{thirdSub.label}</span>
                                                 </NavLink>
                                               )}
                                             </NavItem>
@@ -513,7 +519,8 @@ class Sidebar extends Component {
                               ) : (
                                 <NavLink to={sub.to}>
                                   <i className={sub.icon} />{' '}
-                                  <IntlMessages id={sub.label} />
+                                  {/* <IntlMessages id={sub.label} /> */}
+                                  <span>{sub.label}</span>
                                 </NavLink>
                               )}
                             </NavItem>

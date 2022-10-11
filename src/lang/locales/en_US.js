@@ -147,6 +147,7 @@ module.exports = {
   'menu.layouts': 'Layouts',
   'menu.validations': 'Validations',
   'menu.wizard': 'Wizard',
+  'menu.complaint-details': 'Complaint Details',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'Pending Orders',

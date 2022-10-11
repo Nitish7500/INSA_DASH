@@ -49,9 +49,7 @@ const ListPageHeading = ({
       <Colxx xxs="12" className="position-relative p-2" style={{height: '130px'}}>
         <div className="fixedSectionHeader">
           <div className="mb-2">
-            <h1>
-              <IntlMessages id={heading} />
-            </h1>
+            <h1> {heading} </h1>
 
             <div className="text-zero top-right-button-container">
 

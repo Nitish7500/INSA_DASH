@@ -45,6 +45,7 @@
         text-align: center;
         padding: 0 10px;
         line-height: 14px;
+        text-transform: capitalize;
       }
 
       a {
@@ -74,6 +75,7 @@
 
       &.active a {
         color: $theme-color-1;
+        box-shadow: inset 5px 5px 8px $separator-color-light, inset -5px -5px 8px $separator-color-light;
       }
 
       &.active:after {
@@ -168,10 +170,15 @@
         a {
           font-size: 13px;
           display: flex;
+          align-items: center;
           padding: 8px 0;
           margin-bottom: 10px;
           word-wrap: break-word !important;
           width: 90%;
+
+          span{
+            padding-top: 0px !important;
+          }
 
           i {
             display: block;

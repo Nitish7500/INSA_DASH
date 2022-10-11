@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import ComplaintDetails from './complaint-details';
 
 const DataList = React.lazy(() =>
   import(/* webpackChunkName: "product-data-list" */ './data-list')
@@ -13,9 +14,9 @@ const ThumbList = React.lazy(() =>
 const Details = React.lazy(() =>
   import(/* webpackChunkName: "product-details" */ './details')
 );
-const DetailsAlt = React.lazy(() =>
-  import(/* webpackChunkName: "product-details-alt" */ './details-alt')
-);
+// const ComplaintDetails = React.lazy(() =>
+//   import(/* webpackChunkName: "product-details-alt" */ './complaint-details')
+// );
 
 const PagesProduct = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
@@ -42,8 +43,8 @@ const PagesProduct = ({ match }) => (
         render={(props) => <Details {...props} />}
       />
       <Route
-        path={`${match.url}/details-alt`}
-        render={(props) => <DetailsAlt {...props} />}
+        path={`${match.url}/complaint-details`}
+        render={(props) => <ComplaintDetails {...props} />}
       />
       <Redirect to="/error" />
     </Switch>

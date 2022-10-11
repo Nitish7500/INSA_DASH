@@ -84,8 +84,8 @@ const DataListPages = ({ match }) => {
       // console.log("status Filter :", statusFilter);
     } else {
       statusFilter = `&status=${statusLabel}`;
-      // console.log("Status Label :", statusLabel);
-      // console.log("status Filter :", statusFilter);
+      console.log("Status Label :", statusLabel);
+      console.log("status Filter :", statusFilter);
     }
 
     async function fetchData() {

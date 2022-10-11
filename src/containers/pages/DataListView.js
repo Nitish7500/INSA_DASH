@@ -8,6 +8,7 @@ import IntlMessages from 'helpers/IntlMessages';
 import { useState } from 'react';
 import StatusHistory from 'views/app/pages/complaints/modals/statusHistory';
 import claimAmountModal from 'views/app/pages/complaints/modals/claimAmountModal';
+import ComplaintDetails from 'views/app/pages/complaints/complaint-details';
 
 const DataListView = ({ complaint, isSelect, collect, onCheckItem ,onSelectedStatus,setStatusHistoryDetails,setStatusClaimAmount}) => {
   const {policyNumber,userId, email,phone, status, insuranceCompanyId,complaintTypeId,policyTypeId} = complaint;
@@ -36,7 +37,7 @@ const DataListView = ({ complaint, isSelect, collect, onCheckItem ,onSelectedSta
                   >
                   {/* <IntlMessages id="collapse.toggle" /> */}
                 </Button>
-                <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
                   <p className="text-primary text-bold mb-0 truncate">
                     {policyNumber}
                   </p>
@@ -80,40 +81,40 @@ const DataListView = ({ complaint, isSelect, collect, onCheckItem ,onSelectedSta
               <Collapse isOpen={collapse}>
                 <div className="p-2 record-options">
                   <div className="options-flex">
-                    <NavLink to = {`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                    <NavLink to = {`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
                       <img src="/icons/add-task.png" alt="option" className="option-icon" />
                     </NavLink>
-                    <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
                       <img src="/icons/task-remove.png" alt="option" className="option-icon" />
                     </NavLink>
-                    <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
                       <img src="/icons/list.png" alt="option" className="option-icon" />
                     </NavLink>
-                    <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
                       <img src="/icons/create-list.png" alt="option" className="option-icon" />
                     </NavLink>
-                    <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
                       <img src="/icons/status.png" alt="option" className="option-icon" />
                     </NavLink>
-                    <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
                       <img src="/icons/send.png" alt="option" className="option-icon" />
                     </NavLink>
-                    <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
                       <img src="/icons/edit.png" alt="option" className="option-icon" />
                     </NavLink>
-                    <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
                       <img src="/icons/target.png" alt="option" className="option-icon" />
                     </NavLink>
-                    <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
                       <img src="/icons/warning.png" alt="option" className="option-icon" />
                     </NavLink>
-                    <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
                       <img src="/icons/upload.png" alt="option" className="option-icon" />
                     </NavLink>
-                    <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
                       <img src="/icons/ombudsman.png" alt="option" className="option-icon" />
                     </NavLink>
-                    <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
                       <img src="/icons/cancel.png" alt="option" className="option-icon" />
                     </NavLink>
                   </div>
@@ -129,7 +130,6 @@ const DataListView = ({ complaint, isSelect, collect, onCheckItem ,onSelectedSta
         </Card>
       </ContextMenuTrigger>
     </Colxx>
-
     {/* <StatusHistory isOpen={modalBasic && Object.keys(statusHistoryDetails).length} 
       onClose = {() => setModalBasic(!modalBasic)}
       details = {statusHistoryDetails}

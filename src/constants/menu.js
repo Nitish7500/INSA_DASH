@@ -4,7 +4,7 @@ const data = [
   {
     id: 'dashboards',
     icon: 'iconsminds-shop-4',
-    label: 'menu.dashboards',
+    label: 'dashboards',
     to: `${adminRoot}/dashboards`,
     roles: [UserRole.Admin, UserRole.Executive],
     subs: [
@@ -49,7 +49,7 @@ const data = [
   {
     id: 'complaints',
     icon: 'iconsminds-digital-drawing',
-    label: 'menu.complaints',
+    label: 'complaints',
     to: `${adminRoot}/pages`,
     roles: [UserRole.Admin, UserRole.Executive],
     subs: [
@@ -586,78 +586,78 @@ const data = [
 
       // {
       //   id: 'pages-profile',
-      //   label: 'menu.profile',
+      //   label: 'profile',
       //   to: `${adminRoot}/pages/profile`,
       //   subs: [
       //     {
       //       icon: 'simple-icon-share',
-      //       label: 'menu.social',
+      //       label: 'social',
       //       to: `${adminRoot}/pages/profile/social`,
       //     },
       //     {
       //       icon: 'simple-icon-link',
-      //       label: 'menu.portfolio',
+      //       label: 'portfolio',
       //       to: `${adminRoot}/pages/profile/portfolio`,
       //     },
       //   ],
       // },
       // {
       //   id: 'pages-blog',
-      //   label: 'menu.blog',
+      //   label: 'blog',
       //   to: `${adminRoot}/pages/blog`,
       //   subs: [
       //     {
       //       icon: 'simple-icon-share',
-      //       label: 'menu.blog-list',
+      //       label: 'blog-list',
       //       to: `${adminRoot}/pages/blog/blog-list`,
       //     },
       //     {
       //       icon: 'simple-icon-link',
-      //       label: 'menu.blog-detail',
+      //       label: 'blog-detail',
       //       to: `${adminRoot}/pages/blog/blog-detail`,
       //     },
       //   ],
       // },
       // {
       //   id: 'pages-miscellaneous',
-      //   label: 'menu.miscellaneous',
+      //   label: 'miscellaneous',
       //   to: `${adminRoot}/pages/miscellaneous`,
       //   subs: [
       //     {
       //       icon: 'simple-icon-question',
-      //       label: 'menu.faq',
+      //       label: 'faq',
       //       to: `${adminRoot}/pages/miscellaneous/faq`,
       //     },
       //     {
       //       icon: 'simple-icon-graduation',
-      //       label: 'menu.knowledge-base',
+      //       label: 'knowledge-base',
       //       to: `${adminRoot}/pages/miscellaneous/knowledge-base`,
       //     },
 
       //     {
       //       icon: 'simple-icon-diamond',
-      //       label: 'menu.prices',
+      //       label: 'prices',
       //       to: `${adminRoot}/pages/miscellaneous/prices`,
       //     },
       //     {
       //       icon: 'simple-icon-magnifier',
-      //       label: 'menu.search',
+      //       label: 'search',
       //       to: `${adminRoot}/pages/miscellaneous/search`,
       //     },
       //     {
       //       icon: 'simple-icon-envelope-open',
-      //       label: 'menu.mailing',
+      //       label: 'mailing',
       //       to: `${adminRoot}/pages/miscellaneous/mailing`,
       //     },
       //     {
       //       icon: 'simple-icon-bag',
-      //       label: 'menu.invoice',
+      //       label: 'invoice',
       //       to: `${adminRoot}/pages/miscellaneous/invoice`,
       //     },
 
       //     {
       //       icon: 'simple-icon-exclamation',
-      //       label: 'menu.error',
+      //       label: 'error',
       //       to: '/error',
       //       newWindow: true,
       //     },
@@ -668,22 +668,22 @@ const data = [
   {
     id: 'applications',
     icon: 'iconsminds-air-balloon-1',
-    label: 'menu.applications',
+    label: 'applications',
     to: `${adminRoot}/applications`,
     subs: [
       {
         icon: 'simple-icon-check',
-        label: 'menu.todo',
+        label: 'todo',
         to: `${adminRoot}/applications/todo`,
       },
       {
         icon: 'simple-icon-calculator',
-        label: 'menu.survey',
+        label: 'survey',
         to: `${adminRoot}/applications/survey`,
       },
       {
         icon: 'simple-icon-bubbles',
-        label: 'menu.chat',
+        label: 'chat',
         to: `${adminRoot}/applications/chat`,
       },
     ],
@@ -691,130 +691,130 @@ const data = [
   {
     id: 'ui',
     icon: 'iconsminds-pantone',
-    label: 'menu.ui',
+    label: 'ui',
     to: `${adminRoot}/ui`,
     subs: [
       {
         id: 'ui-forms',
-        label: 'menu.forms',
+        label: 'forms',
         to: `${adminRoot}/ui/forms`,
         subs: [
           {
             icon: 'simple-icon-notebook',
-            label: 'menu.layouts',
+            label: 'layouts',
             to: `${adminRoot}/ui/forms/layouts`,
           },
           {
             icon: 'simple-icon-puzzle',
-            label: 'menu.components',
+            label: 'components',
             to: `${adminRoot}/ui/forms/components`,
           },
           {
             icon: 'simple-icon-check',
-            label: 'menu.validations',
+            label: 'validations',
             to: `${adminRoot}/ui/forms/validations`,
           },
           {
             icon: 'simple-icon-magic-wand',
-            label: 'menu.wizard',
+            label: 'wizard',
             to: `${adminRoot}/ui/forms/wizard`,
           },
         ],
       },
       {
         id: 'ui-components',
-        label: 'menu.components',
+        label: 'components',
         to: `${adminRoot}/ui/components`,
         subs: [
           {
             icon: 'simple-icon-bell',
-            label: 'menu.alerts',
+            label: 'alerts',
             to: `${adminRoot}/ui/components/alerts`,
           },
           {
             icon: 'simple-icon-badge',
-            label: 'menu.badges',
+            label: 'badges',
             to: `${adminRoot}/ui/components/badges`,
           },
           {
             icon: 'simple-icon-control-play',
-            label: 'menu.buttons',
+            label: 'buttons',
             to: `${adminRoot}/ui/components/buttons`,
           },
           {
             icon: 'simple-icon-layers',
-            label: 'menu.cards',
+            label: 'cards',
             to: `${adminRoot}/ui/components/cards`,
           },
           {
             icon: 'simple-icon-picture',
-            label: 'menu.carousel',
+            label: 'carousel',
             to: `${adminRoot}/ui/components/carousel`,
           },
           {
             icon: 'simple-icon-chart',
-            label: 'menu.charts',
+            label: 'charts',
             to: `${adminRoot}/ui/components/charts`,
           },
           {
             icon: 'simple-icon-arrow-up',
-            label: 'menu.collapse',
+            label: 'collapse',
             to: `${adminRoot}/ui/components/collapse`,
           },
           {
             icon: 'simple-icon-arrow-down',
-            label: 'menu.dropdowns',
+            label: 'dropdowns',
             to: `${adminRoot}/ui/components/dropdowns`,
           },
           {
             icon: 'simple-icon-book-open',
-            label: 'menu.editors',
+            label: 'editors',
             to: `${adminRoot}/ui/components/editors`,
           },
 
           {
             icon: 'simple-icon-star',
-            label: 'menu.icons',
+            label: 'icons',
             to: `${adminRoot}/ui/components/icons`,
           },
           {
             icon: 'simple-icon-note',
-            label: 'menu.input-groups',
+            label: 'input-groups',
             to: `${adminRoot}/ui/components/input-groups`,
           },
           {
             icon: 'simple-icon-screen-desktop',
-            label: 'menu.jumbotron',
+            label: 'jumbotron',
             to: `${adminRoot}/ui/components/jumbotron`,
           },
           {
             icon: 'simple-icon-map',
-            label: 'menu.maps',
+            label: 'maps',
             to: `${adminRoot}/ui/components/maps`,
           },
           {
             icon: 'simple-icon-docs',
-            label: 'menu.modal',
+            label: 'modal',
             to: `${adminRoot}/ui/components/modal`,
           },
           {
             icon: 'simple-icon-cursor',
-            label: 'menu.navigation',
+            label: 'navigation',
             to: `${adminRoot}/ui/components/navigation`,
           },
           {
             icon: 'simple-icon-pin',
-            label: 'menu.popover-tooltip',
+            label: 'popover-tooltip',
             to: `${adminRoot}/ui/components/popover-tooltip`,
           },
           {
             icon: 'simple-icon-shuffle',
-            label: 'menu.sortable',
+            label: 'sortable',
             to: `${adminRoot}/ui/components/sortable`,
           },
           {
             icon: 'simple-icon-grid',
-            label: 'menu.tables',
+            label: 'tables',
             to: `${adminRoot}/ui/components/tables`,
           },
         ],
@@ -824,32 +824,32 @@ const data = [
   {
     id: 'menu',
     icon: 'iconsminds-three-arrow-fork',
-    label: 'menu.menu',
+    label: 'menu',
     to: `${adminRoot}/menu`,
     subs: [
       {
         icon: 'simple-icon-logout',
-        label: 'menu.types',
+        label: 'types',
         to: `${adminRoot}/menu/types`,
       },
       {
         icon: 'simple-icon-layers',
-        label: 'menu.levels',
+        label: 'levels',
         to: `${adminRoot}/menu/levels`,
         subs: [
           {
             icon: 'simple-icon-arrow-right',
-            label: 'menu.third-level-1',
+            label: 'third-level-1',
             to: `${adminRoot}/menu/levels/third-level-1`,
           },
           {
             icon: 'simple-icon-arrow-right',
-            label: 'menu.third-level-2',
+            label: 'third-level-2',
             to: `${adminRoot}/menu/levels/third-level-2`,
           },
           {
             icon: 'simple-icon-arrow-right',
-            label: 'menu.third-level-3',
+            label: 'third-level-3',
             to: `${adminRoot}/menu/levels/third-level-3`,
           },
         ],
@@ -859,13 +859,13 @@ const data = [
   {
     id: 'blankpage',
     icon: 'iconsminds-bucket',
-    label: 'menu.blank-page',
+    label: 'blank-page',
     to: `${adminRoot}/blank-page`,
   },
   {
     id: 'docs',
     icon: 'iconsminds-library',
-    label: 'menu.docs',
+    label: 'docs',
     to: 'https://gogo-react-docs.coloredstrategies.com/',
     newWindow: true,
   },

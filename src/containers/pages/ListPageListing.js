@@ -103,7 +103,7 @@ const ListPageListing = ({
                   }}
                 />
               );
-            })}<p className='text-center'>No Records Found</p>
+            })}
           </div>
 
         </div>
