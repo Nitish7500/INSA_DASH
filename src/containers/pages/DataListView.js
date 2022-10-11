@@ -7,9 +7,9 @@ import { Colxx } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { useState } from 'react';
 import StatusHistory from 'views/app/pages/complaints/modals/statusHistory';
+import claimAmountModal from 'views/app/pages/complaints/modals/claimAmountModal';
 
-const DataListView = ({ complaint, isSelect, collect, onCheckItem ,onSelectedStatus,setStatusHistoryDetails}) => {
-// policyNumber email phone status insuranceCompanyId{address name policyTypeId} policyTypeId complaintTypeId{name} 
+const DataListView = ({ complaint, isSelect, collect, onCheckItem ,onSelectedStatus,setStatusHistoryDetails,setStatusClaimAmount}) => {
   const {policyNumber,userId, email,phone, status, insuranceCompanyId,complaintTypeId,policyTypeId} = complaint;
   const [collapse, setCollapse] = useState(false);
   const [modalBasic, setModalBasic] = useState(false);
@@ -19,7 +19,7 @@ const DataListView = ({ complaint, isSelect, collect, onCheckItem ,onSelectedSta
     <Colxx xxs="12" style={{marginBottom: '10px', paddingLeft: '0px'}}>
       <ContextMenuTrigger id="menu_id" data={complaint.id} collect={collect}>
         <Card
-          onClick={(event) => onCheckItem(event, complaint.id)}
+          // onClick={(event) => onCheckItem(event, complaint.id)}
           className={classnames('d-flex flex-row', {
             active: isSelect,
           })}
@@ -80,7 +80,7 @@ const DataListView = ({ complaint, isSelect, collect, onCheckItem ,onSelectedSta
               <Collapse isOpen={collapse}>
                 <div className="p-2 record-options">
                   <div className="options-flex">
-                    <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
+                    <NavLink to = {`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
                       <img src="/icons/add-task.png" alt="option" className="option-icon" />
                     </NavLink>
                     <NavLink to={`details?complaint=${complaint?._id}`} className="cardCell cardCell--250px columnLead">

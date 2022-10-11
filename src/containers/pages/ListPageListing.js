@@ -9,6 +9,11 @@ import { Colxx } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { useState } from 'react';
 import StatusHistory from 'views/app/pages/complaints/modals/statusHistory';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSort } from '@fortawesome/free-solid-svg-icons';
+
+import ClaimAmountModal from 'views/app/pages/complaints/modals/claimAmountModal';
+import { useHistory } from 'react-router-dom';
 
 function collect(props) {
   return { data: props.data };
@@ -30,22 +35,27 @@ const ListPageListing = ({
 }) => {
   const [isStatusHistoryModal, setIsStatusHistoryModal] = useState(false)
   const [selectedStatusHistoryInfo,setSelectedStatusHistoryInfo] = useState({});
+
+  const [isClaimAmountModal, setIsClaimAmountModal] = useState(false)
+  const [selectedStatusClaimAmount,setSelectedStatusClaimAmount] = useState({});
+
+  // const history = useHistory();
+  // console.log(history.location.state);
   
   const onCloseStatusHistoryModal = () => {
     setIsStatusHistoryModal(!isStatusHistoryModal);
     setSelectedStatusHistoryInfo({});
   }
+  const onCloseClaimAmountModal = () => {
+    setIsClaimAmountModal(!isClaimAmountModal);
+    setSelectedStatusClaimAmount({});
+  }
 
   return (
     <>
-      <Row className='tableContainer'>
+      <Row className='tableContainer' >
 
         {/* Table Header */}
-        
-        {/* <div className="tabledata--scrollable">
-          
-        </div> */}
-
         {/* Table data */}
         <div className="table-scrollable">
 
@@ -53,11 +63,16 @@ const ListPageListing = ({
             <p className="mr-2 ml-1 cardCell--50px"></p>
             <p className="cardCell cardCell--250px th-column">
               <span className="column-name">Policy Number</span>
-              {/* <div className="column-actions">
-                <Button><i className="simple-icon-reload" /></Button>
-              </div> */}
+              <div className="column-actions">
+                <Button className='tbl-sorticon' onClick={() => changeOrderBy(policyNumber)}><FontAwesomeIcon icon={faSort} /></Button>
+              </div>
             </p>
-            <p className="cardCell th-column">Name</p>
+            <p className="cardCell th-column">
+              <span className="column-name">Name</span>
+              <div className="column-actions">
+                <Button className='tbl-sorticon' onClick={() => changeOrderBy(userId.name)}><FontAwesomeIcon icon={faSort} /></Button>
+              </div>
+            </p>
             <p className="cardCell cardCell--250px th-column">Email ID</p>
             <p className="cardCell cardCell--150px th-column">Phone Number</p>
             <p className="cardCell th-column">Status</p>
@@ -74,11 +89,18 @@ const ListPageListing = ({
                 <DataListView
                   key={complaint._id}
                   complaint={complaint}
-                  isSelect={selectedItems.includes(complaint._id)}
+                  // isSelect={selectedItems.includes(complaint._id)}
                   onCheckItem={onCheckItem}
                   collect={collect}
                   onSelectedStatus = {() => setIsStatusHistoryModal(!isStatusHistoryModal)}
                   setStatusHistoryDetails = {(statusHistory)=>setSelectedStatusHistoryInfo(statusHistory)}
+                  onSelectedClaimAmount = {() => setIsClaimAmountModal(!isClaimAmountModal)}
+                  setStatusClaimAmount = {(ClaimAmountModal)=>setSelectedStatusClaimAmount(ClaimAmountModal)}
+                  changeOrderBy={(column) => {
+                    setSelectedOrderOption(
+                      orderOptions.find((x) => x.column === column)
+                    );
+                  }}
                 />
               );
             })}<p className='text-center'>No Records Found</p>
@@ -96,6 +118,12 @@ const ListPageListing = ({
     <StatusHistory isOpen={isStatusHistoryModal} 
       onClose = {onCloseStatusHistoryModal}
       details = {selectedStatusHistoryInfo}
+      
+    />
+
+    <ClaimAmountModal isOpen={isClaimAmountModal} 
+      onClose = {onCloseClaimAmountModal}
+      details = {selectedStatusClaimAmount}
       
     />
       {/* <Row>

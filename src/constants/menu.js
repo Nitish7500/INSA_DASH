@@ -57,113 +57,169 @@ const data = [
         id: '',
         icon: 'iconsminds-digital-drawing',
         label: 'All Complaints',
-        to: `${adminRoot}/pages/product/data-list/`
+        to: {pathname: `${adminRoot}/pages/product/data-list`}
       },
       {
         id: '',
         icon: 'iconsminds-digital-drawing',
         label: 'Pending Complaints',
-        to: `${adminRoot}/pages/product/data-list/pending`
+        to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'Pending'},
+        roles: [UserRole.Admin, UserRole.Executive],
       },
       {
         id: '',
         icon: 'iconsminds-digital-drawing',
         label: 'Accept',
-        to: `${adminRoot}/pages/product/data-list/accept`
+        to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'Accept'},
+        roles: [UserRole.Admin, UserRole.Executive],
       },
       {
         id: '',
         icon: 'iconsminds-digital-drawing',
         label: 'Accepted with Pendency',
-        to: `${adminRoot}/pages/product/data-list/accepted-with-pendency`
+        to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'ACCEPTED WITH PENDENCY'},
+        roles: [UserRole.Admin, UserRole.Executive],
       },
       {
         id: '',
         icon: 'iconsminds-digital-drawing',
         label: 'Incomplete Information',
-        to: `${adminRoot}/pages/product/data-list/incomplete-information`
+        to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'INCOMPLETE INFORMATION'},
+        roles: [UserRole.Admin, UserRole.Executive],
       },
       {
         id: '',
         icon: 'iconsminds-digital-drawing',
         label: 'Expert Mail Drafted',
-        to: `${adminRoot}/pages/product/data-list/expert-mail-drafted`
+        to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'EXPERT MAIL DRAFTED'},
+        roles: [UserRole.Admin, UserRole.Executive],
       },
       {
         id: '',
         icon: 'iconsminds-digital-drawing',
         label: 'Company Escalation Done',
-        to: `${adminRoot}/pages/product/data-list/company-escalation-done`
+        to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'COMPANY ESCALATION DONE'},
+        roles: [UserRole.Admin, UserRole.Executive],
       },
 
       {
         id: 'pages-authorization',
         label: 'Mailing Buckets',
+        icon: 'iconsminds-digital-drawing',
         to: '/user',
+        roles: [UserRole.Admin, UserRole.Executive],
         subs: [
           {
-            label: 'COMPLAINT FORM FILLED',
-            to: `${adminRoot}/pages/product/data-list`
+            id: '',
+            icon: 'simple-icon-credit-card',
+            label: 'Complaint Form Filled',
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'COMPLAINT FORM FILLED'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
-            label: 'DRAFT MAIL GENERATED',
-            to: `${adminRoot}/pages/product/data-list`
+            id: '',
+            icon: 'simple-icon-credit-card',
+            label: 'Draft Mail Generated',
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'DRAFT MAIL GENERATED'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
-            label: 'EXPERT APPROVED DRAFT MAIL',
-            to: `${adminRoot}/pages/product/data-list`
+            id: '',
+            icon: 'simple-icon-credit-card',
+            label: 'Expert Approved Draft Mail',
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'EXPERT APPROVED DRAFT MAIL'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
+            id: '',
+            icon: 'simple-icon-credit-card',
             label: 'Company',
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'Company'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
+            id: '',
+            icon: 'simple-icon-credit-card',
             label: 'IGMS',
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'IGMS'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
+            id: '',
+            icon: 'simple-icon-credit-card',
             label: 'Company/IGMS',
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'Company/IGMS'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
-            label: 'ESCALATION PENDING',
-            to: `${adminRoot}/pages/product/data-list`
+            id: '',
+            icon: 'simple-icon-credit-card',
+            label: 'Escalation Pending',
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'ESCALATION PENDING'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
-            label: 'ESCALATION MAIL GENERATED',
-            to: `${adminRoot}/pages/product/data-list`
+            id: '',
+            icon: 'simple-icon-credit-card',
+            label: 'Escalation Mail Generated',
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'ESCALATION MAIL GENERATED'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
-            label: 'ESCALATION APPROVED',
-            to: `${adminRoot}/pages/product/data-list`
+            id: '',
+            icon: 'simple-icon-credit-card',
+            label: 'Escalation Approved',
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'ESCALATION APPROVED'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
-            label: 'COMPANY ESCALATED',
-            to: `${adminRoot}/pages/product/data-list`
+            id: '',
+            icon: 'simple-icon-credit-card',
+            label: 'Company Escalated',
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'COMPANY ESCALATED'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
-            label: 'IGMS ESCALATED',
-            to: `${adminRoot}/pages/product/data-list`
+            id: '',
+            icon: 'simple-icon-credit-card',
+            label: 'IGMS Escalated',
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'IGMS ESCALATED'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
-            label: 'COMPANY/IGMS ESCALATED',
-            to: `${adminRoot}/pages/product/data-list`
+            id: '',
+            icon: 'simple-icon-credit-card',
+            label: 'Company / IGMS Escalated',
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'COMPANY/IGMS ESCALATED'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
-            label: 'NO RESPONSE RECEIVED',
-            to: `${adminRoot}/pages/product/data-list`
+            id: '',
+            icon: 'simple-icon-credit-card',
+            label: 'No Response Received',
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'NO RESPONSE RECEIVED'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
-            label: 'REMINDER MAIL SENT',
-            to: `${adminRoot}/pages/product/data-list`
+            id: '',
+            icon: 'simple-icon-credit-card',
+            label: 'Reminder Mail Sent',
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'REMINDER MAIL SENT'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
-            label: 'COMPANY REQUIREMENT RECEIVED',
-            to: `${adminRoot}/pages/product/data-list`
+            id: '',
+            icon: 'simple-icon-credit-card',
+            label: 'Company Requirement Received',
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'COMPANY REQUIREMENT RECEIVED'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
-            label: 'COMPANY REQUIREMENT SENT',
-            to: `${adminRoot}/pages/product/data-list`
+            id: '',
+            icon: 'simple-icon-credit-card',
+            label: 'Company Requirement Sent',
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'COMPANY REQUIREMENT SENT'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
         ],
       },
@@ -174,84 +230,116 @@ const data = [
         to: `${adminRoot}/pages/product`,
         subs: [
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Ombudsman Pending",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'Ombudsman Pending'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Complaint Form Sent",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'COMPLAINT FORM SENT'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Without Legal",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'Ombudsman without Legal'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Requirement Pending",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'OMBUDSMAN REQUIREMENT PENDING'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Requirement Pushed",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'OMBUDSMAN REQUIREMENT PUSHED'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Requirement Sent",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'OMBUDSMAN REQUIREMENT SENT'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Form 6a Received",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'FORM 6A RECEIVED'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Form 6a Pushed",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'FORM 6A PUSHED'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Form 6a Sent",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'FORM 6A SENT'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Hearing Date Received",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'HEARING DATE RECEIVED'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Hearing Postponed",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'HEARING POSTPONED'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Hearing Done",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'HEARING DONE'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Award Accepted",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'AWARD ACCEPTED'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Award Rejected",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'AWARD REJECTED'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Ombudsman With Legal Pending",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'OMBUDSMAN WITH LEGAL PENDING'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Ombudsman With Legal Sent",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'OMBUDSMAN WITH LEGAL SENT'},
+            roles: [UserRole.Admin, UserRole.Executive],
           },
         ],
       },
@@ -260,126 +348,151 @@ const data = [
         id: 'legal-buckets',
         label: 'Legal Buckets',
         to: `${adminRoot}/pages/product`,
+        roles: [UserRole.Admin, UserRole.Executive],
         subs: [
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label:"Legal",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'Legal'}
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label:"Legal Contract Pending",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'LEGAL CONTRACT PENDING'}
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label:"Legal Contract Signed",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'LEGAL CONTRACT SIGNED'}
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label:"Legal Query Raised",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'LEGAL QUERY RAISED'}
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label:"Legal Query Answered",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'LEGAL QUERY ANSWERED'}
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label:"Legal Draft For Approval",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'LEGAL DRAFT FOR APPROVAL'}
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label:"Court Filing Points",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'COURT FILING POINTS'}
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label:"Court Filing Pending Bucket",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'COURT FILING PENDING BUCKET'}
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label:"Case Filing Done",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'CASE FILING DONE'}
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label:"Legal Recovery From Customer",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'LEGAL RECOVERY FROM CUSTOMER'}
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label:"Legal Notice Received",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'LEGAL NOTICE RECEIVED'}
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label:"Legal Notice Sent",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'LEGAL NOTICE SENT'}
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label:"Legal Recovery From Company",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'LEGAL RECOVERY FROM COMPANY'}
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Court Issued Summon",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'COURT ISSUED SUMMON'}
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Company Reply Awaited",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'COMPANY REPLY AWAITED'}
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Rejoinder Need To Be Filed",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'REJOINDER NEED TO BE FILED'}
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Affidavit Need To Be Filed",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'AFFIDAVIT NEED TO BE FILED'}
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Complainant Evidence",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'COMPLAINANT EVIDENCE'}
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Defendant Evidence",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'DEFENDANT EVIDENCE'}
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Settlement Proposal Submission Pending",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'SETTLEMENT PROPOSAL SUBMISSION PENDING'}
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Settlement Proposal Submitted",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'SETTLEMENT PROPOSAL SUBMITTED'}
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Agruments",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'AGRUMENTS'}
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Final Arguments",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'FINAL ARGUMENTS'}
           },
           {
+            id: '',
             icon: 'simple-icon-credit-card',
             label: "Order Awaited",
-            to: `${adminRoot}/pages/product/data-list`
+            to: {pathname: `${adminRoot}/pages/product/data-list`, state: 'ORDER AWAITED'}
           }
         ]
       },
@@ -388,6 +501,7 @@ const data = [
         id: 'account-buckets',
         label: 'Account Buckets',
         to: `${adminRoot}/pages/profile`,
+        roles: [UserRole.Admin, UserRole.Executive],
         subs: [
           {
             icon: 'simple-icon-share',
@@ -416,6 +530,7 @@ const data = [
         id: 'rejected-buckets',
         label: 'Rejected Buckets',
         to: `${adminRoot}/pages/profile`,
+        roles: [UserRole.Admin, UserRole.Executive],
         subs: [
           {
             icon: 'simple-icon-share',
