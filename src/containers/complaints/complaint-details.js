@@ -14,19 +14,13 @@ import {
   TabPane,
   Badge,
 } from 'reactstrap';
-import { NavLink, useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import classnames from 'classnames';
 import { injectIntl } from 'react-intl';
-import Rating from 'components/common/Rating';
 
 import Breadcrumb from 'containers/navs/Breadcrumb';
 import { Colxx } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
-import RadialProgressCard from 'components/cards/RadialProgressCard';
-import SmallLineCharts from 'containers/dashboards/SmallLineCharts';
-import WebsiteVisitsChartCard from 'containers/dashboards/WebsiteVisitsChartCard';
-import NewComments from 'containers/dashboards/NewComments';
-import Orders from 'containers/pages/Orders';
 import FormikCustomComponents from 'containers/form-validations/FormikCustomComponents';
 import DetailsForm from 'components/reusable-components/tabpanes/forms/details-form';
 
@@ -39,9 +33,6 @@ const ComplaintDetails = ({ match }) => {
   // console.log(complaintId);
 
   // const { messages } = intl;
-
-  
-
   return (
     <>
       <Row>
@@ -51,33 +42,6 @@ const ComplaintDetails = ({ match }) => {
             <Button color='danger' size='md' className="top-right-button mr-3">
               <p className='mb-0'>Add More Complaint</p>
             </Button>
-
-            {/* <UncontrolledDropdown>
-              <DropdownToggle
-                caret
-                color="primary"
-                size="lg"
-                outline
-                className="top-right-button top-right-button-single"
-              >
-                <span>Actions</span>
-              </DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem header>
-                  <span>Lead Communication</span>
-                </DropdownItem>
-                <DropdownItem disabled>
-                  <span>Complaint Communication</span>
-                </DropdownItem>
-                <DropdownItem>
-                  <IntlMessages id="pages.another-action" />
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                  <IntlMessages id="pages.another-action" />
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown> */}
           </div>
           <Breadcrumb match={match} />
 
@@ -217,9 +181,9 @@ const ComplaintDetails = ({ match }) => {
           <TabContent activeTab={activeTab}>
 
             <TabPane tabId="details">
-              <h2>Complaint Details Form comes here</h2>
-              {complaintId}
-              <DetailsForm complaintId />
+              {/* <h2>Complaint Details Form comes here</h2>
+              {complaintId} */}
+              <DetailsForm heading='Complaint Details Form' />
             </TabPane>
 
             <TabPane tabId="mailing">

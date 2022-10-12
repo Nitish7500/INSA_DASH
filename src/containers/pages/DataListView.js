@@ -11,7 +11,7 @@ import claimAmountModal from 'components/reusable-components/modals/claimAmountM
 import ComplaintDetails from 'containers/complaints/complaint-details';
 
 const DataListView = ({ complaint, isSelect, collect, onCheckItem ,onSelectedStatus,setStatusHistoryDetails,setStatusClaimAmount}) => {
-  const {policyNumber,userId, email,phone, status, insuranceCompanyId,complaintTypeId,policyTypeId} = complaint;
+  const {policyNumber,userId, email,phone, status, insuranceCompanyId, complaintTypeId, policyTypeId} = complaint;
   const [collapse, setCollapse] = useState(false);
   const [modalBasic, setModalBasic] = useState(false);
 

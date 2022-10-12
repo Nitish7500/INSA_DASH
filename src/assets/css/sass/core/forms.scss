@@ -25,7 +25,8 @@
   font-size: 0.76rem;
   color: $primary-color;
   background: $foreground-color;
-  border: 1px solid $theme-color-1;
+  border: none;
+  border-bottom: 3px solid $theme-color-1;
   text-align: center;
   width: unset !important;
   position: absolute;
@@ -159,7 +160,8 @@ select.form-control:not([size]):not([multiple]) {
 .custom-control-input:checked ~ .custom-control-label::before {
   background-color: $theme-color-1;
   box-shadow: initial !important;
-  border: 1px solid $theme-color-1;
+  border: none;
+  border-bottom: 3px solid $theme-color-1;
 }
 
 .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before,
@@ -265,7 +267,8 @@ select.form-control:not([size]):not([multiple]) {
   outline: initial !important;
   box-shadow: initial !important;
   font-size: 0.8rem;
-  border: 1px solid $separator-color;
+  border: none;
+  border-bottom: 3px solid $separator-color;
   background: $input-background;
   color: $primary-color;
   height: initial;

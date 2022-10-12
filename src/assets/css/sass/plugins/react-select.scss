@@ -1,10 +1,10 @@
 .react-select {
-  outline: initial !important;
+  outline: none !important;
   box-shadow: none !important;
 }
 
 .react-select__value-container {
-  outline: initial !important;
+  outline: none !important;
   box-shadow: none !important;
   padding: 0.75rem 0.75rem 0.4rem 0.75rem !important;
   background: $foreground-color !important;
@@ -52,10 +52,14 @@
 
 .react-select__control {
   border-radius: $border-radius !important;
-  border: 1px solid $separator-color !important;
+  border: none;
   background: $input-background !important;
-  outline: initial !important;
+  outline: none !important;
   box-shadow: none !important;
+  border-color: none;
+  border-style: solid;
+  border-width: 0px !important;
+  border-bottom: 4px solid $separator-color !important;
 }
 
 .react-select__indicator-separator {
@@ -89,7 +93,8 @@
 
 .react-select__multi-value {
   background: transparent !important;
-  border: 1px solid $separator-color !important;
+  border: none;
+  border-bottom: 3px solid $theme-color-1;
 }
 
 .react-select__multi-value__remove:hover,
