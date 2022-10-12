@@ -28,6 +28,7 @@ import WebsiteVisitsChartCard from 'containers/dashboards/WebsiteVisitsChartCard
 import NewComments from 'containers/dashboards/NewComments';
 import Orders from 'containers/pages/Orders';
 import FormikCustomComponents from 'containers/form-validations/FormikCustomComponents';
+import DetailsForm from 'components/reusable-components/tabpanes/forms/details-form';
 
 const ComplaintDetails = ({ match }) => {
   const [activeTab, setActiveTab] = useState('details');
@@ -38,6 +39,8 @@ const ComplaintDetails = ({ match }) => {
   // console.log(complaintId);
 
   // const { messages } = intl;
+
+  
 
   return (
     <>
@@ -216,6 +219,7 @@ const ComplaintDetails = ({ match }) => {
             <TabPane tabId="details">
               <h2>Complaint Details Form comes here</h2>
               {complaintId}
+              <DetailsForm complaintId />
             </TabPane>
 
             <TabPane tabId="mailing">

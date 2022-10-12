@@ -8,11 +8,11 @@ import ThumbListView from './ThumbListView';
 import { Colxx } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { useState } from 'react';
-import StatusHistory from 'views/app/pages/complaints/modals/statusHistory';
+import StatusHistory from 'components/reusable-components/modals/statusHistory';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort } from '@fortawesome/free-solid-svg-icons';
 
-import ClaimAmountModal from 'views/app/pages/complaints/modals/claimAmountModal';
+import ClaimAmountModal from 'components/reusable-components/modals/claimAmountModal';
 import { useHistory } from 'react-router-dom';
 
 function collect(props) {

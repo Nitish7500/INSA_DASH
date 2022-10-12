@@ -6,9 +6,9 @@ import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { useState } from 'react';
-import StatusHistory from 'views/app/pages/complaints/modals/statusHistory';
-import claimAmountModal from 'views/app/pages/complaints/modals/claimAmountModal';
-import ComplaintDetails from 'views/app/pages/complaints/complaint-details';
+import StatusHistory from 'components/reusable-components/modals/statusHistory';
+import claimAmountModal from 'components/reusable-components/modals/claimAmountModal';
+import ComplaintDetails from 'containers/complaints/complaint-details';
 
 const DataListView = ({ complaint, isSelect, collect, onCheckItem ,onSelectedStatus,setStatusHistoryDetails,setStatusClaimAmount}) => {
   const {policyNumber,userId, email,phone, status, insuranceCompanyId,complaintTypeId,policyTypeId} = complaint;

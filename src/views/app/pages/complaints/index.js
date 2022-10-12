@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import ComplaintDetails from './complaint-details';
+import ComplaintDetails from '../../../../containers/complaints/complaint-details';
 
 const DataList = React.lazy(() =>
   import(/* webpackChunkName: "product-data-list" */ './data-list')
