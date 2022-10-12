@@ -64,13 +64,13 @@ const ListPageListing = ({
             <p className="cardCell cardCell--250px th-column">
               <span className="column-name">Policy Number</span>
               <div className="column-actions">
-                <Button className='tbl-sorticon' onClick={() => changeOrderBy(policyNumber)}><FontAwesomeIcon icon={faSort} /></Button>
+                {/* <Button className='tbl-sorticon' onClick={() => changeOrderBy(policyNumber)}><FontAwesomeIcon icon={faSort} /></Button> */}
               </div>
             </p>
             <p className="cardCell th-column">
               <span className="column-name">Name</span>
               <div className="column-actions">
-                <Button className='tbl-sorticon' onClick={() => changeOrderBy(userId.name)}><FontAwesomeIcon icon={faSort} /></Button>
+                {/* <Button className='tbl-sorticon' onClick={() => changeOrderBy(userId.name)}><FontAwesomeIcon icon={faSort} /></Button> */}
               </div>
             </p>
             <p className="cardCell cardCell--250px th-column">Email ID</p>

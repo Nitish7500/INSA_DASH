@@ -14,7 +14,7 @@ import {
   TabPane,
   Badge,
 } from 'reactstrap';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
 import classnames from 'classnames';
 import { injectIntl } from 'react-intl';
 import Rating from 'components/common/Rating';
@@ -32,10 +32,12 @@ import FormikCustomComponents from 'containers/form-validations/FormikCustomComp
 const ComplaintDetails = ({ match }) => {
   const [activeTab, setActiveTab] = useState('details');
 
-  let {complaintId} = useParams();
-  console.log({complaintId});
-  // const { messages } = intl;
+  let {search} = useLocation();
+  const query = new URLSearchParams(search);
+  const complaintId = query.get('complaintId');
+  console.log(complaintId);
 
+  // const { messages } = intl;
 
   return (
     <>
@@ -213,6 +215,7 @@ const ComplaintDetails = ({ match }) => {
 
             <TabPane tabId="details">
               <h2>Complaint Details Form comes here</h2>
+              {complaintId}
             </TabPane>
 
             <TabPane tabId="mailing">

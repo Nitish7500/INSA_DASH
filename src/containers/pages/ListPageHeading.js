@@ -18,6 +18,7 @@ import IntlMessages from 'helpers/IntlMessages';
 
 import { DataListIcon, ThumbListIcon, ImageListIcon } from 'components/svg';
 import Breadcrumb from '../navs/Breadcrumb';
+import { capitalizeEachWordInString, capitalizeFirstLetter } from 'helpers/CommonHelper';
 
 const ListPageHeading = ({
   intl,
@@ -39,17 +40,20 @@ const ListPageHeading = ({
   pageSizes,
   toggleModal,
   heading,
+  filter
 }) => {
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
   const { messages } = intl;
+  
+  const currentFilter = ( (typeof(filter)==undefined) ? 'All Complaints' : capitalizeEachWordInString(filter));
 
   return (
     <Row>
       <Colxx xxs="12" className="position-relative p-2" style={{height: '130px'}}>
         <div className="fixedSectionHeader">
           <div className="mb-2">
-            <h1> {heading} </h1>
+            <h1> {currentFilter ? currentFilter : 'All'} Complaints </h1>
 
             <div className="text-zero top-right-button-container">
 

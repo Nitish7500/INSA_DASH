@@ -63,30 +63,25 @@ const DataListPages = ({ match }) => {
   }, [selectedPageSize
     // , selectedOrderOption
   ]);
-
-  // function capitalizeFirstLetter(string) {
-  //   return string.charAt(0).toUpperCase() + string.slice(1);
-  // }
-  
-  // function capitalizeLetter(string) {
-  //   return string.toUpperCase();
-  // }
   
   const history = useHistory();
   // console.log(history.location.state);
  
-  useEffect(() => {
+  //fetching sleected filter category through state as being passed through menu.js
+  let statusLabel = history.location.state;
+  let statusFilter;
+  
+  if(typeof(statusLabel) == 'undefined') {
+    statusFilter = '';
+    // console.log("Status Label :", statusLabel);
+    // console.log("status Filter :", statusFilter);
+  } else {
+    statusFilter = `&status=${statusLabel}`;
+    // console.log("Status Label :", statusLabel);
+    // console.log("status Filter :", statusFilter);
+  }
 
-    let statusLabel = history.location.state;
-    let statusFilter = '';
-    if(typeof(statusLabel) == 'undefined') {
-      // console.log("Status Label :", statusLabel);
-      // console.log("status Filter :", statusFilter);
-    } else {
-      statusFilter = `&status=${statusLabel}`;
-      console.log("Status Label :", statusLabel);
-      console.log("status Filter :", statusFilter);
-    }
+  useEffect(() => {
 
     async function fetchData() {
       axios
@@ -191,6 +186,8 @@ const DataListPages = ({ match }) => {
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
 
+  const filter = statusLabel;
+
   return !isLoaded ? (
     <div className="loading" />
   ) : (
@@ -222,6 +219,7 @@ const DataListPages = ({ match }) => {
         // orderOptions={orderOptions}
         pageSizes={pageSizes}
         toggleModal={() => setModalOpen(!modalOpen)}
+        filter={filter}
       />
       <AddNewModal
         modalOpen={modalOpen}
