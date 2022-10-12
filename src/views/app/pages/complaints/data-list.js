@@ -59,13 +59,12 @@ const DataListPages = ({ match }) => {
   // console.log(authorizedUser.token);
 
   useEffect(() => {
-    setCurrentPage(0);
-  }, [selectedPageSize
-    // , selectedOrderOption
+      setCurrentPage(0);
+    }, [selectedPageSize
+      // , selectedOrderOption
   ]);
   
   const history = useHistory();
-  // console.log(history.location.state);
  
   //fetching sleected filter category through state as being passed through menu.js
   let statusLabel = history.location.state;
@@ -73,12 +72,8 @@ const DataListPages = ({ match }) => {
   
   if(typeof(statusLabel) == 'undefined') {
     statusFilter = '';
-    // console.log("Status Label :", statusLabel);
-    // console.log("status Filter :", statusFilter);
   } else {
     statusFilter = `&status=${statusLabel}`;
-    // console.log("Status Label :", statusLabel);
-    // console.log("status Filter :", statusFilter);
   }
 
   useEffect(() => {

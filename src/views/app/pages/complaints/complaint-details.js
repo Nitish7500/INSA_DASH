@@ -35,7 +35,7 @@ const ComplaintDetails = ({ match }) => {
   let {search} = useLocation();
   const query = new URLSearchParams(search);
   const complaintId = query.get('complaintId');
-  console.log(complaintId);
+  // console.log(complaintId);
 
   // const { messages } = intl;
 
