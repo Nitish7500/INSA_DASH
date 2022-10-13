@@ -46,7 +46,7 @@ const DataListPages = ({ match }) => {
   //   label: 'complaint',
   // });
   let { id } = useParams();
-
+console.log("id",id)
   const [modalOpen, setModalOpen] = useState(false);
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
@@ -77,7 +77,6 @@ const DataListPages = ({ match }) => {
   }
 
   useEffect(() => {
-
     async function fetchData() {
       axios
         .get(
@@ -105,7 +104,7 @@ const DataListPages = ({ match }) => {
     fetchData();
   }, [selectedPageSize, currentPage, 
     // selectedOrderOption, 
-    search,id]);
+    search,statusLabel]);
 
   // const onCheckItem = (event, id) => {
   //   if (

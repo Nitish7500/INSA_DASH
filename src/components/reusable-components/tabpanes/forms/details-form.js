@@ -34,7 +34,7 @@ export default function DetailsForm({ heading }) {
     return (
         <Card>
             <CardBody>
-                <h6 className="mb-4">{heading}</h6>
+                <h2 className="mb-5">{heading}</h2>
                 <Formik initialValues={{
                     name: 'Yash',
                     email: 'test@test.com',
@@ -588,6 +588,7 @@ export default function DetailsForm({ heading }) {
                                             </Colxx>
                                         </Row>
 
+                                        <h4 className='my-4'>Customer Care Executive Created Email Section</h4>
                                         <Row className='mb-4'>
                                             {/* Form Column 1 */}
                                             <Colxx xxs="12" lg="3">

@@ -46,7 +46,7 @@ const ComplaintDetails = ({ match }) => {
           </div>
           <Breadcrumb match={match} />
 
-          <h2 className='mb-4'>Complaint ID : {complaintId}</h2>
+          {/* <h2 className='mb-4'>Complaint ID : {complaintId}</h2> */}
           <Nav tabs className="separator-tabs ml-0 mt-3 mb-5">
             <NavItem>
               <NavLink

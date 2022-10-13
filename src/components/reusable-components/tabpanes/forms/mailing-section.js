@@ -5,8 +5,8 @@ import { FormikCheckbox, FormikCustomCheckboxGroup, FormikCustomRadioGroup, Form
 import { Field, Formik } from 'formik'
 import * as Yup from 'yup';
 import React, { useState } from 'react'
-import { Button, Card, CardBody, Form, FormGroup, Input, Label, Modal, ModalBody, Row } from 'reactstrap'
-import { gender, options } from 'constants/formValues';
+import { Button, Card, CardBody, CustomInput, Form, FormGroup, Input, Label, Modal, ModalBody, Row } from 'reactstrap'
+import { choices, complaintDelayReason, draftSentByCustomer, firstResponseType, firstResponseTypes, gender, isAcknowledgementReceived, isCustomerIDRegistered, isFirstEscalationSent, isFirstReminderMailSentToCompany, isFirstResponseFromCompany, isfirstResponseFromCompany, isReminderMailSentToCompany, isRequirementMailRevert, isRequirementMailSent, isSecondReminderMailSentToCompany, isSecondResponseFromCompany, options, secondResponseType } from 'constants/formValues';
 
 
 export default function MailingSectionForm ({ heading }) {
@@ -27,11 +27,12 @@ export default function MailingSectionForm ({ heading }) {
     return (
         <Card>
             <CardBody>
-                <h6 className="mb-4">{heading}</h6>
+                <h2 className="mb-4">{heading}</h2>
                 <Formik initialValues={{
                     name: 'Yash',
                     email: 'test@test.com',
                     phone: '9453578234',
+                    choice: 'Yes'
                 }}
                     // validationSchema={SignupSchema}
                     // onSubmit={onSubmit}
@@ -41,76 +42,400 @@ export default function MailingSectionForm ({ heading }) {
                     setFieldValue,
                     setFieldTouched,
                     handleChange,
-                    handleBlur
+                    handleBlur,
+                    values
                 }) => (
                     <Form className="av-tooltip tooltip-label-right">
                         <Row className="mb-4">
                             <Colxx xxs="12" lg="12">
-                            
-                                {/* Sample Components */}
-                                <Row className="my-6">
-                                    {/* :::::::: Radio Group :::::: */}
-                                    <Colxx xxs="12" lg="3"> 
-                                        <FormGroup className="error-l-150 pt-2">
-                                            <Label className="d-block">Gender</Label>
-                                            <FormikCustomRadioGroup
-                                                inline
-                                                name="gender"
-                                                id="gender"
-                                                label="Which of these?"
-                                                value=''
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                                options={gender}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* ::::::::  Select Group  ::::::: */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100 pt-1">
-                                            <Label>Select State</Label>
-                                            <select name="select"
-                                                    className="form-control"
-                                                    value=''
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                >
-                                                <option value="">Select a state..</option>
-                                                <option value="1">Bihar</option>
-                                                <option value="2">2</option>
-                                            </select>
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* ::::::::  Checkbbox Group  ::::::: */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-175 ">
-                                            <Label className="d-block">Custom Checkbox Group</Label>
-                                            <FormikCustomCheckboxGroup
-                                            inline
-                                            name="customCheckGroup"
-                                            id="customCheckGroup"
-                                            label="Which of these?"
-                                            value=''
-                                            onChange={setFieldValue}
-                                            onBlur={setFieldTouched}
-                                            options={options}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* ::::::::  Text Group  ::::::: */}
+
+                                {/* Form Row */}
+                                <Row className='mb-3'>
+                                    {/* Form Column 1 */}
                                     <Colxx xxs="12" lg="3">
                                         <FormGroup className="error-l-100">
-                                            <Label>Name</Label>
+                                            <Label>Customer ID is Register</Label><br />
+                                            <FormikCustomRadioGroup
+                                                inline
+                                                name="isCustomerIdRegistered"
+                                                id="isCustomerIdRegistered"
+                                                label="Which of these?"
+                                                value={values.isCustomerIdRegistered}
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                                options={isCustomerIDRegistered}
+                                            />
+                                        </FormGroup>
+                                    </Colxx>
+                                    {/* Form Column 2 */}
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label>Complaint Number</Label>
                                             <Field className="form-control" name="name" />
+                                        </FormGroup>
+                                    </Colxx>
+                                    {/* Form Column 3 */}
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">Complaint Date</Label>
+                                            <FormikDatePicker
+                                                name="date"
+                                                value={values.date}
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                            />
+                                        </FormGroup>
+                                    </Colxx>
+                                    {/* Form Column 4 */}
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">First Response Date from Company </Label>
+                                            <FormikDatePicker
+                                                name="date"
+                                                value={values.date}
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                            />
+                                        </FormGroup>
+                                    </Colxx>
+                                </Row>
+                            
+                                {/* Form Row */}
+                                <Row className='mb-3'>
+                                    {/* Form Column 1 */}
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">Escalation Date Sent to Company</Label>
+                                            <FormikDatePicker
+                                                name="date"
+                                                value={values.date}
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                            />
+                                        </FormGroup>
+                                    </Colxx>
+                                    {/* Form Column 2 */}
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">Requirement Raised Date</Label>
+                                            <FormikDatePicker
+                                                name="date"
+                                                value={values.date}
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                            />
+                                        </FormGroup>
+                                    </Colxx>
+                                    {/* Form Column 3 */}
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">Requirement Reverted Date</Label>
+                                            <FormikDatePicker
+                                                name="date"
+                                                value={values.date}
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                            />
+                                        </FormGroup>
+                                    </Colxx>
+                                    {/* Form Column 4 */}
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">Reminder Sent Date</Label>
+                                            <FormikDatePicker
+                                                name="date"
+                                                value={values.date}
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                            />
                                         </FormGroup>
                                     </Colxx>
                                 </Row>
 
-                                {/* Form Row 1 */}
-                                <Row>
+                                {/* Form Row */}
+                                <Row className='mb-3'>
                                     {/* Form Column 1 */}
                                     <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">Second Response Date from Company</Label>
+                                            <FormikDatePicker
+                                                name="date"
+                                                value={values.date}
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                            />
+                                        </FormGroup>
+                                    </Colxx>
+                                    {/* Form Column 2 */}
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">Draft Mail Sent by customer or Not</Label>
+                                            <FormikCustomRadioGroup
+                                                inline
+                                                name="draftSentByCustomer"
+                                                id="draftSentByCustomer"
+                                                label="Which of these?"
+                                                value={values.draftSentByCustomer}
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                                options={draftSentByCustomer}
+                                            />
+                                        </FormGroup>
+                                    </Colxx>
+                                    {/* Form Column 3 */}
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">Is draft shared ?</Label>
+                                            <FormikCheckbox
+                                                name="draftShared"
+                                                value={values.draftShared}
+                                                label="Draft shared with the customer"
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                            />
+                                        </FormGroup>
+                                    </Colxx>
+                                    {/* Form Column 4 */}
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">Draft shared with the customer Date</Label>
+                                            <FormikDatePicker
+                                                name="date"
+                                                value={values.date}
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                            />
+                                        </FormGroup>
+                                    </Colxx>
+                                </Row>
+                            
+                                {/* Form Row */}
+                                <Row className='mb-3'>
+                                    {/* Form Column 1 */}
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">Acknowledgement Received or Not</Label>
+                                            <FormikCustomRadioGroup
+                                                inline
+                                                name="isAcknowledgementReceived"
+                                                id="isAcknowledgementReceived"
+                                                label="Which of these?"
+                                                value={values.isAcknowledgementReceived}
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                                options={isAcknowledgementReceived}
+                                            />
+                                        </FormGroup>
+                                    </Colxx>
+                                    {/* Form Column 2 */}
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">Requirement Mail Sent By Company</Label>
+                                            <FormikCustomRadioGroup
+                                                inline
+                                                name="isRequirementMailSent"
+                                                id="isRequirementMailSent"
+                                                label="Which of these?"
+                                                value={values.isRequirementMailSent}
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                                options={isRequirementMailSent}
+                                            />
+                                        </FormGroup>
+                                    </Colxx>
+                                    {/* Form Column 3 */}
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">Requirement Mail Revert Sent By Customer</Label>
+                                            <FormikCustomRadioGroup
+                                                inline
+                                                name="isRequirementMailRevert"
+                                                id="isRequirementMailRevert"
+                                                label="Which of these?"
+                                                value={values.isRequirementMailRevert}
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                                options={isRequirementMailRevert}
+                                            />
+                                        </FormGroup>
+                                    </Colxx>
+                                </Row>
+                            
+                                <h5>First Response Data</h5><hr />
+                                {/* Form Row */}
+                                <Row className='mb-3'>
+                                    {/* Form Column 1 */}
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">First Response from Company</Label>
+                                            <FormikCustomRadioGroup
+                                                inline
+                                                name="isFirstResponseFromCompany"
+                                                id="isFirstResponseFromCompany"
+                                                label="Which of these?"
+                                                value={values.isFirstResponseFromCompany}
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                                options={isFirstResponseFromCompany}
+                                            />
+                                        </FormGroup>
+                                    </Colxx>
+                                    {/* Form Column 2 */}
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">Reminder Mail Sent to Company</Label>
+                                            <FormikCustomRadioGroup
+                                                inline
+                                                name="isFirstReminderMailSentToCompany"
+                                                id="isFirstReminderMailSentToCompany"
+                                                label="Which of these?"
+                                                value={values.isFirstReminderMailSentToCompany}
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                                options={isFirstReminderMailSentToCompany}
+                                            />
+                                        </FormGroup>
+                                    </Colxx>
+                                    {/* Form Column 3 */}
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">First Response Type</Label>
+                                            <select name="firstResponseType"
+                                                    className="form-control"
+                                                    value={values.firstResponseType}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                >
+                                                {firstResponseType.map((item) => (
+                                                    <option value={item.value}>{item.label}</option>
+                                                ))}
+                                            </select>
+                                        </FormGroup>
+                                    </Colxx>
+                                    {/* Form Column 4 */}
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">Complaint delay reason</Label>
+                                            <select name="complaintDelayReason"
+                                                    className="form-control"
+                                                    value={values.complaintDelayReason}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                >
+                                                {complaintDelayReason.map((item) => (
+                                                    <option value={item.value}>{item.label}</option>
+                                                ))}
+                                            </select>
+                                        </FormGroup>
+                                    </Colxx>
+                                </Row>
 
+                                {/* Form Row */}
+                                <Row className='mb-3'>
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label>First Escalation Sent or Not</Label><br />
+                                            <FormikCustomRadioGroup
+                                                inline
+                                                name="isFirstEscalationSent"
+                                                id="isFirstEscalationSent"
+                                                label="Which of these?"
+                                                value={values.isFirstEscalationSent}
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                                options={isFirstEscalationSent}
+                                            />
+                                        </FormGroup>
+                                    </Colxx>
+                                    {/* Form Column */}
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">Escalation shared with the customer</Label>
+                                            <FormikCheckbox
+                                                name="isEscalationShared"
+                                                value={values.isEscalationShared}
+                                                label="Draft shared with the customer"
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                            />
+                                        </FormGroup>
+                                    </Colxx>
+                                    {/* Form Column */}
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">Draft shared with the customer Date</Label>
+                                            <FormikDatePicker
+                                                name="date"
+                                                value={values.date}
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                            />
+                                        </FormGroup>
+                                    </Colxx>
+                                </Row>
+
+                                <h5>Second Response Data</h5><hr />
+                                {/* Form Row */}
+                                <Row className='mb-3'>
+                                    {/* Form Column 1 */}
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">Second Response from Company</Label>
+                                            <FormikCustomRadioGroup
+                                                inline
+                                                name="isSecondResponseFromCompany"
+                                                id="isSecondResponseFromCompany"
+                                                label="Which of these?"
+                                                value={values.isSecondResponseFromCompany}
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                                options={isSecondResponseFromCompany}
+                                            />
+                                        </FormGroup>
+                                    </Colxx>
+                                    {/* Form Column 2 */}
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">Reminder Mail Sent to Company</Label>
+                                            <FormikCustomRadioGroup
+                                                inline
+                                                name="isSecondReminderMailSentToCompany"
+                                                id="isSecondReminderMailSentToCompany"
+                                                label="Which of these?"
+                                                value={values.isSecondReminderMailSentToCompany}
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                                options={isSecondReminderMailSentToCompany}
+                                            />
+                                        </FormGroup>
+                                    </Colxx>
+                                    {/* Form Column 3 */}
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">Reminder Sent Date</Label>
+                                            <FormikDatePicker
+                                                name="date"
+                                                value={values.date}
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                            />
+                                        </FormGroup>
+                                    </Colxx>
+                                    {/* Form Column 4 */}
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">Second Response Type</Label>
+                                            <select name="secondResponseType"
+                                                    className="form-control"
+                                                    value={values.secondResponseType}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                >
+                                                {secondResponseType.map((item) => (
+                                                    <option value={item.value}>{item.label}</option>
+                                                ))}
+                                            </select>
+                                        </FormGroup>
                                     </Colxx>
                                 </Row>
                             
