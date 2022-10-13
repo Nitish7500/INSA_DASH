@@ -143,6 +143,35 @@ export default function IGMSForm ({ heading }) {
                                     </Colxx>
                                 </Row>
 
+                                {/* Form Row */}
+                                <Row className='mb-3'>
+                                    {/* Form Column 1 */}
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-150">
+                                            <FormikCheckbox
+                                                name="isResponseRecieved"
+                                                value={values.isResponseRecieved}
+                                                label="Response Recieved"
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                            />
+                                        </FormGroup>
+                                    </Colxx>
+
+                                    {/* Form Column 2 */}
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-150">
+                                            <FormikCheckbox
+                                                name="isRequirementRecieved"
+                                                value={values.isRequirementRecieved}
+                                                label="Requirement Recieved"
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                            />
+                                        </FormGroup>
+                                    </Colxx>
+                                </Row>
+
                                 {/* Textarea */}
                                 <Row className='mb-4'>
                                     <Colxx xxs="12" lg="12">
