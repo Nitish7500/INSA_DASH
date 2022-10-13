@@ -47,7 +47,7 @@ export default function MailingSectionForm ({ heading }) {
                 }) => (
                     <Form className="av-tooltip tooltip-label-right">
                         <Row className="mb-4">
-                            <Colxx xxs="12" lg="12">
+                            <Colxx xxs="12" lg="12" className="mb-5">
 
                                 {/* Form Row */}
                                 <Row className='mb-3'>
@@ -438,7 +438,33 @@ export default function MailingSectionForm ({ heading }) {
                                         </FormGroup>
                                     </Colxx>
                                 </Row>
+
+                                {/* Texr=tarea */}
+                                <Row className='mb-4'>
+                                    <Colxx xxs="12" lg="12">
+                                        <FormGroup className="error-l-100">
+                                            <Label>Escalation Mail Points</Label>
+                                            <Input type="textarea" rows="5" name="escalationpoints" id="escalationpoints" />
+                                        </FormGroup>
+                                    </Colxx>
+                                </Row>
+
+                                {/* Texr=tarea */}
+                                <Row className='mb-4'>
+                                    <Colxx xxs="12" lg="12">
+                                        <FormGroup className="error-l-100">
+                                            <Label>Earlier Mail Editors</Label>
+                                            <Input type="textarea" rows="5" name="earliermails" id="earliermails" />
+                                        </FormGroup>
+                                    </Colxx>
+                                </Row>
                             
+                            </Colxx>
+                            {/* Wrapping Column ends */}
+                            <Colxx xxs="12" lg="12" className="text-center">
+                                <Button color="primary" type="submit">
+                                    Submit
+                                </Button>
                             </Colxx>
                         </Row>
                     </Form>

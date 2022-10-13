@@ -24,6 +24,7 @@ import IntlMessages from 'helpers/IntlMessages';
 import FormikCustomComponents from 'containers/form-validations/FormikCustomComponents';
 import DetailsForm from 'components/reusable-components/tabpanes/forms/details-form';
 import MailingSectionForm from 'components/reusable-components/tabpanes/forms/mailing-section';
+import IGMSForm from 'components/reusable-components/tabpanes/forms/igms-form';
 
 const ComplaintDetails = ({ match }) => {
   const [activeTab, setActiveTab] = useState('details');
@@ -193,7 +194,7 @@ const ComplaintDetails = ({ match }) => {
             </TabPane>
 
             <TabPane tabId="igms">
-              <h2>Into IGMS Section</h2>
+              <IGMSForm heading='IGMS Section' />
             </TabPane>
 
             <TabPane tabId="ombudsman">
