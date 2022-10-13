@@ -1,79 +1,35 @@
 //complaint details nested form
 
 import { Colxx } from 'components/common/CustomBootstrap'
-import { 
-        FormikCheckbox, 
-        FormikCheckboxGroup, 
-        FormikCustomCheckbox, 
-        FormikCustomCheckboxGroup, 
-        FormikCustomRadioGroup, 
-        FormikDatePicker, 
-        FormikRadioButtonGroup, 
-        FormikReactSelect, 
-        FormikSwitch, 
-        FormikTagsInput} 
-    from 'containers/form-validations/FormikFields'
+import { FormikCheckbox, FormikCustomCheckboxGroup, FormikCustomRadioGroup, FormikDatePicker } from 'containers/form-validations/FormikFields'
 import { Field, Formik } from 'formik'
 import * as Yup from 'yup';
-import IntlMessages from 'helpers/IntlMessages'
-import React from 'react'
-import { Button, Card, CardBody, Form, FormGroup, Label, Row } from 'reactstrap'
-
-const SignupSchema = Yup.object().shape({
-    email: Yup.string()
-      .email('Invalid email address')
-      .required('Email is required!'),
-    select: Yup.string().required('A select option is required!'),
-    reactSelect: Yup.array()
-      .min(3, 'Pick at least 3 tags')
-      .of(
-        Yup.object().shape({
-          label: Yup.string().required(),
-          value: Yup.string().required(),
-        })
-      ),
-    checkboxSingle: Yup.bool().oneOf([true], 'Must agree to something'),
-    checkboxCustomSingle: Yup.bool().oneOf([true], 'Must agree to something'),
-    checkboxGroup: Yup.array()
-      .min(2, 'Pick at least 2 tags')
-      .required('At least one checkbox is required'),
-  
-    customCheckGroup: Yup.array()
-      .min(2, 'Pick at least 2 tags')
-      .required('At least one checkbox is required'),
-  
-    radioGroup: Yup.string().required('A radio option is required'),
-    customRadioGroup: Yup.string().required('A radio option is required'),
-    tags: Yup.array()
-      .min(3, 'Pick at least 3 tags')
-      .required('At least one checkbox is required'),
-    switch: Yup.bool().oneOf([true], 'Must agree to something'),
-    date: Yup.date().nullable().required('Date required'),
-});
-
+import React, { useState } from 'react'
+import { Button, Card, CardBody, Form, FormGroup, Input, Label, Modal, ModalBody, Row } from 'reactstrap'
+import { education, gender, occupation } from 'constants/formValues';
 
 const options = [
-    { value: 'food', label: 'Food' },
-    { value: 'beingfabulous', label: 'Being Fabulous', disabled: true },
-    { value: 'reasonml', label: 'ReasonML' },
-    { value: 'unicorns', label: 'Unicorns' },
-    { value: 'kittens', label: 'Kittens' },
+    { value: '', label: 'Select an Option' },
+    { value: 'Something', label: 'Something' },
+    { value: 'Anything', label: 'Anything' }
 ];
-  
-  
+
+
 
 export default function DetailsForm({ heading }) {
 
-    const onSubmit = (values, { setSubmitting }) => {
-        const payload = {
-          ...values,
-          reactSelect: values.reactSelect.map((t) => t.value),
-        };
-        setTimeout(() => {
-          console.log(JSON.stringify(payload, null, 2));
-          setSubmitting(false);
-        }, 1000);
-    };
+    const [documentUploadModal, setDocumentUploadModal] = useState(false);
+
+    // const onSubmit = (values, { setSubmitting }) => {
+    //     const payload = {
+    //       ...values,
+    //       reactSelect: values.reactSelect.map((t) => t.value),
+    //     };
+    //     setTimeout(() => {
+    //       console.log(JSON.stringify(payload, null, 2));
+    //       setSubmitting(false);
+    //     }, 1000);
+    // };
 
     return (
         <Card>
@@ -82,20 +38,26 @@ export default function DetailsForm({ heading }) {
                 <Formik initialValues={{
                     name: 'Yash',
                     email: 'test@test.com',
+                    phone: '9453578234',
+                    alternate: '',
+                    income: '25000',
                     select: '3',
+                    pincode: '201301',
+                    dob: '13/01/1970',
                     reactSelect: [{ value: 'reasonml', label: 'ReasonML' }],
                     checkboxGroup: ['kittens'],
                     customCheckGroup: ['unicorns'],
                     checkboxSingle: true,
                     checkboxCustomSingle: false,
-                    radioGroup: '',
-                    customRadioGroup: '',
+                    radioGroup: 'male',
+                    gender: 'male',
+                    customRadioGroup: 'male',
                     tags: ['cake', 'dessert'],
                     switch: false,
                     date: null,
                 }}
-                validationSchema={SignupSchema}
-                onSubmit={onSubmit}
+                    // validationSchema={SignupSchema}
+                    // onSubmit={onSubmit}
                 >
                 {({
                     handleSubmit,
@@ -110,255 +72,601 @@ export default function DetailsForm({ heading }) {
                 }) => (
                     <Form className="av-tooltip tooltip-label-right">
                         <Row className="mb-4">
-                            <Colxx xxs="12" lg="3" className="mb-4">
+                            <Colxx xxs="12" lg="12">
 
-                                <FormGroup className="error-l-100">
-                                    <Label>Name</Label>
-                                    <Field className="form-control" name="name" />
-                                    {errors.name && touched.name ? (
-                                    <div className="invalid-feedback d-block">
-                                        {errors.name}
-                                    </div>
-                                    ) : null}
-                                </FormGroup>
+                                {/* Form Row 1 */}
+                                <Row>
+                                    {/* Form Column 1 */}
+                                    <Colxx xxs="12" lg="3">
+
+                                        <FormGroup className="error-l-100">
+                                            <Label>Name</Label>
+                                            <Field className="form-control" name="name" />
+                                        </FormGroup>
+
+                                        <FormGroup className="error-l-100">
+                                            <Label>Income Level*(per month)</Label>
+                                            <Field className="form-control" name="income" />
+                                        </FormGroup>
+                                        
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">DOB</Label>
+                                            <FormikDatePicker
+                                                name="date"
+                                                value={values.date}
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                            />
+                                        </FormGroup>
+                                        
+                                        <FormGroup className="error-l-100">
+                                            <Label>Occupation</Label>
+                                            <select name="select"
+                                                    className="form-control"
+                                                    value={values.select}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                >
+                                                {occupation.map((key) => (
+                                                    <option value={key.value}>{key.label}</option>
+                                                ))}
+                                            </select>
+                                        </FormGroup>
+
+                                    </Colxx>
+
+                                    {/* Form Column 2 */}
+                                    <Colxx xxs="12" lg="3">
+                                        
+                                        <FormGroup className="error-l-100">
+                                            <Label>Email</Label>
+                                            <Field className="form-control" name="email" />
+                                        </FormGroup>
+
+                                        <FormGroup className="error-l-100">
+                                            <Label>Pincode</Label>
+                                            <Field className="form-control" name="pincode" />
+                                        </FormGroup>
+                                        
+                                        <FormGroup className="error-l-100">
+                                            <Label>Pan Card Number</Label>
+                                            <Field className="form-control" name="pancard" />
+                                        </FormGroup>
+                                        
+                                        <FormGroup className="error-l-100">
+                                            <Label>Nominee Name</Label>
+                                            <Field className="form-control" name="nominee" />
+                                        </FormGroup>
+                        
+                                    </Colxx>
+
+                                    {/* Form Column 3 */}
+                                    <Colxx xxs="12" lg="3">
+                                        
+                                        <FormGroup className="error-l-100">
+                                            <Label>Phone</Label>
+                                            <Field className="form-control" name="phone" />
+                                        </FormGroup>
+                                        
+                                        {/* :::::::: Radio Group :::::: */}
+                                        <FormGroup className="error-l-150 pt-2">
+                                            <Label className="d-block">Gender</Label>
+                                            <FormikCustomRadioGroup
+                                                inline
+                                                name="gender"
+                                                id="gender"
+                                                label="Which of these?"
+                                                value={values.gender}
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                                options={gender}
+                                            />
+                                        </FormGroup>
+                                        
+                                        {/* ::::::::  Select Group  ::::::: */}
+                                        <FormGroup className="error-l-100 pt-1">
+                                            <Label>Select State</Label>
+                                            <select name="select"
+                                                    className="form-control"
+                                                    value={values.select}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                >
+                                                <option value="">Select a state..</option>
+                                                <option value="1">Bihar</option>
+                                                <option value="2">2</option>
+                                            </select>
+                                        </FormGroup>
+                                        
+                                        <FormGroup className="error-l-100">
+                                            <Label>Deceased Person</Label>
+                                            <Field className="form-control" name="deceased" />
+                                        </FormGroup>
+
+                                    </Colxx>
+
+                                    {/* Form Column 4 */}
+                                    <Colxx xxs="12" lg="3">
+                                        
+                                        <FormGroup className="error-l-100">
+                                            <Label>Alternate Contact Number</Label>
+                                            <Field className="form-control" name="alternate" />
+                                        </FormGroup>
+
+                                        {/* ::::::::  Select Group  ::::::: */}
+                                        <FormGroup className="error-l-100 pt-1">
+                                            <Label>Education*</Label>
+                                            <select name="select"
+                                                    className="form-control"
+                                                    value={values.select}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                >
+                                                {education.map((level) => (
+                                                    <option value={level.value}>{level.label}</option>
+                                                ))}
+                                            </select>
+                                        </FormGroup>
+
+                                        <FormGroup className="error-l-100">
+                                            <Label>Select District</Label>
+                                            <select name="select"
+                                                    className="form-control"
+                                                    value={values.select}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                >
+                                                <option value="">Select District</option>
+                                                <option value="1">Araria</option>
+                                                <option value="2">Arval</option>
+                                            </select>
+                                        </FormGroup>
+
+                                        <FormGroup className="error-l-100">
+                                            <Label>Nominee Name</Label>
+                                            <Field className="form-control" name="nominee" />
+                                        </FormGroup>
+
+                                    </Colxx>
+                                </Row>
+
+                                {/* Form Address Row */}
+                                <Row className='mb-4'>
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label>Policy Number</Label>
+                                            <Field className="form-control" name="policyNumber" />
+                                        </FormGroup>
+                                    </Colxx>
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label>Claim Amount</Label>
+                                            <Field className="form-control" name="claimAmt" />
+                                        </FormGroup>
+                                    </Colxx>
+                                    <Colxx xxs="12" lg="6">
+                                        <FormGroup className="error-l-100">
+                                            <Label>Address</Label>
+                                            <Field className="form-control" name="address" />
+                                        </FormGroup>
+                                    </Colxx>
+                                </Row>
+
+                                {/* Form row 3 */}
+                                <Row className='mb-4'>
+                                    {/* Form Column 1 */}
+                                    <Colxx xxs="12" lg="3">
+
+                                        <FormGroup className="error-l-100 pt-1">
+                                            <Label>Insurance Type</Label>
+                                            <select name="select"
+                                                    className="form-control"
+                                                    value={values.select}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                >
+                                                <option value="">Select Insurance Type</option>
+                                                <option value="1">Bihar</option>
+                                                <option value="2">2</option>
+                                            </select>
+                                        </FormGroup>
+                                        
+                                        <FormGroup className="error-l-100 pt-1">
+                                            <Label>Rejection Type</Label>
+                                            <select name="select"
+                                                    className="form-control"
+                                                    value={values.select}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                >
+                                                <option value="">Select Claim Rejection Type</option>
+                                                <option value="1">Bihar</option>
+                                                <option value="2">2</option>
+                                            </select>
+                                        </FormGroup>
+                                        
+
+
+                                    </Colxx>
+
+                                    {/* Form Column 2 */}
+                                    <Colxx xxs="12" lg="3">
+                                        
+                                        <FormGroup className="error-l-100 pt-1">
+                                            <Label>Complaint Type</Label>
+                                            <select name="select"
+                                                    className="form-control"
+                                                    value={values.select}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                >
+                                                <option value="">Select Complaint Type</option>
+                                                <option value="1">Bihar</option>
+                                                <option value="2">2</option>
+                                            </select>
+                                        </FormGroup>
+
+                                        <FormGroup className="error-l-100 pt-1">
+                                            <Label>Relationship</Label>
+                                            <select name="select"
+                                                    className="form-control"
+                                                    value={values.select}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                >
+                                                <option value="">Select Option</option>
+                                                <option value="1">Bihar</option>
+                                                <option value="2">2</option>
+                                            </select>
+                                        </FormGroup>
+                                    </Colxx>
+
+                                    {/* Form Column 3 */}
+                                    <Colxx xxs="12" lg="3">
+                                        
+                                        {/* ::::::::  Select Group  ::::::: */}
+                                        <FormGroup className="error-l-100 pt-1">
+                                            <Label>Insurance Company Name</Label>
+                                            <select name="select"
+                                                    className="form-control"
+                                                    value={values.select}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                >
+                                                <option value="">Select Company</option>
+                                                <option value="1">Bihar</option>
+                                                <option value="2">2</option>
+                                            </select>
+                                        </FormGroup>
+                                        
+                                        <FormGroup className="error-l-100 pt-1">
+                                            <Label>Movement of Case</Label>
+                                            <select name="select"
+                                                    className="form-control"
+                                                    value={values.select}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                >
+                                                <option value="">Select Movement</option>
+                                                <option value="1">Bihar</option>
+                                                <option value="2">2</option>
+                                            </select>
+                                        </FormGroup>
+
+                                    </Colxx>
+
+                                    {/* Form Column 4 */}
+                                    <Colxx xxs="12" lg="3">
+                                    
+                                        {/* ::::::::  Select Group  ::::::: */}
+                                        <FormGroup className="error-l-100 pt-1">
+                                            <Label>Policy Type</Label>
+                                            <select name="select"
+                                                    className="form-control"
+                                                    value={values.select}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                >
+                                                <option value="">Select Policy type</option>
+                                                <option value="1">Illeterate</option>
+                                                <option value="2">Below 10th</option>
+                                            </select>
+                                        </FormGroup>
+
+                                    </Colxx>
+                                </Row>
+
+                                {/* Form row 4 */}
+                                <Row className='mb-4'>
+                                    {/* Form Column 1 */}
+                                    <Colxx xxs="12" lg="3">
+
+                                        <FormGroup className="error-l-100 pt-1">
+                                            <Label>Assign To</Label>
+                                            <select name="select"
+                                                    className="form-control"
+                                                    value={values.select}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                >
+                                                <option value="">Select Executive Name</option>
+                                                <option value="1">Bihar</option>
+                                                <option value="2">2</option>
+                                            </select>
+                                        </FormGroup>
+                                        
+                                        <FormGroup className="error-l-100 pt-1">
+                                            <Label>Assign to Legal Executive</Label>
+                                            <select name="select"
+                                                    className="form-control"
+                                                    value={values.select}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                >
+                                                <option value="">Select Legal Executive</option>
+                                                <option value="1">Bihar</option>
+                                                <option value="2">2</option>
+                                            </select>
+                                        </FormGroup>
+
+                                    </Colxx>
+
+                                    {/* Form Column 2 */}
+                                    <Colxx xxs="12" lg="3">
+                                        
+                                        <FormGroup className="error-l-100 pt-1">
+                                            <Label>Assign to Expert</Label>
+                                            <select name="select"
+                                                    className="form-control"
+                                                    value={values.select}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                >
+                                                <option value="">Select Expert</option>
+                                                <option value="1">Bihar</option>
+                                                <option value="2">2</option>
+                                            </select>
+                                        </FormGroup>
+
+                                        <FormGroup className="error-l-100 pt-1">
+                                            <Label>Lead Number</Label>
+                                            <Field className="form-control" name="leadNumber" />
+                                        </FormGroup>
+                        
+                                    </Colxx>
+
+                                    {/* Form Column 3 */}
+                                    <Colxx xxs="12" lg="3">
+                                        
+                                        {/* ::::::::  Select Group  ::::::: */}
+                                        <FormGroup className="error-l-100 pt-1">
+                                            <Label>Assign To Company/IGMS</Label>
+                                            <select name="select"
+                                                    className="form-control"
+                                                    value={values.select}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                >
+                                                <option value="">Select Company</option>
+                                                <option value="1">Bihar</option>
+                                                <option value="2">2</option>
+                                            </select>
+                                        </FormGroup>
+                                        
+                                        <FormGroup className="error-l-100 pt-1">
+                                            <Label>Status</Label>
+                                            <select name="select"
+                                                    className="form-control"
+                                                    value={values.select}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                >
+                                                <option value="">Select Status</option>
+                                                <option value="1">Bihar</option>
+                                                <option value="2">2</option>
+                                            </select>
+                                        </FormGroup>
+
+                                    </Colxx>
+
+                                    {/* Form Column 4 */}
+                                    <Colxx xxs="12" lg="3">
+                                    
+                                        {/* ::::::::  Select Group  ::::::: */}
+                                        <FormGroup className="error-l-100 pt-1">
+                                            <Label>Assign To Ombudsman</Label>
+                                            <select name="select"
+                                                    className="form-control"
+                                                    value={values.select}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                >
+                                                <option value="">Select Policy type</option>
+                                                <option value="1">Illeterate</option>
+                                                <option value="2">Below 10th</option>
+                                            </select>
+                                        </FormGroup>
+
+                                    </Colxx>
+                                </Row>
+
+                                {/* Form row 5 */}
+                                <Row className='mb-4'>
+                                    {/* Form Column 1 */}
+                                    <Colxx xxs="12" lg="3">
+
+                                        <FormGroup className="error-l-100">
+                                            <Label>Door No./ Bldg/Name / Floor</Label>
+                                            <Field className="form-control" name="addressNo" />
+                                        </FormGroup>
+
+                                        <FormGroup className="error-l-100">
+                                            <Label>Generated address</Label>
+                                            <Field className="form-control" name="generatedAddress" />
+                                        </FormGroup>
+
+                                    </Colxx>
+
+                                    {/* Form Column 2 */}
+                                    <Colxx xxs="12" lg="3">
+                                        
+                                        <FormGroup className="error-l-100">
+                                            <Label>Street / Area</Label>
+                                            <Field className="form-control" name="street" />
+                                        </FormGroup>
+                                        
+                                        <FormGroup className="error-l-150">
+                                            <Label className="d-block">Covid Complaint Check</Label>
+                                            <FormikCheckbox
+                                                name="checkboxSingle"
+                                                value={values.checkboxSingle}
+                                                label="Is it a Covid Complaint"
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                            />
+                                        </FormGroup>
+                                        
+                                    </Colxx>
+
+                                    {/* Form Column 3 */}
+                                    <Colxx xxs="12" lg="3">
+                                        
+                                        <FormGroup className="error-l-100">
+                                            <Label>City / Town / Panchayath / Village</Label>
+                                            <Field className="form-control" name="city" />
+                                        </FormGroup>
+
+                                        <FormGroup className="error-l-150">
+                                            <Label className="d-block">Service Complaint Check</Label>
+                                            <FormikCheckbox
+                                                name="checkboxSingle"
+                                                value={values.checkboxSingle}
+                                                label="As a Service Complaint or not"
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                            />
+                                        </FormGroup>
+
+                                    </Colxx>
+
+                                    {/* Form Column 4 */}
+                                    <Colxx xxs="12" lg="3">
+                                        
+                                        <FormGroup className="error-l-100">
+                                            <Label>Taluk / Tehsil</Label>
+                                            <Field className="form-control" name="street" />
+                                        </FormGroup>
+
+                                        <FormGroup className="error-l-100 pt-1">
+                                            <Label>Assign To Internal Legal Executive</Label>
+                                            <select name="select"
+                                                    className="form-control"
+                                                    value={values.select}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                >
+                                                <option value="">Select Executive Name</option>
+                                                <option value="1">Illeterate</option>
+                                                <option value="2">Below 10th</option>
+                                            </select>
+                                        </FormGroup>
+
+                                    </Colxx>
+                                </Row>
+
+                                {/* Form row 6 */}
+                                <Row className='mb-4'>
+
+                                    <Colxx xxs="12" lg="12">
+
+                                        <Row className='mb-4'>
+                                            <Colxx xxs="12" lg="12">
+                                                <FormGroup className="error-l-100">
+                                                    <Label>Complaint Statement</Label>
+                                                    <Input type="textarea" rows="5" name="text" id="statement" />
+                                                </FormGroup>
+                                            </Colxx>
+                                        </Row>
+
+                                        <Row className='mb-4'>
+                                            {/* Form Column 1 */}
+                                            <Colxx xxs="12" lg="3">
+                                                <FormGroup className="error-l-100">
+                                                    <Label>Email ID</Label>
+                                                    <Field className="form-control" name="email" />
+                                                </FormGroup>
+                                            </Colxx>
+
+                                            {/* Form Column 2 */}
+                                            <Colxx xxs="12" lg="2">
+                                                <FormGroup className="error-l-100">
+                                                    <Label>Password</Label>
+                                                    <Field className="form-control" name="password" />
+                                                </FormGroup>
+                                            </Colxx>
+
+                                            {/* Form Column 3 */}
+                                            <Colxx xxs="12" lg="3">
+                                                <FormGroup className="error-l-100">
+                                                    <Label>Approved Claim Amount</Label>
+                                                    <Field className="form-control" name="claimAmount" />
+                                                </FormGroup>
+                                            </Colxx>
+
+                                            {/* Form Column 4 */}
+                                            <Colxx xxs="12" lg="4">
+                                                <FormGroup row>
+                                                    <Label for="documents">IGMS / Ombudsman Award and Ombudsman requirement Documents Upload</Label>
+                                                    <Button color="warning" outline onClick={() => setDocumentUploadModal(true)} >Upload Documents</Button>
+                                                    
+                                                    <Modal isOpen={documentUploadModal} toggle={() => setDocumentUploadModal(!documentUploadModal)}>
+                                                        <div className='d-flex w-100 justify-content-between p-4 border-bottom'>
+                                                            <h2 className='mb-0 ml-3'>Document Uploads</h2>
+                                                            <div onClick={() => setDocumentUploadModal(false)} style={{fontSize: '22px', marginRight: '20px'}}>
+                                                                <i className="simple-icon-close" />
+                                                            </div>
+                                                        </div>
+                                                        <ModalBody>
+                                                            <h3 className="text-muted text-thin">Lead ID : </h3>
+                                                            <FormGroup className='my-3'>
+                                                                <Label for="companyresponse">Company Response Documents :</Label>
+                                                                <Input id="companyresponse" name="file" type="file" />
+                                                            </FormGroup>
+                                                            <FormGroup className='my-3'>
+                                                                <Label for="igms">IGMS Documents :</Label>
+                                                                <Input id="igms" name="file" type="file" />
+                                                            </FormGroup>
+                                                            <FormGroup className='my-3'>
+                                                                <Label for="awardrejected">Award Rejected Documents :</Label>
+                                                                <Input id="awardrejected" name="file" type="file" />
+                                                            </FormGroup>
+                                                            <FormGroup className='my-3'>
+                                                                <Label for="ombudsman">Ombudsman Requirement Documents :</Label>
+                                                                <Input id="ombudsman" name="file" type="file" /> 
+                                                            </FormGroup>
+                                                            <FormGroup className='my-3'>
+                                                                <Label for="corier">Complaint form Courier Receipt :</Label>
+                                                                <Input id="corier" name="file" type="file" />
+                                                            </FormGroup>
+                                                            <FormGroup className='my-3'>
+                                                                <Label for="form6a">Form 6A Courier Receipt :</Label>
+                                                                <Input id="form6a" name="file" type="file" />
+                                                            </FormGroup>
+                                                        </ModalBody>
+                                                    </Modal>
+                                                </FormGroup>
+                                            </Colxx>
+                                        </Row>
+                                    </Colxx>
+
+                                </Row>
 
                             </Colxx>
-                            <Colxx xxs="12" lg="3" className="mb-4">
-                                
-                                <FormGroup className="error-l-100">
-                                    <Label>
-                                        <IntlMessages id="forms.email" />
-                                    </Label>
-                                    <Field className="form-control" name="email" />
-                                    {errors.email && touched.email ? (
-                                    <div className="invalid-feedback d-block">
-                                        {errors.email}
-                                    </div>
-                                    ) : null}
-                                </FormGroup>
-
-                                
-                            </Colxx>
-                            <Colxx xxs="12" lg="3" className="mb-4">
-                                
-                            </Colxx>
-                            <Colxx xxs="12" lg="3" className="mb-4">
-                                
-                            </Colxx>
-                            <Colxx xxs="12">
-                                    <FormGroup className="error-l-100">
-                                        <Label>
-                                            <IntlMessages id="forms.email" />
-                                        </Label>
-                                        <Field className="form-control" name="email" />
-                                        {errors.email && touched.email ? (
-                                        <div className="invalid-feedback d-block">
-                                            {errors.email}
-                                        </div>
-                                        ) : null}
-                                    </FormGroup>
-                                    <FormGroup className="error-l-100">
-                                        <Label>Select </Label>
-                                        <select name="select"
-                                            className="form-control"
-                                            value={values.select}
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                        >
-                                        <option value="">Select an option..</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        </select>
-
-                                        {errors.select && touched.select ? (
-                                        <div className="invalid-feedback d-block">
-                                            {errors.select}
-                                        </div>
-                                        ) : null}
-                                    </FormGroup>
-
-                                    <FormGroup className="error-l-100">
-                                        <Label>React Select </Label>
-                                        <FormikReactSelect
-                                        name="reactSelect"
-                                        id="reactSelect"
-                                        value={values.reactSelect}
-                                        isMulti
-                                        options={options}
-                                        onChange={setFieldValue}
-                                        onBlur={setFieldTouched}
-                                        />
-                                        {errors.reactSelect && touched.reactSelect ? (
-                                        <div className="invalid-feedback d-block">
-                                            {errors.reactSelect}
-                                        </div>
-                                        ) : null}
-                                    </FormGroup>
-                                    <FormGroup className="error-l-150">
-                                        <Label className="d-block">Single Checkbox </Label>
-                                        <FormikCheckbox
-                                        name="checkboxSingle"
-                                        value={values.checkboxSingle}
-                                        label="Agree to something"
-                                        onChange={setFieldValue}
-                                        onBlur={setFieldTouched}
-                                        />
-                                        {errors.checkboxSingle && touched.checkboxSingle ? (
-                                        <div className="invalid-feedback d-block">
-                                            {errors.checkboxSingle}
-                                        </div>
-                                        ) : null}
-                                    </FormGroup>
-                                    <FormGroup className="error-l-150">
-                                        <Label className="d-block">Custom Single Checkbox </Label>
-                                        <FormikCustomCheckbox
-                                        name="checkboxCustomSingle"
-                                        value={values.checkboxCustomSingle}
-                                        label="Agree to something"
-                                        onChange={setFieldValue}
-                                        onBlur={setFieldTouched}
-                                        />
-                                        {errors.checkboxCustomSingle &&
-                                        touched.checkboxCustomSingle ? (
-                                        <div className="invalid-feedback d-block">
-                                            {errors.checkboxCustomSingle}
-                                        </div>
-                                        ) : null}
-                                    </FormGroup>
-                                    <FormGroup className="error-l-150 ">
-                                        <Label className="d-block">Checkbox Group</Label>
-                                        <FormikCheckboxGroup
-                                        inline
-                                        name="checkboxGroup"
-                                        id="checkboxGroup"
-                                        label="Which of these?"
-                                        value={values.checkboxGroup}
-                                        onChange={setFieldValue}
-                                        onBlur={setFieldTouched}
-                                        options={options}
-                                        />
-                                        {errors.checkboxGroup && touched.checkboxGroup ? (
-                                        <div className="invalid-feedback d-block">
-                                            {errors.checkboxGroup}
-                                        </div>
-                                        ) : null}
-                                    </FormGroup>
-                                    <FormGroup className="error-l-175 ">
-                                        <Label className="d-block">Custom Checkbox Group</Label>
-                                        <FormikCustomCheckboxGroup
-                                        inline
-                                        name="customCheckGroup"
-                                        id="customCheckGroup"
-                                        label="Which of these?"
-                                        value={values.customCheckGroup}
-                                        onChange={setFieldValue}
-                                        onBlur={setFieldTouched}
-                                        options={options}
-                                        />
-                                        {errors.customCheckGroup && touched.customCheckGroup ? (
-                                        <div className="invalid-feedback d-block">
-                                            {errors.customCheckGroup}
-                                        </div>
-                                        ) : null}
-                                    </FormGroup>
-
-                                    <FormGroup className="error-l-150">
-                                        <Label className="d-block">Radio Group </Label>
-                                        <FormikRadioButtonGroup
-                                        inline
-                                        name="radioGroup"
-                                        id="radioGroup"
-                                        label="One of these please"
-                                        value={values.radioGroup}
-                                        onChange={setFieldValue}
-                                        onBlur={setFieldTouched}
-                                        options={options}
-                                        />
-                                        {errors.radioGroup && touched.radioGroup ? (
-                                        <div className="invalid-feedback d-block">
-                                            {errors.radioGroup}
-                                        </div>
-                                        ) : null}
-                                    </FormGroup>
-                                    <FormGroup className="error-l-175">
-                                        <Label className="d-block">Custom Radio Group</Label>
-                                        <FormikCustomRadioGroup
-                                        inline
-                                        name="customRadioGroup"
-                                        id="customRadioGroup"
-                                        label="Which of these?"
-                                        value={values.customRadioGroup}
-                                        onChange={setFieldValue}
-                                        onBlur={setFieldTouched}
-                                        options={options}
-                                        />
-                                        {errors.customRadioGroup && touched.customRadioGroup ? (
-                                        <div className="invalid-feedback d-block">
-                                            {errors.customRadioGroup}
-                                        </div>
-                                        ) : null}
-                                    </FormGroup>
-
-                                    <FormGroup className="error-l-175">
-                                        <Label className="d-block">
-                                        <IntlMessages id="form-components.tags" />
-                                        </Label>
-
-                                        <FormikTagsInput
-                                        name="tags"
-                                        value={values.tags}
-                                        onChange={setFieldValue}
-                                        onBlur={setFieldTouched}
-                                        />
-
-                                        {errors.tags && touched.tags ? (
-                                        <div className="invalid-feedback d-block">
-                                            {errors.tags}
-                                        </div>
-                                        ) : null}
-                                    </FormGroup>
-
-                                    <FormGroup className="error-l-100">
-                                        <Label className="d-block">
-                                        <IntlMessages id="form-components.switch" />
-                                        </Label>
-                                        <FormikSwitch
-                                        name="switch"
-                                        className="custom-switch custom-switch-primary"
-                                        value={values.switch}
-                                        onChange={setFieldValue}
-                                        onBlur={setFieldTouched}
-                                        />
-                                        {errors.switch && touched.switch ? (
-                                        <div className="invalid-feedback d-block">
-                                            {errors.switch}
-                                        </div>
-                                        ) : null}
-                                    </FormGroup>
-
-                                    <FormGroup className="error-l-100">
-                                        <Label className="d-block">
-                                        <IntlMessages id="form-components.date-picker" />
-                                        </Label>
-                                        <FormikDatePicker
-                                        name="date"
-                                        value={values.date}
-                                        onChange={setFieldValue}
-                                        onBlur={setFieldTouched}
-                                        />
-                                        {errors.date && touched.date ? (
-                                        <div className="invalid-feedback d-block">
-                                            {errors.date}
-                                        </div>
-                                        ) : null}
-                                    </FormGroup>
-
-                                    <Button color="primary" type="submit">
-                                        Submit
-                                    </Button>
+                            {/* Wrapping Column ends */}
+                            <Colxx xxs="12" lg="12" className="text-center">
+                                <Button color="primary" type="submit">
+                                    Submit
+                                </Button>
                             </Colxx>
                         </Row>
                     </Form>

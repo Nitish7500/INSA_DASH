@@ -19,4 +19,12 @@ export function capitalizeEachWordInString(string) {
     }
 }
 
+//to fetch parameters from URL
+export function getParametersFromURL(parameterIdentifier) {
+    let {search} = useLocation();
+    const query = new URLSearchParams(search);
+    const parameter = query.get(`${parameterIdentifier}`);
+    return parameter;
+}
+
 

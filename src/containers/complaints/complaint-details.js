@@ -23,6 +23,7 @@ import { Colxx } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import FormikCustomComponents from 'containers/form-validations/FormikCustomComponents';
 import DetailsForm from 'components/reusable-components/tabpanes/forms/details-form';
+import MailingSectionForm from 'components/reusable-components/tabpanes/forms/mailing-section';
 
 const ComplaintDetails = ({ match }) => {
   const [activeTab, setActiveTab] = useState('details');
@@ -30,14 +31,14 @@ const ComplaintDetails = ({ match }) => {
   let {search} = useLocation();
   const query = new URLSearchParams(search);
   const complaintId = query.get('complaintId');
-  // console.log(complaintId);
+  console.log(complaintId);
 
   // const { messages } = intl;
   return (
     <>
       <Row>
         <Colxx xxs="12" className="my-3">
-          <h1>Complaint Details</h1>
+          <h1 className='mb-4'>Complaint Details </h1>
           <div className="text-zero top-right-button-container">
             <Button color='danger' size='md' className="top-right-button mr-3">
               <p className='mb-0'>Add More Complaint</p>
@@ -45,6 +46,7 @@ const ComplaintDetails = ({ match }) => {
           </div>
           <Breadcrumb match={match} />
 
+          <h2 className='mb-4'>Complaint ID : {complaintId}</h2>
           <Nav tabs className="separator-tabs ml-0 mt-3 mb-5">
             <NavItem>
               <NavLink
@@ -187,7 +189,7 @@ const ComplaintDetails = ({ match }) => {
             </TabPane>
 
             <TabPane tabId="mailing">
-              <h2>Into Mailing Section</h2>
+              <MailingSectionForm heading='Mailing Section' />
             </TabPane>
 
             <TabPane tabId="igms">
