@@ -26,6 +26,7 @@ import DetailsForm from 'components/reusable-components/tabpanes/forms/details-f
 import MailingSectionForm from 'components/reusable-components/tabpanes/forms/mailing-section';
 import IGMSForm from 'components/reusable-components/tabpanes/forms/igms-form';
 import OmbudsmanForm from 'components/reusable-components/tabpanes/forms/ombudsman-form';
+import ResolutionForm from 'components/reusable-components/tabpanes/forms/resolution-form';
 
 const ComplaintDetails = ({ match }) => {
   const [activeTab, setActiveTab] = useState('details');
@@ -203,7 +204,7 @@ const ComplaintDetails = ({ match }) => {
             </TabPane>
 
             <TabPane tabId="resolution">
-              <h2>Into Resolution Section</h2>
+              <ResolutionForm heading='Resolution Section'/>
             </TabPane>
 
             <TabPane tabId="legal">

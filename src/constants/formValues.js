@@ -67,6 +67,11 @@ export const calledCustForRewardStatus = [
     { value: 'No', label: 'No' }
 ];
 
+export const isRequirementReceived = [
+    { value: 'Yes', label: 'Yes' },
+    { value: 'No', label: 'No' }
+];
+
 
 export const gender = [
     { value: 'male', label: 'Male' },
