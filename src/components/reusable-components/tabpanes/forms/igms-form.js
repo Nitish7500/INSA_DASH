@@ -55,7 +55,7 @@ export default function IGMSForm ({ heading }) {
                                     <Colxx xxs="12" lg="3">
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">IGMS Token Number</Label>
-                                            <Field className="form-control" name="name" />
+                                            <Field className="form-control" name="igmsTokenNo" />
                                         </FormGroup>
                                     </Colxx>
                                     {/* Form Column 2 */}
@@ -87,8 +87,8 @@ export default function IGMSForm ({ heading }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">IGMS Login DOB</Label>
                                             <FormikDatePicker
-                                                name="date"
-                                                value={values.date}
+                                                name="igmsLoginDob"
+                                                value={values.igmsLoginDob}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -102,7 +102,7 @@ export default function IGMSForm ({ heading }) {
                                     <Colxx xxs="12" lg="3">
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">IGMS Done By</Label>
-                                            <Field className="form-control" name="name" />
+                                            <Field className="form-control" name="igmsDoneBy" />
                                         </FormGroup>
                                     </Colxx>
                                     {/* Form Column 2 */}
@@ -110,8 +110,8 @@ export default function IGMSForm ({ heading }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">First Response date from IGMS</Label>
                                             <FormikDatePicker
-                                                name="igmsdate"
-                                                value={values.igmsdate}
+                                                name="firstResponseFromIGMSDate"
+                                                value={values.firstResponseFromIGMSDate}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -122,8 +122,8 @@ export default function IGMSForm ({ heading }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Second Response date from IGMS</Label>
                                             <FormikDatePicker
-                                                name="igmsEscalationDate"
-                                                value={values.igmsEscalationDate}
+                                                name="secondResponseFromIGMSDate"
+                                                value={values.secondResponseFromIGMSDate}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -134,8 +134,8 @@ export default function IGMSForm ({ heading }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">IGMS Escalation Date</Label>
                                             <FormikDatePicker
-                                                name="date"
-                                                value={values.date}
+                                                name="secondIgmsEscalationDate"
+                                                value={values.secondIgmsEscalationDate}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />

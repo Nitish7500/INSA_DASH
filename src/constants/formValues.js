@@ -62,6 +62,11 @@ export const isSecondReminderMailSentToCompany = [
     { value: 'No', label: 'No' }
 ];
 
+export const calledCustForRewardStatus = [
+    { value: 'Yes', label: 'Yes' },
+    { value: 'No', label: 'No' }
+];
+
 
 export const gender = [
     { value: 'male', label: 'Male' },

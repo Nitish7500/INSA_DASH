@@ -25,6 +25,7 @@ import FormikCustomComponents from 'containers/form-validations/FormikCustomComp
 import DetailsForm from 'components/reusable-components/tabpanes/forms/details-form';
 import MailingSectionForm from 'components/reusable-components/tabpanes/forms/mailing-section';
 import IGMSForm from 'components/reusable-components/tabpanes/forms/igms-form';
+import OmbudsmanForm from 'components/reusable-components/tabpanes/forms/ombudsman-form';
 
 const ComplaintDetails = ({ match }) => {
   const [activeTab, setActiveTab] = useState('details');
@@ -198,7 +199,7 @@ const ComplaintDetails = ({ match }) => {
             </TabPane>
 
             <TabPane tabId="ombudsman">
-              <h2>Into Ombudsman Section</h2>
+              <OmbudsmanForm heading='Ombudsman Section'/>
             </TabPane>
 
             <TabPane tabId="resolution">
