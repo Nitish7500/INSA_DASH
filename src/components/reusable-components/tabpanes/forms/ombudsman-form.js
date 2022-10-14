@@ -4,7 +4,7 @@ import { Colxx } from 'components/common/CustomBootstrap'
 import { FormikCheckbox, FormikCustomCheckboxGroup, FormikCustomRadioGroup, FormikDatePicker } from 'containers/form-validations/FormikFields'
 import { Field, Formik } from 'formik'
 import * as Yup from 'yup';
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Button, Card, CardBody, CustomInput, Form, FormGroup, Input, Label, Modal, ModalBody, Row } from 'reactstrap'
 import { 
         calledCustForRewardStatus,
@@ -13,6 +13,7 @@ import {
         ombudsmanPendingReason, 
         resolutionType, 
     } from 'constants/formValues';
+import { Editor } from '@tinymce/tinymce-react';
 
 
 export default function OmbudsmanForm ({ heading }) {
@@ -29,6 +30,15 @@ export default function OmbudsmanForm ({ heading }) {
     //       setSubmitting(false);
     //     }, 1000);
     // };
+
+
+    const editorRef = useRef(null);
+    const log = (e) => {
+        e.preventDefault()
+        if (editorRef.current) {
+        console.log(editorRef.current.getContent());
+        }
+    };
 
     return (
         <Card>
@@ -379,7 +389,24 @@ export default function OmbudsmanForm ({ heading }) {
                                     <Colxx xxs="12" lg="12">
                                         <FormGroup className="error-l-100">
                                             <Label>Expert Important Points for Hearing</Label>
-                                            <Input type="textarea" rows="2" name="expImpPoints" id="expImpPoints" />
+                                            <Editor
+                                                onInit={(evt, editor) => editorRef.current = editor}
+                                                initialValue="<p>This is the initial content of the editor.</p>"
+                                                init={{
+                                                height: 500,
+                                                menubar: false,
+                                                plugins: [
+                                                    'advlist autolink lists link image charmap print preview anchor',
+                                                    'searchreplace visualblocks code fullscreen',
+                                                    'insertdatetime media table paste code help wordcount'
+                                                ],
+                                                toolbar: 'undo redo | formatselect | ' +
+                                                'bold italic backcolor | alignleft aligncenter ' +
+                                                'alignright alignjustify | bullist numlist outdent indent | ' +
+                                                'removeformat | help',
+                                                content_style: 'body { font-family:Work Sans,Helvetica,Arial,sans-serif; font-size:14px }'
+                                                }}
+                                            />
                                         </FormGroup>
                                     </Colxx>
                                 </Row>

@@ -27,6 +27,11 @@ import MailingSectionForm from 'components/reusable-components/tabpanes/forms/ma
 import IGMSForm from 'components/reusable-components/tabpanes/forms/igms-form';
 import OmbudsmanForm from 'components/reusable-components/tabpanes/forms/ombudsman-form';
 import ResolutionForm from 'components/reusable-components/tabpanes/forms/resolution-form';
+import LegalForm from 'components/reusable-components/tabpanes/forms/legal-form';
+import SavedEmail from 'components/reusable-components/tabpanes/forms/save-email';
+import GetEmailData from 'components/reusable-components/tabpanes/forms/get-email';
+import DocumentForm from 'components/reusable-components/tabpanes/forms/document-form';
+import NonResponsive from 'components/reusable-components/tabpanes/forms/non-responsive';
 
 const ComplaintDetails = ({ match }) => {
   const [activeTab, setActiveTab] = useState('details');
@@ -208,23 +213,23 @@ const ComplaintDetails = ({ match }) => {
             </TabPane>
 
             <TabPane tabId="legal">
-              <h2>Into Legal Section</h2>
+              <LegalForm heading='Legal Section' />
             </TabPane>
 
             <TabPane tabId="saveEmail">
-              <h2>Into Save Email Section</h2>
+              <SavedEmail heading='Send Email Section' />
             </TabPane>
 
             <TabPane tabId="getEmail">
-              <h2>Into Get Email Data Section</h2>
+              <GetEmailData heading='Get Email Data' />
             </TabPane>
           
             <TabPane tabId="document">
-              <h2>Into Document Section</h2>
+              <DocumentForm heading='Document Uploads' />
             </TabPane>
 
             <TabPane tabId="nonResponsive">
-              <h2>Into Non Responsive Section</h2>
+              <NonResponsive heading='Non Responsive Customer Flow' />
             </TabPane>
 
           </TabContent>

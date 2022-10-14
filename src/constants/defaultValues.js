@@ -6,6 +6,7 @@ export const UserRole = {
   Executive: 0,
 };
 
+export const tinyMceApiKey = '0sj8gdgjk9z142gxzuv3f5t0meq0q6gxvuowe0avsommw26a';
 
 
 /* 

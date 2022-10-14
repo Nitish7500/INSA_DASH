@@ -7,6 +7,14 @@ export const options = [
     { value: 'Everything', label: 'Everything' }
 ];
 
+export const selectMultipleItems = [
+    { value: '', label: 'Select Items' },
+    { value: 'AI', label: 'Artificial Intelligence', disabled: true },
+    { value: 'Machine Learning', label: 'ReasonML' },
+    { value: 'Blockchain', label: 'Blockchain' },
+    { value: 'Data Science', label: 'Data Science' },
+];
+
 export const choices = [
     { value: 'Yes', label: 'Yes' },
     { value: 'No', label: 'No' }
@@ -72,6 +80,10 @@ export const isRequirementReceived = [
     { value: 'No', label: 'No' }
 ];
 
+export const isLegalNotice = [
+    { value: 'Yes', label: 'Yes' },
+    { value: 'No', label: 'No' }
+];
 
 export const gender = [
     { value: 'male', label: 'Male' },

@@ -7,11 +7,7 @@ import * as Yup from 'yup';
 import React, { useState } from 'react'
 import { Button, Card, CardBody, CustomInput, Form, FormGroup, Input, Label, Modal, ModalBody, Row } from 'reactstrap'
 import { 
-        calledCustForRewardStatus,
-        hearingComment,
         isRequirementReceived,
-        ombudsmanLocation, 
-        ombudsmanPendingReason, 
         resolutionType, 
     } from 'constants/formValues';
 import { faDownload, faDownLong } from '@fortawesome/free-solid-svg-icons';
@@ -184,7 +180,7 @@ export default function ResolutionForm ({ heading }) {
                                     <Colxx xxs="12" lg="3">
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Resolution Proof Download</Label>
-                                            <Button color='success' outline onClick={ (e) => e.preventDefault() }><FontAwesomeIcon icon={faDownload} /></Button>
+                                            <Button color='success' onClick={ (e) => e.preventDefault() }><FontAwesomeIcon icon={faDownload} /></Button>
                                         </FormGroup>
                                     </Colxx>
                                 </Row>

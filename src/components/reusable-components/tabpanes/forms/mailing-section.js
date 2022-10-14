@@ -4,14 +4,25 @@ import { Colxx } from 'components/common/CustomBootstrap'
 import { FormikCheckbox, FormikCustomCheckboxGroup, FormikCustomRadioGroup, FormikDatePicker } from 'containers/form-validations/FormikFields'
 import { Field, Formik } from 'formik'
 import * as Yup from 'yup';
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Button, Card, CardBody, CustomInput, Form, FormGroup, Input, Label, Modal, ModalBody, Row } from 'reactstrap'
 import { choices, complaintDelayReason, draftSentByCustomer, firstResponseType, firstResponseTypes, gender, isAcknowledgementReceived, isCustomerIDRegistered, isFirstEscalationSent, isFirstReminderMailSentToCompany, isFirstResponseFromCompany, isfirstResponseFromCompany, isReminderMailSentToCompany, isRequirementMailRevert, isRequirementMailSent, isSecondReminderMailSentToCompany, isSecondResponseFromCompany, options, secondResponseType } from 'constants/formValues';
+import { Editor } from '@tinymce/tinymce-react';
+import { tinyMceApiKey } from 'constants/defaultValues';
 
 
 export default function MailingSectionForm ({ heading }) {
 
     const [documentUploadModal, setDocumentUploadModal] = useState(false);
+    
+
+    const editorRef = useRef(null);
+    const log = (e) => {
+        e.preventDefault()
+        if (editorRef.current) {
+        console.log(editorRef.current.getContent());
+        }
+    };
 
     // const onSubmit = (values, { setSubmitting }) => {
     //     const payload = {
@@ -444,7 +455,25 @@ export default function MailingSectionForm ({ heading }) {
                                     <Colxx xxs="12" lg="12">
                                         <FormGroup className="error-l-100">
                                             <Label>Escalation Mail Points</Label>
-                                            <Input type="textarea" rows="5" name="escalationpoints" id="escalationpoints" />
+                                            <Editor
+                                                apiKey={tinyMceApiKey}
+                                                onInit={(evt, editor) => editorRef.current = editor}
+                                                initialValue="<p>This is the initial content of the editor.</p>"
+                                                init={{
+                                                height: 500,
+                                                menubar: false,
+                                                plugins: [
+                                                    'advlist autolink lists link image charmap print preview anchor',
+                                                    'searchreplace visualblocks code fullscreen',
+                                                    'insertdatetime media table paste code help wordcount'
+                                                ],
+                                                toolbar: 'undo redo | formatselect | ' +
+                                                'bold italic backcolor | alignleft aligncenter ' +
+                                                'alignright alignjustify | bullist numlist outdent indent | ' +
+                                                'removeformat | help',
+                                                content_style: 'body { font-family:Work Sans,Helvetica,Arial,sans-serif; font-size:14px }'
+                                                }}
+                                            />
                                         </FormGroup>
                                     </Colxx>
                                 </Row>
@@ -454,7 +483,25 @@ export default function MailingSectionForm ({ heading }) {
                                     <Colxx xxs="12" lg="12">
                                         <FormGroup className="error-l-100">
                                             <Label>Earlier Mail Editors</Label>
-                                            <Input type="textarea" rows="5" name="earliermails" id="earliermails" />
+                                            <Editor
+                                                apiKey={tinyMceApiKey}
+                                                onInit={(evt, editor) => editorRef.current = editor}
+                                                initialValue="<p>This is the initial content of the editor.</p>"
+                                                init={{
+                                                height: 500,
+                                                menubar: false,
+                                                plugins: [
+                                                    'advlist autolink lists link image charmap print preview anchor',
+                                                    'searchreplace visualblocks code fullscreen',
+                                                    'insertdatetime media table paste code help wordcount'
+                                                ],
+                                                toolbar: 'undo redo | formatselect | ' +
+                                                'bold italic backcolor | alignleft aligncenter ' +
+                                                'alignright alignjustify | bullist numlist outdent indent | ' +
+                                                'removeformat | help',
+                                                content_style: 'body { font-family:Work Sans,Helvetica,Arial,sans-serif; font-size:14px }'
+                                                }}
+                                            />
                                         </FormGroup>
                                     </Colxx>
                                 </Row>

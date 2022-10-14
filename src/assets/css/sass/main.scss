@@ -154,3 +154,28 @@ html {
     }
 
 }
+
+.flex {
+    display: flex;
+    align-items: center;
+}
+.flex-fs-sb {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.flex-sa {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.flex-se {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.flex-sb {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
