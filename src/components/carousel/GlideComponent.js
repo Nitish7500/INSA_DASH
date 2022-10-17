@@ -72,10 +72,8 @@ function GlideComponent(props) {
       {/* eslint-disable-next-line no-return-assign */}
       <div className="glide" ref={(node) => (carousel = node)}>
         <div data-glide-el="track" className="glide__track">
-          {/* eslint-disable-next-line react/destructuring-assignment */}
           <div className="glide__slides">{props.children}</div>
         </div>
-        {/* eslint-disable-next-line react/destructuring-assignment */}
         {!props.settings.hideNav && (
           <div className="glide__arrows slider-nav" data-glide-el="controls">
             <button

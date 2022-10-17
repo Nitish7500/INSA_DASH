@@ -92,9 +92,9 @@
 }
 
 .react-select__multi-value {
-  background: transparent !important;
-  border: none;
-  border-bottom: 3px solid $theme-color-1;
+  background: $separator-color !important;
+  // border: none;
+  // border-bottom: 3px solid $theme-color-1;
 }
 
 .react-select__multi-value__remove:hover,

@@ -6,7 +6,7 @@ import React, { useState } from 'react'
 import { Button, Card, CardBody, CustomInput, Form, FormGroup, Input, Label, Modal, ModalBody, Row } from 'reactstrap'
 import { faDownload, faDownLong } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { movementOfCase } from 'constants/formValues';
+import { movementOfCase, nonResponsiveCustomerFlow } from 'constants/formValues';
 
 
 export default function NonResponsive ({ heading }) {
@@ -38,31 +38,31 @@ export default function NonResponsive ({ heading }) {
                                 {/* Form Row */}
                                 <Row className='mb-3'>
                                     {/* Form Column 1 */}
-                                    <Colxx xxs="12" lg="3">
+                                    <Colxx xxs="12" lg="6">
                                         <FormGroup className="error-l-100">
-                                            <Label className="d-block">Movement Of Case</Label>
-                                            <select name="movementOfCase"
-                                                className="form-control"
-                                                value={values.movementOfCase}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                            >
-                                                {movementOfCase.map((item) => (
-                                                    <option value={item.value}>{item.label}</option>
-                                                ))}
-                                            </select>
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column 2 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">Email To</Label>
+                                            <Label className="d-block">Called Date</Label>
                                             <FormikDatePicker
                                                 name="legalNoticeResRecDate"
                                                 value={values.legalNoticeResRecDate}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
+                                        </FormGroup>
+                                    </Colxx>
+                                    {/* Form Column 2 */}
+                                    <Colxx xxs="12" lg="6">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">No Response Section</Label>
+                                            <select name="movementOfCase"
+                                                className="form-control"
+                                                value={values.movementOfCase}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                            >
+                                                {nonResponsiveCustomerFlow.map((item) => (
+                                                    <option value={item.value}>{item.label}</option>
+                                                ))}
+                                            </select>
                                         </FormGroup>
                                     </Colxx>
                                 </Row>

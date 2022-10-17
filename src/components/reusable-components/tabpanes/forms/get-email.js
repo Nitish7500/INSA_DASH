@@ -5,9 +5,10 @@ import { FormikCheckbox, FormikCustomCheckboxGroup, FormikCustomRadioGroup, Form
 import { Field, Formik } from 'formik'
 import * as Yup from 'yup';
 import React, { useState } from 'react'
-import { Button, Card, CardBody, CustomInput, Form, FormGroup, Input, Label, Modal, ModalBody, Row } from 'reactstrap'
-import { faDownload, faDownLong } from '@fortawesome/free-solid-svg-icons';
+import { Alert, Badge, Button, Card, CardBody, CardHeader, CustomInput, Form, FormGroup, Input, Label, Modal, ModalBody, Row } from 'reactstrap'
+import { faCalendarDays, faDownload, faDownLong } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import AlertsUi from 'views/app/ui/components/alerts';
 
 
 export default function GetEmailData ({ heading }) {
@@ -15,7 +16,7 @@ export default function GetEmailData ({ heading }) {
     const [documentUploadModal, setDocumentUploadModal] = useState(false);
 
     return (
-        <Card>
+        // <Card>
             <CardBody>
                 <h2 className="mb-4">{heading}</h2>
                 <Formik initialValues={{
@@ -53,48 +54,64 @@ export default function GetEmailData ({ heading }) {
                                 <Card>
                                     <CardBody>
                                         {/* Field */}
-                                        <div className="flex mb-3">
-                                            <h6>CC :</h6>
-                                            <p></p>
+                                        <div className="flex mb-1">
+                                            <h3>Email Subject will go here and it can take up to 2-3 lines too . . .</h3>
+                                        </div>
+                                        {/* Field */}
+                                        <div className="flex mb-3 ccfield">
+                                            <p>
+                                                <span>CC : </span>
+                                                <span className="email-tab">ravi@insurancesamadhan.com</span>
+                                                <span className="email-tab">ravi@insurancesamadhan.com</span>
+                                                <span className="email-tab">ravi@insurancesamadhan.com</span>
+                                            </p>
+                                        </div>
+                                        {/* Field */}
+                                        <div className="flex-sb mb-3">
+                                            <div className="mailtype">
+                                                <span className='customAlertBadge'>Email type</span>
+                                                <Badge className='ml-3' color='primary'>Escalation Draft Email</Badge>
+                                                <Badge className='ml-3' color='danger'>First Draft Email</Badge>
+                                                <Badge className='ml-3' color='warning'>IGMS First Entry</Badge>
+                                                <Badge className='ml-3' color='success'>IGMS Escalation Entry</Badge>
+                                            </div>
+                                            <p className="date">
+                                                <span className='mr-2'>Sent Date - </span>
+                                                <Badge>
+                                                    <FontAwesomeIcon icon={faCalendarDays} /> 
+                                                    <span className='pl-2'>dd/mm/yyyy</span>
+                                                </Badge>
+                                            </p>
                                         </div>
                                         {/* Field */}
                                         <div className="flex mb-3">
-                                            <h6>Email Type :</h6>
-                                            <p></p>
+                                            <p className='mail-content'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum, exercitationem nihil impedit eligendi doloribus consequuntur magnam quia nisi! Dicta accusantium, fuga officia pariatur nesciunt qui nemo quam minus distinctio sequi.
+                                            Nulla alias sapiente mollitia cupiditate porro molestias incidunt. Maiores praesentium quaerat libero fugit impedit sed molestiae reiciendis magnam velit enim! Minus porro omnis, illum reiciendis sint architecto vero iusto quis.
+                                            Veniam eos soluta in autem! Minima nisi ex, quos sit nam odio inventore nemo iste voluptates quasi quia a rerum dolorem quo commodi, similique tempore maiores? Ut tenetur vero praesentium.
+                                            Consequuntur vero aperiam, blanditiis minus voluptates consequatur dicta aliquam autem quidem neque deserunt quibusdam accusamus incidunt provident alias dolor. Quidem accusamus similique quia. Doloribus quaerat quam aut voluptatem, necessitatibus qui?
+                                            Odio vero hic illo veniam et, perferendis cumque! Iure quia nostrum autem officiis vero quisquam illo, aspernatur temporibus! Consequatur vero expedita placeat repellendus commodi, culpa praesentium et eveniet distinctio eaque.
+                                            Aspernatur hic cumque esse vel suscipit porro a ex quod numquam? Enim soluta blanditiis minima, rem temporibus porro iusto mollitia voluptatum modi reprehenderit cupiditate recusandae iste nostrum, autem voluptatem quam.
+                                            Hic possimus, quis perspiciatis assumenda, cupiditate consequatur fugiat deleniti, at enim illo perferendis beatae cumque blanditiis temporibus laboriosam illum quam commodi sapiente. Natus corrupti iure nostrum id quas, quidem reiciendis.
+                                            Adipisci quasi est maiores quae sit quia sapiente aut, porro rem nisi! Qui, ducimus voluptates. Pariatur cupiditate eligendi laborum asperiores illum rem, expedita veritatis quae dolorum minima dolore! Debitis, atque.</p>
                                         </div>
                                         {/* Field */}
                                         <div className="flex mb-3">
-                                            <h6>Subject :</h6>
-                                            <p></p>
+                                            <h6 className='mr-2'>Update Draft : </h6>
+                                            <div className="mailtype">
+                                                <Badge className='ml-3' color='primary'>Escalation Draft Email</Badge>
+                                                <Badge className='ml-3' color='danger'>First Draft Email</Badge>
+                                                <Badge className='ml-3' color='warning'>IGMS First Entry</Badge>
+                                                <Badge className='ml-3' color='success'>IGMS Escalation Entry</Badge>
+                                            </div>
                                         </div>
                                         {/* Field */}
-                                        <div className="flex mb-3">
-                                            <h6>Email Content :</h6>
-                                            <p></p>
+                                        <div className="flex-sb">
+                                            <Button color='warning'>Action</Button>
+                                            <Button color='primary'>Send Email To Customer</Button>
                                         </div>
                                         {/* Field */}
-                                        <div className="flex mb-3">
-                                            <h6>Send Date :</h6>
-                                            <p></p>
-                                        </div>
-                                        {/* Field */}
-                                        <div className="flex mb-3">
-                                            <h6>Update Draft :</h6>
-                                            <p></p>
-                                        </div>
-                                        {/* Field */}
-                                        <div className="flex mb-3">
-                                            <h6>Action(Please Check before clicking on Delete button) :</h6>
-                                            <p></p>
-                                        </div>
-                                        {/* Field */}
-                                        <div className="flex">
-                                            <h6>Send Email To Customer :</h6>
-                                            <p></p>
-                                        </div>
                                     </CardBody>
                                 </Card>
-
 
                             </Colxx>
                         </Row>
@@ -102,7 +119,7 @@ export default function GetEmailData ({ heading }) {
                 )}
                 </Formik>
             </CardBody>
-        </Card>
+        // </Card>
     )
 }
 

@@ -1,8 +1,8 @@
 export const items = [
   {
     id: 1,
-    title: '1 Homemade Cheesecake with Fresh Berries and Mint',
-    img: '/assets/img/cards/thumb-1.jpg',
+    title: '1 Document uploaded from Sahil Singh',
+    img: '/assets/img/cards/todo.jpg',
     detail: '10.12.2019',
     category: 'Cupcakes',
     badges: [
@@ -18,8 +18,8 @@ export const items = [
   },
   {
     id: 2,
-    title: '2 Wedding Cake with Flowers Macarons and Blueberries',
-    img: '/assets/img/cards/thumb-2.jpg',
+    title: '2 Aadhar Card uploaded from Bharti Axa Insurance Customer',
+    img: '/assets/img/cards/chat.jpg',
     detail: '01.06.2019',
     category: 'Cakes',
     badges: [
@@ -35,8 +35,8 @@ export const items = [
   },
   {
     id: 3,
-    title: '3 Cheesecake with Chocolate Cookies and Cream Biscuits',
-    img: '/assets/img/cards/thumb-3.jpg',
+    title: '3 Documents uploaded from Medical Insurance client',
+    img: '/assets/img/cards/survey.jpg',
     detail: '27.05.2019',
     category: 'Cupcakes',
     badges: [
@@ -48,8 +48,8 @@ export const items = [
   },
   {
     id: 4,
-    title: '4 Homemade Cheesecake with Fresh Berries and Mint',
-    img: '/assets/img/cards/thumb-1.jpg',
+    title: '4 Claim Settlement documents sent from client',
+    img: '/assets/img/cards/thumb-list.jpg',
     detail: '10.12.2019',
     category: 'Cakes',
     badges: [
@@ -61,8 +61,8 @@ export const items = [
   },
   {
     id: 5,
-    title: '5 Cheesecake with Chocolate Cookies and Cream Biscuits',
-    img: '/assets/img/cards/thumb-3.jpg',
+    title: '5 Address Verification Documents',
+    img: '/assets/img/cards/image-list.jpg',
     detail: '27.05.2019',
     category: 'Cupcakes',
     badges: [
