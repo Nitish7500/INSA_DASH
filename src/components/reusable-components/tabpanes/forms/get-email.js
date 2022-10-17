@@ -18,7 +18,7 @@ export default function GetEmailData ({ heading }) {
     return (
         // <Card>
             <CardBody>
-                <h2 className="mb-4">{heading}</h2>
+                {/* <h2 className="mb-4">{heading}</h2> */}
                 <Formik initialValues={{
                      //formvalues fetched from api will be stored here
                 }}
@@ -35,7 +35,7 @@ export default function GetEmailData ({ heading }) {
                 }) => (
                     <Form className="av-tooltip tooltip-label-right">
                         <Row className="mb-4">
-                            <Colxx xxs="12" lg="12" className="mb-5">
+                            <Colxx xxs="12" lg="12">
 
                                 <Row className="mb-3">
                                     <Colxx xxs="12" lg="12" className="mb-5">
@@ -69,11 +69,7 @@ export default function GetEmailData ({ heading }) {
                                         {/* Field */}
                                         <div className="flex-sb mb-3">
                                             <div className="mailtype">
-                                                <span className='customAlertBadge'>Email type</span>
-                                                <Badge className='ml-3' color='primary'>Escalation Draft Email</Badge>
-                                                <Badge className='ml-3' color='danger'>First Draft Email</Badge>
-                                                <Badge className='ml-3' color='warning'>IGMS First Entry</Badge>
-                                                <Badge className='ml-3' color='success'>IGMS Escalation Entry</Badge>
+                                                <Badge color='primary'>Escalation Draft Email</Badge>
                                             </div>
                                             <p className="date">
                                                 <span className='mr-2'>Sent Date - </span>
@@ -84,24 +80,26 @@ export default function GetEmailData ({ heading }) {
                                             </p>
                                         </div>
                                         {/* Field */}
-                                        <div className="flex mb-3">
+                                        <div className="mb-3">
                                             <p className='mail-content'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum, exercitationem nihil impedit eligendi doloribus consequuntur magnam quia nisi! Dicta accusantium, fuga officia pariatur nesciunt qui nemo quam minus distinctio sequi.
                                             Nulla alias sapiente mollitia cupiditate porro molestias incidunt. Maiores praesentium quaerat libero fugit impedit sed molestiae reiciendis magnam velit enim! Minus porro omnis, illum reiciendis sint architecto vero iusto quis.
-                                            Veniam eos soluta in autem! Minima nisi ex, quos sit nam odio inventore nemo iste voluptates quasi quia a rerum dolorem quo commodi, similique tempore maiores? Ut tenetur vero praesentium.
-                                            Consequuntur vero aperiam, blanditiis minus voluptates consequatur dicta aliquam autem quidem neque deserunt quibusdam accusamus incidunt provident alias dolor. Quidem accusamus similique quia. Doloribus quaerat quam aut voluptatem, necessitatibus qui?
+                                            Veniam eos soluta in autem! Minima nisi ex, quos sit nam odio inventore nemo iste voluptates quasi quia a rerum dolorem quo commodi, similique tempore maiores? Ut tenetur vero praesentium. Consequuntur vero aperiam, blanditiis minus voluptates consequatur dicta aliquam autem quidem neque deserunt quibusdam accusamus incidunt provident alias dolor. Quidem accusamus similique quia.</p>
+                                            <p className='mail-content'>
+                                            Doloribus quaerat quam aut voluptatem, necessitatibus qui?
                                             Odio vero hic illo veniam et, perferendis cumque! Iure quia nostrum autem officiis vero quisquam illo, aspernatur temporibus! Consequatur vero expedita placeat repellendus commodi, culpa praesentium et eveniet distinctio eaque.
-                                            Aspernatur hic cumque esse vel suscipit porro a ex quod numquam? Enim soluta blanditiis minima, rem temporibus porro iusto mollitia voluptatum modi reprehenderit cupiditate recusandae iste nostrum, autem voluptatem quam.
-                                            Hic possimus, quis perspiciatis assumenda, cupiditate consequatur fugiat deleniti, at enim illo perferendis beatae cumque blanditiis temporibus laboriosam illum quam commodi sapiente. Natus corrupti iure nostrum id quas, quidem reiciendis.
-                                            Adipisci quasi est maiores quae sit quia sapiente aut, porro rem nisi! Qui, ducimus voluptates. Pariatur cupiditate eligendi laborum asperiores illum rem, expedita veritatis quae dolorum minima dolore! Debitis, atque.</p>
+                                            Enim soluta blanditiis minima, rem temporibus porro iusto mollitia voluptatum modi reprehenderit cupiditate recusandae iste nostrum, autem voluptatem quam.
+                                            Aspernatur hic cumque esse vel suscipit porro a ex quod numquam? </p>
+                                            <p className='mail-content'>
+                                            Hic possimus, quis perspiciatis assumenda, cupiditate consequatur fugiat deleniti, at enim illo perferendis beatae cumque blanditiis temporibus laboriosam illum quam commodi sapiente.</p>
                                         </div>
                                         {/* Field */}
-                                        <div className="flex mb-3">
-                                            <h6 className='mr-2'>Update Draft : </h6>
+                                        <div className="flex mt-4 mb-4">
+                                            <h6 className='mr-2 mb-0'>Update Draft : </h6>
                                             <div className="mailtype">
-                                                <Badge className='ml-3' color='primary'>Escalation Draft Email</Badge>
-                                                <Badge className='ml-3' color='danger'>First Draft Email</Badge>
-                                                <Badge className='ml-3' color='warning'>IGMS First Entry</Badge>
-                                                <Badge className='ml-3' color='success'>IGMS Escalation Entry</Badge>
+                                                <Badge className='ml-2' color='secondary'>Escalation Draft Email</Badge>
+                                                <Badge className='ml-2' color='secondary'>First Draft Email</Badge>
+                                                <Badge className='ml-2' color='secondary'>IGMS First Entry</Badge>
+                                                <Badge className='ml-2' color='secondary'>IGMS Escalation Entry</Badge>
                                             </div>
                                         </div>
                                         {/* Field */}

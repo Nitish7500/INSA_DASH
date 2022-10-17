@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Row,
   Card,
@@ -32,21 +32,52 @@ import SavedEmail from 'components/reusable-components/tabpanes/forms/save-email
 import GetEmailData from 'components/reusable-components/tabpanes/forms/get-email';
 import DocumentForm from 'components/reusable-components/tabpanes/forms/document-form';
 import NonResponsive from 'components/reusable-components/tabpanes/forms/non-responsive';
+import axios from 'axios';
+import { apisURLs } from 'services/apisURLs.services';
+import { getCurrentUser } from 'helpers/Utils';
 
 const ComplaintDetails = ({ match }) => {
   const [activeTab, setActiveTab] = useState('details');
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [items, setItems] = useState([]);
+
+  const authorizedUser = getCurrentUser();
 
   let {search} = useLocation();
   const query = new URLSearchParams(search);
   const complaintId = query.get('complaintId');
-  console.log(complaintId);
+  // console.log(complaintId);
+
+  useEffect(() => {
+    async function fetchData() {
+      axios
+        .get(
+          `${apisURLs.getComplaintById}${complaintId}`,
+          {
+            headers:{
+              Authorization: `${authorizedUser.data.token || authorizedUser.token}`
+            }
+          }
+        )
+        .then((res) => {
+          return res.data;
+        })
+        .then((data) => {
+          const dataList = data.data;
+          setItems(dataList);
+          setIsLoaded(true);
+        });
+    }
+    fetchData();
+  }, []);
+
 
   // const { messages } = intl;
   return (
     <>
       <Row>
         <Colxx xxs="12" className="my-3">
-          <h1 className='mb-4'>Complaint Details </h1>
+          <h1 className='mb-4'>Complaint Details</h1>
           <div className="text-zero top-right-button-container">
             <Button color='danger' size='md' className="top-right-button mr-3">
               <p className='mb-0'>Add More Complaint</p>

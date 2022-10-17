@@ -8,8 +8,13 @@ export const baseURLs = {
 }
 
 export const apisURLs = {
-    adminLogin:baseURLs.regular + "admin/login",
-    agentLogin:baseURLs.agent + 'login'
+    adminLogin : baseURLs.regular + "admin/login",
+    agentLogin : baseURLs.agent + 'login',
+    getComplaintById : baseURLs.regular + '/insurance/details/',
+    state : baseURLs.regular + '/ombudsman/state',
+    getAllInsa : baseURLs.regular + '/insurance/getAllInsa',
+    policyType : baseURLs.regular + '/policy_type',
+    
 }
 
 

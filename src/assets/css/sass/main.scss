@@ -68,7 +68,6 @@ html {
 }
 
 .tableContainer::-webkit-scrollbar {
-    // display: none;
     width: 100%;
     height: 6px;
     background: $separator-color;
@@ -218,6 +217,7 @@ html {
 
 .mail-content {
     text-align: justify;
+    margin-bottom: .5rem;
 }
 
 .date {
