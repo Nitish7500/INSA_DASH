@@ -138,5 +138,4 @@ const DataListView = ({ complaint, isSelect, collect, onCheckItem, onSelectedSta
   );
 };
 
-/* React.memo detail : https://reactjs.org/docs/react-api.html#reactpurecomponent  */
 export default React.memo(DataListView);

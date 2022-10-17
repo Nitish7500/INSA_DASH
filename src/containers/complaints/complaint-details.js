@@ -191,8 +191,6 @@ const ComplaintDetails = ({ match }) => {
           <TabContent activeTab={activeTab}>
 
             <TabPane tabId="details">
-              {/* <h2>Complaint Details Form comes here</h2>
-              {complaintId} */}
               <DetailsForm heading='Complaint Details Form' />
             </TabPane>
 
