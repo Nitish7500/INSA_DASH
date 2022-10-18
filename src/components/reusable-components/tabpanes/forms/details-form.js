@@ -4,23 +4,61 @@ import { Colxx } from 'components/common/CustomBootstrap'
 import { FormikCheckbox, FormikCustomCheckboxGroup, FormikCustomRadioGroup, FormikDatePicker } from 'containers/form-validations/FormikFields'
 import { Field, Formik } from 'formik'
 import * as Yup from 'yup';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Card, CardBody, Form, FormGroup, Input, Label, Modal, ModalBody, Row } from 'reactstrap'
-import { education, gender, occupation } from 'constants/formValues';
+import { education, gender, occupation, policyTypes, realtionships } from 'constants/formValues';
+import { getAllStates } from 'services/complaints.services';
 
-const options = [
-    { value: '', label: 'Select an Option' },
-    { value: 'Something', label: 'Something' },
-    { value: 'Anything', label: 'Anything' }
-];
+// const options = [
+//     { value: '', label: 'Select an Option' },
+//     { value: 'Something', label: 'Something' },
+//     { value: 'Anything', label: 'Anything' }
+// ];
 
 
-
-export default function DetailsForm({ heading }) {
+export default function DetailsForm({ heading, details }) {
 
     const [documentUploadModal, setDocumentUploadModal] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [states, setStates] = useState([]);
 
-    // const onSubmit = (values, { setSubmitting }) => {
+    let userId = details?.userId;
+    let date = new Date(parseInt(userId?.dob.substr(6)))
+
+    //getting all states (ombudsman state locations and districts)
+    useEffect(() => {
+        const fetchData = async () => {
+        try {
+            const {data} = await getAllStates();
+            setStates(data);
+        } catch (error) {
+            console.log("States",error)
+        }
+        setIsLoaded(true);
+        }
+        fetchData();
+    }, []);
+
+    console.log(details);
+
+    //getting all states (ombudsman state locations and districts)
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //     try {
+    //         const {data} = await getAllStates();
+    //         setStates(data);
+    //     } catch (error) {
+    //         console.log("States",error)
+    //     }
+    //     setIsLoaded(true);
+    //     }
+    //     fetchData();
+    // }, []);
+
+    // console.log(details);
+
+    // const onSubmit = (values, { setSubmitting } ) => {
+    //     values.preventDefault()
     //     const payload = {
     //       ...values,
     //       reactSelect: values.reactSelect.map((t) => t.value),
@@ -36,25 +74,54 @@ export default function DetailsForm({ heading }) {
             <CardBody>
                 <h2 className="mb-5">{heading}</h2>
                 <Formik initialValues={{
-                    name: 'Yash',
-                    email: 'test@test.com',
-                    phone: '9453578234',
-                    alternate: '',
-                    income: '25000',
-                    select: '3',
-                    pincode: '201301',
-                    dob: '13/01/1970',
-                    reactSelect: [{ value: 'reasonml', label: 'ReasonML' }],
-                    checkboxGroup: ['kittens'],
-                    customCheckGroup: ['unicorns'],
-                    checkboxSingle: true,
-                    checkboxCustomSingle: false,
-                    radioGroup: 'male',
-                    gender: 'male',
-                    customRadioGroup: 'male',
-                    tags: ['cake', 'dessert'],
-                    switch: false,
-                    date: null,
+                    name : userId ? userId.name : '',
+                    email : userId ? userId.email : '',
+                    phone : userId ? userId.phone : '',
+                    alternate : userId ? userId.alternatePhone : '',
+                    income : userId ? userId.income : '',
+                    occupation : userId ? userId.occupation : '',
+                    pincode : userId ? userId.pinCode :  '',
+                    dob : date ? date : '',
+                    state : userId ? userId.state :  '',
+                    district: userId ? userId.district :  '',
+                    nomineee : '',
+                    deceased : '',
+                    gender : userId ? userId.gender : '',
+                    pancard : userId ? userId.panCard : '',
+                    education : userId ? userId.education : '',
+                    policyNumber : details ? details.policyNumber : '',
+                    claimAmt : details ? details.claimAmount : '',
+                    address : userId ? userId.address : '',
+                    insuranceType : '',
+                    rejectionType : '',
+                    complaintType : '',
+                    relationship : '',
+                    policyType : '',
+                    insuranceCompanyType : '',
+                    caseMovement : '',
+                    legalExecutiveAssigned : '',
+                    expertAssigned : '',
+                    leadNumber : '',
+                    companyAssigned : '',
+                    status : '',
+                    ombudsmanAssigned : '',
+                    houseNumber : '',
+                    street : '',
+                    city : '',
+                    isACovidComplaint : details ? details.covidCheck : '',
+                    isAServiceComplaint : details ? details.asAServiceCheck : '',
+                    internalLegalExecutiveAssigned : '',
+                    statement : '',
+                    custCreatedEmail : '',
+                    custCreatedPassword : '',
+                    approvedClaimAmt : '',
+                    companyResponseDoc : '',
+                    igmsDoc : '',
+                    awardRejectedDoc : '',
+                    ombudsmanDoc : '',
+                    complaintCourierReceiptDoc : '',
+                    form6aCourierReceiptDoc : '',
+
                 }}
                     // validationSchema={SignupSchema}
                     // onSubmit={onSubmit}
@@ -81,7 +148,7 @@ export default function DetailsForm({ heading }) {
 
                                         <FormGroup className="error-l-100">
                                             <Label>Name</Label>
-                                            <Field className="form-control" name="name" />
+                                            <Field className="form-control" name="name" onChange={handleChange} />
                                         </FormGroup>
 
                                         <FormGroup className="error-l-100">
@@ -92,18 +159,19 @@ export default function DetailsForm({ heading }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">DOB</Label>
                                             <FormikDatePicker
-                                                name="date"
-                                                value={values.date}
+                                                name="dob"
+                                                value={values.dob}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
+                                            {/* <input type="date" name="d" id="" /> */}
                                         </FormGroup>
                                         
                                         <FormGroup className="error-l-100">
                                             <Label>Occupation</Label>
-                                            <select name="select"
+                                            <select name="occupation"
                                                     className="form-control"
-                                                    value={values.select}
+                                                    value={values.occupation}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
@@ -166,9 +234,9 @@ export default function DetailsForm({ heading }) {
                                         {/* ::::::::  Select Group  ::::::: */}
                                         <FormGroup className="error-l-100 pt-1">
                                             <Label>Select State</Label>
-                                            <select name="select"
+                                            <select name="state"
                                                     className="form-control"
-                                                    value={values.select}
+                                                    value={values.state}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
@@ -196,9 +264,9 @@ export default function DetailsForm({ heading }) {
                                         {/* ::::::::  Select Group  ::::::: */}
                                         <FormGroup className="error-l-100 pt-1">
                                             <Label>Education*</Label>
-                                            <select name="select"
+                                            <select name="education"
                                                     className="form-control"
-                                                    value={values.select}
+                                                    value={values.education}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
@@ -210,9 +278,9 @@ export default function DetailsForm({ heading }) {
 
                                         <FormGroup className="error-l-100">
                                             <Label>Select District</Label>
-                                            <select name="select"
+                                            <select name="district"
                                                     className="form-control"
-                                                    value={values.select}
+                                                    value={values.district}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
@@ -259,9 +327,9 @@ export default function DetailsForm({ heading }) {
 
                                         <FormGroup className="error-l-100 pt-1">
                                             <Label>Insurance Type</Label>
-                                            <select name="select"
+                                            <select name="insuranceType"
                                                     className="form-control"
-                                                    value={values.select}
+                                                    value={values.insuranceType}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
@@ -273,9 +341,9 @@ export default function DetailsForm({ heading }) {
                                         
                                         <FormGroup className="error-l-100 pt-1">
                                             <Label>Rejection Type</Label>
-                                            <select name="select"
+                                            <select name="rejectionType"
                                                     className="form-control"
-                                                    value={values.select}
+                                                    value={values.rejectionType}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
@@ -284,9 +352,7 @@ export default function DetailsForm({ heading }) {
                                                 <option value="2">2</option>
                                             </select>
                                         </FormGroup>
-                                        
-
-
+                                
                                     </Colxx>
 
                                     {/* Form Column 2 */}
@@ -294,9 +360,9 @@ export default function DetailsForm({ heading }) {
                                         
                                         <FormGroup className="error-l-100 pt-1">
                                             <Label>Complaint Type</Label>
-                                            <select name="select"
+                                            <select name="complaintType"
                                                     className="form-control"
-                                                    value={values.select}
+                                                    value={values.complaintType}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
@@ -308,15 +374,15 @@ export default function DetailsForm({ heading }) {
 
                                         <FormGroup className="error-l-100 pt-1">
                                             <Label>Relationship</Label>
-                                            <select name="select"
+                                            <select name="relationship"
                                                     className="form-control"
-                                                    value={values.select}
+                                                    value={values.relationship}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
-                                                <option value="">Select Option</option>
-                                                <option value="1">Bihar</option>
-                                                <option value="2">2</option>
+                                                {realtionships.map((key) => (
+                                                    <option value={key.value}>{key.label}</option>
+                                                ))}
                                             </select>
                                         </FormGroup>
                                     </Colxx>
@@ -327,9 +393,9 @@ export default function DetailsForm({ heading }) {
                                         {/* ::::::::  Select Group  ::::::: */}
                                         <FormGroup className="error-l-100 pt-1">
                                             <Label>Insurance Company Name</Label>
-                                            <select name="select"
+                                            <select name="insuranceCompanyType"
                                                     className="form-control"
-                                                    value={values.select}
+                                                    value={values.insuranceCompanyType}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
@@ -341,9 +407,9 @@ export default function DetailsForm({ heading }) {
                                         
                                         <FormGroup className="error-l-100 pt-1">
                                             <Label>Movement of Case</Label>
-                                            <select name="select"
+                                            <select name="caseMovement"
                                                     className="form-control"
-                                                    value={values.select}
+                                                    value={values.caseMovement}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
@@ -361,15 +427,15 @@ export default function DetailsForm({ heading }) {
                                         {/* ::::::::  Select Group  ::::::: */}
                                         <FormGroup className="error-l-100 pt-1">
                                             <Label>Policy Type</Label>
-                                            <select name="select"
+                                            <select name="policyType"
                                                     className="form-control"
-                                                    value={values.select}
+                                                    value={values.policyType}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
-                                                <option value="">Select Policy type</option>
-                                                <option value="1">Illeterate</option>
-                                                <option value="2">Below 10th</option>
+                                                {policyTypes.map((key) => (
+                                                    <option value={key.value}>{key.label}</option>
+                                                ))}
                                             </select>
                                         </FormGroup>
 
@@ -383,9 +449,9 @@ export default function DetailsForm({ heading }) {
 
                                         <FormGroup className="error-l-100 pt-1">
                                             <Label>Assign To</Label>
-                                            <select name="select"
+                                            <select name="executiveName"
                                                     className="form-control"
-                                                    value={values.select}
+                                                    value={values.executiveName}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
@@ -397,9 +463,9 @@ export default function DetailsForm({ heading }) {
                                         
                                         <FormGroup className="error-l-100 pt-1">
                                             <Label>Assign to Legal Executive</Label>
-                                            <select name="select"
+                                            <select name="legalExecutiveAssigned"
                                                     className="form-control"
-                                                    value={values.select}
+                                                    value={values.legalExecutiveAssigned}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
@@ -416,9 +482,9 @@ export default function DetailsForm({ heading }) {
                                         
                                         <FormGroup className="error-l-100 pt-1">
                                             <Label>Assign to Expert</Label>
-                                            <select name="select"
+                                            <select name="expertAssigned"
                                                     className="form-control"
-                                                    value={values.select}
+                                                    value={values.expertAssigned}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
@@ -441,9 +507,9 @@ export default function DetailsForm({ heading }) {
                                         {/* ::::::::  Select Group  ::::::: */}
                                         <FormGroup className="error-l-100 pt-1">
                                             <Label>Assign To Company/IGMS</Label>
-                                            <select name="select"
+                                            <select name="companyAssigned"
                                                     className="form-control"
-                                                    value={values.select}
+                                                    value={values.companyAssigned}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
@@ -455,9 +521,9 @@ export default function DetailsForm({ heading }) {
                                         
                                         <FormGroup className="error-l-100 pt-1">
                                             <Label>Status</Label>
-                                            <select name="select"
+                                            <select name="status"
                                                     className="form-control"
-                                                    value={values.select}
+                                                    value={values.status}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
@@ -475,12 +541,12 @@ export default function DetailsForm({ heading }) {
                                         {/* ::::::::  Select Group  ::::::: */}
                                         <FormGroup className="error-l-100 pt-1">
                                             <Label>Assign To Ombudsman</Label>
-                                            <select name="select"
-                                                    className="form-control"
-                                                    value={values.select}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                >
+                                            <select name="ombudsmanAssigned"
+                                                className="form-control"
+                                                value={values.ombudsmanAssigned}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                            >
                                                 <option value="">Select Policy type</option>
                                                 <option value="1">Illeterate</option>
                                                 <option value="2">Below 10th</option>
@@ -497,7 +563,7 @@ export default function DetailsForm({ heading }) {
 
                                         <FormGroup className="error-l-100">
                                             <Label>Door No./ Bldg/Name / Floor</Label>
-                                            <Field className="form-control" name="addressNo" />
+                                            <Field className="form-control" name="houseNumber" />
                                         </FormGroup>
 
                                         <FormGroup className="error-l-100">
@@ -518,8 +584,8 @@ export default function DetailsForm({ heading }) {
                                         <FormGroup className="error-l-150">
                                             <Label className="d-block">Covid Complaint Check</Label>
                                             <FormikCheckbox
-                                                name="checkboxSingle"
-                                                value={values.checkboxSingle}
+                                                name="isACovidComplaint"
+                                                value={values.isACovidComplaint}
                                                 label="Is it a Covid Complaint"
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
@@ -533,14 +599,14 @@ export default function DetailsForm({ heading }) {
                                         
                                         <FormGroup className="error-l-100">
                                             <Label>City / Town / Panchayath / Village</Label>
-                                            <Field className="form-control" name="city" />
+                                            <Field className="form-control" name="cityName" />
                                         </FormGroup>
 
                                         <FormGroup className="error-l-150">
                                             <Label className="d-block">Service Complaint Check</Label>
                                             <FormikCheckbox
-                                                name="checkboxSingle"
-                                                value={values.checkboxSingle}
+                                                name="isAServiceComplaint"
+                                                value={values.isAServiceComplaint}
                                                 label="As a Service Complaint or not"
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
@@ -554,14 +620,14 @@ export default function DetailsForm({ heading }) {
                                         
                                         <FormGroup className="error-l-100">
                                             <Label>Taluk / Tehsil</Label>
-                                            <Field className="form-control" name="street" />
+                                            <Field className="form-control" name="tehsil" />
                                         </FormGroup>
 
                                         <FormGroup className="error-l-100 pt-1">
                                             <Label>Assign To Internal Legal Executive</Label>
-                                            <select name="select"
+                                            <select name="internalLegalExecutiveAssigned"
                                                     className="form-control"
-                                                    value={values.select}
+                                                    value={values.internalLegalExecutiveAssigned}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
@@ -594,7 +660,7 @@ export default function DetailsForm({ heading }) {
                                             <Colxx xxs="12" lg="3">
                                                 <FormGroup className="error-l-100">
                                                     <Label>Email ID</Label>
-                                                    <Field className="form-control" name="email" />
+                                                    <Field className="form-control" name="custCreatedEmail" />
                                                 </FormGroup>
                                             </Colxx>
 
@@ -602,7 +668,7 @@ export default function DetailsForm({ heading }) {
                                             <Colxx xxs="12" lg="2">
                                                 <FormGroup className="error-l-100">
                                                     <Label>Password</Label>
-                                                    <Field className="form-control" name="password" />
+                                                    <Field className="form-control" name="custCreatedPassword" />
                                                 </FormGroup>
                                             </Colxx>
 
@@ -610,7 +676,7 @@ export default function DetailsForm({ heading }) {
                                             <Colxx xxs="12" lg="3">
                                                 <FormGroup className="error-l-100">
                                                     <Label>Approved Claim Amount</Label>
-                                                    <Field className="form-control" name="claimAmount" />
+                                                    <Field className="form-control" name="approvedClaimAmt" />
                                                 </FormGroup>
                                             </Colxx>
 
@@ -631,27 +697,27 @@ export default function DetailsForm({ heading }) {
                                                             <h3 className="text-muted text-thin">Lead ID : </h3>
                                                             <FormGroup className='my-3'>
                                                                 <Label for="companyresponse">Company Response Documents :</Label>
-                                                                <Input id="companyresponse" name="file" type="file" />
+                                                                <Input id="companyresponse" name="companyResponseDoc" type="file" />
                                                             </FormGroup>
                                                             <FormGroup className='my-3'>
                                                                 <Label for="igms">IGMS Documents :</Label>
-                                                                <Input id="igms" name="file" type="file" />
+                                                                <Input id="igms" name="igmsDoc" type="file" />
                                                             </FormGroup>
                                                             <FormGroup className='my-3'>
                                                                 <Label for="awardrejected">Award Rejected Documents :</Label>
-                                                                <Input id="awardrejected" name="file" type="file" />
+                                                                <Input id="awardrejected" name="awardRejectedDoc" type="file" />
                                                             </FormGroup>
                                                             <FormGroup className='my-3'>
                                                                 <Label for="ombudsman">Ombudsman Requirement Documents :</Label>
-                                                                <Input id="ombudsman" name="file" type="file" /> 
+                                                                <Input id="ombudsman" name="ombudsmanDoc" type="file" /> 
                                                             </FormGroup>
                                                             <FormGroup className='my-3'>
-                                                                <Label for="corier">Complaint form Courier Receipt :</Label>
-                                                                <Input id="corier" name="file" type="file" />
+                                                                <Label for="courier">Complaint form Courier Receipt :</Label>
+                                                                <Input id="courier" name="complaintCourierReceiptDoc" type="file" />
                                                             </FormGroup>
                                                             <FormGroup className='my-3'>
                                                                 <Label for="form6a">Form 6A Courier Receipt :</Label>
-                                                                <Input id="form6a" name="file" type="file" />
+                                                                <Input id="form6a" name="form6aCourierReceiptDoc" type="file" />
                                                             </FormGroup>
                                                         </ModalBody>
                                                     </Modal>
@@ -665,7 +731,7 @@ export default function DetailsForm({ heading }) {
                             </Colxx>
                             {/* Wrapping Column ends */}
                             <Colxx xxs="12" lg="12" className="text-center">
-                                <Button color="primary" type="submit">
+                                <Button color="primary" type="button">
                                     Submit
                                 </Button>
                             </Colxx>

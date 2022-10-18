@@ -1,27 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import {
   Row,
-  Card,
-  CardBody,
   Nav,
   NavItem,
   Button,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownItem,
-  DropdownMenu,
   TabContent,
   TabPane,
-  Badge,
 } from 'reactstrap';
 import { NavLink, useLocation } from 'react-router-dom';
 import classnames from 'classnames';
-import { injectIntl } from 'react-intl';
-
 import Breadcrumb from 'containers/navs/Breadcrumb';
 import { Colxx } from 'components/common/CustomBootstrap';
-import IntlMessages from 'helpers/IntlMessages';
-import FormikCustomComponents from 'containers/form-validations/FormikCustomComponents';
 import DetailsForm from 'components/reusable-components/tabpanes/forms/details-form';
 import MailingSectionForm from 'components/reusable-components/tabpanes/forms/mailing-section';
 import IGMSForm from 'components/reusable-components/tabpanes/forms/igms-form';
@@ -32,48 +21,36 @@ import SavedEmail from 'components/reusable-components/tabpanes/forms/save-email
 import GetEmailData from 'components/reusable-components/tabpanes/forms/get-email';
 import DocumentForm from 'components/reusable-components/tabpanes/forms/document-form';
 import NonResponsive from 'components/reusable-components/tabpanes/forms/non-responsive';
-import axios from 'axios';
-import { apisURLs } from 'services/apisURLs.services';
-import { getCurrentUser } from 'helpers/Utils';
+import { getComplaintDetailsById } from 'services/complaints.services';
 
 const ComplaintDetails = ({ match }) => {
   const [activeTab, setActiveTab] = useState('details');
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
 
-  const authorizedUser = getCurrentUser();
-
   let {search} = useLocation();
   const query = new URLSearchParams(search);
   const complaintId = query.get('complaintId');
-  // console.log(complaintId);
 
+  //getting Complaint by Id through complaints.services
   useEffect(() => {
-    async function fetchData() {
-      axios
-        .get(
-          `${apisURLs.getComplaintById}${complaintId}`,
-          {
-            headers:{
-              Authorization: `${authorizedUser.data.token || authorizedUser.token}`
-            }
-          }
-        )
-        .then((res) => {
-          return res.data;
-        })
-        .then((data) => {
-          const dataList = data.data;
-          setItems(dataList);
-          setIsLoaded(true);
-        });
+    const fetchData = async () => {
+      try {
+        const {data} = await getComplaintDetailsById(complaintId);
+        setItems(data);
+      } catch (error) {
+        console.log("ComplaintDetails",error)
+      }
+      setIsLoaded(true);
     }
     fetchData();
   }, []);
 
 
   // const { messages } = intl;
-  return (
+  return !isLoaded ? (
+    <div className="loading" />
+  ) : (
     <>
       <Row>
         <Colxx xxs="12" className="my-3">
@@ -222,7 +199,7 @@ const ComplaintDetails = ({ match }) => {
           <TabContent activeTab={activeTab}>
 
             <TabPane tabId="details">
-              <DetailsForm heading='Complaint Details Form' />
+              <DetailsForm heading='Complaint Details Form' details={items} />
             </TabPane>
 
             <TabPane tabId="mailing">
