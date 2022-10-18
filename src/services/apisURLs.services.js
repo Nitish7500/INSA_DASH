@@ -29,7 +29,7 @@ export const apisURLs = {
     checkRefreshToken : baseURLs.regular + 'gmail/checkRefreshToken/',
     getComplaintTypeList : baseURLs.regular + 'complaint_type?policyTypeId=',
     getInsuranceCompanyList : baseURLs.regular + 'insurance_company/getByPolicyId?policyTypeId=',
-    getUserBasedData : baseURLs.regular + 'insurance/getUserBasedData',
+    userBasedData : baseURLs.regular + 'insurance/getUserBasedData',
     firstDraftData : baseURLs.regular + 'insurance/firstDraftData',
 }
 

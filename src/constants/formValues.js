@@ -86,15 +86,15 @@ export const isLegalNotice = [
 ];
 
 export const gender = [
-    { value: 'male', label: 'Male' },
-    { value: 'female', label: 'Female' }
+    { value: 'Male', label: 'Male' },
+    { value: 'Female', label: 'Female' }
 ];
 
 export const education = [
     { value: '', label: 'Select an Option' },
     { value: 'Illiterate', label: 'Illiterate' },
     { value: 'Below 10th', label: 'Below 10th' },
-    { value: 'Below 10th and 12th', label: 'Below 10th and 12th' },
+    { value: "Between 10th and 12th", label: 'Below 10th and 12th' },
     { value: '10th Pass', label: '10th Pass' },
     { value: '12th Pass', label: '12th Pass' },
     { value: 'Graduate', label: 'Graduate' },
