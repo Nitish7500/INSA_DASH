@@ -1,5 +1,5 @@
 import { apisURLs } from "./apisURLs.services"
-import { request } from "./requests.services"
+import { bearerRequest, request } from "./requests.services"
 
 const getAllStates = async () => {
     return await request('GET', apisURLs.state);
@@ -10,15 +10,15 @@ const getAllInsa = async () => {
 }
 
 const assignOmbudsman = async () => {
-    return await request('GET', apisURLs.assignOMD);
+    return await bearerRequest('GET', apisURLs.assignOMD);
 }
 
 const assignLegalExpert = async () => {
-    return await request('GET', apisURLs.assignLegalExpert);
+    return await bearerRequest('GET', apisURLs.assignLegalExpert);
 }
 
 const assignIGMS = async () => {
-    return await request('GET', apisURLs.assignIGMS);
+    return await bearerRequest('GET', apisURLs.assignIGMS);
 }
 
 const getPolicyTypes = async () => {
