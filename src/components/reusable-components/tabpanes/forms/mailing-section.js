@@ -6,15 +6,16 @@ import { Field, Formik } from 'formik'
 import * as Yup from 'yup';
 import React, { useRef, useState } from 'react'
 import { Button, Card, CardBody, CustomInput, Form, FormGroup, Input, Label, Modal, ModalBody, Row } from 'reactstrap'
-import { choices, complaintDelayReason, draftSentByCustomer, firstResponseType, firstResponseTypes, gender, isAcknowledgementReceived, isCustomerIDRegistered, isFirstEscalationSent, isFirstReminderMailSentToCompany, isFirstResponseFromCompany, isfirstResponseFromCompany, isReminderMailSentToCompany, isRequirementMailRevert, isRequirementMailSent, isSecondReminderMailSentToCompany, isSecondResponseFromCompany, options, secondResponseType } from 'constants/formValues';
+import { choices, complaintDelayReason, draftSentByCustomer, firstResponseType, firstResponseTypes, gender, isAcknowledgementReceived, isCustomerIDRegistered, isDraftSentByCustomer, isFirstEscalationSent, isFirstReminderMailSentToCompany, isFirstResponseFromCompany, isfirstResponseFromCompany, isReminderMailSentToCompany, isRequirementMailRevert, isRequirementMailSent, isSecondReminderMailSentToCompany, isSecondResponseFromCompany, options, secondResponseType } from 'constants/formValues';
 import { Editor } from '@tinymce/tinymce-react';
 import { tinyMceApiKey } from 'constants/defaultValues';
+import { useQuery } from 'hooks/useQuery';
 
 
-export default function MailingSectionForm ({ heading }) {
+export default function MailingSectionForm ({ heading, details, complaintId }) {
 
     const [documentUploadModal, setDocumentUploadModal] = useState(false);
-    
+    const [isLoaded, setIsLoaded] = useState(false);
 
     const editorRef = useRef(null);
     const log = (e) => {
@@ -40,10 +41,38 @@ export default function MailingSectionForm ({ heading }) {
             <CardBody>
                 <h2 className="mb-4">{heading}</h2>
                 <Formik initialValues={{
-                    name: 'Yash',
-                    email: 'test@test.com',
-                    phone: '9453578234',
-                    choice: 'Yes'
+                    isCustomerIdRegistered: '',
+                    complaintNumber: '',
+                    complaintDate: '',
+                    firstResponseDateFromCompany: '',
+                    escalationDateSentToCompany: '',
+                    requirementRaisedDate: '',
+                    requirementRevertedDate: '',
+                    reminderSentDate: '',
+                    secondResponseDateFromCompany: '',
+                    isDraftSentByCustomer: '',
+                    isDraftShared: '',
+                    customerDraftSharedDate: '',
+                    isAcknowledgementReceived: '',
+                    isRequirementMailSent: '',
+                    isRequirementMailRevert: '',
+                    isFirstResponseFromCompany: '',
+                    isFirstReminderMailSentToCompany: '',
+                    firstResponseType: '',
+                    complaintDelayReason: '',
+                    isFirstEscalationSent: '',
+                    isEscalationShared: '',
+                    firstCustomerDraftSharedDate: '',
+                    isSecondResponseFromCompany: '',
+                    isSecondReminderMailSentToCompany: '',
+                    secondReminderSentDate: '',
+                    secondResponseType: '',
+                    m: '',
+                    m: '',
+                    m: '',
+                    m: '',
+                    m: '',
+                    m: '',
                 }}
                     // validationSchema={SignupSchema}
                     // onSubmit={onSubmit}
@@ -82,7 +111,7 @@ export default function MailingSectionForm ({ heading }) {
                                     <Colxx xxs="12" lg="3">
                                         <FormGroup className="error-l-100">
                                             <Label>Complaint Number</Label>
-                                            <Field className="form-control" name="name" />
+                                            <Field className="form-control" name="complaintNumber" />
                                         </FormGroup>
                                     </Colxx>
                                     {/* Form Column 3 */}
@@ -90,8 +119,8 @@ export default function MailingSectionForm ({ heading }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Complaint Date</Label>
                                             <FormikDatePicker
-                                                name="date"
-                                                value={values.date}
+                                                name="complaintDate"
+                                                value={values.complaintDate}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -102,8 +131,8 @@ export default function MailingSectionForm ({ heading }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">First Response Date from Company </Label>
                                             <FormikDatePicker
-                                                name="date"
-                                                value={values.date}
+                                                name="firstResponseDateFromCompany"
+                                                value={values.firstResponseDateFromCompany}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -118,8 +147,8 @@ export default function MailingSectionForm ({ heading }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Escalation Date Sent to Company</Label>
                                             <FormikDatePicker
-                                                name="date"
-                                                value={values.date}
+                                                name="escalationDateSentToCompany"
+                                                value={values.escalationDateSentToCompany}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -130,8 +159,8 @@ export default function MailingSectionForm ({ heading }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Requirement Raised Date</Label>
                                             <FormikDatePicker
-                                                name="date"
-                                                value={values.date}
+                                                name="requirementRaisedDate"
+                                                value={values.requirementRaisedDate}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -142,8 +171,8 @@ export default function MailingSectionForm ({ heading }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Requirement Reverted Date</Label>
                                             <FormikDatePicker
-                                                name="date"
-                                                value={values.date}
+                                                name="requirementRevertedDate"
+                                                value={values.requirementRevertedDate}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -154,8 +183,8 @@ export default function MailingSectionForm ({ heading }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Reminder Sent Date</Label>
                                             <FormikDatePicker
-                                                name="date"
-                                                value={values.date}
+                                                name="reminderSentDate"
+                                                value={values.reminderSentDate}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -170,8 +199,8 @@ export default function MailingSectionForm ({ heading }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Second Response Date from Company</Label>
                                             <FormikDatePicker
-                                                name="date"
-                                                value={values.date}
+                                                name="secondResponseDateFromCompany"
+                                                value={values.secondResponseDateFromCompany}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -183,13 +212,13 @@ export default function MailingSectionForm ({ heading }) {
                                             <Label className="d-block">Draft Mail Sent by customer or Not</Label>
                                             <FormikCustomRadioGroup
                                                 inline
-                                                name="draftSentByCustomer"
-                                                id="draftSentByCustomer"
+                                                name="isDraftSentByCustomer"
+                                                id="isDraftSentByCustomer"
                                                 label="Which of these?"
-                                                value={values.draftSentByCustomer}
+                                                value={values.isDraftSentByCustomer}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
-                                                options={draftSentByCustomer}
+                                                options={isDraftSentByCustomer}
                                             />
                                         </FormGroup>
                                     </Colxx>
@@ -198,8 +227,8 @@ export default function MailingSectionForm ({ heading }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Is draft shared ?</Label>
                                             <FormikCheckbox
-                                                name="draftShared"
-                                                value={values.draftShared}
+                                                name="isDraftShared"
+                                                value={values.isDraftShared}
                                                 label="Draft shared with the customer"
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
@@ -211,8 +240,8 @@ export default function MailingSectionForm ({ heading }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Draft shared with the customer Date</Label>
                                             <FormikDatePicker
-                                                name="date"
-                                                value={values.date}
+                                                name="customerDraftSharedDate"
+                                                value={values.customerDraftSharedDate}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -376,8 +405,8 @@ export default function MailingSectionForm ({ heading }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Draft shared with the customer Date</Label>
                                             <FormikDatePicker
-                                                name="date"
-                                                value={values.date}
+                                                name="firstCustomerDraftSharedDate"
+                                                value={values.firstCustomerDraftSharedDate}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -425,8 +454,8 @@ export default function MailingSectionForm ({ heading }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Reminder Sent Date</Label>
                                             <FormikDatePicker
-                                                name="date"
-                                                value={values.date}
+                                                name="secondReminderSentDate"
+                                                value={values.secondReminderSentDate}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -458,7 +487,7 @@ export default function MailingSectionForm ({ heading }) {
                                             <Editor
                                                 apiKey={tinyMceApiKey}
                                                 onInit={(evt, editor) => editorRef.current = editor}
-                                                initialValue="<p>This is the initial content of the editor.</p>"
+                                                initialValue = {values.escalationMailPoints}
                                                 init={{
                                                 height: 500,
                                                 menubar: false,
@@ -486,7 +515,7 @@ export default function MailingSectionForm ({ heading }) {
                                             <Editor
                                                 apiKey={tinyMceApiKey}
                                                 onInit={(evt, editor) => editorRef.current = editor}
-                                                initialValue="<p>This is the initial content of the editor.</p>"
+                                                initialValue = {values.earlierMailEditors}
                                                 init={{
                                                 height: 500,
                                                 menubar: false,

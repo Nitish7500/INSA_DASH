@@ -22,15 +22,15 @@ import GetEmailData from 'components/reusable-components/tabpanes/forms/get-emai
 import DocumentForm from 'components/reusable-components/tabpanes/forms/document-form';
 import NonResponsive from 'components/reusable-components/tabpanes/forms/non-responsive';
 import { getComplaintDetailsById } from 'services/complaints.services';
+import { useQuery } from 'hooks/useQuery';
 
 const ComplaintDetails = ({ match }) => {
   const [activeTab, setActiveTab] = useState('details');
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
 
-  let {search} = useLocation();
-  const query = new URLSearchParams(search);
-  const complaintId = query.get('complaintId');
+  const { complaintId } = useQuery(['complaintId']);
+  // console.log(complaintId);
 
   //getting Complaint by Id through complaints.services
   useEffect(() => {
@@ -67,7 +67,7 @@ const ComplaintDetails = ({ match }) => {
             <NavItem>
               <NavLink
                 location={{}}
-                to="#"
+                to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
                   active: activeTab === 'details',
                   'nav-link': true,
@@ -80,7 +80,7 @@ const ComplaintDetails = ({ match }) => {
             <NavItem>
               <NavLink
                 location={{}}
-                to="#"
+                to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
                   active: activeTab === 'mailing',
                   'nav-link': true,
@@ -93,7 +93,7 @@ const ComplaintDetails = ({ match }) => {
             <NavItem>
               <NavLink
                 location={{}}
-                to="#"
+                to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
                   active: activeTab === 'igms',
                   'nav-link': true,
@@ -106,7 +106,7 @@ const ComplaintDetails = ({ match }) => {
             <NavItem>
               <NavLink
                 location={{}}
-                to="#"
+                to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
                   active: activeTab === 'ombudsman',
                   'nav-link': true,
@@ -119,7 +119,7 @@ const ComplaintDetails = ({ match }) => {
             <NavItem>
               <NavLink
                 location={{}}
-                to="#"
+                to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
                   active: activeTab === 'resolution',
                   'nav-link': true,
@@ -132,7 +132,7 @@ const ComplaintDetails = ({ match }) => {
             <NavItem>
               <NavLink
                 location={{}}
-                to="#"
+                to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
                   active: activeTab === 'legal',
                   'nav-link': true,
@@ -145,7 +145,7 @@ const ComplaintDetails = ({ match }) => {
             <NavItem>
               <NavLink
                 location={{}}
-                to="#"
+                to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
                   active: activeTab === 'saveEmail',
                   'nav-link': true,
@@ -158,7 +158,7 @@ const ComplaintDetails = ({ match }) => {
             <NavItem>
               <NavLink
                 location={{}}
-                to="#"
+                to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
                   active: activeTab === 'getEmail',
                   'nav-link': true,
@@ -171,7 +171,7 @@ const ComplaintDetails = ({ match }) => {
             <NavItem>
               <NavLink
                 location={{}}
-                to="#"
+                to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
                   active: activeTab === 'document',
                   'nav-link': true,
@@ -184,7 +184,7 @@ const ComplaintDetails = ({ match }) => {
             <NavItem>
               <NavLink
                 location={{}}
-                to="#"
+                to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
                   active: activeTab === 'nonResponsive',
                   'nav-link': true,
@@ -203,39 +203,39 @@ const ComplaintDetails = ({ match }) => {
             </TabPane>
 
             <TabPane tabId="mailing">
-              <MailingSectionForm heading='Mailing Section' />
+              <MailingSectionForm heading='Mailing Section' details={items} complaintId={complaintId} />
             </TabPane>
 
             <TabPane tabId="igms">
-              <IGMSForm heading='IGMS Section' />
+              <IGMSForm heading='IGMS Section' details={items} complaintId={complaintId} />
             </TabPane>
 
             <TabPane tabId="ombudsman">
-              <OmbudsmanForm heading='Ombudsman Section'/>
+              <OmbudsmanForm heading='Ombudsman Section' details={items} complaintId={complaintId} />
             </TabPane>
 
             <TabPane tabId="resolution">
-              <ResolutionForm heading='Resolution Section'/>
+              <ResolutionForm heading='Resolution Section' details={items} complaintId={complaintId} />
             </TabPane>
 
             <TabPane tabId="legal">
-              <LegalForm heading='Legal Section' />
+              <LegalForm heading='Legal Section' details={items} complaintId={complaintId} />
             </TabPane>
 
             <TabPane tabId="saveEmail">
-              <SavedEmail heading='Send Email Section' />
+              <SavedEmail heading='Send Email Section' details={items} complaintId={complaintId} />
             </TabPane>
 
             <TabPane tabId="getEmail">
-              <GetEmailData heading='Get Email Data' />
+              <GetEmailData heading='Get Email Data' details={items} complaintId={complaintId} />
             </TabPane>
           
             <TabPane tabId="document">
-              <DocumentForm heading='Document Uploads' />
+              <DocumentForm heading='Document Uploads' details={items} complaintId={complaintId} />
             </TabPane>
 
             <TabPane tabId="nonResponsive">
-              <NonResponsive heading='Non Responsive Customer Flow' />
+              <NonResponsive heading='Non Responsive Customer Flow' details={items} complaintId={complaintId} />
             </TabPane>
 
           </TabContent>

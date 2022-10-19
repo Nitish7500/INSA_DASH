@@ -35,6 +35,11 @@ export const isAcknowledgementReceived = [
     { value: 'No', label: 'No' }
 ];
 
+export const isDraftSentByCustomer = [
+    { value: 'Yes', label: 'Yes' },
+    { value: 'No', label: 'No' }
+];
+
 export const isRequirementMailSent = [
     { value: 'Yes', label: 'Yes' },
     { value: 'No', label: 'No' }

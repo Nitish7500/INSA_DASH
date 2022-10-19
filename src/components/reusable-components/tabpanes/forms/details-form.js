@@ -7,13 +7,13 @@ import * as Yup from 'yup';
 import React, { useEffect, useState } from 'react'
 import { Button, Card, CardBody, Form, FormGroup, Input, Label, Modal, ModalBody, Row } from 'reactstrap'
 import { claimRejectionTypes, education, gender, movementOfCase, occupation, policyTypes, realtionships } from 'constants/formValues';
-import { assignLegalExpert, assignOmbudsman, assignOMD, getAllInsa, getAllStates, getComplaintTypesByPolicyTypeId, getFirstDraftData, getInsuranceCompanyNamesByPolicyTypeId, getLegalUserData, getPolicyTypes, getUserBasedData } from 'services/complaints.services';
+import { assignIGMS, assignLegalExpert, assignOmbudsman, getAllInsa, getAllStates, getComplaintTypesByPolicyTypeId, getFirstDraftData, getInsuranceCompanyNamesByPolicyTypeId, getLegalUserData, getPolicyTypes, getUserBasedData } from 'services/complaints.services';
 
-// const options = [
-//     { value: '', label: 'Select an Option' },
-//     { value: 'Something', label: 'Something' },
-//     { value: 'Anything', label: 'Anything' }
-// ];
+const options = [
+    { value: '', label: 'Select an Option' },
+    { value: 'Something', label: 'Something' },
+    { value: 'Anything', label: 'Anything' }
+];
 
 
 export default function DetailsForm({ heading, details }) {
@@ -102,7 +102,7 @@ export default function DetailsForm({ heading, details }) {
         const fetchAllExecutives = async () => {
             try {
                 const {data} = await getAllInsa();
-                setAllExecutives(data);
+                setAllExecutives(data.data);
             } catch (error) {
                 console.log('All INSA Executives ', error);
             }
@@ -115,7 +115,7 @@ export default function DetailsForm({ heading, details }) {
         const fetchLegalExperts = async () => {
             try {
                 const {data} = await assignLegalExpert();
-                setAllLegalExecutives(data);
+                setAllLegalExecutives(data.data);
             } catch (error) {
                 console.log('All Legal Experts ', error);
             }
@@ -128,7 +128,7 @@ export default function DetailsForm({ heading, details }) {
         const fetchAllOmbudsman = async () => {
             try {
                 const {data} = await assignOmbudsman();
-                setAllOmbudsman(data);
+                setAllOmbudsman(data.data);
             } catch (error) {
                 console.log('All Ombudsman ', error);
             }
@@ -136,9 +136,19 @@ export default function DetailsForm({ heading, details }) {
             console.log(allOmbudsman);
         }
         fetchAllOmbudsman();
-
-
-
+        
+        //getting all Ombudsman
+        const fetchAllCompanyIgms = async () => {
+            try {
+                const {data} = await assignIGMS();
+                setAllCompanies(data.data);
+            } catch (error) {
+                console.log('All Companies / IGMS ', error);
+            }
+            setIsLoaded(true);
+            console.log(allCompanies);
+        }
+        fetchAllCompanyIgms();
 
         // const getFirstDraft = async () => {
         //     try {
