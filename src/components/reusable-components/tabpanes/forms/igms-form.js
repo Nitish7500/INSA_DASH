@@ -30,7 +30,9 @@ export default function IGMSForm ({ heading }) {
                     name: 'Yash',
                     email: 'test@test.com',
                     phone: '9453578234',
-                    choice: 'Yes'
+                    choice: 'Yes',
+                    igmsTokenNo: '',
+                    
                 }}
                     // validationSchema={SignupSchema}
                     // onSubmit={onSubmit}

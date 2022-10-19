@@ -11,7 +11,7 @@ async function request(method, url, data) {
         url, 
         data, 
         headers: {
-            Authorization: `${authorizedUser.data.token || authorizedUser.token}`
+            Authorization: `Bearer ${authorizedUser.data.token || authorizedUser.token}`
         }
     }).then(res => res.data);
 }

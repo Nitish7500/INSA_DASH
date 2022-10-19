@@ -6,8 +6,8 @@ import { Field, Formik } from 'formik'
 import * as Yup from 'yup';
 import React, { useEffect, useState } from 'react'
 import { Button, Card, CardBody, Form, FormGroup, Input, Label, Modal, ModalBody, Row } from 'reactstrap'
-import { education, gender, movementOfCase, occupation, policyTypes, realtionships } from 'constants/formValues';
-import { getAllStates, getComplaintTypesByPolicyTypeId, getFirstDraftData, getInsuranceCompanyNamesByPolicyTypeId, getPolicyTypes, getUserBasedData } from 'services/complaints.services';
+import { claimRejectionTypes, education, gender, movementOfCase, occupation, policyTypes, realtionships } from 'constants/formValues';
+import { assignLegalExpert, assignOmbudsman, assignOMD, getAllInsa, getAllStates, getComplaintTypesByPolicyTypeId, getFirstDraftData, getInsuranceCompanyNamesByPolicyTypeId, getLegalUserData, getPolicyTypes, getUserBasedData } from 'services/complaints.services';
 
 // const options = [
 //     { value: '', label: 'Select an Option' },
@@ -26,6 +26,11 @@ export default function DetailsForm({ heading, details }) {
     const [insuranceCompanies, setInsuranceCompanies] = useState([]);
     const [firstDraft, setFirstDraft] = useState([]);
     const [userBasedData, setUserBasedData] = useState([]);
+    const [allExecutives, setAllExecutives] = useState([]);
+    const [allExperts, setAllExperts] = useState([]);
+    const [allCompanies, setAllCompanies] = useState([]);
+    const [allOmbudsman, setAllOmbudsman] = useState([]);
+    const [allLegalExecutives, setAllLegalExecutives] = useState([]);
 
     // objects nested in api response
     let complaint = details?.complaintTypeId;
@@ -34,6 +39,7 @@ export default function DetailsForm({ heading, details }) {
     let wholeAddress = details?.wholeAddress;
     let insuranceCompany = details?.insuranceCompanyId;
     let policyType = details?.policyTypeId;
+    let complaintType = details.complaintTypeId;
     
     // IDs of all important objects
     let policyTypeId = policyType ? policyType._id : '';
@@ -42,7 +48,7 @@ export default function DetailsForm({ heading, details }) {
     let leadId = lead ? lead._id : '';
     let userId = user ? user._id : '';
 
-    console.log(details);
+    // console.log(details);
     
     let date = new Date(parseInt(user?.dob.substr(6)));
 
@@ -59,7 +65,7 @@ export default function DetailsForm({ heading, details }) {
         }
         fetchData();
         
-        //getting all states (ombudsman state locations and districts)
+        //getting all policy types from api ::-- to be noted that policy type here is being referred to Insurance Type i.e. LI, GI, HI etc --::
         const fetchPolicyType = async () => {
             try {
                 const {data} = await getPolicyTypes();
@@ -71,8 +77,14 @@ export default function DetailsForm({ heading, details }) {
         }
         fetchPolicyType();
 
-        //getting all complaint types and  Insurance companies details on the basis of policy type selected
+        // getting all complaint types and  Insurance companies details on the basis of policy type selected
         handleSelectInsurancetype(policyTypeId);
+
+        // getting complaint type if coming from api response
+        getComplaintTypes(complaintTypeId);
+
+        // getting insurance company type
+        getInsuranceCompanies(insuranceCompanyId);
 
         // get user based data method with payload
         const fetchUserBaseddata = async () => {
@@ -86,6 +98,47 @@ export default function DetailsForm({ heading, details }) {
         }
         fetchUserBaseddata();
 
+        //getting all Executives list
+        const fetchAllExecutives = async () => {
+            try {
+                const {data} = await getAllInsa();
+                setAllExecutives(data);
+            } catch (error) {
+                console.log('All INSA Executives ', error);
+            }
+            setIsLoaded(true);
+            console.log(allExecutives);
+        }
+        fetchAllExecutives();
+
+        //getting all Legal Experts
+        const fetchLegalExperts = async () => {
+            try {
+                const {data} = await assignLegalExpert();
+                setAllLegalExecutives(data);
+            } catch (error) {
+                console.log('All Legal Experts ', error);
+            }
+            setIsLoaded(true);
+            console.log(allLegalExecutives);
+        }
+        fetchLegalExperts();
+        
+        //getting all Ombudsman
+        const fetchAllOmbudsman = async () => {
+            try {
+                const {data} = await assignOmbudsman();
+                setAllOmbudsman(data);
+            } catch (error) {
+                console.log('All Ombudsman ', error);
+            }
+            setIsLoaded(true);
+            console.log(allOmbudsman);
+        }
+        fetchAllOmbudsman();
+
+
+
 
         // const getFirstDraft = async () => {
         //     try {
@@ -97,9 +150,7 @@ export default function DetailsForm({ heading, details }) {
         //     setIsLoaded(true);
         // }
         // getFirstDraft();
-        
-
-        
+    
         
     }, []);
     
@@ -132,7 +183,7 @@ export default function DetailsForm({ heading, details }) {
     // function handling policytype id :: insurance type id
     const handleSelectInsurancetype = (insuranceTypeId) => {
         let policyTypeId = insuranceTypeId;
-        console.log(policyTypeId);
+        console.log('Policy Type ID ', policyTypeId);
         getComplaintTypes(policyTypeId);
         getInsuranceCompanies(policyTypeId);
     }
@@ -158,53 +209,55 @@ export default function DetailsForm({ heading, details }) {
             <CardBody>
                 <h2 className="mb-5">{heading}</h2>
                 <Formik initialValues={{
-                    name : user ? user.name : '- -',
-                    email : details ? details.email : '- -',
-                    phone : details ? details.phone : '- -',
-                    alternate : user ? user.alternatePhone : '- -',
-                    income : user ? user.income : '- -',
-                    occupation : details ? details.occupation : '- -',
-                    pincode : user ? user.pinCode :  '- -',
-                    dob : date ? date : '- -',
-                    state : user ? user.state :  '- -',
-                    district: user ? user.district :  '- -',
-                    nominee : '- -',
-                    deceased : '- -',
-                    gender : details ? details.gender : '- -',
-                    pancard : details ? details.panNumber : '- -',
-                    education : details ? details.education : '- -',
-                    policyNumber : details ? details.policyNumber : '- -',
-                    claimAmt : details.claimAmount ? details.claimAmount : '- -',
-                    address : user ? user.address : '- -',
-                    insuranceType : insuranceCompany ? insuranceCompany._id : '- -',
-                    rejectionType : '- -',
-                    complaintType : '- -',
-                    relationship : '- -',
-                    policyType : details ? details.policyType : '- -',
-                    insuranceCompanyType : '- -',
-                    caseMovement : '- -',
-                    legalExecutiveAssigned : '- -',
-                    expertAssigned : '- -',
-                    leadNumber : lead ? lead.leadId : '- -',
-                    companyAssigned : '- -',
-                    status : details ? details.status : '- -',
-                    ombudsmanAssigned : '- -',
-                    houseNumber : '- -',
-                    street : '- -',
-                    city : wholeAddress ? wholeAddress.City : '- -',
-                    isACovidComplaint : details ? details.covidCheck : '- -',
-                    isAServiceComplaint : details ? details.asAServiceCheck : '- -',
-                    internalLegalExecutiveAssigned : '- -',
-                    statement : '- -',
-                    custCreatedEmail : '- -',
-                    custCreatedPassword : '- -',
-                    approvedClaimAmt : '- -',
-                    companyResponseDoc : '- -',
-                    igmsDoc : '- -',
-                    awardRejectedDoc : '- -',
-                    ombudsmanDoc : '- -',
-                    complaintCourierReceiptDoc : '- -',
-                    form6aCourierReceiptDoc : '- -',
+                    name : user ? user.name : '--',
+                    email : details ? details.email : '--',
+                    phone : details ? details.phone : '--',
+                    alternate : user ? user.alternatePhone : '--',
+                    income : user ? user.income : '--',
+                    occupation : details ? details.occupation : '--',
+                    pincode : user ? user.pinCode :  '--',
+                    dob : date ? date : '--',
+                    state : user ? user.state :  '--',
+                    district: user ? user.district :  '--',
+                    nominee : details ? details.nominee : '--',
+                    deceased : details ? details.deceasedPerson : '--',
+                    gender : details ? details.gender : '--',
+                    pancard : details ? details.panNumber : '--',
+                    education : details ? details.education : '--',
+                    policyNumber : details ? details.policyNumber : '--',
+                    claimAmt : details.claimAmount ? details.claimAmount : '--',
+                    address : user ? user.address : '--',
+                    insuranceType : insuranceCompany ? insuranceCompany._id : '--',
+                    rejectionType : details ? details.claimRejectionType : '--',
+                    complaintType : complaintTypeId ? complaintTypeId : '--',
+                    relationship : details ? details.nomineeRelation : '--',
+                    policyType : details ? details.policyType : '--',
+                    insuranceCompanyType : insuranceCompanyId ? insuranceCompanyId : '--',
+                    caseMovement : details ? details.movementOfCase : '--',
+                    executiveName : details ? details.executiveName : '--',
+                    legalExecutiveAssigned : details ? details.assign_to_legalExpert : '--',
+                    expertAssigned : details ? details.assign_to_expert : '--',
+                    leadNumber : lead ? lead.leadId : '--',
+                    companyAssigned : details ? details.assignToCompanyIGMS : '--',
+                    status : details ? details.status : '--',
+                    ombudsmanAssigned : details ? details.assignToOmbudsman : '--',
+                    houseNumber : wholeAddress ? wholeAddress["DoorNo/Bldg/Name/Floor"] : '--',
+                    street : wholeAddress ? wholeAddress["Street/Area"] : '--',
+                    cityName : wholeAddress ? wholeAddress["City/Town/Panchayath/Village"] : '--',
+                    tehsil : wholeAddress ? wholeAddress["Taluk/Tehsil"] : '--',
+                    isACovidComplaint : details ? details.covidCheck : '--',
+                    isAServiceComplaint : details ? details.asAServiceCheck : '--',
+                    internalLegalExecutiveAssigned : details ? details.assigned_internal_legal_executive : '--',
+                    complaintStatement : details ? details.complaintStatement : '--',
+                    custCreatedEmail : details ? details.executive_created_email : '--',
+                    custCreatedPassword : details ? details.password : '--',
+                    approvedClaimAmt : details ? details.actualRefundAmount : '--',
+                    companyResponseDoc : '--',
+                    igmsDoc : '--',
+                    awardRejectedDoc : '--',
+                    ombudsmanDoc : '--',
+                    complaintCourierReceiptDoc : '--',
+                    form6aCourierReceiptDoc : '--',
                     generatedAddress : wholeAddress ? wholeAddress.address : '',
 
                 }}
@@ -432,9 +485,9 @@ export default function DetailsForm({ heading, details }) {
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
-                                                <option value="">Select Claim Rejection Type</option>
-                                                <option value="1">Bihar</option>
-                                                <option value="2">2</option>
+                                                {claimRejectionTypes.map((type) => (
+                                                    <option value={type.value}>{type.label}</option>
+                                                ))}
                                             </select>
                                         </FormGroup>
                                 
@@ -451,8 +504,8 @@ export default function DetailsForm({ heading, details }) {
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
-                                                {complaintTypes.map((complaintType) => (
-                                                    <option value={complaintType._id}>{complaintType.name}</option>
+                                                {complaintTypes.map((type) => (
+                                                    <option value={type._id}>{type.name}</option>
                                                 ))}
                                             </select>
                                         </FormGroup>
@@ -518,7 +571,7 @@ export default function DetailsForm({ heading, details }) {
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
-                                                {policyTypes.map((key) => (
+                                                {policyTypes?.map((key) => (
                                                     <option value={key.value}>{key.label}</option>
                                                 ))}
                                             </select>
@@ -540,9 +593,9 @@ export default function DetailsForm({ heading, details }) {
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
-                                                <option value="">Select Executive Name</option>
-                                                <option value="1">Bihar</option>
-                                                <option value="2">2</option>
+                                                {allExecutives?.map((executive) => (
+                                                    <option value={executive.user_id}>{executive.user_id}</option>
+                                                ))}
                                             </select>
                                         </FormGroup>
                                         
@@ -554,9 +607,9 @@ export default function DetailsForm({ heading, details }) {
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
-                                                <option value="">Select Legal Executive</option>
-                                                <option value="1">Bihar</option>
-                                                <option value="2">2</option>
+                                                {allLegalExecutives?.map((executive) => (
+                                                    <option value={executive.user_id}>{executive.user_id}</option>
+                                                ))}
                                             </select>
                                         </FormGroup>
 
@@ -573,9 +626,9 @@ export default function DetailsForm({ heading, details }) {
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
-                                                <option value="">Select Expert</option>
-                                                <option value="1">Bihar</option>
-                                                <option value="2">2</option>
+                                                {allExecutives?.map((executive) => (
+                                                    <option value={executive.user_id}>{executive.user_id}</option>
+                                                ))}
                                             </select>
                                         </FormGroup>
 
@@ -593,14 +646,14 @@ export default function DetailsForm({ heading, details }) {
                                         <FormGroup className="error-l-100 pt-1">
                                             <Label>Assign To Company/IGMS</Label>
                                             <select name="companyAssigned"
-                                                    className="form-control"
-                                                    value={values.companyAssigned}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                >
-                                                <option value="">Select Company</option>
-                                                <option value="1">Bihar</option>
-                                                <option value="2">2</option>
+                                                className="form-control"
+                                                value={values.companyAssigned}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                            >
+                                               {allCompanies?.map((company) => (
+                                                    <option value={company.user_id}>{company.user_id}</option>
+                                                ))}
                                             </select>
                                         </FormGroup>
                                         
@@ -633,9 +686,9 @@ export default function DetailsForm({ heading, details }) {
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
                                             >
-                                                <option value="">Select Policy type</option>
-                                                <option value="1">Illeterate</option>
-                                                <option value="2">Below 10th</option>
+                                                {allOmbudsman?.map((ombudsman) => (
+                                                    <option value={ombudsman.user_id}>{ombudsman.user_id}</option>
+                                                ))}
                                             </select>
                                         </FormGroup>
 
@@ -717,9 +770,9 @@ export default function DetailsForm({ heading, details }) {
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
-                                                <option value="">Select Executive Name</option>
-                                                <option value="1">Illeterate</option>
-                                                <option value="2">Below 10th</option>
+                                                {allLegalExecutives?.map((executives) => (
+                                                    <option value={executives.user_id}>{executives.user_id}</option>
+                                                ))}
                                             </select>
                                         </FormGroup>
 
@@ -735,7 +788,7 @@ export default function DetailsForm({ heading, details }) {
                                             <Colxx xxs="12" lg="12">
                                                 <FormGroup className="error-l-100">
                                                     <Label>Complaint Statement</Label>
-                                                    <Input type="textarea" rows="5" name="text" id="statement" />
+                                                    <Input type="textarea" rows="5" name="complaintStatement" id="statement" />
                                                 </FormGroup>
                                             </Colxx>
                                         </Row>

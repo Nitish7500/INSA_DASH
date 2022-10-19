@@ -1,10 +1,6 @@
 import { apisURLs } from "./apisURLs.services"
 import { request } from "./requests.services"
 
-const getComplaintDetailsById = async (complaintId) => {
-   return await request("GET", apisURLs.getComplaintById + complaintId);
-}
-
 const getAllStates = async () => {
     return await request('GET', apisURLs.state);
 }
@@ -13,16 +9,20 @@ const getAllInsa = async () => {
     return await request('GET', apisURLs.getAllInsa);
 }
 
+const assignOmbudsman = async () => {
+    return await request('GET', apisURLs.assignOMD);
+}
+
+const assignLegalExpert = async () => {
+    return await request('GET', apisURLs.assignLegalExpert);
+}
+
+const assignIGMS = async () => {
+    return await request('GET', apisURLs.assignIGMS);
+}
+
 const getPolicyTypes = async () => {
     return await request('GET', apisURLs.policyType);
-}
-
-const getComplaintTypesByPolicyTypeId = async (policyTypeId) => {
-    return await request('GET', apisURLs.getComplaintTypeList, policyTypeId);
-}
-
-const getInsuranceCompanyNamesByPolicyTypeId = async (policyTypeId) => {
-    return await request('GET', apisURLs.getInsuranceCompanyList, policyTypeId);
 }
 
 const getFirstDraftData = async () => {
@@ -31,6 +31,12 @@ const getFirstDraftData = async () => {
 
 const getUserBasedData = async () => {
     return await request('GET', apisURLs.userBasedData);
+}
+
+// --------------- APIs with Payload -------------- //
+
+const getComplaintDetailsById = async (complaintId) => {
+    return await request("GET", apisURLs.getComplaintById + complaintId);
 }
 
 const getAllForEscalationByUserId = async (userId) => {
@@ -45,20 +51,16 @@ const findLegalByComplaintId = async (complaintId) => {
     return await request('GET', apisURLs.findLegalByComplaintId, complaintId);
 }
 
+const getComplaintTypesByPolicyTypeId = async (policyTypeId) => {
+    return await request('GET', apisURLs.getComplaintTypeList, policyTypeId);
+}
+
+const getInsuranceCompanyNamesByPolicyTypeId = async (policyTypeId) => {
+    return await request('GET', apisURLs.getInsuranceCompanyList, policyTypeId);
+}
+
 const userAdmin = async (id) => {
     return await request('GET', apisURLs.userAdmin, id);
-}
-
-const assignOMD = async () => {
-    return await request('GET', apisURLs.assignOMD);
-}
-
-const assignLegalExpert = async () => {
-    return await request('GET', apisURLs.assignLegalExpert);
-}
-
-const assignIGMS = async () => {
-    return await request('GET', apisURLs.assignIGMS);
 }
 
 const checkRefreshToken = async (email) => {
@@ -101,7 +103,7 @@ export {
     findByUserId,
     findLegalByComplaintId,
     userAdmin,
-    assignOMD,
+    assignOmbudsman,
     assignLegalExpert,
     assignIGMS,
     checkRefreshToken,
@@ -110,5 +112,7 @@ export {
     getLegalUserData,
     getCompanyNoticeData,
     omdRemindMail,
-    getCurrentInvoiceCount
+    getCurrentInvoiceCount,
+    getAllInsa,
+
 }

@@ -151,10 +151,13 @@ export const setCurrentLanguage = (locale) => {
 export const getCurrentUser = () => {
   let user = null;
   try {
-    user =
-      localStorage.getItem('insa_accessor') != null
-        ? JSON.parse(localStorage.getItem('insa_accessor'))
-        : null;
+    user = localStorage.getItem('insa_accessor') != null
+      ? JSON.parse(localStorage.getItem('insa_accessor'))
+      : null;
+    const insa_agentToken = localStorage.getItem('insa_agentToken') != null
+    ? JSON.parse(localStorage.getItem('insa_agentToken'))
+    : null;  
+    user = {...user, insa_agentToken}
   } catch (error) {
     console.log('>>>>: src/helpers/Utils.js  : insa_accessor -> error', error);
     user = null;
@@ -168,11 +171,20 @@ export const setCurrentUser = (user) => {
       localStorage.setItem('insa_accessor', JSON.stringify(user));
     } else {
       localStorage.removeItem('insa_accessor');
+      localStorage.removeItem('insa_agentToken');
     }
   } catch (error) {
     console.log('>>>>: src/helpers/Utils.js : insa_accessor -> error', error);
   }
 };
+
+// export const getAgentToken = () => {
+//   try {
+//     user = localStorage.getItem('insa_accessor') != null
+//       ? JSON.parse(localStorage.getItem('insa_accessor'))
+//       : null;
+//   }
+// }
 
 export const getComplaints = () => {
   let user = null;

@@ -125,8 +125,13 @@ export const policyTypes = [
     { value: 'Others', label: 'Others' },   
 ];
 
+export const claimRejectionTypes = [
+    { value: '', label: 'Select Rejection Type' },
+    { value: 'Pre-existing Disease', label: 'Pre-existing Disease' }
+];
+
 export const realtionships = [
-    { value: '', label: 'Select Relation'},
+    { value: '-', label: 'Select Relation'},
     { value: 'Self', label: 'Self' },
     { value: 'Mother', label: 'Mother' },
     { value: 'Father', label: 'Father' },
@@ -249,7 +254,7 @@ export const consumerCourtLocation = [
 ];
 
 export const movementOfCase = [
-    { value: '', label: 'Select Type' },
+    { value: '', label: 'Select Movement' },
     { value: 'Ombudsman', label: 'Ombudsman' },
     { value: 'Legal', label: 'Legal' },
     { value: 'Others', label: 'Others' },
