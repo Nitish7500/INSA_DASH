@@ -19,7 +19,7 @@ export function capitalizeEachWordInString(string) {
     }
 }
 
-//to fetch parameters from URL
+// to fetch parameters from URL
 export function getParametersFromURL(parameterIdentifier) {
     let {search} = useLocation();
     const query = new URLSearchParams(search);
@@ -27,4 +27,24 @@ export function getParametersFromURL(parameterIdentifier) {
     return parameter;
 }
 
+// to format date from yyyy-mm-dd format to dd-mm-yyyy format
+export const formatDate = (responseDate) => {
+    const date = responseDate;
+    let result = '';
+    if (date === undefined || date === '' || date === null) {
+        result = '';
+        console.log(result);
+        return 0;
+    } else {
+        const [year, month, day] = date.split('-');
+        result = [day, month, year].join('-');
+        console.log('formatted date using func', result);
+    }
+    return result;
+}
 
+// return bool for values coming in Yes and No from API Request
+export const returnBool = (status) => {
+    let value = (status === 'Yes') ? true : false;
+    return value;
+}

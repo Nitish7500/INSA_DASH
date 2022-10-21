@@ -10,6 +10,7 @@ import { choices, complaintDelayReason, draftSentByCustomer, firstResponseType, 
 import { Editor } from '@tinymce/tinymce-react';
 import { tinyMceApiKey } from 'constants/defaultValues';
 import { useQuery } from 'hooks/useQuery';
+import { formatDate } from 'helpers/CommonHelper';
 
 
 export default function MailingSectionForm ({ heading, details, complaintId }) {
@@ -25,6 +26,8 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
         }
     };
 
+    console.log(details);
+
     // const onSubmit = (values, { setSubmitting }) => {
     //     const payload = {
     //       ...values,
@@ -36,43 +39,40 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
     //     }, 1000);
     // };
 
+    console.log('Response date', details.complaint_date);
+    console.log('Formatted date', formatDate(details.complaint_date));
+
     return (
         <Card>
             <CardBody>
                 <h2 className="mb-4">{heading}</h2>
                 <Formik initialValues={{
                     isCustomerIdRegistered: '',
-                    complaintNumber: '',
-                    complaintDate: '',
-                    firstResponseDateFromCompany: '',
-                    escalationDateSentToCompany: '',
-                    requirementRaisedDate: '',
-                    requirementRevertedDate: '',
-                    reminderSentDate: '',
-                    secondResponseDateFromCompany: '',
-                    isDraftSentByCustomer: '',
-                    isDraftShared: '',
-                    customerDraftSharedDate: '',
-                    isAcknowledgementReceived: '',
-                    isRequirementMailSent: '',
-                    isRequirementMailRevert: '',
-                    isFirstResponseFromCompany: '',
-                    isFirstReminderMailSentToCompany: '',
-                    firstResponseType: '',
-                    complaintDelayReason: '',
+                    complaintNumber: details ? details.complaint_number : '',
+                    complaintDate: details ? formatDate(details.complaint_date) : '',
+                    firstResponseDateFromCompany: details ? formatDate(details.response_date) : '',
+                    escalationDateSentToCompany: details ? formatDate(details.complaint_escalation_date) : '',
+                    requirementRaisedDate: details ? formatDate(details.requirementRaisedDate) : '',
+                    requirementRevertedDate: details ? formatDate(details.requirementRevertedDate) : '',
+                    reminderSentDate: details ? formatDate(details.requirementSentDate) : '',
+                    secondResponseDateFromCompany: details ? details.response_date_company : '',
+                    isDraftSentByCustomer: details ? details.is_draft_mail_send : '',
+                    isDraftShared: details ? details.is_draft_mail_send : '',
+                    customerDraftSharedDate: details ? formatDate(details.draftSharedDate) : '',
+                    isAcknowledgementReceived: details ? details.is_acknowledgement : '',
+                    isRequirementMailSent: details ? details.isRequirement : '',
+                    isRequirementMailRevert: details ? details.isRequirementReverted : '',
+                    isFirstResponseFromCompany: details ? details.response_company : '',
+                    isFirstReminderMailSentToCompany: details ? details.reminder_first : '',
+                    firstResponseType: details ? details.firstResponseType : '',
+                    complaintDelayReason: details ? details.complaintDelayReason : '',
                     isFirstEscalationSent: '',
                     isEscalationShared: '',
                     firstCustomerDraftSharedDate: '',
-                    isSecondResponseFromCompany: '',
-                    isSecondReminderMailSentToCompany: '',
+                    isSecondResponseFromCompany: details ? details.response_company2 : '',
+                    isSecondReminderMailSentToCompany: details ? details.reminder_second : '',
                     secondReminderSentDate: '',
                     secondResponseType: '',
-                    m: '',
-                    m: '',
-                    m: '',
-                    m: '',
-                    m: '',
-                    m: '',
                 }}
                     // validationSchema={SignupSchema}
                     // onSubmit={onSubmit}
@@ -538,7 +538,7 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
                             </Colxx>
                             {/* Wrapping Column ends */}
                             <Colxx xxs="12" lg="12" className="text-center">
-                                <Button color="primary" type="submit">
+                                <Button color="primary" type="button">
                                     Submit
                                 </Button>
                             </Colxx>
