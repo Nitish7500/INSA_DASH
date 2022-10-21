@@ -6,7 +6,7 @@ import { Field, Formik } from 'formik'
 import * as Yup from 'yup';
 import React, { useRef, useState } from 'react'
 import { Button, Card, CardBody, CustomInput, Form, FormGroup, Input, Label, Modal, ModalBody, Row } from 'reactstrap'
-import { choices, complaintDelayReason, draftSentByCustomer, firstResponseType, firstResponseTypes, gender, isAcknowledgementReceived, isCustomerIDRegistered, isDraftSentByCustomer, isFirstEscalationSent, isFirstReminderMailSentToCompany, isFirstResponseFromCompany, isfirstResponseFromCompany, isReminderMailSentToCompany, isRequirementMailRevert, isRequirementMailSent, isSecondReminderMailSentToCompany, isSecondResponseFromCompany, options, secondResponseType } from 'constants/formValues';
+import { complaintDelayReason, firstResponseType, isAcknowledgementReceived, isCustomerIDRegistered, isDraftSentByCustomer, isFirstEscalationSent, isFirstReminderMailSentToCompany, isFirstResponseFromCompany, isRequirementMailRevert, isRequirementMailSent, isSecondReminderMailSentToCompany, isSecondResponseFromCompany, secondResponseType } from 'constants/formValues';
 import { Editor } from '@tinymce/tinymce-react';
 import { tinyMceApiKey } from 'constants/defaultValues';
 import { useQuery } from 'hooks/useQuery';
@@ -27,7 +27,7 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
     };
 
     console.log(details);
-
+    
     // const onSubmit = (values, { setSubmitting }) => {
     //     const payload = {
     //       ...values,
@@ -38,9 +38,19 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
     //       setSubmitting(false);
     //     }, 1000);
     // };
-
-    console.log('Response date', details.complaint_date);
-    console.log('Formatted date', formatDate(details.complaint_date));
+                
+    // destructuring the required keys from API response
+    const {complaint_date, response_date, complaint_escalation_date, requirementRaisedDate, requirementRevertedDate, requirementSentDate, response_date_company, draftSharedDate, reminderSentDate } = details;
+    
+    const complaintDate = new Date(formatDate(complaint_date));
+    const firstResponseDateFromCompany = new Date(formatDate(response_date));
+    const escalationDateSentToCompany = new Date(formatDate(complaint_escalation_date));
+    const reqRaisedDate = new Date(formatDate(requirementRaisedDate));
+    const reqRevertedDate = new Date(formatDate(requirementRevertedDate));
+    const firstReminderSentDate = new Date(requirementSentDate);
+    const customerDraftSharedDate = new Date(draftSharedDate);
+    const secondResponseDateFromCompany = new Date(response_date_company);
+    const secondReminderSentDate = new Date(reminderSentDate);
 
     return (
         <Card>
@@ -48,17 +58,17 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
                 <h2 className="mb-4">{heading}</h2>
                 <Formik initialValues={{
                     isCustomerIdRegistered: '',
-                    complaintNumber: details ? details.complaint_number : '',
-                    complaintDate: details ? formatDate(details.complaint_date) : '',
-                    firstResponseDateFromCompany: details ? formatDate(details.response_date) : '',
-                    escalationDateSentToCompany: details ? formatDate(details.complaint_escalation_date) : '',
-                    requirementRaisedDate: details ? formatDate(details.requirementRaisedDate) : '',
-                    requirementRevertedDate: details ? formatDate(details.requirementRevertedDate) : '',
-                    reminderSentDate: details ? formatDate(details.requirementSentDate) : '',
-                    secondResponseDateFromCompany: details ? details.response_date_company : '',
+                    complaintNumber: details.complaint_number ? details.complaint_number : '',
+                    complaintDate: complaintDate,
+                    firstResponseDateFromCompany: firstResponseDateFromCompany,
+                    escalationDateSentToCompany: escalationDateSentToCompany,
+                    reqRaisedDate: reqRaisedDate,
+                    reqRevertedDate: reqRevertedDate,
+                    firstReminderSentDate: firstReminderSentDate,
+                    secondResponseDateFromCompany: secondResponseDateFromCompany,
                     isDraftSentByCustomer: details ? details.is_draft_mail_send : '',
                     isDraftShared: details ? details.is_draft_mail_send : '',
-                    customerDraftSharedDate: details ? formatDate(details.draftSharedDate) : '',
+                    customerDraftSharedDate: customerDraftSharedDate,
                     isAcknowledgementReceived: details ? details.is_acknowledgement : '',
                     isRequirementMailSent: details ? details.isRequirement : '',
                     isRequirementMailRevert: details ? details.isRequirementReverted : '',
@@ -71,8 +81,8 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
                     firstCustomerDraftSharedDate: '',
                     isSecondResponseFromCompany: details ? details.response_company2 : '',
                     isSecondReminderMailSentToCompany: details ? details.reminder_second : '',
-                    secondReminderSentDate: '',
-                    secondResponseType: '',
+                    secondReminderSentDate: secondReminderSentDate,
+                    secondResponseType: details ? details.secondResponseType : '',
                 }}
                     // validationSchema={SignupSchema}
                     // onSubmit={onSubmit}
@@ -159,8 +169,8 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Requirement Raised Date</Label>
                                             <FormikDatePicker
-                                                name="requirementRaisedDate"
-                                                value={values.requirementRaisedDate}
+                                                name="reqRaisedDate"
+                                                value={values.reqRaisedDate}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -171,8 +181,8 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Requirement Reverted Date</Label>
                                             <FormikDatePicker
-                                                name="requirementRevertedDate"
-                                                value={values.requirementRevertedDate}
+                                                name="reqRevertedDate"
+                                                value={values.reqRevertedDate}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -183,8 +193,8 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Reminder Sent Date</Label>
                                             <FormikDatePicker
-                                                name="reminderSentDate"
-                                                value={values.reminderSentDate}
+                                                name="firstReminderSentDate"
+                                                value={values.firstReminderSentDate}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />

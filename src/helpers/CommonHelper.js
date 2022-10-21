@@ -32,15 +32,14 @@ export const formatDate = (responseDate) => {
     const date = responseDate;
     let result = '';
     if (date === undefined || date === '' || date === null) {
-        result = '';
-        console.log(result);
-        return 0;
+        // console.log(result);
+        return null;
     } else {
         const [year, month, day] = date.split('-');
         result = [day, month, year].join('-');
-        console.log('formatted date using func', result);
+        // console.log('formatted date using func', result);
+        return result;
     }
-    return result;
 }
 
 // return bool for values coming in Yes and No from API Request

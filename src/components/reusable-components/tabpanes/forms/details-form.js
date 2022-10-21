@@ -51,6 +51,7 @@ export default function DetailsForm({ heading, details }) {
     // console.log(details);
     
     let date = new Date(parseInt(user?.dob.substr(6)));
+    // console.log(date);
 
     //getting all states (ombudsman state locations and districts)
     useEffect(() => {
