@@ -217,7 +217,7 @@ export const ombudsmanLocation = [
     { value: '17: Guwahti', label: 'Guwahti' },
 ];
 
-export const hearingComment = [
+export const hearingCommentValues = [
     { value: '', label: 'Select Type' },
     { value: 'RefundAccepted', label: 'RefundAccepted' },
     { value: 'SinglePayAccepted', label: 'SinglePayAccepted' },
@@ -242,7 +242,7 @@ export const  resolutionType = [
     { value: 'RefundRejected', label: 'Refund is Rejected' },
 ];
 
-export const ombudsmanPendingReason = [ 
+export const ombudsmanPendingReasonValues = [ 
     { value: '', label: 'Select Type' },
     { value: 'mailPendingFromCustomerEnd', label: 'Mail Pending from Customer\'s Side' },
     { value: 'escalationPending', label: 'Escalation Pending' },

@@ -8,15 +8,16 @@ import React, { useRef, useState } from 'react'
 import { Button, Card, CardBody, CustomInput, Form, FormGroup, Input, Label, Modal, ModalBody, Row } from 'reactstrap'
 import { 
         calledCustForRewardStatus,
-        hearingComment,
+        hearingCommentValues,
         ombudsmanLocation, 
-        ombudsmanPendingReason, 
+        ombudsmanPendingReasonValues, 
         resolutionType, 
     } from 'constants/formValues';
 import { Editor } from '@tinymce/tinymce-react';
+import { date } from 'yup/lib/locale';
 
 
-export default function OmbudsmanForm ({ heading }) {
+export default function OmbudsmanForm ({ heading, details, complaintId }) {
 
     const [documentUploadModal, setDocumentUploadModal] = useState(false);
 
@@ -31,7 +32,6 @@ export default function OmbudsmanForm ({ heading }) {
     //     }, 1000);
     // };
 
-
     const editorRef = useRef(null);
     const log = (e) => {
         e.preventDefault()
@@ -40,12 +40,42 @@ export default function OmbudsmanForm ({ heading }) {
         }
     };
 
+    const { ombudsman_c_date, courier_number_doc, courierNumberDocArr, complainFormSendDate, form6ASendDate, VIAFormUploadedDate, ombudsman_submit_date, courier_date, courier_number, form6AMail, stateName, omb_first_date, omb_sec_date, expert_customer_date, hearingComment, check_status, omd_reward_date, refundSingleClaim, paymentRefundInt, rewardType, hearing_points, ombudsmanPendingReasonListing, ombudsmanPendingReason,  } = details;
+
+    console.log(courier_date);
+
     return (
         <Card>
             <CardBody>
                 <h2 className="mb-4">{heading}</h2>
                 <Formik initialValues={{
-                     //formvalues fetched from api will be stored here
+                    //formvalues fetched from api will be stored here
+                    ombudsmanComplaintDate: ombudsman_c_date ? new Date(ombudsman_c_date) : null,
+                    ccRecentDate: courier_date ? new Date(courier_date) : null,
+                    ccDate: '',
+                    ccRecentNo: courier_number_doc ? courier_number_doc : '',
+                    cpFormPushDate: complainFormSendDate ? new Date(complainFormSendDate) : null,
+                    ccNumbers: courierNumberDocArr ? courierNumberDocArr : '',
+                    ombudsmanComplaintNumber : courier_number_doc ? courier_number_doc : '',
+                    form6aPushedDate: form6ASendDate ? new Date(form6ASendDate) : null,
+                    form6aReceivedDate: VIAFormUploadedDate ? new Date(VIAFormUploadedDate) : null,
+                    form6aSubmissionDate: ombudsman_submit_date ? new Date(ombudsman_submit_date) : null,
+                    form6aCourierDate: courier_date ? new Date(courier_date) : '',
+                    form6aCourierNo: courier_number ? courier_number : '',
+                    isForm6AThroughMail: form6AMail ? form6AMail : '',
+                    ombudsmanLocation: stateName ? stateName : '',
+                    firstHearingDate: omb_first_date ? new Date(omb_first_date) : '',
+                    callDate: expert_customer_date ? new Date(expert_customer_date) : null,
+                    hearingComment: hearingComment ? hearingComment : '',
+                    calledCustForRewardStatus: check_status ? check_status : '',
+                    ombudsmanRewardDate: omd_reward_date ? new Date(omd_reward_date) : '',
+                    claimAmount : refundSingleClaim ? refundSingleClaim : '',
+                    interest : paymentRefundInt ? paymentRefundInt : '',
+                    secondCallDate: omb_sec_date ? new Date(omb_sec_date) : '',
+                    resolutionType: rewardType ? rewardType : '',
+                    hearingPoints : hearing_points ? hearing_points : '',
+                    ombudsmanPendingReasonListing : ombudsmanPendingReasonListing ? ombudsmanPendingReasonListing : '',
+                    ombudsmanPendingReason: ombudsmanPendingReason ? ombudsmanPendingReason : '',
                 }}
                     // validationSchema={SignupSchema}
                     // onSubmit={onSubmit}
@@ -135,9 +165,9 @@ export default function OmbudsmanForm ({ heading }) {
                                     <Colxx xxs="12" lg="3">
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Ombudsman Complaint Number</Label>
-                                            <FormikDatePicker
-                                                name="form6APushDate"
-                                                value={values.form6APushDate}
+                                            <Input
+                                                name="ombudsmanComplaintNumber"
+                                                value={values.ombudsmanComplaintNumber}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -287,7 +317,7 @@ export default function OmbudsmanForm ({ heading }) {
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
-                                                {hearingComment.map((item) => (
+                                                {hearingCommentValues.map((item) => (
                                                     <option value={item.value}>{item.label}</option>
                                                 ))}
                                             </select>
@@ -330,8 +360,8 @@ export default function OmbudsmanForm ({ heading }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Ombudsman Award Non Compliance Sent Date</Label>
                                             <FormikDatePicker
-                                                name="callDate"
-                                                value={values.callDate}
+                                                name="SecondCallDate"
+                                                value={values.secondCallDate}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -366,7 +396,7 @@ export default function OmbudsmanForm ({ heading }) {
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
                                             >
-                                                {ombudsmanPendingReason.map((item) => (
+                                                {ombudsmanPendingReasonValues.map((item) => (
                                                     <option value={item.value}>{item.label}</option>
                                                 ))}
                                             </select>
@@ -379,7 +409,7 @@ export default function OmbudsmanForm ({ heading }) {
                                     <Colxx xxs="12" lg="12">
                                         <FormGroup className="error-l-100">
                                             <Label>Ombudsman Pending Reason Listing</Label>
-                                            <Input type="textarea" rows="2" name="ombudsmanPendingReason" id="ombudsmanPendingReason" />
+                                            <Input type="textarea" rows="2" name="ombudsmanPendingReason" id="ombudsmanPendingReason" value={values.ombudsmanPendingReasonListing} />
                                         </FormGroup>
                                     </Colxx>
                                 </Row>
@@ -391,7 +421,7 @@ export default function OmbudsmanForm ({ heading }) {
                                             <Label>Expert Important Points for Hearing</Label>
                                             <Editor
                                                 onInit={(evt, editor) => editorRef.current = editor}
-                                                initialValue="<p>This is the initial content of the editor.</p>"
+                                                initialValue = {values.hearingPoints}
                                                 init={{
                                                 height: 500,
                                                 menubar: false,

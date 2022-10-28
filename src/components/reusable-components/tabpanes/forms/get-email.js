@@ -53,7 +53,7 @@ export default function GetEmailData ({ heading, details, complaintId  }) {
             fetchData();
         }, [complaintId, policyNumber]);
         
-        console.log(emails);
+        // console.log(emails);
 
     return (
         // <Card>

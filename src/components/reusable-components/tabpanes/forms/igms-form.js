@@ -20,7 +20,7 @@ export default function IGMSForm ({ heading, details, complaintId }) {
     const escalationDate = new Date(escalation_date);
     const igmsDate = formatDate(IGMS_date);
 
-    console.log(new Date(response_date_igms));
+    // console.log(new Date(response_date_igms));
 
 
     // const onSubmit = (values, { setSubmitting }) => {

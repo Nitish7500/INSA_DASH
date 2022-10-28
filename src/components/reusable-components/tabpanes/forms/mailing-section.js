@@ -26,7 +26,7 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
         }
     };
 
-    console.log(details);
+    // console.log(details);
     
     // const onSubmit = (values, { setSubmitting }) => {
     //     const payload = {
@@ -42,11 +42,11 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
     // destructuring the required keys from API response
     const {complaint_date, response_date, complaint_escalation_date, requirementRaisedDate, requirementRevertedDate, requirementSentDate, response_date_company, draftSharedDate, reminderSentDate } = details;
     
-    const complaintDate = new Date(formatDate(complaint_date));
-    const firstResponseDateFromCompany = new Date(formatDate(response_date));
-    const escalationDateSentToCompany = new Date(formatDate(complaint_escalation_date));
-    const reqRaisedDate = new Date(formatDate(requirementRaisedDate));
-    const reqRevertedDate = new Date(formatDate(requirementRevertedDate));
+    const complaintDate = formatDate(complaint_date);
+    const firstResponseDateFromCompany = formatDate(response_date);
+    const escalationDateSentToCompany = formatDate(complaint_escalation_date);
+    const reqRaisedDate = formatDate(requirementRaisedDate);
+    const reqRevertedDate = formatDate(requirementRevertedDate);
     const firstReminderSentDate = new Date(requirementSentDate);
     const customerDraftSharedDate = new Date(draftSharedDate);
     const secondResponseDateFromCompany = new Date(response_date_company);
