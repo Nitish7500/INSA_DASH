@@ -108,7 +108,7 @@ export default function DetailsForm({ heading, details }) {
                 console.log('All INSA Executives ', error);
             }
             setIsLoaded(true);
-            console.log(allExecutives);
+            console.log('All Executives ', allExecutives);
         }
         fetchAllExecutives();
 
@@ -121,7 +121,7 @@ export default function DetailsForm({ heading, details }) {
                 console.log('All Legal Experts ', error);
             }
             setIsLoaded(true);
-            console.log(allLegalExecutives);
+            console.log('All Legal Experts ', allLegalExecutives);
         }
         fetchLegalExperts();
         
@@ -134,7 +134,7 @@ export default function DetailsForm({ heading, details }) {
                 console.log('All Ombudsman ', error);
             }
             setIsLoaded(true);
-            console.log(allOmbudsman);
+            console.log('All Ombudsman ', allOmbudsman);
         }
         fetchAllOmbudsman();
         
@@ -147,7 +147,7 @@ export default function DetailsForm({ heading, details }) {
                 console.log('All Companies / IGMS ', error);
             }
             setIsLoaded(true);
-            console.log(allCompanies);
+            console.log('All Companies / IGMS ', allCompanies);
         }
         fetchAllCompanyIgms();
 
@@ -220,11 +220,11 @@ export default function DetailsForm({ heading, details }) {
             <CardBody>
                 <h2 className="mb-5">{heading}</h2>
                 <Formik initialValues={{
-                    name : user ? user.name : '--',
+                    name : details ? details.name : '--',
                     email : details ? details.email : '--',
                     phone : details ? details.phone : '--',
                     alternate : user ? user.alternatePhone : '--',
-                    income : user ? user.income : '--',
+                    income : details ? details.incomeLevel : '--',
                     occupation : details ? details.occupation : '--',
                     pincode : user ? user.pinCode :  '--',
                     dob : date ? date : '--',

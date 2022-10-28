@@ -30,6 +30,7 @@ export const apisURLs = {
     getInsuranceCompanyList : baseURLs.regular + 'insurance_company/getByPolicyId?policyTypeId=',
     userBasedData : baseURLs.regular + 'insurance/getUserBasedData',
     firstDraftData : baseURLs.regular + 'insurance/firstDraftData',
+    searchEmailPolicy : baseURLs.agent + 'searchEmailPolicy',
 }
 
 

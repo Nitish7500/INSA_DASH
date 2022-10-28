@@ -1,5 +1,9 @@
+import axios from "axios";
+import { getCurrentUser } from "helpers/Utils";
 import { apisURLs } from "./apisURLs.services"
 import { bearerRequest, request } from "./requests.services"
+
+const authorizedUser = getCurrentUser();
 
 const getAllStates = async () => {
     return await request('GET', apisURLs.state);
@@ -91,6 +95,20 @@ const getCurrentInvoiceCount = async (headers) => {
     return await request('GET', apisURLs.getCurrentInvoiceCount, headers)
 }
 
+const searchEmailPolicy = async (complaintId, policyNumber) => {
+    return await axios.request({
+        method : 'GET',
+        url : apisURLs.searchEmailPolicy, 
+        data : {
+            id : complaintId,
+            policy_number : policyNumber
+        }, 
+        headers: {
+            Authorization: `${authorizedUser.data.token || authorizedUser.token}`
+        }
+    }).then(res => res.data);
+}
+
 export {
     getComplaintDetailsById,
     getAllStates,
@@ -114,5 +132,5 @@ export {
     omdRemindMail,
     getCurrentInvoiceCount,
     getAllInsa,
-
+    searchEmailPolicy,
 }

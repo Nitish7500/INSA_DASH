@@ -4,16 +4,52 @@ import { Colxx } from 'components/common/CustomBootstrap'
 import { FormikCheckbox, FormikCustomCheckboxGroup, FormikCustomRadioGroup, FormikDatePicker } from 'containers/form-validations/FormikFields'
 import { Field, Formik } from 'formik'
 import * as Yup from 'yup';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Alert, Badge, Button, Card, CardBody, CardHeader, CustomInput, Form, FormGroup, Input, Label, Modal, ModalBody, Row } from 'reactstrap'
 import { faCalendarDays, faDownload, faDownLong } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AlertsUi from 'views/app/ui/components/alerts';
+import { searchEmailPolicy } from 'services/complaints.services';
+import axios from 'axios';
+import { getCurrentUser } from 'helpers/Utils';
 
 
-export default function GetEmailData ({ heading }) {
+export default function GetEmailData ({ heading, details, complaintId  }) {
 
     const [documentUploadModal, setDocumentUploadModal] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [emails, setEmails] = useState([]);
+    // console.log(details)
+
+    const authorizedUser = getCurrentUser();
+
+    //getting Complaint by Id through complaints.services
+    useEffect(() => {
+        const fetchData = async () => {
+        try {
+            const {data} = await searchEmailPolicy(complaintId, details.policyNumber);
+            setItems(data);
+        } catch (error) {
+            console.log("ComplaintDetails",error)
+        }
+        setIsLoaded(true);
+        }
+        fetchData();
+    }, []);
+
+    // const searchEmailPolicy = async (complaintId, policyNumber) => {
+    //     return await axios.request({
+    //         method : 'GET',
+    //         url : apisURLs.searchEmailPolicy, 
+    //         data : {
+    //             id : complaintId,
+    //             policy_number : policyNumber
+    //         }, 
+    //         headers: {
+    //             Authorization: `${authorizedUser.data.token || authorizedUser.token}`
+    //         }
+    //     }).then(res => res.data);
+    // }
 
     return (
         // <Card>
@@ -120,4 +156,3 @@ export default function GetEmailData ({ heading }) {
         // </Card>
     )
 }
-

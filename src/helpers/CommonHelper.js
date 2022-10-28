@@ -38,7 +38,7 @@ export const formatDate = (responseDate) => {
         const [year, month, day] = date.split('-');
         result = [day, month, year].join('-');
         // console.log('formatted date using func', result);
-        return result;
+        return new Date(result);
     }
 }
 
