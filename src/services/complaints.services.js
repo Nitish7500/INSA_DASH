@@ -95,7 +95,7 @@ const getCurrentInvoiceCount = async (headers) => {
     return await request('GET', apisURLs.getCurrentInvoiceCount, headers)
 }
 
-const searchEmailPolicy = async (complaintId, policyNumber) => {
+const searchEmailPolicy = async ({id, policy_number}) => {
     return await axios.request({
         method : 'GET',
         url : apisURLs.searchEmailPolicy, 
