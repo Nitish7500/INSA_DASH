@@ -108,7 +108,7 @@ export default function DetailsForm({ heading, details }) {
                 console.log('All INSA Executives ', error);
             }
             setIsLoaded(true);
-            console.log('All Executives ', allExecutives);
+            // console.log('All Executives ', allExecutives);
         }
         fetchAllExecutives();
 
@@ -121,7 +121,7 @@ export default function DetailsForm({ heading, details }) {
                 console.log('All Legal Experts ', error);
             }
             setIsLoaded(true);
-            console.log('All Legal Experts ', allLegalExecutives);
+            // console.log('All Legal Experts ', allLegalExecutives);
         }
         fetchLegalExperts();
         
@@ -134,7 +134,7 @@ export default function DetailsForm({ heading, details }) {
                 console.log('All Ombudsman ', error);
             }
             setIsLoaded(true);
-            console.log('All Ombudsman ', allOmbudsman);
+            // console.log('All Ombudsman ', allOmbudsman);
         }
         fetchAllOmbudsman();
         
@@ -147,7 +147,7 @@ export default function DetailsForm({ heading, details }) {
                 console.log('All Companies / IGMS ', error);
             }
             setIsLoaded(true);
-            console.log('All Companies / IGMS ', allCompanies);
+            // console.log('All Companies / IGMS ', allCompanies);
         }
         fetchAllCompanyIgms();
 
@@ -194,7 +194,7 @@ export default function DetailsForm({ heading, details }) {
     // function handling policytype id :: insurance type id
     const handleSelectInsurancetype = (insuranceTypeId) => {
         let policyTypeId = insuranceTypeId;
-        console.log('Policy Type ID ', policyTypeId);
+        // console.log('Policy Type ID ', policyTypeId);
         getComplaintTypes(policyTypeId);
         getInsuranceCompanies(policyTypeId);
     }

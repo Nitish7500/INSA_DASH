@@ -402,6 +402,18 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
                                             </select>
                                         </FormGroup>
                                     </Colxx>
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">Claim</Label>
+                                            <Field className="form-control" name="claimAmount" id="claimAmount" value={values.claimAmount} />
+                                        </FormGroup>
+                                    </Colxx>
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">Interest</Label>
+                                            <Field className="form-control" name="interest" id="interest" value={values.interest} />
+                                        </FormGroup>
+                                    </Colxx>
                                 </Row>
 
                                 {/* Textarea */}

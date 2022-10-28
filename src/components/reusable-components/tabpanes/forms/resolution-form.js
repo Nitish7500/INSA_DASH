@@ -14,7 +14,7 @@ import { faDownload, faDownLong } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
-export default function ResolutionForm ({ heading }) {
+export default function ResolutionForm ({ heading, details, complaintId }) {
 
     const [documentUploadModal, setDocumentUploadModal] = useState(false);
 
@@ -29,12 +29,27 @@ export default function ResolutionForm ({ heading }) {
     //     }, 1000);
     // };
 
+    const {resolutionDate, update_date, actualRefundAmount, pendingClaimAmount, requirementReceived, requirementType, requirementDate, rewardType, refundSingleClaim, paymentRefundInt, resolutionProofType  } = details;
+
     return (
         <Card>
             <CardBody>
                 <h2 className="mb-4">{heading}</h2>
                 <Formik initialValues={{
-                     //formvalues fetched from api will be stored here
+                    //formvalues fetched from api will be stored here
+                    resolutionDate: resolutionDate ? new Date(resolutionDate) : '',
+                    markResolved: update_date ? new Date(update_date) : '',
+                    resolvedAmount: actualRefundAmount ? actualRefundAmount : '',
+                    tat: '',
+                    pendingClaimAmt: pendingClaimAmount ? pendingClaimAmount : '',
+                    isRequirementReceived: requirementReceived ? requirementReceived : '',
+                    reqType: requirementType ? requirementType : '',
+                    reqSubmittedOn: requirementDate ? new Date(requirementDate) : '',
+                    resolutionType: rewardType ? rewardType : '',
+                    claimAmount : refundSingleClaim ? refundSingleClaim : '',
+                    interest : paymentRefundInt ? paymentRefundInt : '',
+                    resolutionProofType: resolutionProofType ? resolutionProofType : '',
+                     
                 }}
                     // validationSchema={SignupSchema}
                     // onSubmit={onSubmit}
@@ -76,7 +91,13 @@ export default function ResolutionForm ({ heading }) {
                                     <Colxx xxs="12" lg="3">
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Resolved Marked Date</Label>
-                                            <Field className="form-control" name="markResolved" disabled />
+                                            <FormikDatePicker
+                                                name="markResolved"
+                                                value={values.markResolved}
+                                                onChange={setFieldValue}
+                                                onBlur={setFieldTouched}
+                                                disabled = "true"
+                                            />
                                         </FormGroup>
                                     </Colxx>
                                     {/* Form Column 4 */}
@@ -94,7 +115,7 @@ export default function ResolutionForm ({ heading }) {
                                     <Colxx xxs="12" lg="3">
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Resolution TAT</Label>
-                                            <Field className="form-control" name="field" disabled />
+                                            <Field className="form-control" name="tat" value = {values.tat} disabled />
                                         </FormGroup>
                                     </Colxx>
                                     {/* Form Column 2 */}
@@ -162,6 +183,18 @@ export default function ResolutionForm ({ heading }) {
                                             </select>
                                         </FormGroup>
                                     </Colxx>
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">Claim</Label>
+                                            <Field className="form-control" name="claimAmount" id="claimAmount" value={values.claimAmount} />
+                                        </FormGroup>
+                                    </Colxx>
+                                    <Colxx xxs="12" lg="3">
+                                        <FormGroup className="error-l-100">
+                                            <Label className="d-block">Interest</Label>
+                                            <Field className="form-control" name="interest" id="interest" value={values.interest} />
+                                        </FormGroup>
+                                    </Colxx>
                                     {/* Form Column 2 */}
                                     <Colxx xxs="12" lg="3">
                                         <FormGroup className="error-l-100">
@@ -169,6 +202,8 @@ export default function ResolutionForm ({ heading }) {
                                             <Input type='file' />
                                         </FormGroup>
                                     </Colxx>
+                                </Row>
+                                <Row className='mb-3'>
                                     {/* Form Column 3 */}
                                     <Colxx xxs="12" lg="3">
                                         <FormGroup className="error-l-100">
@@ -200,4 +235,3 @@ export default function ResolutionForm ({ heading }) {
         </Card>
     )
 }
-

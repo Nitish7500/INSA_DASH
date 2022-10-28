@@ -95,20 +95,6 @@ const getCurrentInvoiceCount = async (headers) => {
     return await request('GET', apisURLs.getCurrentInvoiceCount, headers)
 }
 
-const searchEmailPolicy = async ({id, policy_number}) => {
-    return await axios.request({
-        method : 'GET',
-        url : apisURLs.searchEmailPolicy, 
-        data : {
-            id : complaintId,
-            policy_number : policyNumber
-        }, 
-        headers: {
-            Authorization: `${authorizedUser.data.token || authorizedUser.token}`
-        }
-    }).then(res => res.data);
-}
-
 export {
     getComplaintDetailsById,
     getAllStates,
@@ -132,5 +118,4 @@ export {
     omdRemindMail,
     getCurrentInvoiceCount,
     getAllInsa,
-    searchEmailPolicy,
 }
