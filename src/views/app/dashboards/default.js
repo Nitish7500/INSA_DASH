@@ -5,7 +5,6 @@ import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import Breadcrumb from 'containers/navs/Breadcrumb';
 
 const DefaultDashboard = ({ intl, match }) => {
-  const { messages } = intl;
 
   return (
     <>

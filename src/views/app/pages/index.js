@@ -13,18 +13,6 @@ const Pages = ({ match }) => (
         path={`${match.url}/product`}
         render={(props) => <Product {...props} />}
       />
-      <Route
-        path={`${match.url}/profile`}
-        render={(props) => <Profile {...props} />}
-      />
-      <Route
-        path={`${match.url}/blog`}
-        render={(props) => <Blog {...props} />}
-      />
-      <Route
-        path={`${match.url}/miscellaneous`}
-        render={(props) => <Miscellaneous {...props} />}
-      />
       <Redirect to="/error" />
     </Switch>
   </Suspense>

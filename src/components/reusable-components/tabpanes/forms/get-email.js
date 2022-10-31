@@ -8,8 +8,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Alert, Badge, Button, Card, CardBody, CardHeader, CustomInput, Form, FormGroup, Input, Label, Modal, ModalBody, Row } from 'reactstrap'
 import { faCalendarDays, faDownload, faDownLong } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import AlertsUi from 'views/app/ui/components/alerts';
-import { searchEmailPolicy } from 'services/complaints.services';
 import axios from 'axios';
 import { getCurrentUser } from 'helpers/Utils';
 import { apisURLs } from 'services/apisURLs.services';

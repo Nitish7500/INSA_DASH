@@ -5,9 +5,6 @@ import ComplaintDetails from '../../../../containers/complaints/complaint-detail
 const DataList = React.lazy(() =>
   import(/* webpackChunkName: "product-data-list" */ './data-list')
 );
-const Details = React.lazy(() =>
-  import(/* webpackChunkName: "product-details" */ './details')
-);
 // const ComplaintDetails = React.lazy(() =>
 //   import(/* webpackChunkName: "product-details-alt" */ './complaint-details')
 // );
@@ -23,10 +20,6 @@ const PagesProduct = ({ match }) => (
       <Route
         path={`${match.url}/data-list/`}
         render={(props) => <DataList {...props} />}
-      />
-      <Route
-        path={`${match.url}/details`}
-        render={(props) => <Details {...props} />}
       />
       <Route
         path={`${match.url}/complaint-details`}
