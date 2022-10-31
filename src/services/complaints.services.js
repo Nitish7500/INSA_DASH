@@ -1,9 +1,11 @@
 import axios from "axios";
+import { servicePath } from "constants/defaultValues";
 import { getCurrentUser } from "helpers/Utils";
 import { apisURLs } from "./apisURLs.services"
 import { bearerRequest, request } from "./requests.services"
 
 const authorizedUser = getCurrentUser();
+const apiUrl = `${servicePath}/insurance/`;
 
 const getAllStates = async () => {
     return await request('GET', apisURLs.state);
@@ -35,6 +37,14 @@ const getFirstDraftData = async () => {
 
 const getUserBasedData = async () => {
     return await request('GET', apisURLs.userBasedData);
+}
+
+const downloadComplaintsReport = async() => {
+    return await request('GET', apisURLs.complaintReport);
+}
+
+const downloadCustomerReport = async() => {
+    return await request('GET', apisURLs.customerReport)
 }
 
 // --------------- APIs with Payload -------------- //
@@ -95,6 +105,28 @@ const getCurrentInvoiceCount = async (headers) => {
     return await request('GET', apisURLs.getCurrentInvoiceCount, headers)
 }
 
+const getComplaints = async function fetchData(selectedPageSize, currentPage, search, statusLabel) {
+    axios
+    .get(`${apiUrl}?pageIndex=${currentPage}&pageSize=${selectedPageSize}&keyword=${search}${statusFilter}`,
+    {
+        headers:{
+            Authorization: `${authorizedUser.data.token || authorizedUser.token}`
+        }
+    })
+    .then((res) => {
+        return res.data;
+    })
+    .then((data) => {
+        const dataList = data.data.list;
+        setTotalPage(Math.floor(data.data.totalRecords/selectedPageSize));
+        setItems(dataList);
+        setTotalItemCount(data.data.totalRecords);
+        setIsLoaded(true);
+    });
+}
+
+
+
 export {
     getComplaintDetailsById,
     getAllStates,
@@ -118,4 +150,7 @@ export {
     omdRemindMail,
     getCurrentInvoiceCount,
     getAllInsa,
+    getComplaints,
+    downloadComplaintsReport,
+    downloadCustomerReport
 }

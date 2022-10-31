@@ -31,6 +31,8 @@ export const apisURLs = {
     userBasedData : baseURLs.regular + 'insurance/getUserBasedData',
     firstDraftData : baseURLs.regular + 'insurance/firstDraftData',
     searchEmailPolicy : baseURLs.agent + 'searchEmailPolicy',
+    complaintReport : baseURLs.regular + 'analytics/csv/insurance',
+    customerReport : baseURLs.regular + 'analytics/csv/customerReport'
 }
 
 

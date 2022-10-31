@@ -15,6 +15,8 @@ const DataListView = ({ complaint, isSelect, collect, onCheckItem, onSelectedSta
   const [collapse, setCollapse] = useState(false);
   const [modalBasic, setModalBasic] = useState(false);
 
+  console.log(complaint ? '1' : '0');
+
   return (
     <>
     <Colxx xxs="12" style={{marginBottom: '10px', paddingLeft: '0px'}}>
@@ -25,7 +27,6 @@ const DataListView = ({ complaint, isSelect, collect, onCheckItem, onSelectedSta
             active: isSelect,
           })}
         >
-
           {/* a dynamically generated table row */}
           <div className="tableRow">
             <div className='record-data'>
@@ -122,7 +123,6 @@ const DataListView = ({ complaint, isSelect, collect, onCheckItem, onSelectedSta
               </Collapse>
             </div>
           </div>
-
         </Card>
       </ContextMenuTrigger>
     </Colxx>
@@ -132,6 +132,7 @@ const DataListView = ({ complaint, isSelect, collect, onCheckItem, onSelectedSta
     /> */}
     </>
   );
+
 };
 
 export default React.memo(DataListView);

@@ -79,29 +79,35 @@ const ListPageListing = ({
             <p className="cardCell th-column cardCell--150px">TAT Breach Days</p>
           </Row>
 
-          <div className="tabledata">
-            {items.map((complaint) => {
-              return (
-                <DataListView
-                  key={complaint._id}
-                  complaint={complaint}
-                  // isSelect={selectedItems.includes(complaint._id)}
-                  onCheckItem={onCheckItem}
-                  collect={collect}
-                  onSelectedStatus = {() => setIsStatusHistoryModal(!isStatusHistoryModal)}
-                  setStatusHistoryDetails = {(statusHistory)=>setSelectedStatusHistoryInfo(statusHistory)}
-                  onSelectedClaimAmount = {() => setIsClaimAmountModal(!isClaimAmountModal)}
-                  setStatusClaimAmount = {(ClaimAmountModal)=>setSelectedStatusClaimAmount(ClaimAmountModal)}
-                  changeOrderBy={(column) => {
-                    setSelectedOrderOption(
-                      orderOptions.find((x) => x.column === column)
-                    );
-                  }}
-                />
-              );
-            })}
-          </div>
-
+          {((items.length == 0) 
+            ?
+            <div className="tabledata">
+              <p className='text-center'>No Records Found. Please Refresh or try another request !</p>
+            </div> 
+            :
+            <div className="tabledata" id='tabledata'>
+              {items.map((complaint) => {
+                return (
+                  <DataListView
+                    key={complaint._id}
+                    complaint={complaint}
+                    // isSelect={selectedItems.includes(complaint._id)}
+                    onCheckItem={onCheckItem}
+                    collect={collect}
+                    onSelectedStatus = {() => setIsStatusHistoryModal(!isStatusHistoryModal)}
+                    setStatusHistoryDetails = {(statusHistory)=>setSelectedStatusHistoryInfo(statusHistory)}
+                    onSelectedClaimAmount = {() => setIsClaimAmountModal(!isClaimAmountModal)}
+                    setStatusClaimAmount = {(ClaimAmountModal)=>setSelectedStatusClaimAmount(ClaimAmountModal)}
+                    changeOrderBy={(column) => {
+                      setSelectedOrderOption(
+                        orderOptions.find((x) => x.column === column)
+                      );
+                    }}
+                  />
+                );
+              })}
+            </div>
+          )}
         </div>
 
       </Row>

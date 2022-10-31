@@ -69,7 +69,6 @@ const DataListPages = ({ match }) => {
       axios
         .get(
           `${apiUrl}?pageIndex=${currentPage}&pageSize=${selectedPageSize}&keyword=${search}${statusFilter}`,
-          // `${apiUrl}?pageIndex=0&pageSize=${selectedPageSize}&orderBy=${selectedOrderOption.column}&keyword=${search}&status=${statusFilter}`,
           {
             headers:{
               Authorization: `${authorizedUser.data.token || authorizedUser.token}`
@@ -84,6 +83,10 @@ const DataListPages = ({ match }) => {
           setTotalPage(Math.floor(data.data.totalRecords/selectedPageSize));
           setItems(dataList);
           setTotalItemCount(data.data.totalRecords);
+          setIsLoaded(true);
+        })
+        .catch((error) => {
+          console.log(error)
           setIsLoaded(true);
         });
     }

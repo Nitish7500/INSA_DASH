@@ -23,16 +23,7 @@ import {
 import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import { injectIntl } from 'react-intl';
-import Breadcrumb from 'containers/navs/Breadcrumb';
 import { Separator, Colxx } from 'components/common/CustomBootstrap';
-import IntlMessages from 'helpers/IntlMessages';
-import GlideComponentThumbs from 'components/carousel/GlideComponentThumbs';
-import { detailImages, detailThumbs } from 'data/carouselItems';
-import detailsQuestionsData from 'data/questions';
-import CommentWithLikes from 'components/pages/CommentWithLikes';
-import { commentWithLikesData } from 'data/comments';
-import QuestionAnswer from 'components/pages/QuestionAnswer';
-import GalleryDetail from 'containers/pages/GalleryDetail';
 
 const DetailsPages = ({ match, intl }) => {
   const [activeTab, setActiveTab] = useState('details');

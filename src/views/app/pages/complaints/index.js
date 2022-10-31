@@ -5,12 +5,6 @@ import ComplaintDetails from '../../../../containers/complaints/complaint-detail
 const DataList = React.lazy(() =>
   import(/* webpackChunkName: "product-data-list" */ './data-list')
 );
-const ImageList = React.lazy(() =>
-  import(/* webpackChunkName: "product-image-list" */ './image-list')
-);
-const ThumbList = React.lazy(() =>
-  import(/* webpackChunkName: "product-thumb-list" */ './thumb-list')
-);
 const Details = React.lazy(() =>
   import(/* webpackChunkName: "product-details" */ './details')
 );

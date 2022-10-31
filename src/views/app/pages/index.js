@@ -4,15 +4,6 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 const Product = React.lazy(() =>
   import(/* webpackChunkName: "pages-product" */ './complaints')
 );
-const Profile = React.lazy(() =>
-  import(/* webpackChunkName: "pages-profile" */ './profile')
-);
-const Miscellaneous = React.lazy(() =>
-  import(/* webpackChunkName: "pages-miscellaneous" */ './miscellaneous')
-);
-const Blog = React.lazy(() =>
-  import(/* webpackChunkName: "pages-blog" */ './blog')
-);
 
 const Pages = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>

@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Row,
   Button,
@@ -19,6 +19,8 @@ import IntlMessages from 'helpers/IntlMessages';
 import { DataListIcon, ThumbListIcon, ImageListIcon } from 'components/svg';
 import Breadcrumb from '../navs/Breadcrumb';
 import { capitalizeEachWordInString, capitalizeFirstLetter } from 'helpers/CommonHelper';
+import { downloadComplaintsReport, downloadCustomerReport, getComplaints } from 'services/complaints.services';
+import { NotificationManager } from 'components/common/react-notifications';
 
 const ListPageHeading = ({
   intl,
@@ -45,8 +47,67 @@ const ListPageHeading = ({
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
   const { messages } = intl;
+  const [items, setItems] = useState([]);
   
   const currentFilter = ( (typeof(filter)==undefined) ? 'All Complaints' : capitalizeEachWordInString(filter));
+
+  // Download Complaints
+  const downloadReport = async () => {
+    try {
+      const {message} = await downloadComplaintsReport();
+      setItems(message);
+      NotificationManager.success(
+        message,
+        'Report Downloaded Sucessfully',
+        3000,
+        null,
+        null,
+        'filled'
+      );
+    } catch (error) {
+      console.log("Download Report",error)
+    }
+  }
+
+  // Download Customer Report
+  const downloadCustReport = async () => {
+    try {
+      const {message, success} = await downloadCustomerReport();
+      setItems(message, success);
+      console.log('items', items)
+      if (success === true) {
+        NotificationManager.success(
+          message,
+          'Report Downloaded Sucessfully',
+          3000,
+          null,
+          null,
+          'filled'
+        );
+      } else if (success === false) {
+        NotificationManager.error(
+          message,
+          'Some Error Occured !',
+          3000,
+          null,
+          null,
+          'filled'
+        );
+      }
+    } catch (error) {
+      console.log("Download Report",error);
+      NotificationManager.error(
+        error.message,
+        'Failed to download Reports',
+        3000,
+        null,
+        null,
+        'filled'
+      );
+    }
+  }
+
+  console.log(items);
 
   return (
     <Row>
@@ -57,38 +118,22 @@ const ListPageHeading = ({
 
             <div className="text-zero top-right-button-container">
 
-              <Button color='info' size='md' className="top-right-button">
+              <Button color='info' size='md' className="top-right-button" onClick={() => window.location.reload()} >
                 <i className="simple-icon-reload" />
               </Button>
-              <Button color='success' size='md' className="top-right-button mx-3">
-                <i className="simple-icon-cloud-download" />
+              <Button color='success' size='md' className="top-right-button mx-3" onClick={downloadReport}>
+                <i className="simple-icon-cloud-download mr-2" /> <span>Download Complaint Report</span>
               </Button>
-              <Button color='warning' size='md' className="top-right-button mr-3">
-                <i className="simple-icon-cloud-download" />
+              <Button color='warning' size='md' className="top-right-button mr-3" onClick={downloadCustReport}>
+                <i className="simple-icon-cloud-download mr-2" /> <span>Download Customer Report</span>
               </Button>
 
-              <Button
-                color="primary"
-                size="md"
-                className="top-right-button"
-                onClick={() => toggleModal()}
-              >
-                <IntlMessages id="pages.add-new" />
-              </Button>
               {/* Select options Check Box Dropdown :: after exports */}
             </div>
             {/* <Breadcrumb match={match} /> */}
           </div>
 
           <div className="mb-2">
-            {/* <Button
-              color="empty"
-              className="pt-0 pl-0 d-inline-block d-md-none"
-              onClick={() => setDisplayOptionsIsOpen(!displayOptionsIsOpen)}
-            >
-              <IntlMessages id="pages.display-options" />{' '}
-              <i className="simple-icon-arrow-down align-middle" />
-            </Button> */}
             <Collapse isOpen={displayOptionsIsOpen} className="d-md-block row" id="displayOptions" >
               
               {/* Data List Show Options :: after export */}
@@ -147,93 +192,3 @@ const ListPageHeading = ({
 };
 
 export default injectIntl(ListPageHeading);
-
-{/* Select options Check Box Dropdown */}
-{/* <ButtonDropdown
-  isOpen={dropdownSplitOpen}
-  toggle={() => setDropdownSplitOpen(!dropdownSplitOpen)}
->
-  <div className="btn btn-primary btn-lg pl-4 pr-0 check-button check-all">
-    <CustomInput
-      className="custom-checkbox mb-0 d-inline-block"
-      type="checkbox"
-      id="checkAll"
-      checked={selectedItemsLength >= itemsLength}
-      onChange={() => handleChangeSelectAll(true)}
-      label={
-        <span
-          className={`custom-control-label ${
-            selectedItemsLength > 0 &&
-            selectedItemsLength < itemsLength
-              ? 'indeterminate'
-              : ''
-          }`}
-        />
-      }
-    />
-  </div>
-  <DropdownToggle
-    caret
-    color="primary"
-    className="dropdown-toggle-split btn-lg"
-  />
-  <DropdownMenu right>
-    <DropdownItem>
-      <IntlMessages id="pages.delete" />
-    </DropdownItem>
-    <DropdownItem>
-      <IntlMessages id="pages.another-action" />
-    </DropdownItem>
-  </DropdownMenu>
-</ButtonDropdown> */}
-
-{/* Sort By Order Dropdown */}
-{/* <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
-  <DropdownToggle caret color="outline-dark" size="sm">
-    <IntlMessages id="pages.orderby" />
-    {selectedOrderOption.label}
-  </DropdownToggle>
-  <DropdownMenu>
-    {orderOptions.map((order, index) => {
-      return (
-        <DropdownItem
-          key={index}
-          onClick={() => changeOrderBy(order.column)}
-        >
-          {order.label}
-        </DropdownItem>
-      );
-    })}
-  </DropdownMenu>
-</UncontrolledDropdown> */}
-
-{/* Data List Show Options */}
-{/* <span className="mr-3 d-inline-block float-md-left">
-  <a
-    href="#/"
-    className={`mr-2 view-icon ${
-      displayMode === 'list' ? 'active' : ''
-    }`}
-    onClick={() => changeDisplayMode('list')}
-  >
-    <DataListIcon />
-  </a>
-  <a
-    href="#/"
-    className={`mr-2 view-icon ${
-      displayMode === 'thumblist' ? 'active' : ''
-    }`}
-    onClick={() => changeDisplayMode('thumblist')}
-  >
-    <ThumbListIcon />
-  </a>
-  <a
-    href="#/"
-    className={`mr-2 view-icon ${
-      displayMode === 'imagelist' ? 'active' : ''
-    }`}
-    onClick={() => changeDisplayMode('imagelist')}
-  >
-    <ImageListIcon />
-  </a>
-</span> */}
