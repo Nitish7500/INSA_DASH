@@ -185,29 +185,3 @@ export const setCurrentUser = (user) => {
 //       : null;
 //   }
 // }
-
-export const getComplaints = () => {
-  let user = null;
-  try {
-    user =
-      localStorage.getItem('insa_accessor') != null
-        ? JSON.parse(localStorage.getItem('insa_accessor'))
-        : null;
-  } catch (error) {
-    console.log('>>>>: src/helpers/Utils.js  : insa_accessor -> error', error);
-    user = null;
-  }
-  return user;
-};
-
-export const saveComplaints = (user) => {
-  try {
-    if (user) {
-      localStorage.setItem('insa_accessor', JSON.stringify(user));
-    } else {
-      localStorage.removeItem('insa_accessor');
-    }
-  } catch (error) {
-    console.log('>>>>: src/helpers/Utils.js : insa_accessor -> error', error);
-  }
-};

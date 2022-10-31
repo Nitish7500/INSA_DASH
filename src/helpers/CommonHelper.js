@@ -15,7 +15,7 @@ export function capitalizeEachWordInString(string) {
         }
         return words.join(' ');
     } else {
-        console.log('Does not contain a string')
+        // console.log('Does not contain a string')
     }
 }
 

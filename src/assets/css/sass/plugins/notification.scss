@@ -208,7 +208,7 @@
   right: 0;
   z-index: 999999;
   width: 360px;
-  padding: 30px 20px;
+  padding: 0px 20px;
   max-height: calc(100% - 30px);
   overflow-x: hidden;
   overflow-y: auto;
@@ -224,7 +224,7 @@
   line-height: 1.2em;
   position: relative;
   opacity: 1;
-  margin-top: 10px;
+  margin: 20px 0px;
 }
 
 .notification .title {

@@ -7,7 +7,6 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
-import './helpers/Firebase';
 import AppLocale from './lang';
 import ColorSwitcher from './components/common/ColorSwitcher';
 import { NotificationContainer } from './components/common/react-notifications';
@@ -39,8 +38,7 @@ const ViewUnauthorized = React.lazy(() =>
 const App = ({ locale }) => {
   const direction = getDirection();
   const currentAppLocale = AppLocale[locale];
-  // const reduxStore = useSelector((state)=>state);
-  // console.log(reduxStore) 
+
   useEffect(() => {
     if (direction.isRtl) {
       document.body.classList.add('rtl');
@@ -50,7 +48,6 @@ const App = ({ locale }) => {
       document.body.classList.remove('rtl');
     }
   }, [direction]);
-
   
   return (
     <div className="h-100">

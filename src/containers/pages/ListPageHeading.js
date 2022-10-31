@@ -107,8 +107,6 @@ const ListPageHeading = ({
     }
   }
 
-  console.log(items);
-
   return (
     <Row>
       <Colxx xxs="12" className="position-relative p-2" style={{height: '130px'}}>
@@ -137,7 +135,6 @@ const ListPageHeading = ({
             <Collapse isOpen={displayOptionsIsOpen} className="d-md-block row" id="displayOptions" >
               
               {/* Data List Show Options :: after export */}
-
               <div className="d-block d-md-inline-block pt-1 col-md-4 col-sm-12" style={{paddingLeft: '0px'}}>
 
                 {/* Sort By Order Dropdown :: after export */}

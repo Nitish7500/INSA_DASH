@@ -14,14 +14,10 @@ import {
 
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-
-import IntlMessages from 'helpers/IntlMessages';
 import {
   menuHiddenBreakpoint,
   searchPath,
-  localeOptions,
   isDarkSwitchActive,
-  buyUrl,
   adminRoot,
 } from 'constants/defaultValues';
 import { MobileMenuIcon, MenuIcon } from 'components/svg';
@@ -33,7 +29,6 @@ import {
   changeLocale,
 } from 'redux/actions';
 
-import TopnavEasyAccess from './Topnav.EasyAccess';
 import TopnavNotifications from './Topnav.Notifications';
 import TopnavDarkSwitch from './Topnav.DarkSwitch';
 import { capitalizeFirstLetter } from 'helpers/CommonHelper';
@@ -229,49 +224,6 @@ const TopNav = ({
           <MobileMenuIcon />
         </NavLink>
 
-        {/* <div className="search">
-          <Input
-            name="searchKeyword"
-            id="searchKeyword"
-            placeholder={messages['menu.search']}
-            value={searchKeyword}
-            onChange={(e) => setSearchKeyword(e.target.value)}
-            onKeyPress={(e) => handleSearchInputKeyPress(e)}
-          />
-          <span
-            className="search-icon"
-            onClick={(e) => handleSearchIconClick(e)}
-          >
-            <i className="simple-icon-magnifier" />
-          </span>
-        </div> */}
-
-        {/* language dropdown */}
-        {/* <div className="d-inline-block">
-          <UncontrolledDropdown className="ml-2">
-            <DropdownToggle
-              caret
-              color="light"
-              size="sm"
-              className="language-button"
-            >
-              <span className="name">{locale.toUpperCase()}</span>
-            </DropdownToggle>
-            <DropdownMenu className="mt-3" right>
-              {localeOptions.map((l) => {
-                return (
-                  <DropdownItem
-                    onClick={() => handleChangeLocale(l.id, l.direction)}
-                    key={l.id}
-                  >
-                    {l.name}
-                  </DropdownItem>
-                );
-              })}
-            </DropdownMenu>
-          </UncontrolledDropdown>
-        </div> */}
-
       </div>
       
       <NavLink className="navbar-logo" to={adminRoot}>
@@ -282,7 +234,6 @@ const TopNav = ({
       <div className="navbar-right">
         {isDarkSwitchActive && <TopnavDarkSwitch />}
         <div className="header-icons d-inline-block align-middle">
-          <TopnavEasyAccess />
           <TopnavNotifications />
           <button
             className="header-icon btn btn-empty d-none d-sm-inline-block"
@@ -302,16 +253,12 @@ const TopNav = ({
             <DropdownToggle className="p-0" color="empty">
               <span className="name mr-1">{capitalizeFirstLetter(loggedInUser ? (loggedInUser.name ? loggedInUser.name : "") : "")}</span>
               <span>
-                {/* <img alt="Profile" src="/assets/img/profiles/l-1.jpg" /> */}
                 <img alt="Profile" src="/assets/img/profiles/user.png" />
               </span>
             </DropdownToggle>
             <DropdownMenu className="mt-3" left>
               <DropdownItem>{loggedInUser ? loggedInUser.email : ""}</DropdownItem>
               <DropdownItem>Account</DropdownItem>
-              <DropdownItem>Features</DropdownItem>
-              <DropdownItem>History</DropdownItem>
-              <DropdownItem>Support</DropdownItem>
               <DropdownItem divider />
               <DropdownItem onClick={() => handleLogout()}>
                 Sign out
