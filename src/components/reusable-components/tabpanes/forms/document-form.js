@@ -34,12 +34,16 @@ export default function DocumentForm ({ heading }) {
                             <h3>Documents Uploaded by User</h3>
                             <div className="actions flex">
                                 <div className="flex-cc mr-3">
-                                    <Button color='warning' className='text-center'><FontAwesomeIcon icon={faFileZipper} /></Button>
-                                    <span className='text-center mt-2'>Generate Zip</span>
+                                    <Button color='warning' className='text-center'>
+                                        <FontAwesomeIcon icon={faFileZipper} />
+                                        <span className='text-center mt-2 ml-3'>Generate Zip</span>
+                                    </Button>
                                 </div>
                                 <div className="flex-cc">
-                                    <Button color='success' className='text-center'><FontAwesomeIcon icon={faDownload} /></Button>
-                                    <span className='text-center mt-2'>Download generated Zip</span>
+                                    <Button color='success' className='text-center'>
+                                        <FontAwesomeIcon icon={faDownload} />
+                                        <span className='text-center mt-2 ml-3'>Download generated Zip</span>
+                                    </Button>
                                 </div>
                             </div>
                         </div>

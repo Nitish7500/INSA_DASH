@@ -9,16 +9,19 @@ import { Button, Card, CardBody, CustomInput, Form, FormGroup, Input, Label, Mod
 import { 
     isLegalNotice,
     isRequirementReceived,
-    consumerCourtLocation
+    consumerCourtLocations,
+    isLegalNoticeOptions
     } from 'constants/formValues';
 import { faDownload, faDownLong } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Editor } from '@tinymce/tinymce-react';
 import logs from 'data/logs';
 import { tinyMceApiKey } from 'constants/defaultValues';
+import { formatDate } from 'helpers/CommonHelper';
+import { date } from 'yup/lib/locale';
 
 
-export default function LegalForm ({ heading }) {
+export default function LegalForm ({ heading, details, complaintId }) {
 
     const [documentUploadModal, setDocumentUploadModal] = useState(false);
 
@@ -41,12 +44,37 @@ export default function LegalForm ({ heading }) {
         }
     };
 
+    const {  } = details;
+    const { legal_notice, legal_notice_date, approxFees, consumerCourtLocation, sendNoticeReminderOrNot, LawyerFirmNumber, legal_notice_courier_number, legal_res_notice_date, LawyerFirmName, callCust1, caseTitle, C_court_filing_date, callCust2, LawyerFirmAddress, caseFileNumber, caseNumber } = details.legalSection;
+    
+    console.log(approxFees);
+
+
     return (
         <Card>
             <CardBody>
                 <h2 className="mb-4">{heading}</h2>
                 <Formik initialValues={{
-                     //formvalues fetched from api will be stored here
+                    //formvalues fetched from api will be stored here
+                    isLegalNotice: legal_notice ? legal_notice : '',
+                    legalNoticeDate: legal_notice_date ? new Date(legal_notice_date) : '',
+                    approxFees: approxFees ? approxFees : '',
+                    consumerCourtLocation: consumerCourtLocation ? consumerCourtLocation : '',
+                    isNoticeRemider: sendNoticeReminderOrNot ? sendNoticeReminderOrNot : '',
+                    legalNoticeResRecDate: legal_res_notice_date ? new Date(legal_res_notice_date) : '',
+                    lawFirmName: LawyerFirmName ? LawyerFirmName : '',
+                    crNoOfLegalNotice: legal_notice_courier_number ? legal_notice_courier_number : '',
+                    callToCustDate1: callCust1 ? new Date(callCust1) : '',
+                    lawFirmNo: LawyerFirmNumber ? LawyerFirmNumber : '',
+                    caseTitle: caseTitle ? caseTitle : '',
+                    consumerCourtDates: C_court_filing_date ? new Date(C_court_filing_date) : '',
+                    callToCustDate2: callCust2 ? new Date(callCust2) : '',
+                    lawFirmAddress: LawyerFirmAddress ? LawyerFirmAddress : '',
+                    caseFileNumber: caseFileNumber ? caseFileNumber : '',
+                    caseNumber: caseNumber ? caseNumber : '',
+                    secondConsumerCourtDates: '',
+                    thirdConsumerCourtDates: '',
+                     
                 }}
                     // validationSchema={SignupSchema}
                     // onSubmit={onSubmit}
@@ -77,7 +105,7 @@ export default function LegalForm ({ heading }) {
                                                 value={values.isLegalNotice}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
-                                                options={isLegalNotice}
+                                                options={isLegalNoticeOptions}
                                             />
                                         </FormGroup>
                                         <FormGroup className="error-l-100">
@@ -101,7 +129,7 @@ export default function LegalForm ({ heading }) {
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
                                             >
-                                                {consumerCourtLocation.map((item) => (
+                                                {consumerCourtLocations.map((item) => (
                                                     <option value={item.value}>{item.label}</option>
                                                 ))}
                                             </select>
@@ -147,7 +175,7 @@ export default function LegalForm ({ heading }) {
                                             />
                                         </FormGroup>
                                         <FormGroup className="error-l-100">
-                                            <Label className="d-block">Lawyer / Law Firm Number</Label>
+                                            <Label className="d-block">Lawyer / Law Firm Address</Label>
                                             <Field className="form-control" name="lawFirmNo" />
                                         </FormGroup>
                                         <FormGroup className="error-l-100">
@@ -177,16 +205,16 @@ export default function LegalForm ({ heading }) {
                                             />
                                         </FormGroup>
                                         <FormGroup className="error-l-100">
-                                            <Label className="d-block">Lawyer / Law Firm Number</Label>
-                                            <Field className="form-control" name="lawFirmNo" />
+                                            <Label className="d-block">Lawyer / Law Firm Address</Label>
+                                            <Field className="form-control" name="lawFirmAddress" />
                                         </FormGroup>
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Case File Number</Label>
-                                            <Field className="form-control" name="caseTitle" />
+                                            <Field className="form-control" name="caseFileNumber" />
                                         </FormGroup>
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Case Number</Label>
-                                            <Field className="form-control" name="caseTitle" />
+                                            <Field className="form-control" name="caseNumber" />
                                         </FormGroup>
                                     </Colxx>
 
@@ -201,8 +229,8 @@ export default function LegalForm ({ heading }) {
                                         <FormGroup className="error-l-100">
                                             <div className="flex-sb">
                                                 <FormikDatePicker
-                                                    name="consumerCourtDates"
-                                                    value={values.consumerCourtDates}
+                                                    name="secondConsumerCourtDates"
+                                                    value={values.secondConsumerCourtDates}
                                                     onChange={setFieldValue}
                                                     onBlur={setFieldTouched}
                                                 />
@@ -224,8 +252,8 @@ export default function LegalForm ({ heading }) {
                                         <FormGroup className="error-l-100">
                                             <div className="flex-sb">
                                                 <FormikDatePicker
-                                                    name="consumerCourtDates"
-                                                    value={values.consumerCourtDates}
+                                                    name="thirdConsumerCourtDates"
+                                                    value={values.thirdConsumerCourtDates}
                                                     onChange={setFieldValue}
                                                     onBlur={setFieldTouched}
                                                 />

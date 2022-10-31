@@ -85,7 +85,7 @@ export const isRequirementReceived = [
     { value: 'No', label: 'No' }
 ];
 
-export const isLegalNotice = [
+export const isLegalNoticeOptions = [
     { value: 'Yes', label: 'Yes' },
     { value: 'No', label: 'No' }
 ];
@@ -249,7 +249,7 @@ export const ombudsmanPendingReasonValues = [
     { value: 'documentPending', label: 'Document Pending' },
 ];
 
-export const consumerCourtLocation = [
+export const consumerCourtLocations = [
     { value: '', label: 'Select Type' },
     { value: 'Mumbai', label: 'Mumbai' },
     { value: 'Pune', label: 'Pune' },

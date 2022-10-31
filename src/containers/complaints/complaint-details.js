@@ -23,6 +23,7 @@ import DocumentForm from 'components/reusable-components/tabpanes/forms/document
 import NonResponsive from 'components/reusable-components/tabpanes/forms/non-responsive';
 import { getComplaintDetailsById } from 'services/complaints.services';
 import { useQuery } from 'hooks/useQuery';
+import OtherActions from 'components/reusable-components/tabpanes/forms/other-actions';
 
 const ComplaintDetails = ({ match }) => {
   const [activeTab, setActiveTab] = useState('details');
@@ -194,6 +195,19 @@ const ComplaintDetails = ({ match }) => {
                 <span>Non Responsive</span>
               </NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink
+                location={{}}
+                to={`complaint-details?complaintId=${complaintId}`}
+                className={classnames({
+                  active: activeTab === 'others',
+                  'nav-link': true,
+                })}
+                onClick={() => setActiveTab('others')}
+              >
+                <span>Other Actions</span>
+              </NavLink>
+            </NavItem>
           </Nav>
 
           <TabContent activeTab={activeTab}>
@@ -236,6 +250,10 @@ const ComplaintDetails = ({ match }) => {
 
             <TabPane tabId="nonResponsive">
               <NonResponsive heading='Non Responsive Customer Flow' details={items} complaintId={complaintId} />
+            </TabPane>
+
+            <TabPane tabId="others">
+              <OtherActions heading='Other Actions' details={items} complaintId={complaintId} />
             </TabPane>
 
           </TabContent>
