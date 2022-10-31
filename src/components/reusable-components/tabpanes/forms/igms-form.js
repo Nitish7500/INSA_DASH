@@ -17,8 +17,8 @@ export default function IGMSForm ({ heading, details, complaintId }) {
 
     const {IGMS_Token, IGMS_date, escalation_date, IGMSLoginDOB, IGMS_Done, IGMS_No, response_date_igms, response_date_igms1, igmsResponseReceived, igmsRequirementReceived, igms_content, response_data_igms, response_data2_igms} = details;
 
-    const escalationDate = new Date(escalation_date);
-    const igmsDate = formatDate(IGMS_date);
+    const escalationDate = (escalation_date != undefined) ? new Date(escalation_date) : null;
+    const igmsDate = (IGMS_date != undefined) ? formatDate(IGMS_date) : null;
 
     // console.log(new Date(response_date_igms));
 

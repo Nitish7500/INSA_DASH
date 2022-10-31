@@ -42,15 +42,17 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
     // destructuring the required keys from API response
     const {complaint_date, response_date, complaint_escalation_date, requirementRaisedDate, requirementRevertedDate, requirementSentDate, response_date_company, draftSharedDate, reminderSentDate } = details;
     
-    const complaintDate = formatDate(complaint_date);
-    const firstResponseDateFromCompany = formatDate(response_date);
-    const escalationDateSentToCompany = formatDate(complaint_escalation_date);
-    const reqRaisedDate = formatDate(requirementRaisedDate);
-    const reqRevertedDate = formatDate(requirementRevertedDate);
-    const firstReminderSentDate = new Date(requirementSentDate);
-    const customerDraftSharedDate = new Date(draftSharedDate);
-    const secondResponseDateFromCompany = new Date(response_date_company);
-    const secondReminderSentDate = new Date(reminderSentDate);
+    const complaintDate = (complaint_date != undefined) ? formatDate(complaint_date) : null;
+    const firstResponseDateFromCompany = (response_date != undefined) ? formatDate(response_date) : null;
+    const escalationDateSentToCompany = (complaint_escalation_date != undefined) ? formatDate(complaint_escalation_date) : null;
+    const reqRaisedDate = (requirementRaisedDate != undefined) ? formatDate(requirementRaisedDate) : null;
+    const reqRevertedDate = (requirementRevertedDate != undefined) ? formatDate(requirementRevertedDate) : null;
+    const firstReminderSentDate = (firstReminderSentDate != undefined) ? new Date(requirementSentDate) : null;
+    const customerDraftSharedDate = (customerDraftSharedDate != undefined) ? new Date(draftSharedDate) : null;
+    const secondResponseDateFromCompany = (secondResponseDateFromCompany != undefined) ? new Date(response_date_company) : null;
+    const secondReminderSentDate = (secondReminderSentDate != undefined) ? new Date(reminderSentDate) : null;
+
+    console.table('complaint_date, response_date, complaint_escalation_date, requirementRaisedDate, requirementRevertedDate, requirementSentDate, response_date_company, draftSharedDate, reminderSentDate', complaint_date, response_date, complaint_escalation_date, requirementRaisedDate, requirementRevertedDate, requirementSentDate, response_date_company, draftSharedDate, reminderSentDate);
 
     return (
         <Card>

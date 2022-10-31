@@ -58,7 +58,7 @@ export default function GetEmailData ({ heading, details, complaintId  }) {
     return (
         // <Card>
             <CardBody>
-                {/* <h2 className="mb-4">{heading}</h2> */}
+                <h2 className="mb-4">{heading}</h2>
                 <Formik initialValues={{
                     //formvalues fetched from api will be stored here
                 }}
@@ -78,7 +78,7 @@ export default function GetEmailData ({ heading, details, complaintId  }) {
                         <Row className="mb-4">
                             <Colxx xxs="12" lg="12">
 
-                                <Row className="mb-3">
+                                {/* <Row className="mb-3">
                                     <Colxx xxs="12" lg="12" className="mb-5">
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Search Email Data</Label>
@@ -90,7 +90,7 @@ export default function GetEmailData ({ heading, details, complaintId  }) {
                                             </div>
                                         </FormGroup>
                                     </Colxx>
-                                </Row>
+                                </Row> */}
 
                                 {emails.map((email) => {
                                     return (

@@ -24,6 +24,9 @@ import NonResponsive from 'components/reusable-components/tabpanes/forms/non-res
 import { getComplaintDetailsById } from 'services/complaints.services';
 import { useQuery } from 'hooks/useQuery';
 import OtherActions from 'components/reusable-components/tabpanes/forms/other-actions';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { adminRoot } from 'constants/defaultValues';
 
 const ComplaintDetails = ({ match }) => {
   const [activeTab, setActiveTab] = useState('details');
@@ -55,6 +58,7 @@ const ComplaintDetails = ({ match }) => {
     <>
       <Row>
         <Colxx xxs="12" className="my-3">
+          <NavLink location={{}} to= {`${adminRoot}/pages/product/data-list`}><FontAwesomeIcon icon={faArrowLeft} /></NavLink>
           <h1 className='mb-4'>Complaint Details</h1>
           <div className="text-zero top-right-button-container">
             <Button color='danger' size='md' className="top-right-button mr-3">

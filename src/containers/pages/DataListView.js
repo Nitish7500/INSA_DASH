@@ -123,10 +123,6 @@ const DataListView = ({ complaint, isSelect, collect, onCheckItem, onSelectedSta
             </div>
           </div>
 
-          {/* nest table row inside this tableContainer to enable single row scroll */}
-          <div className="tableContainer">
-          </div>
-
         </Card>
       </ContextMenuTrigger>
     </Colxx>
