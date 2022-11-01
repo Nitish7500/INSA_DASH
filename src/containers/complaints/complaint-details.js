@@ -58,13 +58,8 @@ const ComplaintDetails = ({ match }) => {
     <>
       <Row>
         <Colxx xxs="12" className="my-3">
-          <NavLink location={{}} to= {`${adminRoot}/pages/product/data-list`} className="mr-3"><FontAwesomeIcon icon={faArrowLeft} size="2x" /></NavLink>
-          <h1 className='mb-4'>Complaint Details</h1>
-          {/* <div className="text-zero top-right-button-container">
-            <Button color='danger' size='md' className="top-right-button mr-3">
-              <p className='mb-0'>Add More Complaint</p>
-            </Button>
-          </div> */}
+          <NavLink location={{}} to = {`${adminRoot}/pages/product/data-list`} className="mr-3"><FontAwesomeIcon icon={faArrowLeft} size="2x" /></NavLink>
+          <h1>Complaint Details</h1>
           <Breadcrumb match={match} />
 
           {/* <h2 className='mb-4'>Complaint ID : {complaintId}</h2> */}

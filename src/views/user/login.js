@@ -36,7 +36,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
 
   useEffect(() => {
     if (error) {
-      NotificationManager.warning(error, 'Login Error', 3000, null, null, '');
+      NotificationManager.warning(error, 'Login Error', 3000, null, null, 'filled');
     }
   }, [error]);
 

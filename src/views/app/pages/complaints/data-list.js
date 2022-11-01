@@ -24,29 +24,18 @@ const apiUrl = `${servicePath}/insurance/`;
 
 const pageSizes = [10, 20, 50, 100];
 
-// const categories = [
-//   { label: 'Cakes', value: 'Cakes', key: 0 },
-//   { label: 'Cupcakes', value: 'Cupcakes', key: 1 },
-//   { label: 'Desserts', value: 'Desserts', key: 2 },
-// ];
-
 const DataListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('list');
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedPageSize, setSelectedPageSize] = useState(10);
-  // let { id } = useParams();
-  // console.log("id",id)
   const [modalOpen, setModalOpen] = useState(false);
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
   const [search, setSearch] = useState('');
-  // const [selectedItems, setSelectedItems] = useState([]);
   const [items, setItems] = useState([]);
-  // const [lastChecked, setLastChecked] = useState(null);
 
   const authorizedUser = getCurrentUser();
-  // console.log(authorizedUser.token);
 
   useEffect(() => {
     setCurrentPage(0);
@@ -59,6 +48,8 @@ const DataListPages = ({ match }) => {
   let statusFilter;
   
   if(typeof(statusLabel) == 'undefined') {
+    statusFilter = '';
+  } else if (statusLabel == null) {
     statusFilter = '';
   } else {
     statusFilter = `&status=${statusLabel}`;
@@ -106,27 +97,18 @@ const DataListPages = ({ match }) => {
         heading="All Complaints"
         displayMode={displayMode}
         changeDisplayMode={setDisplayMode}
-        // handleChangeSelectAll={handleChangeSelectAll}
-        // changeOrderBy={(column) => {
-        //   setSelectedOrderOption(
-        //     orderOptions.find((x) => x.column === column)
-        //   );
-        // }}
         changePageSize={setSelectedPageSize}
         selectedPageSize={selectedPageSize}
         totalItemCount={totalItemCount}
-        // selectedOrderOption={selectedOrderOption}
         match={match}
         startIndex={startIndex}
         endIndex={endIndex}
-        // selectedItemsLength={selectedItems ? selectedItems.length : 0}
         itemsLength={items ? items.length : 0}
         onSearchKey={(e) => {
           if (e.key === 'Enter') {
             setSearch(e.target.value.toLowerCase());
           }
         }}
-        // orderOptions={orderOptions}
         pageSizes={pageSizes}
         toggleModal={() => setModalOpen(!modalOpen)}
         filter={filter}
@@ -134,16 +116,12 @@ const DataListPages = ({ match }) => {
       <AddNewModal
         modalOpen={modalOpen}
         toggleModal={() => setModalOpen(!modalOpen)}
-        // categories={categories}
       />
       <ListPageListing
         items={items}
         displayMode={displayMode}
-        // selectedItems={selectedItems}
         currentPage={currentPage}
         totalPage={totalPage}
-        // onContextMenuClick={onContextMenuClick}
-        // onContextMenu={onContextMenu}
         onChangePage={setCurrentPage}
       />
     </>

@@ -120,7 +120,6 @@ const ListPageListing = ({
     <StatusHistory isOpen={isStatusHistoryModal} 
       onClose = {onCloseStatusHistoryModal}
       details = {selectedStatusHistoryInfo}
-      
     />
 
     <ClaimAmountModal isOpen={isClaimAmountModal} 

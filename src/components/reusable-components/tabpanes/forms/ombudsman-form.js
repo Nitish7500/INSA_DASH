@@ -42,8 +42,6 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
 
     const { ombudsman_c_date, courier_number_doc, courierNumberDocArr, complainFormSendDate, form6ASendDate, VIAFormUploadedDate, ombudsman_submit_date, courier_date, courier_number, form6AMail, stateName, omb_first_date, omb_sec_date, expert_customer_date, hearingComment, check_status, omd_reward_date, refundSingleClaim, paymentRefundInt, rewardType, hearing_points, ombudsmanPendingReasonListing, ombudsmanPendingReason,  } = details;
 
-    console.log(courier_date);
-
     return (
         <Card>
             <CardBody>

@@ -1,5 +1,3 @@
-import axios from "axios"
-
 export const baseURLs = {
     regular:"https://api.stage.insurancesamadhan.com/",
     agent:"https://agentapi.stage.insurancesamadhan.com/"
@@ -32,7 +30,11 @@ export const apisURLs = {
     firstDraftData : baseURLs.regular + 'insurance/firstDraftData',
     searchEmailPolicy : baseURLs.agent + 'searchEmailPolicy',
     complaintReport : baseURLs.regular + 'analytics/csv/insurance',
-    customerReport : baseURLs.regular + 'analytics/csv/customerReport'
+    customerReport : baseURLs.regular + 'analytics/csv/customerReport',
+    setStatusPOST : baseURLs.regular + 'insurance/setStatus',
+    getUserBasedDataPOST : baseURLs.regular + 'insurance/getUserBasedData',
+    assignIGMSPOST : baseURLs.regular + 'insurance/assignIGMS',
+    assignOMDPOST : baseURLs.regular + 'insurance/assignOMD'
 }
 
 

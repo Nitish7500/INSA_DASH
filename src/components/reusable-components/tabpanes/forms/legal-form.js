@@ -46,9 +46,6 @@ export default function LegalForm ({ heading, details, complaintId }) {
 
     const {  } = details;
     const { legal_notice, legal_notice_date, approxFees, consumerCourtLocation, sendNoticeReminderOrNot, LawyerFirmNumber, legal_notice_courier_number, legal_res_notice_date, LawyerFirmName, callCust1, caseTitle, C_court_filing_date, callCust2, LawyerFirmAddress, caseFileNumber, caseNumber } = details.legalSection;
-    
-    console.log(approxFees);
-
 
     return (
         <Card>

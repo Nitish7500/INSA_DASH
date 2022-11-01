@@ -223,3 +223,37 @@ html {
 .date {
     margin-bottom: 0;
 }
+
+.options-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: max-content;
+}
+
+.table-option {
+    margin: 0px 20px;
+
+    .option-icon {
+        width: 22px;
+    }
+
+    span {
+        font-weight: 600;
+        font-size: .8rem;
+        padding-top: 5px;
+    }
+}
+
+
+@media screen and (max-width: 600px) {
+    .flex {
+        flex-wrap: wrap;
+    }
+
+    .actions {
+        .flex-cc {
+            margin: 10px !important;
+        }
+    }
+}

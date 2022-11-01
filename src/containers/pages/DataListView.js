@@ -15,7 +15,7 @@ const DataListView = ({ complaint, isSelect, collect, onCheckItem, onSelectedSta
   const [collapse, setCollapse] = useState(false);
   const [modalBasic, setModalBasic] = useState(false);
 
-  console.log(complaint ? '1' : '0');
+  // console.log(complaint ? '1' : '0');
 
   return (
     <>
@@ -31,13 +31,15 @@ const DataListView = ({ complaint, isSelect, collect, onCheckItem, onSelectedSta
           <div className="tableRow">
             <div className='record-data'>
               <div className="card-body tableRow-card align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                <Button
-                  color="primary"
-                  onClick={() => setCollapse(!collapse)}
-                  className="mb-1 dropdown-toggle-split dropdown-toggle btn mr-2 ml-2 table-expand cardCell--50px"
-                  >
-                  {/* <IntlMessages id="collapse.toggle" /> */}
-                </Button>
+                <div class={(collapse == true) ? 'dropup btn-group' : ''}>
+                  <Button
+                    color="primary"
+                    onClick={() => setCollapse(!collapse)}
+                    className="mb-1 dropdown-toggle-split dropdown-toggle btn mr-2 ml-2 table-expand cardCell--50px"
+                    >
+                    {/* <IntlMessages id="collapse.toggle" /> */}
+                  </Button>
+                </div>
                 <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
                   <p className="text-primary text-bold mb-0 truncate">
                     {policyNumber}
@@ -72,51 +74,93 @@ const DataListView = ({ complaint, isSelect, collect, onCheckItem, onSelectedSta
                 <p className="mb-0 cardCell cardCell--150px">
                   --
                 </p>
-                {/* <p className="mb-0 text-muted text-small w-15 w-sm-100">
-                  {email}
-                </p>
-                <p className="mb-0 text-muted text-small w-15 w-sm-100">
-                  {email}
-                </p> */}
               </div>
               <Collapse isOpen={collapse}>
                 <div className="p-2 record-options">
                   <div className="options-flex">
-                    <NavLink to = {`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
-                      <img src="/icons/add-task.png" alt="option" className="option-icon" />
+                    <NavLink to = {`complaint-details?complaintId=${complaint?._id}`} className="table-option">
+                      <div className="flex-cc">
+                        <img src="/icons/add-task.png" alt="option" className="option-icon" />
+                        <span>Amount Pending</span>
+                      </div>
                     </NavLink>
-                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
-                      <img src="/icons/task-remove.png" alt="option" className="option-icon" />
+                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="table-option">
+                      <div className="flex-cc">
+                        <img src="/icons/task-remove.png" alt="option" className="option-icon" />
+                        <span>Document Sign Pending</span>
+                      </div>
                     </NavLink>
-                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
-                      <img src="/icons/list.png" alt="option" className="option-icon" />
+                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="table-option">
+                      <div className="flex-cc">
+                        <img src="/icons/list.png" alt="option" className="option-icon" />
+                        <span>Payment Link not Send</span>
+                      </div>
                     </NavLink>
-                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
-                      <img src="/icons/create-list.png" alt="option" className="option-icon" />
+                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="table-option">
+                      <div className="flex-cc">
+                        <img src="/icons/create-list.png" alt="option" className="option-icon" />
+                        <span>Edit Task</span>
+                      </div>
                     </NavLink>
-                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
-                      <img src="/icons/status.png" alt="option" className="option-icon" />
+                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="table-option">
+                      <div className="flex-cc">
+                        <img src="/icons/status.png" alt="option" className="option-icon" />
+                        <span>Pay Fees</span>
+                      </div>
                     </NavLink>
-                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
-                      <img src="/icons/send.png" alt="option" className="option-icon" />
+                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="table-option">
+                      <div className="flex-cc">
+                        <img src="/icons/send.png" alt="option" className="option-icon" />
+                        <span>Add Claim Amount</span>
+                      </div>
                     </NavLink>
-                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
-                      <img src="/icons/edit.png" alt="option" className="option-icon" />
+                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="table-option">
+                      <div className="flex-cc">
+                        <img src="/icons/edit.png" alt="option" className="option-icon" />
+                        <span>Status History</span>
+                      </div>
                     </NavLink>
-                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
-                      <img src="/icons/target.png" alt="option" className="option-icon" />
+                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="table-option">
+                      <div className="flex-cc">
+                        <img src="/icons/target.png" alt="option" className="option-icon" />
+                        <span>Call Logs for Lead</span>
+                      </div>
                     </NavLink>
-                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
-                      <img src="/icons/warning.png" alt="option" className="option-icon" />
+                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="table-option">
+                      <div className="flex-cc">
+                        <img src="/icons/warning.png" alt="option" className="option-icon" />
+                        <span>See Document</span>
+                      </div>
                     </NavLink>
-                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
-                      <img src="/icons/upload.png" alt="option" className="option-icon" />
+                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="table-option">
+                      <div className="flex-cc">
+                        <img src="/icons/upload.png" alt="option" className="option-icon" />
+                        <span>History</span>
+                      </div>
                     </NavLink>
-                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
-                      <img src="/icons/ombudsman.png" alt="option" className="option-icon" />
+                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="table-option">
+                      <div className="flex-cc">
+                        <img src="/icons/ombudsman.png" alt="option" className="option-icon" />
+                        <span>View Complaint Details</span>
+                      </div>
                     </NavLink>
-                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="cardCell cardCell--250px columnLead">
-                      <img src="/icons/cancel.png" alt="option" className="option-icon" />
+                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="table-option">
+                      <div className="flex-cc">
+                        <img src="/icons/cancel.png" alt="option" className="option-icon" />
+                        <span>Communicaion List</span>
+                      </div>
+                    </NavLink>
+                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="table-option">
+                      <div className="flex-cc">
+                        <img src="/icons/cancel.png" alt="option" className="option-icon" />
+                        <span>Update Data</span>
+                      </div>
+                    </NavLink>
+                    <NavLink to={`complaint-details?complaintId=${complaint?._id}`} className="table-option">
+                      <div className="flex-cc">
+                        <img src="/icons/cancel.png" alt="option" className="option-icon" />
+                        <span>Update Single Data</span>
+                      </div>
                     </NavLink>
                   </div>
                 </div>

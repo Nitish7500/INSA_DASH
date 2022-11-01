@@ -51,9 +51,7 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
     const customerDraftSharedDate = (customerDraftSharedDate != undefined) ? new Date(draftSharedDate) : null;
     const secondResponseDateFromCompany = (secondResponseDateFromCompany != undefined) ? new Date(response_date_company) : null;
     const secondReminderSentDate = (secondReminderSentDate != undefined) ? new Date(reminderSentDate) : null;
-
-    console.table('complaint_date, response_date, complaint_escalation_date, requirementRaisedDate, requirementRevertedDate, requirementSentDate, response_date_company, draftSharedDate, reminderSentDate', complaint_date, response_date, complaint_escalation_date, requirementRaisedDate, requirementRevertedDate, requirementSentDate, response_date_company, draftSharedDate, reminderSentDate);
-
+    
     return (
         <Card>
             <CardBody>

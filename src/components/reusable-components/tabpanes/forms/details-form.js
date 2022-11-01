@@ -18,7 +18,6 @@ const options = [
 
 export default function DetailsForm({ heading, details }) {
 
-    const [documentUploadModal, setDocumentUploadModal] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
     const [states, setStates] = useState([]);
     const [policyTypes, setPolicyTypes] = useState([]);
@@ -830,49 +829,6 @@ export default function DetailsForm({ heading, details }) {
                                                 </FormGroup>
                                             </Colxx>
 
-                                            {/* Form Column 4 */}
-                                            <Colxx xxs="12" lg="4">
-                                                <FormGroup row>
-                                                    <Label for="documents">IGMS / Ombudsman Award and Ombudsman requirement Documents Upload</Label>
-                                                    <Button color="warning" outline onClick={() => setDocumentUploadModal(true)} >Upload Documents</Button>
-                                                    
-                                                    <Modal isOpen={documentUploadModal} toggle={() => setDocumentUploadModal(!documentUploadModal)}>
-                                                        <div className='d-flex w-100 justify-content-between p-4 border-bottom'>
-                                                            <h2 className='mb-0 ml-3'>Document Uploads</h2>
-                                                            <div onClick={() => setDocumentUploadModal(false)} style={{fontSize: '22px', marginRight: '20px'}}>
-                                                                <i className="simple-icon-close" />
-                                                            </div>
-                                                        </div>
-                                                        <ModalBody>
-                                                            <h3 className="text-muted text-thin">Lead ID : </h3>
-                                                            <FormGroup className='my-3'>
-                                                                <Label for="companyresponse">Company Response Documents :</Label>
-                                                                <Input id="companyresponse" name="companyResponseDoc" type="file" />
-                                                            </FormGroup>
-                                                            <FormGroup className='my-3'>
-                                                                <Label for="igms">IGMS Documents :</Label>
-                                                                <Input id="igms" name="igmsDoc" type="file" />
-                                                            </FormGroup>
-                                                            <FormGroup className='my-3'>
-                                                                <Label for="awardrejected">Award Rejected Documents :</Label>
-                                                                <Input id="awardrejected" name="awardRejectedDoc" type="file" />
-                                                            </FormGroup>
-                                                            <FormGroup className='my-3'>
-                                                                <Label for="ombudsman">Ombudsman Requirement Documents :</Label>
-                                                                <Input id="ombudsman" name="ombudsmanDoc" type="file" /> 
-                                                            </FormGroup>
-                                                            <FormGroup className='my-3'>
-                                                                <Label for="courier">Complaint form Courier Receipt :</Label>
-                                                                <Input id="courier" name="complaintCourierReceiptDoc" type="file" />
-                                                            </FormGroup>
-                                                            <FormGroup className='my-3'>
-                                                                <Label for="form6a">Form 6A Courier Receipt :</Label>
-                                                                <Input id="form6a" name="form6aCourierReceiptDoc" type="file" />
-                                                            </FormGroup>
-                                                        </ModalBody>
-                                                    </Modal>
-                                                </FormGroup>
-                                            </Colxx>
                                         </Row>
                                     </Colxx>
 

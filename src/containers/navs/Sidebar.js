@@ -369,9 +369,9 @@ class Sidebar extends Component {
                         key={item.id}
                         className={classnames({
                           active:
-                            (selectedParentMenu === item.id &&
-                              viewingParentMenu === '') ||
-                            viewingParentMenu === item.id,
+                            (selectedParentMenu == item.id &&
+                              viewingParentMenu == '') ||
+                            viewingParentMenu == item.id,
                         })}
                       >
                         {item.newWindow ? (
@@ -416,11 +416,11 @@ class Sidebar extends Component {
                       className={classnames({
                         'd-block':
                           // eslint-disable-next-line react/destructuring-assignment
-                          (this.state.selectedParentMenu === item.id &&
+                          (this.state.selectedParentMenu == item.id &&
                             // eslint-disable-next-line react/destructuring-assignment
-                            this.state.viewingParentMenu === '') ||
+                            this.state.viewingParentMenu == '') ||
                           // eslint-disable-next-line react/destructuring-assignment
-                          this.state.viewingParentMenu === item.id,
+                          this.state.viewingParentMenu == item.id,
                       })}
                       data-parent={item.id}
                     >

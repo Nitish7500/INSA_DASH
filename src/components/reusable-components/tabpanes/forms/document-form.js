@@ -13,7 +13,7 @@ import { SimpleCarousel } from '../carousel/simple-carousel';
 import { items } from 'data/carouselItems';
 
 
-export default function DocumentForm ({ heading }) {
+export default function DocumentForm ({ heading, complaintId }) {
 
     return (
         <Card>
@@ -26,7 +26,7 @@ export default function DocumentForm ({ heading }) {
                             <Colxx xxs="12" lg="12" className="mb-5">
                                 <div className="flex">
                                     <h5>Lead ID - </h5>
-                                    <h5 className='text-warning ml-2'>C4CF798D-614E-4C28-89A4-00B453BD4D65</h5>
+                                    <h5 className='text-warning ml-2'>{complaintId}</h5>
                                 </div>
                             </Colxx>
                         </Row>
