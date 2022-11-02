@@ -4,31 +4,52 @@ import axios from 'axios';
 import { NotificationManager } from 'components/common/react-notifications';
 import getStatusBuckets from 'data/getStatusBuckets';
 import { capitalizeEachWordInString } from 'helpers/CommonHelper';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Modal,
   ModalBody,
 } from 'reactstrap';
 import { apisURLs } from 'services/apisURLs.services';
+import { getAllInsa } from 'services/complaints.services';
 
-export default function AssignCompany({isOpen, onClose, insuranceId}) {
+export default function AssignCompany({isOpen, onClose}) {
 
-    const [selectedStatus, setSelectedStatus] = useState();
-    console.log(insuranceId)
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [selectedUser, setSelectedUser] = useState();
+    const [allUsers, setAllUsers] = useState();
 
-    async function updateStatus() {
+    useEffect(() => {
+        const getAllUsers = async () => {
+            try {
+                const {data} = await getAllInsa();
+                setAllUsers(data);
+            } catch (error) {
+                console.log("States",error);
+                NotificationManager.error(
+                    error.message,
+                    'Failed to download Reports',
+                    3000,
+                    null,
+                    null,
+                    'filled'
+                );
+            }
+            setIsLoaded(true);
+        }
+        getAllUsers();
+    }, []);
+
+    console.log(selectedUser);
+
+    async function assignUser() {
         try {
             axios
             .post(
-                apisURLs.setStatus,
+                apisURLs.assignCompanyPOST,
                 {
-                    expert: '', 
-                    id: insuranceId,
-                    legalExpert: '',
-                    status: selectedStatus,
-                    userEntryId: '',
-                    user_id: ''
+                    assignToCompanyIGMS: '', 
+                    id: selectedUser,
                 })
                 .then((res) => {
                     NotificationManager.success(
@@ -54,7 +75,7 @@ export default function AssignCompany({isOpen, onClose, insuranceId}) {
                 onClose();
             }
     };
-        
+
     
     return (
         <Modal isOpen={isOpen} toggle={onClose}>
@@ -66,19 +87,18 @@ export default function AssignCompany({isOpen, onClose, insuranceId}) {
             </div>
             <ModalBody>
                 <label>Assign To</label>
-                <select name="resolutionType" className="form-control" onChange={(e)=>setSelectedStatus(e.target.value)}>
-                    {getStatusBuckets.map((item) => {
-                        let index = item[1];
-                        return (index.map((option) => {
-                            return (
-                                <option value={option}>{capitalizeEachWordInString(option)}</option>
-                            )
-                        }))
+                <select name="resolutionType" className="form-control" onChange={(e)=>setSelectedUser(e.target.value)}>
+                    {allUsers?.map((users) => {
+                        return (
+                            <option value={users?._id}>{users ? users.name : ''}</option>
+                        )
                     })}
                 </select>
                 <div className="text-center mt-4 mb-3">
-                    <Button color='success' className='text-center' onClick={updateStatus}>
-                        <span className='text-center mt-2 ml-3'>Assign</span>
+                    <Button color='success' className='text-center' 
+                    onClick={assignUser}
+                    >
+                        <span className='text-center mt-2'>Assign</span>
                     </Button>
                 </div>
             </ModalBody>

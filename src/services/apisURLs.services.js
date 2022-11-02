@@ -33,8 +33,8 @@ export const apisURLs = {
     customerReport : baseURLs.regular + 'analytics/csv/customerReport',
     setStatusPOST : baseURLs.regular + 'insurance/setStatus',
     getUserBasedDataPOST : baseURLs.regular + 'insurance/getUserBasedData',
-    assignIGMSPOST : baseURLs.regular + 'insurance/assignIGMS',
-    assignOMDPOST : baseURLs.regular + 'insurance/assignOMD'
+    assignCompanyPOST : baseURLs.regular + 'insurance/assignIGMS',
+    assignOmbudsmanPOST : baseURLs.regular + 'insurance/assignOMD'
 }
 
 

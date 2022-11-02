@@ -13,6 +13,7 @@ import SetStatus from '../modals/setStatus';
 import CancelRequest from '../modals/cancelRequest';
 import AddComplaint from '../modals/addComplaints';
 import { getComplaintDetailsById } from 'services/complaints.services';
+import AssignCompany from '../modals/assignToCompany';
 
 
 export default function OtherActions ({ heading, complaintId }) {
@@ -21,6 +22,7 @@ export default function OtherActions ({ heading, complaintId }) {
     const [isCancelReqModal, setIsCancelReqModal] = useState(false);
     const [addComplaintModal, setAddComplaintModal] = useState(false);
     const [documentUploadModal, setDocumentUploadModal] = useState(false);
+    const [assignCompanyModal, setAssignCompanyModal] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
 
@@ -34,6 +36,10 @@ export default function OtherActions ({ heading, complaintId }) {
 
     const onCloseAddComplaintModal = () => {
         setAddComplaintModal(!addComplaintModal);
+    }
+
+    const onCloseAssignCompanyModal = () => {
+        setAssignCompanyModal(!assignCompanyModal);
     }
 
     //getting Complaint by Id through complaints.services
@@ -50,9 +56,8 @@ export default function OtherActions ({ heading, complaintId }) {
         fetchData();
     }, []);
 
-
-    const leadId = items ? items.leadId._id : '';
-    const userId = items ? items.userId._id : '';
+    const leadId = items ? (items.leadId ? items.leadId._id : '') : '';
+    const userId = items ? (items.userId ? items.userId._id : '') : '';
 
     return (
         <Card>
@@ -103,7 +108,7 @@ export default function OtherActions ({ heading, complaintId }) {
                             <h3>Assign Complaint</h3>
                             <div className="actions flex my-3">
                                 <div className="flex-cc mr-3">
-                                    <Button color='primary' className='text-center'>
+                                    <Button color='primary' className='text-center' onClick={() => setAssignCompanyModal(!assignCompanyModal)}>
                                         <FontAwesomeIcon icon={faUser} />
                                         <span className='text-center mt-2 ml-3'>Assign To Company / IGMS </span>
                                     </Button>
@@ -138,7 +143,7 @@ export default function OtherActions ({ heading, complaintId }) {
                             <h3 className='mb-3'>IGMS / Ombudsman Award and Ombudsman requirement Documents Upload</h3>
                             <Button color="warning" onClick={() => setDocumentUploadModal(true)} >Upload Documents</Button>
                             <FormGroup>
-                                
+                                {/* Document Upload Modal */}
                                 <Modal isOpen={documentUploadModal} toggle={() => setDocumentUploadModal(!documentUploadModal)}>
                                     <div className='d-flex w-100 justify-content-between p-4 border-bottom'>
                                         <h2 className='mb-0 ml-3'>Document Uploads</h2>
@@ -198,6 +203,12 @@ export default function OtherActions ({ heading, complaintId }) {
                 userId = {userId}
                 leadId = {leadId}
             />
+
+            <AssignCompany 
+                isOpen = {assignCompanyModal}
+                onClose = {onCloseAssignCompanyModal}
+            />
+
 
         </Card>
     )
