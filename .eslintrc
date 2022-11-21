@@ -54,7 +54,12 @@
     "no-console": "off",
     "react/prop-types": 0,
     "prettier/prettier": [
-      "warn"
+      "warn",
+      "error",
+      {
+        "singleQuote": true,
+        "parser": "flow"
+      }
     ]
   },
   "globals": {
