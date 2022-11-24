@@ -281,16 +281,13 @@ const BotTranscript = ({ intl, match }) => {
                           <span className="display-5">{res.latestMsgDate}</span>
                         </div>
                         <div className="col-sm-3">
-                          <a
-                          href={`${res?.transcriptUrl}`}
-                          target="_blank"
-                        >
-                          <FontAwesomeIcon
-                            color="#9c27b0"
-                            fontSize={"1.2rem"}
-                            icon={faFile}
-                          />
-                        </a>
+                          <a href={`${res?.transcriptUrl}`} target="_blank">
+                            <FontAwesomeIcon
+                              color="#9c27b0"
+                              fontSize={"1.2rem"}
+                              icon={faFile}
+                            />
+                          </a>
                         </div>
                       </div>
                       <hr />

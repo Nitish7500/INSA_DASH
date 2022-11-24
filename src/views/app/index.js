@@ -1,22 +1,29 @@
-import React, { Suspense } from 'react';
-import { Route, withRouter, Switch, Redirect, useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, { Suspense } from "react";
+import {
+  Route,
+  withRouter,
+  Switch,
+  Redirect,
+  useHistory,
+} from "react-router-dom";
+import { connect } from "react-redux";
 
-import AppLayout from 'layout/AppLayout';
-import Pages from './pages';
+import AppLayout from "layout/AppLayout";
+import Pages from "./pages";
 // import BotTranscript from './BotTranscript';
 // import { ProtectedRoute, UserRole } from 'helpers/authHelper';
 
 const Dashboards = React.lazy(() =>
-  import(/* webpackChunkName: "dashboards" */ './dashboards') 
+  import(/* webpackChunkName: "dashboards" */ "./dashboards")
 );
 
-const BotTranscript = React.lazy(() => import("./BotTranscript/BotTranscript"))
+const BotTranscript = React.lazy(() => import("./BotTranscript/BotTranscript"));
+const Leads = React.lazy(() => import("./Leads/Leads"));
 
 const App = ({ match }) => {
   const history = useHistory();
   return (
-    <AppLayout history = {history}>
+    <AppLayout history={history}>
       <div className="dashboard-wrapper">
         <Suspense fallback={<div className="loading" />}>
           <Switch>
@@ -34,13 +41,18 @@ const App = ({ match }) => {
               render={(props) => <Pages {...props} />}
             />
             <Redirect
-            exact
-            path={`${match.url}/`}
-            to={`${match.url}/botTranscript`}
+              exact
+              path={`${match.url}/`}
+              to={`${match.url}/botTranscript`}
             />
             <Route
-            path={`${match.url}/botTranscript`}
-            render={(props) => <BotTranscript {...props} />}
+              path={`${match.url}/botTranscript`}
+              render={(props) => <BotTranscript {...props} />}
+            />
+            <Redirect exact path={`${match.url}/`} to={`${match.url}/leads`} />
+            <Route
+              path={`${match.url}/leads`}
+              render={(props) => <Leads {...props} />}
             />
             <Redirect to="/error" />
           </Switch>

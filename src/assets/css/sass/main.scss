@@ -245,6 +245,21 @@ html {
     }
 }
 
+[role=button] {
+    cursor: pointer;
+  }
+
+[role=button]:hover{
+    background-color: #00bbd4 !important;
+    color: white in !important;
+}
+
+[role=button]:active{
+    
+    transform: translateY(2px) !important;
+  box-shadow: 0 5px #666;
+  color:aqua !important;
+}
 
 @media screen and (max-width: 600px) {
     .flex {
