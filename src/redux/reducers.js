@@ -3,12 +3,14 @@ import settings from './settings/reducer';
 import menu from './menu/reducer';
 import authUser from './auth/reducer';
 import bucket from "./Dashboard/reducer"
+import botTranscript from "./BotTranscript/Reducer"
 
 const reducers = combineReducers({
   menu,
   settings,
   authUser,
-  bucket
+  bucket,
+  botTranscript,
 });
 
 export default reducers;

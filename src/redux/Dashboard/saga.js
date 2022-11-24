@@ -9,7 +9,7 @@ import {
 } from "redux-saga/effects";
 import axios from "axios";
 import { getCurrentUser } from "helpers/Utils";
-import { request } from "services/requests.services";
+import { bearerRequest, request } from "services/requests.services";
 
 let bucketCount = {
   userBucket: [
@@ -158,7 +158,6 @@ let bucketCount = {
     "FINAL ARGUMENTS",
     "ORDER AWAITED",
   ],
-  KeyRefresh: false,
 };
 
 function getAllBucketData(type) {
@@ -173,28 +172,27 @@ function getAllBucketData(type) {
   );
 }
 
-function getLeadExpertData() {
+function getLeadExpertData(state) {
   return request(
     "POST",
     "https://api.stage.insurancesamadhan.com/lead/leadExpertCount",
     {
-      user_id: null,
-      KeyRefresh: false,
+        ...state
     }
   );
 }
 
-function getBucketCount() {
+function getBucketCount(state) {
   return request(
     "POST",
     "https://api.stage.insurancesamadhan.com/insurance/getBucketCount",
-    bucketCount
+    {...bucketCount,...state}
   );
 }
 
 function* getAllBucket(action) {
   try {
-    const data = yield call(() => getAllBucketData({ dailyAll: "Today" }));
+    const data = yield call(() => getAllBucketData({ ...action.state }));
     yield put({ type: "ALL_LEAD_BUCKET_SUCCESS", data: data?.data });
   } catch (error) {
     yield put({ type: "ALL_LEAD_BUCKET_FAILED", message: "Failed to fetch" });
@@ -202,8 +200,8 @@ function* getAllBucket(action) {
 }
 
 function* getTodayLeadBucket(action) {
-  try {
-    const data = yield call(() => getAllBucketData({ dailyAll: "Daily" }));
+    try {
+    const data = yield call(() => getAllBucketData({ ...action.state }));
     yield put({ type: "TODAY_LEAD_BUCKET_SUCCESS", data: data?.data });
   } catch (error) {
     yield put({ type: "TODAY_LEAD_BUCKET_FAILED", message: "Failed to fetch" });
@@ -212,7 +210,8 @@ function* getTodayLeadBucket(action) {
 
 function* getMonthlyLeadBucket(action) {
   try {
-    const data = yield call(() => getAllBucketData({ dailyAll: "Monthly" }));
+
+    const data = yield call(() => getAllBucketData({ ...action.state }));
     yield put({
       type: "MONTHLY_LEAD_BUCKET_SUCCESS",
       data: data?.data?.marketingChannel,
@@ -227,8 +226,7 @@ function* getMonthlyLeadBucket(action) {
 
 function* getLeadExpert(action) {
   try {
-    const data = yield call(getLeadExpertData);
-    console.log(data);
+    const data = yield call(() => getLeadExpertData({...action.state}));
     yield put({
       type: "LEAD_EXPERT_BUCKET_SUCCESS",
       data: data?.data?.allExperts,
@@ -243,7 +241,7 @@ function* getLeadExpert(action) {
 
 function* getBucketCountFunc(action) {
   try {
-    const data = yield call(getBucketCount);
+    const data = yield call(() => getBucketCount({...action.state}));
     yield put({
       type: "LEAD_BUCKET_COUNT_SUCCESS",
       data: data?.data,
@@ -262,9 +260,8 @@ function* getComplaintFunc(action) {
       "POST",
       "https://api.stage.insurancesamadhan.com/insurance/getComplaintCount",
       {
-        user_id: null,
-        KeyRefresh: false,
-      }
+        ...action.state
+    }
     );
 
     yield put({
@@ -284,11 +281,7 @@ function* getB2CRegistrationFunc(action) {
     const data = yield request(
       "POST",
       "https://api.stage.insurancesamadhan.com/insurance/getRegistrationCount",
-      {
-        user_id: null,
-        KeyRefresh: false,
-        dateWise: "Monthly",
-      }
+      {...action.state}
     );
 
     yield put({
@@ -309,10 +302,7 @@ function* getB2CRegistrationCasesFunc(action) {
       "POST",
       "https://api.stage.insurancesamadhan.com/insurance/getInvoiceSettledCount",
       {
-        user_id: null,
-        KeyRefresh: false,
-        type: "Registration Data",
-        dateWise: "Monthly",
+        ...action.state
       }
     );
 
@@ -334,9 +324,7 @@ function* getPartnerRegistration(action) {
       "POST",
       "https://api.stage.insurancesamadhan.com/insurance/getPartnerRegistrationCount",
       {
-        user_id: null,
-        KeyRefresh: false,
-        dateWise: "Monthly",
+        ...action.state
       }
     );
 
@@ -358,9 +346,7 @@ function* getb2cResolution(action) {
       "POST",
       "https://api.stage.insurancesamadhan.com/insurance/getResolvedCount",
       {
-        user_id: null,
-        KeyRefresh: false,
-        dateWise: "Monthly",
+        ...action.state
       }
     );
 
@@ -382,9 +368,7 @@ function* getPartnerResolution(action) {
       "POST",
       "https://api.stage.insurancesamadhan.com/partnerApi/getPartnerResolvedCount",
       {
-        user_id: null,
-        KeyRefresh: false,
-        dateWise: "Monthly",
+        ...action.state
       }
     );
 
@@ -406,14 +390,10 @@ function* getb2cSattled(action) {
       "POST",
       "https://api.stage.insurancesamadhan.com/insurance/getInvoiceSettledCount",
       {
-        user_id: null,
-        KeyRefresh: false,
-        type: "Settled Data",
-        dateWise: "Monthly",
+        ...action.state
       }
     );
 
-    console.log(data);
     yield put({
       type: "B2C_SATTLED_SUCCESS",
       data: data?.data,
@@ -432,14 +412,10 @@ function* getPartnerSattled(action) {
       "POST",
       "https://api.stage.insurancesamadhan.com/partnerApi/getInvoiceSettledCount",
       {
-        user_id: null,
-        KeyRefresh: false,
-        type: "Settled Data",
-        dateWise: "Monthly",
+        ...action.state
       }
     );
 
-    console.log(data);
     yield put({
       type: "PARTNER_SATTLED_CASES_SUCCESS",
       data: data?.data,
@@ -458,14 +434,10 @@ function* getb2cInvoiceRaised(action) {
       "POST",
       "https://api.stage.insurancesamadhan.com/insurance/getInvoiceSettledCount",
       {
-        user_id: null,
-        KeyRefresh: false,
-        type: "Invoice Data",
-        dateWise: "Monthly",
+        ...action.state
       }
     );
 
-    console.log(data);
     yield put({
       type: "B2C_INVOICE_RAISED_SUCCESS",
       data: data?.data,
@@ -479,32 +451,263 @@ function* getb2cInvoiceRaised(action) {
 }
 
 function* getPartnerInvoiceRaised(action) {
-    try {
-      const data = yield request(
-        "POST",
-        "https://api.stage.insurancesamadhan.com/partnerApi/getInvoiceSettledCount",
-        {
-            "user_id": null,
-            "KeyRefresh": false,
-            "type": "Invoice Data",
-            "dateWise": "Monthly"
-          }
-      );
-  
-      console.log(data);
-      yield put({
-        type: "PARTNER_INVOICE_SUCCESS",
-        data: data?.data,
-      });
-    } catch (error) {
-      yield put({
-        type: "PARTNER_INVOICE_FAILED",
-        message: "Failed to fetch",
-      });
-    }
+  try {
+    const data = yield request(
+      "POST",
+      "https://api.stage.insurancesamadhan.com/partnerApi/getInvoiceSettledCount",
+      {
+        ...action.state
+      }
+    );
+
+    yield put({
+      type: "PARTNER_INVOICE_SUCCESS",
+      data: data?.data,
+    });
+  } catch (error) {
+    yield put({
+      type: "PARTNER_INVOICE_FAILED",
+      message: "Failed to fetch",
+    });
   }
+}
+
+function* getLegalPartner(action) {
+  try {
+    const data = yield request(
+      "POST",
+      "https://api.stage.insurancesamadhan.com/insurance/getPartnerCount",
+      {
+        ...action.state
+      }
+    );
+
+    yield put({
+      type: "LEGAL_PARTNER_DASHBOARD_SUCCESS",
+      data: data?.data,
+    });
+  } catch (error) {
+    yield put({
+      type: "LEGAL_PARTNER_DASHBOARD_FAILED",
+      message: "Failed to fetch",
+    });
+  }
+}
+
+function* getB2cOMBCount(action) {
+  try {
+    const data = yield request(
+      "POST",
+      "https://api.stage.insurancesamadhan.com/insurance/getOmdCount",
+      {
+        ...action.state
+      }
+    );
+
+    yield put({
+      type: "B2C_OMBUDSMAN_COUNT_SUCCESS",
+      data: data?.data,
+    });
+  } catch (error) {
+    yield put({
+      type: "B2C_OMBUDSMAN_COUNT_FAILED",
+      message: "Failed to fetch",
+    });
+  }
+}
+function* getPartnerOMBCount(action) {
+  try {
+    const data = yield request(
+      "POST",
+      "https://api.stage.insurancesamadhan.com/partnerApi/getOmdCount",
+      {
+        user_id: null,
+        KeyRefresh: false,
+        dateWise: "Monthly",
+      }
+    );
+
+    yield put({
+      type: "PARTNER_OMBUDSMAN_COUNT_SUCCESS",
+      data: data?.data,
+    });
+  } catch (error) {
+    yield put({
+      type: "PARTNER_OMBUDSMAN_COUNT_FAILED",
+      message: "Failed to fetch",
+    });
+  }
+}
+function* getOMBnewB2cCases(action) {
+  try {
+    const data = yield request(
+      "POST",
+      "https://api.stage.insurancesamadhan.com/insurance/getComplaintFormCount",
+      {
+        ...action.state
+      }
+    );
+
+    yield put({
+      type: "NEW_OMBUDSMAN_COUNT_B2C_SUCCESS",
+      data: data?.data,
+    });
+  } catch (error) {
+    yield put({
+      type: "NEW_OMBUDSMAN_COUNT_B2C_FAILED",
+      message: "Failed to fetch",
+    });
+  }
+}
+function* getOMBnewPartnerCount(action) {
+  try {
+    const data = yield request(
+      "POST",
+      "https://api.stage.insurancesamadhan.com/partnerApi/getNewOmdCount",
+      {
+        ...action.state
+      }
+    );
+
+    yield put({
+      type: "NEW_OMBUDSMAN_COUNT_PARTNER_SUCCESS",
+      data: data?.data,
+    });
+  } catch (error) {
+    yield put({
+      type: "NEW_OMBUDSMAN_COUNT_PARTNER_FAILED",
+      message: "Failed to fetch",
+    });
+  }
+}
+function* getOMBresendB2cCases(action) {
+  try {
+    const data = yield request(
+      "POST",
+      "https://api.stage.insurancesamadhan.com/insurance/resendCasesCount",
+      {
+        ...action.state
+      }
+    );
+
+    yield put({
+      type: "OMBUDSMAN_RESEND_CASES_B2C_SUCCESS",
+      data: data?.data,
+    });
+  } catch (error) {
+    yield put({
+      type: "OMBUDSMAN_RESEND_CASES_B2C_FAILED",
+      message: "Failed to fetch",
+    });
+  }
+}
+function* getOMBresendPartnerCases(action) {
+  try {
+    const data = yield request(
+      "POST",
+      "https://api.stage.insurancesamadhan.com/partnerApi/resendCasesCount",
+      {
+        ...action.state
+      }
+    );
+
+    yield put({
+      type: "OMBUDSMAN_RESEND_CASES_PARTNER_SUCCESS",
+      data: data?.data,
+    });
+  } catch (error) {
+    yield put({
+      type: "OMBUDSMAN_RESEND_CASES_PARTNER_FAILED",
+      message: "Failed to fetch",
+    });
+  }
+}
+
+function* getb2cMailing(action) {
+  try {
+    const data = yield request(
+      "POST",
+      "https://api.stage.insurancesamadhan.com/insurance/getMailingCount",
+      {
+        ...action.state
+      }
+    );
+
+    yield put({
+      type: "B2C_MAILING_COUNT_SUCCESS",
+      data: data?.data,
+    });
+  } catch (error) {
+    yield put({
+      type: "B2C_MAILING_COUNT_FAILED",
+      message: "Failed to fetch",
+    });
+  }
+}
+
+function* getPartnerMailing(action) {
+  try {
+    const data = yield request(
+      "POST",
+      "https://api.stage.insurancesamadhan.com/partnerApi/getMailingCount",
+      {
+        ...action.state
+      }
+    );
+
+    yield put({
+      type: "PARTNER_MAILING_COUNT_SUCCESS",
+      data: data?.data,
+    });
+  } catch (error) {
+    yield put({
+      type: "PARTNER_MAILING_COUNT_FAILED",
+      message: "Failed to fetch",
+    });
+  }
+}
+
+function* getActiveUsers(action) {
+  try {
+    const data = yield bearerRequest(
+      "GET",
+      "https://agentapi.stage.insurancesamadhan.com/activeUsers"
+    );
+    yield put({
+      type: "GET_ACTIVE_USER_SUCCESS",
+      data: data?.user_data,
+    });
+  } catch (error) {
+    yield put({
+      type: "GET_ACTIVE_USER_FAILED",
+      message: "Failed to fetch",
+    });
+  }
+}
+
+function* getStates(action) {
+  try {
+    const data = yield request(
+      "GET",
+      "https://api.stage.insurancesamadhan.com/ombudsman/state"
+    );
+
+    yield put({
+      type: "GET_STATES_SUCCESS",
+      data: data?.data,
+    });
+  } catch (error) {
+    yield put({
+      type: "GET_STATES_FAILED",
+      message: "Failed to fetch",
+    });
+  }
+}
 
 export default function* mySaga() {
+  yield takeEvery("GET_ACTIVE_USER", getActiveUsers);
+  yield takeEvery("GET_STATES", getStates);
+
   yield takeEvery("ALL_LEAD_BUCKET", getAllBucket);
   yield takeEvery("TODAY_LEAD_BUCKET", getTodayLeadBucket);
   yield takeEvery("MONTHLY_LEAD_BUCKET", getMonthlyLeadBucket);
@@ -519,5 +722,16 @@ export default function* mySaga() {
   yield takeEvery("B2C_SATTLED", getb2cSattled);
   yield takeEvery("PARTNER_SATTLED_CASES", getPartnerSattled);
   yield takeEvery("B2C_INVOICE_RAISED", getb2cInvoiceRaised);
-  yield takeEvery("PARTNER_INVOICE",getPartnerInvoiceRaised)
+  yield takeEvery("PARTNER_INVOICE", getPartnerInvoiceRaised);
+  yield takeEvery("LEGAL_PARTNER_DASHBOARD", getLegalPartner);
+
+  yield takeEvery("B2C_OMBUDSMAN_COUNT", getB2cOMBCount);
+  yield takeEvery("PARTNER_OMBUDSMAN_COUNT", getPartnerOMBCount);
+  yield takeEvery("NEW_OMBUDSMAN_COUNT_B2C", getOMBnewB2cCases);
+  yield takeEvery("NEW_OMBUDSMAN_COUNT_PARTNER", getOMBnewPartnerCount);
+  yield takeEvery("OMBUDSMAN_RESEND_CASES_B2C", getOMBresendB2cCases);
+  yield takeEvery("OMBUDSMAN_RESEND_CASES_PARTNER", getOMBresendPartnerCases);
+
+  yield takeEvery("B2C_MAILING_COUNT", getb2cMailing);
+  yield takeEvery("PARTNER_MAILING_COUNT", getPartnerMailing);
 }

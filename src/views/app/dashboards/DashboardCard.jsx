@@ -7,8 +7,7 @@ const DashboardCard = ({name, value}) => {
       <Card style={{wordBreak:"break-all"}}>
         <CardBody className="text-dark m-2 p-2">
           <p style={{color:"#999"}} className="font-weight-bold">{name}</p>
-
-          <span className="font-weight-bold h2">{value}</span>
+          <span className="font-weight-bold h3">{value}</span>
         </CardBody>
       </Card>
     </div>

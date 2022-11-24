@@ -627,6 +627,13 @@ const data = [
       // },
     ],
   },
+  {
+    id:"botTranscript",
+    icon:"",
+    label:"Bot Transcript",
+    to:`${adminRoot}/botTranscript`,
+    roles:[UserRole.Admin, UserRole.Executive]
+  }
   // {
   //   id: 'applications',
   //   icon: 'iconsminds-air-balloon-1',

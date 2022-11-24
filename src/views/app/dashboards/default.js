@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { injectIntl } from "react-intl";
 import { Row } from "reactstrap";
 import { Colxx, Separator } from "components/common/CustomBootstrap";
@@ -7,6 +7,8 @@ import { getCurrentUser } from "helpers/Utils";
 import { Collapse, Button, CardBody, Card } from "reactstrap";
 import DashboardCard from "./DashboardCard";
 import { useSelector, useDispatch } from "react-redux";
+import moment from "moment";
+import Chart from "./Chart";
 
 const user = getCurrentUser();
 
@@ -18,14 +20,48 @@ const DefaultDashboard = ({ intl, match }) => {
   const [legalSection, setlegalSection] = useState("");
   const [ombudsmanSec, setombudsmanSec] = useState("");
   const [mailingSec, setmailingSec] = useState("");
-  // const [dashboardData, setdashboardData] = useState({
-  //   allBucketData:
-  // })
+
+  // ----------------> Filter states
+  const ombudsmanStatusList = [
+    "Ombudsman Pending",
+    "OMBUDSMAN REQUIREMENT PENDING",
+    "OMBUDSMAN REQUIREMENT PUSHED",
+    "COMPLAINT FORM SENT",
+    "OMBUDSMAN REQUIREMENT SENT",
+    "Ombudsman without Legal",
+    "FORM 6A RECEIVED",
+    "FORM 6A PUSHED",
+    "FORM 6A SENT",
+    "HEARING DATE RECEIVED",
+    "HEARING POSTPONED",
+    "HEARING DONE",
+    "AWARD ACCEPTED",
+    "AWARD REJECTED",
+  ];
+  const [isDateSelected, setisDateSelected] = useState({});
+  const [dateWise, setDateWise] = useState("Monthly");
+  const [filterObj, setFilterObj] = useState({
+    user_id: null,
+    KeyRefresh: false,
+  });
+  const [dateObj, setDateObj] = useState({
+    endDate: "",
+    startDate: "",
+  });
+  const [ombObj, setOmbObj] = useState({
+    omdLocation: "All",
+    selectedStatus: "OMBUDSMAN PENDING",
+  });
+
+  useEffect(() => {
+    dispatch({ type: "GET_ACTIVE_USER", user });
+    dispatch({ type: "GET_STATES" });
+  }, []);
+
   const data = useSelector((state) => state.bucket);
   const dispatch = useDispatch();
   console.log(data);
   const leadCollapse = (e) => {
-    console.log(e);
     if (e == collapse) {
       setCollapse("");
       return;
@@ -35,7 +71,6 @@ const DefaultDashboard = ({ intl, match }) => {
   };
 
   const leadSectionHandler = (name) => {
-    console.log(leadSection);
     if (name === leadSection) {
       setleadSection("");
       return;
@@ -86,42 +121,154 @@ const DefaultDashboard = ({ intl, match }) => {
     }
   };
 
+  const handleDate = (e) => {
+    if (e.target.name === "endDate") {
+      if (moment() < moment(e.target.value)) {
+        alert("Date cannot be greater than today !");
+        return;
+      } else {
+        setDateObj({ ...dateObj, [e.target.name]: e.target.value });
+        return;
+      }
+    } else if (e.target.name === "startDate") {
+      if (moment() < moment(e.target.value)) {
+        alert("Date cannot be grater than today");
+        return;
+      } else {
+        setDateObj({ ...dateObj, [e.target.name]: e.target.value });
+        return;
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (dateObj.endDate && dateObj.startDate) {
+      setisDateSelected({ ...filterObj, ...dateObj });
+      setDateWise("");
+      stateEmptyFunc()
+    }
+  }, [dateObj]);
+
+  const stateEmptyFunc = () => {
+    setmailingSec("");
+    setombudsmanSec("");
+    setlegalSection("");
+    setResolutionSection("");
+    setregSection("");
+    setleadSection("");
+  }
+
+  const handleDateWiseChange = (e) => {
+    setDateWise(e.target.value);
+    setDateObj({ ...dateObj, endDate: "" });
+    stateEmptyFunc()
+  };
+
   return (
     <>
       <h1>
         Welcome <span className="text-warning">{user.data?.userType}</span> !
       </h1>
       <p>Work in Progress...</p>
-      <div class="container m-2">
-        <div class="row align-items-start">
-          <div class="col-sm">
-            <label className="d-block">Daily/Monthly/Yearly</label>
-            <select className="form-control border-0" id="ex1">
-              <option>Daily</option>
+      <div className="container m-2">
+        <div className="row align-items-start">
+          <div className="col-sm">
+            <label className="d-block">Select Executive:-</label>
+            <select
+              className="form-control border-0"
+              id="ex1"
+              name="user_id"
+              onChange={(e) => {
+                stateEmptyFunc()
+                setFilterObj({ ...filterObj, [e.target.name]: e.target.value === "--All--" ? null : e.target.value });
+              }}
+            >
+              <option selected>--All--</option>
+              {data.activeUsers?.length
+                ? data.activeUsers?.map((res) => {
+                    return <option value={res.user_id}>{res.name}</option>;
+                  })
+                : null}
             </select>
           </div>
-          <div class="col-md">
+          <div className="col-sm">
+            <label className="d-block">Daily/Monthly/Yearly</label>
+            <select
+              className="form-control border-0"
+              id="ex1"
+              name="dateWise"
+              onChange={handleDateWiseChange}
+            >
+              <option value={"Daily"}>Daily</option>
+              <option value={"Monthly"} selected>
+                Monthly
+              </option>
+              <option value={"Yearly"}>Yearly</option>
+            </select>
+          </div>
+          <div className="col-md">
             <label className="d-block">Start Date</label>
             <input
               className="form-control input-lg pt-2 border-0"
               id="ex1"
               type={"date"}
+              value={dateObj.startDate}
+              name="startDate"
+              onChange={handleDate}
             />
           </div>
-          <div class="col-md">
+          <div className="col-md">
             <label className="d-block">End Date</label>
-            <input className="form-control border-0" id="ex1" type={"date"} />
+            <input
+              className="form-control border-0"
+              id="ex1"
+              type={"date"}
+              name="endDate"
+              value={dateObj.endDate}
+              onChange={handleDate}
+            />
           </div>
-          <div class="col-md-6 col-lg-6 col-xl">
+          <div className="col-md-6 col-lg-6 col-xl">
             <label className="d-block">Ombudsman Location</label>
-            <select className="form-control border-0" id="ex1">
-              <option>Daily</option>
+            <select
+              className="form-control border-0"
+              id="ex1"
+              name="omdLocation"
+              value={ombObj.omdLocation}
+              onChange={(e) => {
+                stateEmptyFunc()
+                setOmbObj({ ...ombObj, [e.target.name]: e.target.value });
+              }}
+            >
+              <option selected disabled>
+                Select Location
+              </option>
+              <option value={'All'}>--All--</option>
+              {data.states?.length
+                ? data.states?.map((x) => {
+                    return <option value={x.name} >{x.name}</option>;
+                  })
+                : null}
             </select>
           </div>
-          <div class="col-md-6 col-lg-6 col-xl">
+          <div className="col-md-6 col-lg-6 col-xl">
             <label className="d-block">Ombudsman Status</label>
-            <select className="form-control border-0" id="ex1">
-              <option>Daily</option>
+            <select
+              className="form-control border-0"
+              id="ex1"
+              name="selectedStatus"
+              value={ombObj.selectedStatus}
+              onChange={(e) => {
+                stateEmptyFunc()
+                setOmbObj({ ...ombObj, [e.target.name]: e.target.value });
+              }}
+            >
+              <option selected disabled>
+                Select Status
+              </option>
+              {ombudsmanStatusList?.map((res) => {
+                return <option value={res}>{res}</option>;
+              })}
             </select>
           </div>
         </div>
@@ -186,64 +333,21 @@ const DefaultDashboard = ({ intl, match }) => {
               {/* <hr/> */}
               <h1>Lead Section</h1>
               <hr />
-              {/* <div className="container">
-                <div className="row">
-                  <div className="col-sm-2 p-0">
-                    <Button
-                      className="m-0"
-                      color="primary"
-                      onClick={() => setCollapse(true)}
-                    >
-                      All Lead Buckets
-                    </Button>
-                  </div>
-                  <div className="col-sm-2">
-                    <Button
-                      color="primary"
-                      onClick={() => setCollapse(true)}
-                      style={{ marginBottom: "1rem" }}
-                    >
-                      Todays Lead Buckets Movement
-                    </Button>
-                  </div>
-                  <div className="col-sm-2">
-                    <Button
-                      color="primary"
-                      onClick={() => setCollapse(true)}
-                      style={{ marginBottom: "1rem" }}
-                    >
-                      Leads Marketing Channel Dashboard(Monthly)
-                    </Button>
-                  </div>
-                  <div className="col-sm-2">
-                    <Button
-                      color="primary"
-                      onClick={() => setCollapse(true)}
-                      style={{ marginBottom: "1rem" }}
-                    >
-                      Leads Experts Dashboard
-                    </Button>
-                  </div>
-
-                  <div className="col-sm-2">
-                    <Button
-                      color="primary"
-                      onClick={() => setCollapse(true)}
-                      style={{ marginBottom: "1rem" }}
-                    >
-                      Buckets Count
-                    </Button>
-                  </div>
-                </div>
-              </div> */}
               <ul className="d-flex list-unstyled flex-xl-row flex-md-row flex-sm-column">
-                <li className="mr-3">
+                <li key={"1"} className="mr-3">
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
                     onClick={() => {
                       leadSectionHandler("allLeadBuckets");
-                      dispatch({ type: "ALL_LEAD_BUCKET" });
+                      dispatch({
+                        type: "ALL_LEAD_BUCKET",
+                        state: {
+                          ...filterObj,
+                          dailyAll: "Total",
+                          ...isDateSelected,
+                        },
+                      });
                     }}
                   >
                     All Lead Buckets
@@ -255,7 +359,14 @@ const DefaultDashboard = ({ intl, match }) => {
                     color="primary"
                     onClick={() => {
                       leadSectionHandler("todaysLead");
-                      dispatch({ type: "TODAY_LEAD_BUCKET" });
+                      dispatch({
+                        type: "TODAY_LEAD_BUCKET",
+                        state: {
+                          ...filterObj,
+                          dailyAll: "Daily",
+                          ...isDateSelected,
+                        },
+                      });
                     }}
                   >
                     Todays Lead Buckets Movement
@@ -267,7 +378,14 @@ const DefaultDashboard = ({ intl, match }) => {
                     color="primary"
                     onClick={() => {
                       leadSectionHandler("leadMarketing");
-                      dispatch({ type: "MONTHLY_LEAD_BUCKET" });
+                      dispatch({
+                        type: "MONTHLY_LEAD_BUCKET",
+                        state: {
+                          ...filterObj,
+                          dailyAll: "Monthly",
+                          ...isDateSelected,
+                        },
+                      });
                     }}
                   >
                     Leads Marketing Channel Dashboard(Monthly)
@@ -279,7 +397,10 @@ const DefaultDashboard = ({ intl, match }) => {
                     color="primary"
                     onClick={() => {
                       leadSectionHandler("leadExperts");
-                      dispatch({ type: "LEAD_EXPERT_BUCKET" });
+                      dispatch({
+                        type: "LEAD_EXPERT_BUCKET",
+                        state: { ...filterObj, ...isDateSelected },
+                      });
                     }}
                   >
                     Leads Experts Dashboard
@@ -291,7 +412,10 @@ const DefaultDashboard = ({ intl, match }) => {
                     color="primary"
                     onClick={() => {
                       leadSectionHandler("bucketCount");
-                      dispatch({ type: "LEAD_BUCKET_COUNT" });
+                      dispatch({
+                        type: "LEAD_BUCKET_COUNT",
+                        state: { ...filterObj },
+                      });
                     }}
                   >
                     Buckets Count
@@ -493,7 +617,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 >
                   <div className="p-2 bg-primary mb-3 p-2">
                     <h2 className="p-0 m-0 font-weight-light pl-2 py-1">
-                      Today's Lead Buckets
+                      Leads Marketing Channel Dashboard(Monthly)
                     </h2>
                   </div>
 
@@ -501,35 +625,67 @@ const DefaultDashboard = ({ intl, match }) => {
                     <div className="row">
                       <DashboardCard
                         name="IVR"
-                        value={data.monthlyLeadBucket?.ivr}
+                        value={
+                          data.monthlyLeadBucket?.ivr
+                            ? data.monthlyLeadBucket?.ivr
+                            : 0
+                        }
                       />
                       <DashboardCard
                         name="Direct"
-                        value={data.monthlyLeadBucket?.direct}
+                        value={
+                          data.monthlyLeadBucket?.direct
+                            ? data.monthlyLeadBucket?.direct
+                            : 0
+                        }
                       />
                       <DashboardCard
                         name="WhatsApp"
-                        value={data.monthlyLeadBucket?.whatsapp}
+                        value={
+                          data.monthlyLeadBucket?.whatsapp
+                            ? data.monthlyLeadBucket?.whatsapp
+                            : 0
+                        }
                       />
                       <DashboardCard
                         name="ChatBots"
-                        value={data.monthlyLeadBucket?.chatbot}
+                        value={
+                          data.monthlyLeadBucket?.chatbot
+                            ? data.monthlyLeadBucket?.chatbot
+                            : 0
+                        }
                       />
                       <DashboardCard
                         name="WhiteGrapes"
-                        value={data.monthlyLeadBucket?.whitegrapes}
+                        value={
+                          data.monthlyLeadBucket?.whitegrapes
+                            ? data.monthlyLeadBucket?.whitegrapes
+                            : 0
+                        }
                       />
                       <DashboardCard
                         name="Organic"
-                        value={data.monthlyLeadBucket?.organic}
+                        value={
+                          data.monthlyLeadBucket?.organic
+                            ? data.monthlyLeadBucket?.organic
+                            : 0
+                        }
                       />
                       <DashboardCard
                         name="INSA-Website"
-                        value={data?.monthlyLeadBucket?.["insa-website"]}
+                        value={
+                          data?.monthlyLeadBucket?.["insa-website"]
+                            ? data?.monthlyLeadBucket?.["insa-website"]
+                            : 0
+                        }
                       />
                       <DashboardCard
                         name="Total"
-                        value={data.monthlyLeadBucket?.total}
+                        value={
+                          data.monthlyLeadBucket?.total
+                            ? data.monthlyLeadBucket?.total
+                            : 0
+                        }
                       />
                     </div>
                   </div>
@@ -550,7 +706,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 >
                   <div className="p-2 bg-primary mb-3 p-2">
                     <h2 className="p-0 m-0 font-weight-light pl-2 py-1">
-                      Today's Lead Buckets
+                      Leads Experts Dashboard
                     </h2>
                   </div>
 
@@ -581,7 +737,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 >
                   <div className="p-2 bg-primary mb-3 p-2">
                     <h2 className="p-0 m-0 font-weight-light pl-2 py-1">
-                      Today's Lead Buckets
+                      Buckets Count
                     </h2>
                   </div>
 
@@ -618,7 +774,10 @@ const DefaultDashboard = ({ intl, match }) => {
                     color="primary"
                     onClick={() => {
                       regSectionHandler("regComplaints");
-                      dispatch({ type: "COMPLAINT_DASHBOARD" });
+                      dispatch({
+                        type: "COMPLAINT_DASHBOARD",
+                        state: { ...filterObj },
+                      });
                     }}
                   >
                     Complaint Dashboard(All Cases)
@@ -630,7 +789,10 @@ const DefaultDashboard = ({ intl, match }) => {
                     color="primary"
                     onClick={() => {
                       regSectionHandler("regB2C");
-                      dispatch({ type: "B2C_REGISTRATION" });
+                      dispatch({
+                        type: "B2C_REGISTRATION",
+                        state: { ...filterObj, dateWise, ...isDateSelected },
+                      });
                     }}
                   >
                     B2C Registration Dashboard
@@ -642,7 +804,15 @@ const DefaultDashboard = ({ intl, match }) => {
                     color="primary"
                     onClick={() => {
                       regSectionHandler("regB2CCases");
-                      dispatch({ type: "B2C_REGISTRATION_CASES" });
+                      dispatch({
+                        type: "B2C_REGISTRATION_CASES",
+                        state: {
+                          ...filterObj,
+                          dateWise,
+                          ...isDateSelected,
+                          type: "Registration Data",
+                        },
+                      });
                     }}
                   >
                     B2C Registration Cases(Monthly)
@@ -654,7 +824,10 @@ const DefaultDashboard = ({ intl, match }) => {
                     color="primary"
                     onClick={() => {
                       regSectionHandler("regPartner");
-                      dispatch({ type: "PARTNER_REGISTRATION" });
+                      dispatch({
+                        type: "PARTNER_REGISTRATION",
+                        state: { ...filterObj, dateWise, ...isDateSelected },
+                      });
                     }}
                   >
                     Partner Registration Dashboard
@@ -672,7 +845,7 @@ const DefaultDashboard = ({ intl, match }) => {
         >
           <Card>
             <CardBody>
-              <h1>Complaint Section </h1>
+              <h1>Complaint Dashboard </h1>
 
               <div className="container">
                 <div className="row">
@@ -701,11 +874,42 @@ const DefaultDashboard = ({ intl, match }) => {
                 <div className="row">
                   {data.b2cRegistration ? (
                     <>
+                      {dateWise === "Yearly" ? (
+                        <>
+                          <Chart
+                            header="Cases"
+                            labels={["Li", "Hi", "Gi"]}
+                            chartData={[
+                              data?.b2cRegistration?.caseMonthLi,
+                              data?.b2cRegistration?.caseMonthHi,
+                              data?.b2cRegistration?.caseMonthGi,
+                            ]}
+                          />
+                          <Chart
+                            header="Claim Amount"
+                            labels={["Li", "Hi", "Gi"]}
+                            chartData={[
+                              data?.b2cRegistration?.claimCaseLi?.slice(2,),
+                              data?.b2cRegistration?.claimCaseHi?.slice(2,),
+                              data?.b2cRegistration?.claimCaseGi?.slice(2,),
+                            ]}
+                          />
+                          <Chart
+                            header="Customers"
+                            labels={["Li", "Hi", "Gi"]}
+                            chartData={[
+                              data?.b2cRegistration?.allCustomerMonthLi,
+                              data?.b2cRegistration?.allCustomerMonthHi,
+                              data?.b2cRegistration?.allCustomerMonthGi,
+                            ]}
+                          />
+                        </>
+                      ) : null}
                       <DashboardCard
                         name={"Life Insurance"}
                         value={
                           <div className="text-right">
-                            <h3>Cases ${data.b2cRegistration?.caseMonthLi}</h3>
+                            <h3>Cases : {data.b2cRegistration?.caseMonthLi}</h3>
                             <h3>
                               Claim Amount : {data.b2cRegistration?.claimCaseLi}
                             </h3>
@@ -720,7 +924,7 @@ const DefaultDashboard = ({ intl, match }) => {
                         name={"Health Insurance"}
                         value={
                           <div className="text-right">
-                            <h3>Cases ${data.b2cRegistration?.caseMonthHi}</h3>
+                            <h3>Cases : {data.b2cRegistration?.caseMonthHi}</h3>
                             <h3>
                               Claim Amount : {data.b2cRegistration?.claimCaseHi}
                             </h3>
@@ -735,7 +939,7 @@ const DefaultDashboard = ({ intl, match }) => {
                         name={"General Insurance"}
                         value={
                           <div className="text-right">
-                            <h3>Cases ${data.b2cRegistration?.caseMonthGi}</h3>
+                            <h3>Cases : {data.b2cRegistration?.caseMonthGi}</h3>
                             <h3>
                               Claim Amount : {data.b2cRegistration?.claimCaseGi}
                             </h3>
@@ -750,7 +954,7 @@ const DefaultDashboard = ({ intl, match }) => {
                         name={"Total"}
                         value={
                           <div className="text-right">
-                            <h3>Cases ${data.b2cRegistration?.caseMonth}</h3>
+                            <h3>Cases : {data.b2cRegistration?.caseMonth}</h3>
                             <h3>
                               Claim Amount : {data.b2cRegistration?.claimCase}
                             </h3>
@@ -972,11 +1176,43 @@ const DefaultDashboard = ({ intl, match }) => {
               <h1>Partner Registration Dashboard(Monthly) </h1>
               <div className="container">
                 <div className="row">
+                  {" "}
+                  {dateWise === "Yearly" ? (
+                    <>
+                      <Chart
+                        header="Cases"
+                        labels={["Li", "Hi", "Gi"]}
+                        chartData={[
+                          data?.partnerRegistration?.caseMonthLi,
+                          data?.partnerRegistration?.caseMonthHi,
+                          data?.partnerRegistration?.caseMonthGi,
+                        ]}
+                      />
+                      <Chart
+                        header="Claim Amount"
+                        labels={["Li", "Hi", "Gi"]}
+                        chartData={[
+                          data?.partnerRegistration?.claimCaseLi?.slice(2,),
+                          data?.partnerRegistration?.claimCaseHi?.slice(2,),
+                          data?.partnerRegistration?.claimCaseGi?.slice(2,),
+                        ]}
+                      />
+                      <Chart
+                        header="Customers"
+                        labels={["Li", "Hi", "Gi"]}
+                        chartData={[
+                          data?.partnerRegistration?.allCustomerMonthLi,
+                          data?.partnerRegistration?.allCustomerMonthHi,
+                          data?.partnerRegistration?.allCustomerMonthGi,
+                        ]}
+                      />
+                    </>
+                  ) : null}
                   <DashboardCard
                     name={"Life Insurance"}
                     value={
                       <div className="text-right w-100">
-                        <h3>Cases ${data.partnerRegistration?.caseMonthLi}</h3>
+                        <h3>Cases : {data.partnerRegistration?.caseMonthLi}</h3>
                         <h3>
                           Claim Amount : {data.partnerRegistration?.claimCaseLi}
                         </h3>
@@ -991,7 +1227,7 @@ const DefaultDashboard = ({ intl, match }) => {
                     name={"Health Insurance"}
                     value={
                       <div className="text-right">
-                        <h3>Cases ${data.partnerRegistration?.caseMonthHi}</h3>
+                        <h3>Cases : {data.partnerRegistration?.caseMonthHi}</h3>
                         <h3>
                           Claim Amount : {data.partnerRegistration?.claimCaseHi}
                         </h3>
@@ -1006,7 +1242,7 @@ const DefaultDashboard = ({ intl, match }) => {
                     name={"General Insurance"}
                     value={
                       <div className="text-right">
-                        <h3>Cases ${data.partnerRegistration?.caseMonthGi}</h3>
+                        <h3>Cases : {data.partnerRegistration?.caseMonthGi}</h3>
                         <h3>
                           Claim Amount : {data.partnerRegistration?.claimCaseGi}
                         </h3>
@@ -1021,7 +1257,7 @@ const DefaultDashboard = ({ intl, match }) => {
                     name={"Total"}
                     value={
                       <div className="text-right w-100">
-                        <h3>Cases ${data.partnerRegistration?.caseMonth}</h3>
+                        <h3>Cases : {data.partnerRegistration?.caseMonth}</h3>
                         <h3>
                           Claim Amount : {data.partnerRegistration?.claimCase}
                         </h3>
@@ -1056,7 +1292,10 @@ const DefaultDashboard = ({ intl, match }) => {
                     color="primary"
                     onClick={() => {
                       resolutionSectionHandler("resolutionOne");
-                      dispatch({ type: "B2C_RESOLUTION" });
+                      dispatch({
+                        type: "B2C_RESOLUTION",
+                        state: { ...filterObj, dateWise, ...isDateSelected },
+                      });
                     }}
                   >
                     B2C Resolution Dashboard
@@ -1068,7 +1307,10 @@ const DefaultDashboard = ({ intl, match }) => {
                     color="primary"
                     onClick={() => {
                       resolutionSectionHandler("resolutionTwo");
-                      dispatch({ type: "PARTNER_RESOLUTION" });
+                      dispatch({
+                        type: "PARTNER_RESOLUTION",
+                        state: { ...filterObj, dateWise, ...isDateSelected },
+                      });
                     }}
                   >
                     Partner Resolution Dashboard
@@ -1080,7 +1322,15 @@ const DefaultDashboard = ({ intl, match }) => {
                     color="primary"
                     onClick={() => {
                       resolutionSectionHandler("resolutionThree");
-                      dispatch({ type: "B2C_SATTLED" });
+                      dispatch({
+                        type: "B2C_SATTLED",
+                        state: {
+                          ...filterObj,
+                          dateWise,
+                          ...isDateSelected,
+                          type: "Settled Data",
+                        },
+                      });
                     }}
                   >
                     B2C Sattled Cases
@@ -1092,7 +1342,15 @@ const DefaultDashboard = ({ intl, match }) => {
                     color="primary"
                     onClick={() => {
                       resolutionSectionHandler("resolutionFour");
-                      dispatch({ type: "PARTNER_SATTLED_CASES" });
+                      dispatch({
+                        type: "PARTNER_SATTLED_CASES",
+                        state: {
+                          ...filterObj,
+                          dateWise,
+                          ...isDateSelected,
+                          type: "Settled Data",
+                        },
+                      });
                     }}
                   >
                     Partner Sattled Cases(Monthly)
@@ -1104,7 +1362,15 @@ const DefaultDashboard = ({ intl, match }) => {
                     color="primary"
                     onClick={() => {
                       resolutionSectionHandler("resolutionFive");
-                      dispatch({ type: "B2C_INVOICE_RAISED" });
+                      dispatch({
+                        type: "B2C_INVOICE_RAISED",
+                        state: {
+                          ...filterObj,
+                          dateWise,
+                          ...isDateSelected,
+                          type: "Invoice Data",
+                        },
+                      });
                     }}
                   >
                     B2C Invoice Raised Cases(Monthly)
@@ -1116,7 +1382,15 @@ const DefaultDashboard = ({ intl, match }) => {
                     color="primary"
                     onClick={() => {
                       resolutionSectionHandler("resolutionSix");
-                      dispatch({ type: "PARTNER_INVOICE" });
+                      dispatch({
+                        type: "PARTNER_INVOICE",
+                        state: {
+                          ...filterObj,
+                          dateWise,
+                          ...isDateSelected,
+                          type: "Invoice Data",
+                        },
+                      });
                     }}
                   >
                     Partner Invoice Cases(Monthly)
@@ -1139,18 +1413,52 @@ const DefaultDashboard = ({ intl, match }) => {
               <h1>B2C Resolution Dashboard </h1>
               <div className="container">
                 <div className="row">
+                  {dateWise === "Yearly" ? (
+                    <>
+                      <Chart
+                        header="Cases"
+                        labels={["Li", "Hi", "Gi"]}
+                        chartData={[
+                          data.b2cResolution?.caseMonthLi,
+                          data.b2cResolution?.caseMonthHi,
+                          data.b2cResolution?.caseMonthGi,
+                        ]}
+                      />
+                      <Chart
+                        header="Claim Amount"
+                        labels={["Li", "Hi", "Gi"]}
+                        chartData={[
+                          data.b2cResolution?.claimCaseLi?.slice(2,),
+                          data.b2cResolution?.claimCaseHi?.slice(2,),
+                          data.b2cResolution?.claimCaseGi?.slice(2,),
+                        ]}
+                      />
+                      <Chart
+                        header="Customers"
+                        labels={["Li", "Hi", "Gi"]}
+                        chartData={[
+                          data.b2cResolution?.allCustomerMonthLi,
+                          data.b2cResolution?.allCustomerMonthHi,
+                          data.b2cResolution?.allCustomerMonthGi,
+                        ]}
+                      />
+                    </>
+                  ) : null}
                   <DashboardCard
                     name={"Life Insurance"}
                     value={
                       <div className="text-right w-100">
-                        <h6>Cases ${data.b2cResolution?.caseMonthLi}</h6>
+                        <h6>Cases : {data.b2cResolution?.caseMonthLi}</h6>
                         <h6>
                           Claim Amount : {data.b2cResolution?.claimCaseLi}
-                        </h6><h6>
-                          Approved Claim Amount : {data.b2cResolution?.claimCaseTotalLi}
                         </h6>
                         <h6>
-                          Pending Claim Amount : {data.b2cResolution?.claimCasePendingLi}
+                          Approved Claim Amount :{" "}
+                          {data.b2cResolution?.claimCaseTotalLi}
+                        </h6>
+                        <h6>
+                          Pending Claim Amount :{" "}
+                          {data.b2cResolution?.claimCasePendingLi}
                         </h6>
                         <h6>
                           Customers : {data.b2cResolution?.allCustomerMonthLi}
@@ -1162,14 +1470,17 @@ const DefaultDashboard = ({ intl, match }) => {
                     name={"Health Insurance"}
                     value={
                       <div className="text-right w-100">
-                        <h6>Cases ${data.b2cResolution?.caseMonthHi}</h6>
+                        <h6>Cases : {data.b2cResolution?.caseMonthHi}</h6>
                         <h6>
                           Claim Amount : {data.b2cResolution?.claimCaseHi}
-                        </h6><h6>
-                          Approved Claim Amount : {data.b2cResolution?.claimCaseTotalHi}
                         </h6>
                         <h6>
-                          Pending Claim Amount : {data.b2cResolution?.claimCasePendingHi}
+                          Approved Claim Amount :{" "}
+                          {data.b2cResolution?.claimCaseTotalHi}
+                        </h6>
+                        <h6>
+                          Pending Claim Amount :{" "}
+                          {data.b2cResolution?.claimCasePendingHi}
                         </h6>
                         <h6>
                           Customers : {data.b2cResolution?.allCustomerMonthHi}
@@ -1181,14 +1492,17 @@ const DefaultDashboard = ({ intl, match }) => {
                     name={"General Insurance"}
                     value={
                       <div className="text-right w-100">
-                        <h6>Cases ${data.b2cResolution?.caseMonthGi}</h6>
+                        <h6>Cases : {data.b2cResolution?.caseMonthGi}</h6>
                         <h6>
                           Claim Amount : {data.b2cResolution?.claimCaseGi}
-                        </h6><h6>
-                          Approved Claim Amount : {data.b2cResolution?.claimCaseTotalGi}
                         </h6>
                         <h6>
-                          Pending Claim Amount : {data.b2cResolution?.claimCasePendingGi}
+                          Approved Claim Amount :{" "}
+                          {data.b2cResolution?.claimCaseTotalGi}
+                        </h6>
+                        <h6>
+                          Pending Claim Amount :{" "}
+                          {data.b2cResolution?.claimCasePendingGi}
                         </h6>
                         <h6>
                           Customers : {data.b2cResolution?.allCustomerMonthGi}
@@ -1200,14 +1514,15 @@ const DefaultDashboard = ({ intl, match }) => {
                     name={"Total"}
                     value={
                       <div className="text-right w-100">
-                        <h6>Cases ${data.b2cResolution?.caseMonth}</h6>
+                        <h6>Cases : {data.b2cResolution?.caseMonth}</h6>
+                        <h6>Claim Amount : {data.b2cResolution?.claimCase}</h6>
                         <h6>
-                          Claim Amount : {data.b2cResolution?.claimCase}
-                        </h6><h6>
-                          Approved Claim Amount : {data.b2cResolution?.claimCaseTotal}
+                          Approved Claim Amount :{" "}
+                          {data.b2cResolution?.claimCaseTotal}
                         </h6>
                         <h6>
-                          Pending Claim Amount : {data.b2cResolution?.claimCasePendingTotal}
+                          Pending Claim Amount :{" "}
+                          {data.b2cResolution?.claimCasePendingTotal}
                         </h6>
                         <h6>
                           Customers : {data.b2cResolution?.allCustomerMonth}
@@ -1215,233 +1530,219 @@ const DefaultDashboard = ({ intl, match }) => {
                       </div>
                     }
                   />
-                  
+
                   <div className="overflow-auto">
-                        <table className="table text-center table-borderless font-weight-bold">
-                          <thead className="bg-primary">
-                            <tr>
-                              <th colSpan={4}>Life Insurance</th>
-                              <th colSpan={3}>General Insurance</th>
-                              <th colSpan={3}>Health Insurance</th>
-                              <th colSpan={3}>Total</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr style={{ backgroundColor: "#e0ecf4" }}>
-                              <td>Marketing Channel</td>
-                              <td>Cases</td>
-                              <td>Claim Amount</td>
-                              <td>Customers</td>
-                              <td>Cases</td>
-                              <td>Claim Amount</td>
-                              <td>Customers</td>
-                              <td>Cases</td>
-                              <td>Claim Amount</td>
-                              <td>Customers</td>
-                              <td>Cases</td>
-                              <td>Claim Amount</td>
-                              <td>Customers</td>
-                            </tr>
-                            <tr>
-                              <td style={{ backgroundColor: "#e0ecf4" }}>
-                                IVR
-                              </td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                            </tr>
-                            <tr>
-                              <td style={{ backgroundColor: "#e0ecf4" }}>
-                                Direct
-                              </td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                            </tr>
-                            <tr>
-                              <td style={{ backgroundColor: "#e0ecf4" }}>
-                                WhatsApp
-                              </td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                            </tr>
-                            <tr>
-                              <td style={{ backgroundColor: "#e0ecf4" }}>
-                                Chatbot
-                              </td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                            </tr>
-                            <tr>
-                              <td style={{ backgroundColor: "#e0ecf4" }}>
-                                Whitegrape
-                              </td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                            </tr>
-                            <tr>
-                              <td style={{ backgroundColor: "#e0ecf4" }}>
-                                Organic
-                              </td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                            </tr>
-                            <tr>
-                              <td style={{ backgroundColor: "#e0ecf4" }}>
-                                Insa Website
-                              </td>
-                              <td>
-                                {data.b2cRegistration?.allCustomerMonthLi}
-                              </td>
-                              <td>{data.b2cRegistration?.claimCaseLi}</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>{data.b2cRegistration?.caseMonthHi}</td>
-                              <td>{data.b2cRegistration?.claimCaseHi}</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>{data.b2cRegistration?.claimCase}</td>
-                              <td>-</td>
-                            </tr>
-                            <tr>
-                              <td style={{ backgroundColor: "#e0ecf4" }}>
-                                Resolution Level
-                              </td>
-                              <td>
-                                {data.b2cRegistration?.allCustomerMonthLi}
-                              </td>
-                              <td>{data.b2cRegistration?.claimCaseLi}</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>{data.b2cRegistration?.caseMonthHi}</td>
-                              <td>{data.b2cRegistration?.claimCaseHi}</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>{data.b2cRegistration?.claimCase}</td>
-                              <td>-</td>
-                            </tr>
-                            <tr>
-                              <td style={{ backgroundColor: "#e0ecf4" }}>
-                                Company Level
-                              </td>
-                              <td>
-                                {data.b2cRegistration?.allCustomerMonthLi}
-                              </td>
-                              <td>{data.b2cRegistration?.claimCaseLi}</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>{data.b2cRegistration?.caseMonthHi}</td>
-                              <td>{data.b2cRegistration?.claimCaseHi}</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>{data.b2cRegistration?.claimCase}</td>
-                              <td>-</td>
-                            </tr>
-                            <tr>
-                              <td style={{ backgroundColor: "#e0ecf4" }}>
-                                Ombudsman Level
-                              </td>
-                              <td>
-                                {data.b2cRegistration?.allCustomerMonthLi}
-                              </td>
-                              <td>{data.b2cRegistration?.claimCaseLi}</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>{data.b2cRegistration?.caseMonthHi}</td>
-                              <td>{data.b2cRegistration?.claimCaseHi}</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>{data.b2cRegistration?.claimCase}</td>
-                              <td>-</td>
-                            </tr>
-                            <tr>
-                              <td style={{ backgroundColor: "#e0ecf4" }}>
-                                Legal Level
-                              </td>
-                              <td>
-                                {data.b2cRegistration?.allCustomerMonthLi}
-                              </td>
-                              <td>{data.b2cRegistration?.claimCaseLi}</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>{data.b2cRegistration?.caseMonthHi}</td>
-                              <td>{data.b2cRegistration?.claimCaseHi}</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>{data.b2cRegistration?.claimCase}</td>
-                              <td>-</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
+                    <table className="table text-center table-borderless font-weight-bold">
+                      <thead className="bg-primary">
+                        <tr>
+                          <th colSpan={4}>Life Insurance</th>
+                          <th colSpan={3}>General Insurance</th>
+                          <th colSpan={3}>Health Insurance</th>
+                          <th colSpan={3}>Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr style={{ backgroundColor: "#e0ecf4" }}>
+                          <td>Marketing Channel</td>
+                          <td>Cases</td>
+                          <td>Claim Amount</td>
+                          <td>Customers</td>
+                          <td>Cases</td>
+                          <td>Claim Amount</td>
+                          <td>Customers</td>
+                          <td>Cases</td>
+                          <td>Claim Amount</td>
+                          <td>Customers</td>
+                          <td>Cases</td>
+                          <td>Claim Amount</td>
+                          <td>Customers</td>
+                        </tr>
+                        <tr>
+                          <td style={{ backgroundColor: "#e0ecf4" }}>IVR</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                        </tr>
+                        <tr>
+                          <td style={{ backgroundColor: "#e0ecf4" }}>Direct</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                        </tr>
+                        <tr>
+                          <td style={{ backgroundColor: "#e0ecf4" }}>
+                            WhatsApp
+                          </td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                        </tr>
+                        <tr>
+                          <td style={{ backgroundColor: "#e0ecf4" }}>
+                            Chatbot
+                          </td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                        </tr>
+                        <tr>
+                          <td style={{ backgroundColor: "#e0ecf4" }}>
+                            Whitegrape
+                          </td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                        </tr>
+                        <tr>
+                          <td style={{ backgroundColor: "#e0ecf4" }}>
+                            Organic
+                          </td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                        </tr>
+                        <tr>
+                          <td style={{ backgroundColor: "#e0ecf4" }}>
+                            Insa Website
+                          </td>
+                          <td>{data.b2cRegistration?.allCustomerMonthLi}</td>
+                          <td>{data.b2cRegistration?.claimCaseLi}</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>{data.b2cRegistration?.caseMonthHi}</td>
+                          <td>{data.b2cRegistration?.claimCaseHi}</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>{data.b2cRegistration?.claimCase}</td>
+                          <td>-</td>
+                        </tr>
+                        <tr>
+                          <td style={{ backgroundColor: "#e0ecf4" }}>
+                            Resolution Level
+                          </td>
+                          <td>{data.b2cRegistration?.allCustomerMonthLi}</td>
+                          <td>{data.b2cRegistration?.claimCaseLi}</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>{data.b2cRegistration?.caseMonthHi}</td>
+                          <td>{data.b2cRegistration?.claimCaseHi}</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>{data.b2cRegistration?.claimCase}</td>
+                          <td>-</td>
+                        </tr>
+                        <tr>
+                          <td style={{ backgroundColor: "#e0ecf4" }}>
+                            Company Level
+                          </td>
+                          <td>{data.b2cRegistration?.allCustomerMonthLi}</td>
+                          <td>{data.b2cRegistration?.claimCaseLi}</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>{data.b2cRegistration?.caseMonthHi}</td>
+                          <td>{data.b2cRegistration?.claimCaseHi}</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>{data.b2cRegistration?.claimCase}</td>
+                          <td>-</td>
+                        </tr>
+                        <tr>
+                          <td style={{ backgroundColor: "#e0ecf4" }}>
+                            Ombudsman Level
+                          </td>
+                          <td>{data.b2cRegistration?.allCustomerMonthLi}</td>
+                          <td>{data.b2cRegistration?.claimCaseLi}</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>{data.b2cRegistration?.caseMonthHi}</td>
+                          <td>{data.b2cRegistration?.claimCaseHi}</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>{data.b2cRegistration?.claimCase}</td>
+                          <td>-</td>
+                        </tr>
+                        <tr>
+                          <td style={{ backgroundColor: "#e0ecf4" }}>
+                            Legal Level
+                          </td>
+                          <td>{data.b2cRegistration?.allCustomerMonthLi}</td>
+                          <td>{data.b2cRegistration?.claimCaseLi}</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>{data.b2cRegistration?.caseMonthHi}</td>
+                          <td>{data.b2cRegistration?.claimCaseHi}</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>{data.b2cRegistration?.claimCase}</td>
+                          <td>-</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </CardBody>
@@ -1460,21 +1761,56 @@ const DefaultDashboard = ({ intl, match }) => {
               <h1>Partner Resolution Dashboard </h1>
               <div className="container">
                 <div className="row">
+                  {dateWise === "Yearly" ? (
+                    <>
+                      <Chart
+                        header="Cases"
+                        labels={["Li", "Hi", "Gi"]}
+                        chartData={[
+                          data.partnerResolution?.caseMonthLi,
+                          data.partnerResolution?.caseMonthHi,
+                          data.partnerResolution?.caseMonthGi,
+                        ]}
+                      />
+                      <Chart
+                        header="Claim Amount"
+                        labels={["Li", "Hi", "Gi"]}
+                        chartData={[
+                          data.partnerResolution?.claimCaseLi?.slice(2,),
+                          data.partnerResolution?.claimCaseHi?.slice(2,),
+                          data.partnerResolution?.claimCaseGi?.slice(2,),
+                        ]}
+                      />
+                      <Chart
+                        header="Customers"
+                        labels={["Li", "Hi", "Gi"]}
+                        chartData={[
+                          data.partnerResolution?.allCustomerMonthLi,
+                          data.partnerResolution?.allCustomerMonthHi,
+                          data.partnerResolution?.allCustomerMonthGi,
+                        ]}
+                      />
+                    </>
+                  ) : null}
                   <DashboardCard
                     name={"Life Insurance"}
                     value={
                       <div className="text-right w-100">
-                        <h3>Cases ${data.partnerResolution?.caseMonthLi}</h3>
+                        <h3>Cases : {data.partnerResolution?.caseMonthLi}</h3>
                         <h3>
                           Claim Amount : {data.partnerResolution?.claimCaseLi}
-                        </h3><h3>
-                          Approved Claim Amount : {data.partnerResolution?.claimCaseTotalLi}
                         </h3>
                         <h3>
-                          Pending Claim Amount : {data.partnerResolution?.claimCasePendingLi}
+                          Approved Claim Amount :{" "}
+                          {data.partnerResolution?.claimCaseTotalLi}
                         </h3>
                         <h3>
-                          Customers : {data.partnerResolution?.allCustomerMonthLi}
+                          Pending Claim Amount :{" "}
+                          {data.partnerResolution?.claimCasePendingLi}
+                        </h3>
+                        <h3>
+                          Customers :{" "}
+                          {data.partnerResolution?.allCustomerMonthLi}
                         </h3>
                       </div>
                     }
@@ -1483,17 +1819,21 @@ const DefaultDashboard = ({ intl, match }) => {
                     name={"Health Insurance"}
                     value={
                       <div className="text-right w-100">
-                        <h3>Cases ${data.partnerResolution?.caseMonthHi}</h3>
+                        <h3>Cases : {data.partnerResolution?.caseMonthHi}</h3>
                         <h3>
                           Claim Amount : {data.partnerResolution?.claimCaseHi}
-                        </h3><h3>
-                          Approved Claim Amount : {data.partnerResolution?.claimCaseTotalHi}
                         </h3>
                         <h3>
-                          Pending Claim Amount : {data.partnerResolution?.claimCasePendingHi}
+                          Approved Claim Amount :{" "}
+                          {data.partnerResolution?.claimCaseTotalHi}
                         </h3>
                         <h3>
-                          Customers : {data.partnerResolution?.allCustomerMonthHi}
+                          Pending Claim Amount :{" "}
+                          {data.partnerResolution?.claimCasePendingHi}
+                        </h3>
+                        <h3>
+                          Customers :{" "}
+                          {data.partnerResolution?.allCustomerMonthHi}
                         </h3>
                       </div>
                     }
@@ -1502,17 +1842,21 @@ const DefaultDashboard = ({ intl, match }) => {
                     name={"General Insurance"}
                     value={
                       <div className="text-right w-100">
-                        <h3>Cases ${data.partnerResolution?.caseMonthGi}</h3>
+                        <h3>Cases : {data.partnerResolution?.caseMonthGi}</h3>
                         <h3>
                           Claim Amount : {data.partnerResolution?.claimCaseGi}
-                        </h3><h3>
-                          Approved Claim Amount : {data.partnerResolution?.claimCaseTotalGi}
                         </h3>
                         <h3>
-                          Pending Claim Amount : {data.partnerResolution?.claimCasePendingGi}
+                          Approved Claim Amount :{" "}
+                          {data.partnerResolution?.claimCaseTotalGi}
                         </h3>
                         <h3>
-                          Customers : {data.partnerResolution?.allCustomerMonthGi}
+                          Pending Claim Amount :{" "}
+                          {data.partnerResolution?.claimCasePendingGi}
+                        </h3>
+                        <h3>
+                          Customers :{" "}
+                          {data.partnerResolution?.allCustomerMonthGi}
                         </h3>
                       </div>
                     }
@@ -1521,14 +1865,17 @@ const DefaultDashboard = ({ intl, match }) => {
                     name={"Total"}
                     value={
                       <div className="text-right w-100">
-                        <h3>Cases ${data.partnerResolution?.caseMonth}</h3>
+                        <h3>Cases : {data.partnerResolution?.caseMonth}</h3>
                         <h3>
                           Claim Amount : {data.partnerResolution?.claimCase}
-                        </h3><h3>
-                          Approved Claim Amount : {data.partnerResolution?.claimCaseTotal}
                         </h3>
                         <h3>
-                          Pending Claim Amount : {data.partnerResolution?.claimCasePendingTotal}
+                          Approved Claim Amount :{" "}
+                          {data.partnerResolution?.claimCaseTotal}
+                        </h3>
+                        <h3>
+                          Pending Claim Amount :{" "}
+                          {data.partnerResolution?.claimCasePendingTotal}
                         </h3>
                         <h3>
                           Customers : {data.partnerResolution?.allCustomerMonth}
@@ -1536,93 +1883,87 @@ const DefaultDashboard = ({ intl, match }) => {
                       </div>
                     }
                   />
-                  
+
                   <div className="overflow-auto">
-                        <table className="table text-center table-borderless font-weight-bold">
-                          <thead className="bg-primary">
-                            <tr>
-                              <th colSpan={4}>Life Insurance</th>
-                              <th colSpan={ 3}>General Insurance</th>
-                              <th colSpan={3}>Health Insurance</th>
-                              <th colSpan={3}>Total</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr style={{ backgroundColor: "#e0ecf4" }}>
-                              <td>Marketing Channel</td>
-                              <td>Cases</td>
-                              <td>Claim Amount</td>
-                              <td>Customers</td>
-                              <td>Cases</td>
-                              <td>Claim Amount</td>
-                              <td>Customers</td>
-                              <td>Cases</td>
-                              <td>Claim Amount</td>
-                              <td>Customers</td>
-                              <td>Cases</td>
-                              <td>Claim Amount</td>
-                              <td>Customers</td>
-                            </tr>
-                            <tr>
-                              <td style={{ backgroundColor: "#e0ecf4" }}>
-                                Company Level
-                              </td>
-                              <td>
-                                {data.b2cRegistration?.allCustomerMonthLi}
-                              </td>
-                              <td>{data.b2cRegistration?.claimCaseLi}</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>{data.b2cRegistration?.caseMonthHi}</td>
-                              <td>{data.b2cRegistration?.claimCaseHi}</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>{data.b2cRegistration?.claimCase}</td>
-                              <td>-</td>
-                            </tr>
-                            <tr>
-                              <td style={{ backgroundColor: "#e0ecf4" }}>
-                                Ombudsman Level
-                              </td>
-                              <td>
-                                {data.b2cRegistration?.allCustomerMonthLi}
-                              </td>
-                              <td>{data.b2cRegistration?.claimCaseLi}</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>{data.b2cRegistration?.caseMonthHi}</td>
-                              <td>{data.b2cRegistration?.claimCaseHi}</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>{data.b2cRegistration?.claimCase}</td>
-                              <td>-</td>
-                            </tr>
-                            <tr>
-                              <td style={{ backgroundColor: "#e0ecf4" }}>
-                                Legal Level
-                              </td>
-                              <td>
-                                {data.b2cRegistration?.allCustomerMonthLi}
-                              </td>
-                              <td>{data.b2cRegistration?.claimCaseLi}</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>{data.b2cRegistration?.caseMonthHi}</td>
-                              <td>{data.b2cRegistration?.claimCaseHi}</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>{data.b2cRegistration?.claimCase}</td>
-                              <td>-</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
+                    <table className="table text-center table-borderless font-weight-bold">
+                      <thead className="bg-primary">
+                        <tr>
+                          <th colSpan={4}>Life Insurance</th>
+                          <th colSpan={3}>General Insurance</th>
+                          <th colSpan={3}>Health Insurance</th>
+                          <th colSpan={3}>Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr style={{ backgroundColor: "#e0ecf4" }}>
+                          <td>Marketing Channel</td>
+                          <td>Cases</td>
+                          <td>Claim Amount</td>
+                          <td>Customers</td>
+                          <td>Cases</td>
+                          <td>Claim Amount</td>
+                          <td>Customers</td>
+                          <td>Cases</td>
+                          <td>Claim Amount</td>
+                          <td>Customers</td>
+                          <td>Cases</td>
+                          <td>Claim Amount</td>
+                          <td>Customers</td>
+                        </tr>
+                        <tr>
+                          <td style={{ backgroundColor: "#e0ecf4" }}>
+                            Company Level
+                          </td>
+                          <td>{data.b2cRegistration?.allCustomerMonthLi}</td>
+                          <td>{data.b2cRegistration?.claimCaseLi}</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>{data.b2cRegistration?.caseMonthHi}</td>
+                          <td>{data.b2cRegistration?.claimCaseHi}</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>{data.b2cRegistration?.claimCase}</td>
+                          <td>-</td>
+                        </tr>
+                        <tr>
+                          <td style={{ backgroundColor: "#e0ecf4" }}>
+                            Ombudsman Level
+                          </td>
+                          <td>{data.b2cRegistration?.allCustomerMonthLi}</td>
+                          <td>{data.b2cRegistration?.claimCaseLi}</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>{data.b2cRegistration?.caseMonthHi}</td>
+                          <td>{data.b2cRegistration?.claimCaseHi}</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>{data.b2cRegistration?.claimCase}</td>
+                          <td>-</td>
+                        </tr>
+                        <tr>
+                          <td style={{ backgroundColor: "#e0ecf4" }}>
+                            Legal Level
+                          </td>
+                          <td>{data.b2cRegistration?.allCustomerMonthLi}</td>
+                          <td>{data.b2cRegistration?.claimCaseLi}</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>{data.b2cRegistration?.caseMonthHi}</td>
+                          <td>{data.b2cRegistration?.claimCaseHi}</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td>{data.b2cRegistration?.claimCase}</td>
+                          <td>-</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </CardBody>
@@ -1640,41 +1981,90 @@ const DefaultDashboard = ({ intl, match }) => {
               <h1>B2C Settled Cases(Monthly) </h1>
               <div className="container">
                 <div className="row font-weight-bold">
-                  <DashboardCard value={<div className="text-right"><h4>Cases : {data.b2cSattled?.countData?.lifeCount}</h4><h4> Revenue : {data.b2cSattled?.countData?.lifeAmt}</h4></div>} name={"Life Insurance"} />
-                  <DashboardCard value={<div className="text-right"><h4>Cases : {data.b2cSattled?.countData?.healthCount}</h4><h4> Revenue : {data.b2cSattled?.countData?.healthAmt}</h4></div>} name={"Health Insurance"} />
-                  <DashboardCard value={<div className="text-right"><h4>Cases : {data.b2cSattled?.countData?.generalCount}</h4><h4> Revenue : {data.b2cSattled?.countData?.generalAmt}</h4></div>} name={"Life Insurance"} />
-                  <DashboardCard value={<div className="text-right"><h4>Cases : {data.b2cSattled?.countData?.sendDataCount}</h4><h4>Total Revenue : {data.b2cSattled?.countData?.totalAmt}</h4></div>} name={"Life Insurance"} />
+                  <DashboardCard
+                    value={
+                      <div className="text-right">
+                        <h4>Cases : {data.b2cSattled?.countData?.lifeCount}</h4>
+                        <h4>
+                          {" "}
+                          Revenue : {data.b2cSattled?.countData?.lifeAmt}
+                        </h4>
+                      </div>
+                    }
+                    name={"Life Insurance"}
+                  />
+                  <DashboardCard
+                    value={
+                      <div className="text-right">
+                        <h4>
+                          Cases : {data.b2cSattled?.countData?.healthCount}
+                        </h4>
+                        <h4>
+                          {" "}
+                          Revenue : {data.b2cSattled?.countData?.healthAmt}
+                        </h4>
+                      </div>
+                    }
+                    name={"Health Insurance"}
+                  />
+                  <DashboardCard
+                    value={
+                      <div className="text-right">
+                        <h4>
+                          Cases : {data.b2cSattled?.countData?.generalCount}
+                        </h4>
+                        <h4>
+                          {" "}
+                          Revenue : {data.b2cSattled?.countData?.generalAmt}
+                        </h4>
+                      </div>
+                    }
+                    name={"Life Insurance"}
+                  />
+                  <DashboardCard
+                    value={
+                      <div className="text-right">
+                        <h4>
+                          Cases : {data.b2cSattled?.countData?.sendDataCount}
+                        </h4>
+                        <h4>
+                          Total Revenue : {data.b2cSattled?.countData?.totalAmt}
+                        </h4>
+                      </div>
+                    }
+                    name={"Life Insurance"}
+                  />
 
-                    <table className="table table-borderless font-weight-bold">
-                      <thead className="bg-primary">
-                        <tr>
-                          <th>S.No</th>
-                          <th>Name</th>
-                          <th>Policy Number</th>
-                          <th>Final Amt to be Paid</th>
-                          <th>Invoice Date</th>
-                          <th>Fianl Paid At</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {
-                          data.b2cSattled?.sendData
-                          ?
-                          data.b2cSattled?.sendData.map((res,i) => {
-                            return <tr>
-                                  <td>{i + 1}</td>
-                                  <td>{res.name}</td>
-                                  <td>{res.policyNumber}</td>
-                                  <td>{res.finalAmountToBePaid}</td>
-                                  <td>{res.invoiceRaisedDate}</td>
-                                  <td>{res.finalPaidAt}</td>
+                  <table className="table table-borderless font-weight-bold">
+                    <thead className="bg-primary">
+                      <tr>
+                        <th>S.No</th>
+                        <th>Name</th>
+                        <th>Policy Number</th>
+                        <th>Final Amt to be Paid</th>
+                        <th>Invoice Date</th>
+                        <th>Fianl Paid At</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {data.b2cSattled?.sendData ? (
+                        data.b2cSattled?.sendData.map((res, i) => {
+                          return (
+                            <tr>
+                              <td>{i + 1}</td>
+                              <td>{res.name}</td>
+                              <td>{res.policyNumber}</td>
+                              <td>{res.finalAmountToBePaid}</td>
+                              <td>{res.invoiceRaisedDate}</td>
+                              <td>{res.finalPaidAt}</td>
                             </tr>
-                          })
-                          :
-                          <tr>No Data</tr>
-                        }
-                      </tbody>
-                    </table>
+                          );
+                        })
+                      ) : (
+                        <tr>No Data</tr>
+                      )}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </CardBody>
@@ -1692,10 +2082,63 @@ const DefaultDashboard = ({ intl, match }) => {
               <h1>Partner Sattled Cases(Monthly) </h1>
               <div className="container">
                 <div className="row font-weight-bold">
-                  <DashboardCard value={<div className="text-right"><h4>Cases : {data.partnerSattled?.countData?.lifeCount}</h4><h4> Revenue : {data.partnerSattled?.countData?.lifeAmt}</h4></div>} name={"Life Insurance"} />
-                  <DashboardCard value={<div className="text-right"><h4>Cases : {data.partnerSattled?.countData?.healthCount}</h4><h4> Revenue : {data.partnerSattled?.countData?.healthAmt}</h4></div>} name={"Health Insurance"} />
-                  <DashboardCard value={<div className="text-right"><h4>Cases : {data.partnerSattled?.countData?.generalCount}</h4><h4> Revenue : {data.partnerSattled?.countData?.generalAmt}</h4></div>} name={"Life Insurance"} />
-                  <DashboardCard value={<div className="text-right"><h4>Cases : {data.partnerSattled?.countData?.sendDataCount}</h4><h4>Total Revenue : {data.partnerSattled?.countData?.totalAmt}</h4></div>} name={"Life Insurance"} />
+                  <DashboardCard
+                    value={
+                      <div className="text-right">
+                        <h4>
+                          Cases : {data.partnerSattled?.countData?.lifeCount}
+                        </h4>
+                        <h4>
+                          {" "}
+                          Revenue : {data.partnerSattled?.countData?.lifeAmt}
+                        </h4>
+                      </div>
+                    }
+                    name={"Life Insurance"}
+                  />
+                  <DashboardCard
+                    value={
+                      <div className="text-right">
+                        <h4>
+                          Cases : {data.partnerSattled?.countData?.healthCount}
+                        </h4>
+                        <h4>
+                          {" "}
+                          Revenue : {data.partnerSattled?.countData?.healthAmt}
+                        </h4>
+                      </div>
+                    }
+                    name={"Health Insurance"}
+                  />
+                  <DashboardCard
+                    value={
+                      <div className="text-right">
+                        <h4>
+                          Cases : {data.partnerSattled?.countData?.generalCount}
+                        </h4>
+                        <h4>
+                          {" "}
+                          Revenue : {data.partnerSattled?.countData?.generalAmt}
+                        </h4>
+                      </div>
+                    }
+                    name={"Life Insurance"}
+                  />
+                  <DashboardCard
+                    value={
+                      <div className="text-right">
+                        <h4>
+                          Cases :{" "}
+                          {data.partnerSattled?.countData?.sendDataCount}
+                        </h4>
+                        <h4>
+                          Total Revenue :{" "}
+                          {data.partnerSattled?.countData?.totalAmt}
+                        </h4>
+                      </div>
+                    }
+                    name={"Life Insurance"}
+                  />
                 </div>
               </div>
             </CardBody>
@@ -1709,42 +2152,120 @@ const DefaultDashboard = ({ intl, match }) => {
         >
           <Card>
             <CardBody>
-              <h1>B2C Invoice Cases(Monthly)  </h1>
+              <h1>B2C Invoice Cases(Monthly) </h1>
               <div className="container">
-                <div className="row font-weight-bold" style={{fontWeight:"900"}}>
-                  <DashboardCard value={<div className="text-right"><h4>Cases : {data.b2cInvoiceRaised?.countData?.lifeCount}</h4><h4> Final Amt to be Paid : {data.b2cInvoiceRaised?.countData?.lifeAmt}</h4><h4>Final Amt Settled : {data.b2cInvoiceRaised?.countData?.lifeSettleCount}</h4></div>} name={"Life Insurance"} />
-                  <DashboardCard value={<div className="text-right"><h4>Cases : {data.b2cInvoiceRaised?.countData?.healthCount}</h4><h4> Final Amt to be Paid : {data.b2cInvoiceRaised?.countData?.healthAmt}</h4><h4>Final Amt Settled : {data.b2cInvoiceRaised?.countData?.healthSettleCount}</h4></div>} name={"Health Insurance"} />
-                  <DashboardCard value={<div className="text-right"><h4>Cases : {data.b2cInvoiceRaised?.countData?.generalCount}</h4><h4> Final Amt to be Paid : {data.b2cInvoiceRaised?.countData?.generalAmt}</h4><h4>Final Amt Settled : {data.b2cInvoiceRaised?.countData?.generalSettleCount}</h4></div>} name={"Life Insurance"} />
-                  <DashboardCard value={<div className="text-right"><h4>Cases : {data.b2cInvoiceRaised?.countData?.sendDataCount}</h4><h4>Total Final Amt to be Paid : {data.b2cInvoiceRaised?.countData?.totalAmt}</h4><h4>Final Amt Settled : {data.b2cInvoiceRaised?.countData?.totalSettleCount}</h4></div>} name={"Life Insurance"} />
-                  <table className="table table-borderless font-weight-bold">
-                      <thead className="bg-primary">
-                        <tr>
-                          <th>S.No</th>
-                          <th>Name</th>
-                          <th>Policy Number</th>
-                          <th>Final Amt to be Paid</th>
-                          <th>Invoice Date</th>
-                          <th>Fianl Paid At</th>
-                        </tr>
-                  </thead>
-                  <tbody>
-                    {
-                      data.b2cInvoiceRaised?.sendData ? data.b2cInvoiceRaised?.sendData?.map((res,i) => {
-                        return <tr>
-                          <td>{i + 1}</td>
-                          <td>{res.name}</td>
-                          <td>{res.policyNumber}</td>
-                          <td>{res.finalAmountToBePaid}</td>
-                          <td>{res.invoiceRaisedDate}</td>
-                          <td>{res.paidAt}</td>
-                        </tr>
-                      })
-                      :
-                      <tr>No Data</tr>
+                <div
+                  className="row font-weight-bold"
+                  style={{ fontWeight: "900" }}
+                >
+                  <DashboardCard
+                    value={
+                      <div className="text-right">
+                        <h4>
+                          Cases : {data.b2cInvoiceRaised?.countData?.lifeCount}
+                        </h4>
+                        <h4>
+                          {" "}
+                          Final Amt to be Paid :{" "}
+                          {data.b2cInvoiceRaised?.countData?.lifeAmt}
+                        </h4>
+                        <h4>
+                          Final Amt Settled :{" "}
+                          {data.b2cInvoiceRaised?.countData?.lifeSettleCount}
+                        </h4>
+                      </div>
                     }
-                  </tbody>
-                </table>
-
+                    name={"Life Insurance"}
+                  />
+                  <DashboardCard
+                    value={
+                      <div className="text-right">
+                        <h4>
+                          Cases :{" "}
+                          {data.b2cInvoiceRaised?.countData?.healthCount}
+                        </h4>
+                        <h4>
+                          {" "}
+                          Final Amt to be Paid :{" "}
+                          {data.b2cInvoiceRaised?.countData?.healthAmt}
+                        </h4>
+                        <h4>
+                          Final Amt Settled :{" "}
+                          {data.b2cInvoiceRaised?.countData?.healthSettleCount}
+                        </h4>
+                      </div>
+                    }
+                    name={"Health Insurance"}
+                  />
+                  <DashboardCard
+                    value={
+                      <div className="text-right">
+                        <h4>
+                          Cases :{" "}
+                          {data.b2cInvoiceRaised?.countData?.generalCount}
+                        </h4>
+                        <h4>
+                          {" "}
+                          Final Amt to be Paid :{" "}
+                          {data.b2cInvoiceRaised?.countData?.generalAmt}
+                        </h4>
+                        <h4>
+                          Final Amt Settled :{" "}
+                          {data.b2cInvoiceRaised?.countData?.generalSettleCount}
+                        </h4>
+                      </div>
+                    }
+                    name={"Life Insurance"}
+                  />
+                  <DashboardCard
+                    value={
+                      <div className="text-right">
+                        <h4>
+                          Cases :{" "}
+                          {data.b2cInvoiceRaised?.countData?.sendDataCount}
+                        </h4>
+                        <h4>
+                          Total Final Amt to be Paid :{" "}
+                          {data.b2cInvoiceRaised?.countData?.totalAmt}
+                        </h4>
+                        <h4>
+                          Final Amt Settled :{" "}
+                          {data.b2cInvoiceRaised?.countData?.totalSettleCount}
+                        </h4>
+                      </div>
+                    }
+                    name={"Life Insurance"}
+                  />
+                  <table className="table table-borderless font-weight-bold">
+                    <thead className="bg-primary">
+                      <tr>
+                        <th>S.No</th>
+                        <th>Name</th>
+                        <th>Policy Number</th>
+                        <th>Final Amt to be Paid</th>
+                        <th>Invoice Date</th>
+                        <th>Fianl Paid At</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {data.b2cInvoiceRaised?.sendData ? (
+                        data.b2cInvoiceRaised?.sendData?.map((res, i) => {
+                          return (
+                            <tr>
+                              <td>{i + 1}</td>
+                              <td>{res.name}</td>
+                              <td>{res.policyNumber}</td>
+                              <td>{res.finalAmountToBePaid}</td>
+                              <td>{res.invoiceRaisedDate}</td>
+                              <td>{res.paidAt}</td>
+                            </tr>
+                          );
+                        })
+                      ) : (
+                        <tr>No Data</tr>
+                      )}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </CardBody>
@@ -1761,10 +2282,68 @@ const DefaultDashboard = ({ intl, match }) => {
               <h1>Partner Invoice Cases(Monthly) </h1>
               <div className="container">
                 <div className="row font-weight-bold">
-                  <DashboardCard value={<div className="text-right"><h4>Cases : {data.partnerInvoiceCases?.countData?.lifeCount}</h4><h4> Life Insurance : {data.partnerInvoiceCases?.countData?.lifeAmt}</h4></div>} name={"Life Insurance"} />
-                  <DashboardCard value={<div className="text-right"><h4>Cases : {data.partnerInvoiceCases?.countData?.healthCount}</h4><h4>Health Insurance  : {data.partnerInvoiceCases?.countData?.healthAmt}</h4></div>} name={"Health Insurance"} />
-                  <DashboardCard value={<div className="text-right"><h4>Cases : {data.partnerInvoiceCases?.countData?.generalCount}</h4><h4> General Insurance : {data.partnerInvoiceCases?.countData?.generalAmt}</h4></div>} name={"Life Insurance"} />
-                  <DashboardCard value={<div className="text-right"><h4>Cases : {data.partnerInvoiceCases?.countData?.sendDataCount}</h4><h4>Total  : {data.partnerInvoiceCases?.countData?.totalAmt}</h4></div>} name={"Life Insurance"} />
+                  <DashboardCard
+                    value={
+                      <div className="text-right">
+                        <h4>
+                          Cases :{" "}
+                          {data.partnerInvoiceCases?.countData?.lifeCount}
+                        </h4>
+                        <h4>
+                          {" "}
+                          Life Insurance :{" "}
+                          {data.partnerInvoiceCases?.countData?.lifeAmt}
+                        </h4>
+                      </div>
+                    }
+                    name={"Life Insurance"}
+                  />
+                  <DashboardCard
+                    value={
+                      <div className="text-right">
+                        <h4>
+                          Cases :{" "}
+                          {data.partnerInvoiceCases?.countData?.healthCount}
+                        </h4>
+                        <h4>
+                          Health Insurance :{" "}
+                          {data.partnerInvoiceCases?.countData?.healthAmt}
+                        </h4>
+                      </div>
+                    }
+                    name={"Health Insurance"}
+                  />
+                  <DashboardCard
+                    value={
+                      <div className="text-right">
+                        <h4>
+                          Cases :{" "}
+                          {data.partnerInvoiceCases?.countData?.generalCount}
+                        </h4>
+                        <h4>
+                          {" "}
+                          General Insurance :{" "}
+                          {data.partnerInvoiceCases?.countData?.generalAmt}
+                        </h4>
+                      </div>
+                    }
+                    name={"Life Insurance"}
+                  />
+                  <DashboardCard
+                    value={
+                      <div className="text-right">
+                        <h4>
+                          Cases :{" "}
+                          {data.partnerInvoiceCases?.countData?.sendDataCount}
+                        </h4>
+                        <h4>
+                          Total :{" "}
+                          {data.partnerInvoiceCases?.countData?.totalAmt}
+                        </h4>
+                      </div>
+                    }
+                    name={"Life Insurance"}
+                  />
                 </div>
               </div>
             </CardBody>
@@ -1787,27 +2366,15 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
-                    onClick={() => handleLegalSection("legalOne")}
+                    onClick={() => {
+                      handleLegalSection("legalOne");
+                      dispatch({
+                        type: "LEGAL_PARTNER_DASHBOARD",
+                        state: { ...filterObj },
+                      });
+                    }}
                   >
                     Partner Dashboard(All Cases)
-                  </button>
-                </li>
-                <li className="mr-3">
-                  <button
-                    className="m-0 btn btn-primary rounded"
-                    color="primary"
-                    onClick={() => handleLegalSection("legalTwo")}
-                  >
-                    Expert Dashboard(Monthly)
-                  </button>
-                </li>
-                <li className="mr-3">
-                  <button
-                    className="m-0 btn btn-primary rounded"
-                    color="primary"
-                    onClick={() => handleLegalSection("legalThree")}
-                  >
-                    Expert Partner Dashboard(Monthly)
                   </button>
                 </li>
               </ul>
@@ -1820,40 +2387,76 @@ const DefaultDashboard = ({ intl, match }) => {
         <Collapse isOpen={collapse === "legal" && legalSection == "legalOne"}>
           <Card>
             <CardBody>
-              <h1>Complaint Section </h1>
+              {/* <h1>Parnter Dashboard </h1> */}
+              <div className="container">
+                <div className="row font-weight-bold">
+                  <DashboardCard
+                    name={"Cases for which invoicing is done"}
+                    value={data.legalPartner?.complaintCaseInvoice}
+                  />
+                  <DashboardCard
+                    name={"Cases Registered in GI"}
+                    value={data.legalPartner?.complaintCaseGI}
+                  />
+                  <DashboardCard
+                    name={"Total claim amount in GI"}
+                    value={data.legalPartner?.claimComplaintCaseGI}
+                  />
+                  <DashboardCard
+                    name={"No. of Cases Registered in HI"}
+                    value={data.legalPartner?.complaintCaseHI}
+                  />
+                  <DashboardCard
+                    name={"Total claim amount in HI"}
+                    value={data.legalPartner?.claimComplaintCaseHI}
+                  />
+                  <DashboardCard
+                    name={"No. of Cases Registered in LI"}
+                    value={data.legalPartner?.complaintCaseLI}
+                  />
+                  <DashboardCard
+                    name={"Total claim amount in LI"}
+                    value={data.legalPartner?.claimComplaintCaseLI}
+                  />
+                  <DashboardCard
+                    name={"No. of Cases in IGMS"}
+                    value={data.legalPartner?.complaintCaseIGMS}
+                  />
+                  <DashboardCard
+                    name={"Total claim amount in IGMS"}
+                    value={data.legalPartner?.claimComplaintCaseIGMS}
+                  />
+                  <DashboardCard
+                    name={"No. of Cases in Ombudsman"}
+                    value={data.legalPartner?.complaintCaseOMD}
+                  />
+                  <DashboardCard
+                    name={"Total claim amount in Ombudsman"}
+                    value={data.legalPartner?.claimComplaintCaseOMD}
+                  />
+                  <DashboardCard
+                    name={"As a Service Cases"}
+                    value={data.legalPartner?.caseAsAService}
+                  />
+                  <DashboardCard
+                    name={"Total claim amount in As a Service Cases"}
+                    value={data.legalPartner?.claimCaseAsAService}
+                  />
+                  <DashboardCard
+                    name={"Total Number of cases(01/Jan/2021 - 31/12/2021)"}
+                    value={data.legalPartner?.complaintCaseYear}
+                  />
+                  <DashboardCard
+                    name={"Total claim amount(01/Jan/2021 - 31/12/2021)"}
+                    value={data.legalPartner?.claimComplaintCaseYear}
+                  />
+                </div>
+              </div>
             </CardBody>
           </Card>
         </Collapse>
 
         {/* -------------------------> Registration B2C Registration */}
-
-        <Collapse isOpen={collapse === "legal" && legalSection == "legalTwo"}>
-          <Card>
-            <CardBody>
-              <h1>B2C Registration Section </h1>
-            </CardBody>
-          </Card>
-        </Collapse>
-
-        {/* -------------------------> Registration B2C Cases */}
-        <Collapse isOpen={collapse === "legal" && legalSection == "legalThree"}>
-          <Card>
-            <CardBody>
-              <h1>B2C Cases </h1>
-            </CardBody>
-          </Card>
-        </Collapse>
-
-        {/* -------------------------> Registration Partner Registration */}
-        <Collapse
-          isOpen={collapse === "registration" && legalSection == "regPartner"}
-        >
-          <Card>
-            <CardBody>
-              <h1>Registration Partner </h1>
-            </CardBody>
-          </Card>
-        </Collapse>
       </div>
 
       {/* ------------------------------------------------> Legal Section End */}
@@ -1871,16 +2474,108 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
-                    onClick={() => ombudsmanHandler("ombudsmanOne")}
+                    onClick={() => {
+                      ombudsmanHandler("ombudsmanOne");
+                      dispatch({
+                        type: "B2C_OMBUDSMAN_COUNT",
+                        state: { ...filterObj, dateWise, ...isDateSelected },
+                      });
+                    }}
                   >
-                    Resend B2B Cases(Monthly)
+                    B2C Ombudsman Count(Monthly)
                   </button>
                 </li>
                 <li className="mr-3">
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
-                    onClick={() => ombudsmanHandler("ombudsmanTwo")}
+                    onClick={() => {
+                      ombudsmanHandler("ombudsmanTwo");
+                      dispatch({
+                        type: "PARTNER_OMBUDSMAN_COUNT",
+                        state: { ...filterObj, dateWise, ...isDateSelected },
+                      });
+                    }}
+                  >
+                    Partner Ombudsman Count(Monthly)
+                  </button>
+                </li>
+                <li className="mr-3">
+                  <button
+                    className="m-0 btn btn-primary rounded"
+                    color="primary"
+                    onClick={() => {
+                      ombudsmanHandler("ombudsmanThree");
+                      dispatch({
+                        type: "NEW_OMBUDSMAN_COUNT_B2C",
+                        state: {
+                          ...filterObj,
+                          dateWise,
+                          ...isDateSelected,
+                          omdLocation: ombObj.omdLocation,
+                        },
+                      });
+                    }}
+                  >
+                    New Ombudsman Count(B2C)(Yearly)
+                  </button>
+                </li>
+                <li className="mr-3">
+                  <button
+                    className="m-0 btn btn-primary rounded"
+                    color="primary"
+                    onClick={() => {
+                      ombudsmanHandler("ombudsmanFour");
+                      dispatch({
+                        type: "NEW_OMBUDSMAN_COUNT_PARTNER",
+                        state: {
+                          ...filterObj,
+                          dateWise,
+                          ...isDateSelected,
+                          omdLocation: ombObj.omdLocation,
+                        },
+                      });
+                    }}
+                  >
+                    New Ombudsman Count(Partner)(Yearly)
+                  </button>
+                </li>
+                <li className="mr-3">
+                  <button
+                    className="m-0 btn btn-primary rounded"
+                    color="primary"
+                    onClick={() => {
+                      ombudsmanHandler("ombudsmanFive");
+                      dispatch({
+                        type: "OMBUDSMAN_RESEND_CASES_B2C",
+                        state: {
+                          ...filterObj,
+                          dateWise,
+                          ...isDateSelected,
+                          selectedStatus: ombObj.selectedStatus,
+                        },
+                      });
+                    }}
+                  >
+                    Resend B2C Cases(Monthly)
+                  </button>
+                </li>
+                <li className="mr-3">
+                  <button
+                    className="m-0 btn btn-primary rounded"
+                    color="primary"
+                    onClick={() => {
+                      ombudsmanHandler("ombudsmanSix");
+                      dispatch({
+                        type: "OMBUDSMAN_RESEND_CASES_PARTNER",
+                        state: {
+                          ...filterObj,
+                          dateWise,
+                          ...isDateSelected,
+                          selectedStatus: ombObj.selectedStatus,
+                        },
+                      });
+                    }}
                   >
                     Resend Partner Cases(Monthly)
                   </button>
@@ -1897,7 +2592,63 @@ const DefaultDashboard = ({ intl, match }) => {
         >
           <Card>
             <CardBody>
-              <h1>Complaint Section </h1>
+              <h1>B2C Ombudsman Dashboard(Monthly) </h1>
+              <div className="container">
+                <div className="row">
+                  <table className="table table-borderless">
+                    <thead className="bg-primary">
+                      <tr className="bg-primary text-center">
+                        <th colSpan={4}>Life Insurance</th>
+                        <th colSpan={3}>General Insurance</th>
+                        <th colSpan={3}>Health Insurance</th>
+                        <th colSpan={3}>Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style={{ backgroundColor: "#DAEEF3" }}>
+                        <th>Status</th>
+                        <th>Cases</th>
+                        <th>Claim Amount</th>
+                        <th>Customers</th>
+                        <th>Cases </th>
+                        <th>Claim Amount</th>
+                        <th>Customers</th>
+                        <th>Cases </th>
+                        <th>Claim Amount</th>
+                        <th>Customers</th>
+                        <th>Cases </th>
+                        <th>Claim Amount</th>
+                        <th>Customers</th>
+                      </tr>
+                      {data?.b2cOmbudsmanCount ? (
+                        data?.b2cOmbudsmanCount?.map((res) => {
+                          return (
+                            <tr>
+                              <th style={{ backgroundColor: "#DAEEF3" }}>
+                                {res.status}
+                              </th>
+                              <td>{res.count?.caseLi}</td>
+                              <td>{res.count?.claimCaseLi}</td>
+                              <td>{res.count?.allCustomerMonthLi}</td>
+                              <td>{res.count?.caseHi}</td>
+                              <td>{res.count?.claimCaseHi}</td>
+                              <td>{res.count?.allCustomerMonthHi}</td>
+                              <td>{res.count?.caseGi}</td>
+                              <td>{res.count?.claimCaseGi}</td>
+                              <td>{res.count?.allCustomerMonthGi}</td>
+                              <td>{res.count?.case}</td>
+                              <td>{res.count?.claimCase}</td>
+                              <td>{res.count?.allCustomerMonth}</td>
+                            </tr>
+                          );
+                        })
+                      ) : (
+                        <tr className="text-center">No Data</tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </CardBody>
           </Card>
         </Collapse>
@@ -1909,7 +2660,284 @@ const DefaultDashboard = ({ intl, match }) => {
         >
           <Card>
             <CardBody>
-              <h1>B2C Registration Section </h1>
+              <h1>Partner Ombudsman Dashboard(Monthly) </h1>
+              <div className="container">
+                <div className="row">
+                  <table className="table table-borderless">
+                    <thead className="bg-primary">
+                      <tr className="bg-primary text-center">
+                        <th colSpan={4}>Life Insurance</th>
+                        <th colSpan={3}>General Insurance</th>
+                        <th colSpan={3}>Health Insurance</th>
+                        <th colSpan={3}>Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style={{ backgroundColor: "#DAEEF3" }}>
+                        <th>Status</th>
+                        <th>Cases</th>
+                        <th>Claim Amount</th>
+                        <th>Customers</th>
+                        <th>Cases </th>
+                        <th>Claim Amount</th>
+                        <th>Customers</th>
+                        <th>Cases </th>
+                        <th>Claim Amount</th>
+                        <th>Customers</th>
+                        <th>Cases </th>
+                        <th>Claim Amount</th>
+                        <th>Customers</th>
+                      </tr>
+                      {data?.partnerOmbudsmanCount ? (
+                        data?.partnerOmbudsmanCount?.map((res) => {
+                          return (
+                            <tr>
+                              <th style={{ backgroundColor: "#DAEEF3" }}>
+                                {res.status}
+                              </th>
+                              <td>{res.count?.caseLi}</td>
+                              <td>{res.count?.claimCaseLi}</td>
+                              <td>{res.count?.allCustomerMonthLi}</td>
+                              <td>{res.count?.caseHi}</td>
+                              <td>{res.count?.claimCaseHi}</td>
+                              <td>{res.count?.allCustomerMonthHi}</td>
+                              <td>{res.count?.caseGi}</td>
+                              <td>{res.count?.claimCaseGi}</td>
+                              <td>{res.count?.allCustomerMonthGi}</td>
+                              <td>{res.count?.case}</td>
+                              <td>{res.count?.claimCase}</td>
+                              <td>{res.count?.allCustomerMonth}</td>
+                            </tr>
+                          );
+                        })
+                      ) : (
+                        <tr className="text-center">No Data</tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </CardBody>
+          </Card>
+        </Collapse>
+
+        <Collapse
+          isOpen={collapse === "ombudsman" && ombudsmanSec == "ombudsmanThree"}
+        >
+          <Card>
+            <CardBody>
+              <h1>New Ombudsman Count(B2C)(Yearly) </h1>
+              <div className="container">
+                <div className="row">
+                  <table className="table table-borderless">
+                    <thead className="bg-primary">
+                      <tr className="bg-primary text-center">
+                        <th colSpan={4}>Life Insurance</th>
+                        <th colSpan={3}>General Insurance</th>
+                        <th colSpan={3}>Health Insurance</th>
+                        <th colSpan={3}>Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style={{ backgroundColor: "#DAEEF3" }}>
+                        <th>Status</th>
+                        <th>Cases</th>
+                        <th>Claim Amount</th>
+                        <th>Customers</th>
+                        <th>Cases </th>
+                        <th>Claim Amount</th>
+                        <th>Customers</th>
+                        <th>Cases </th>
+                        <th>Claim Amount</th>
+                        <th>Customers</th>
+                        <th>Cases </th>
+                        <th>Claim Amount</th>
+                        <th>Customers</th>
+                      </tr>
+                      {data?.newB2COmbudsmanCount ? (
+                        data?.newB2COmbudsmanCount?.map((res) => {
+                          return (
+                            <tr>
+                              <th style={{ backgroundColor: "#DAEEF3" }}>
+                                {res.status}
+                              </th>
+                              <td>{res.count?.caseLi}</td>
+                              <td>{res.count?.claimCaseLi}</td>
+                              <td>{res.count?.allCustomerMonthLi}</td>
+                              <td>{res.count?.caseHi}</td>
+                              <td>{res.count?.claimCaseHi}</td>
+                              <td>{res.count?.allCustomerMonthHi}</td>
+                              <td>{res.count?.caseGi}</td>
+                              <td>{res.count?.claimCaseGi}</td>
+                              <td>{res.count?.allCustomerMonthGi}</td>
+                              <td>{res.count?.case}</td>
+                              <td>{res.count?.claimCase}</td>
+                              <td>{res.count?.allCustomerMonth}</td>
+                            </tr>
+                          );
+                        })
+                      ) : (
+                        <tr className="text-center">No Data</tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </CardBody>
+          </Card>
+        </Collapse>
+
+        <Collapse
+          isOpen={collapse === "ombudsman" && ombudsmanSec == "ombudsmanFour"}
+        >
+          <Card>
+            <CardBody>
+              <h1>New Ombudsman Count(Partner)(Yearly) </h1>
+              <div className="container">
+                <div className="row">
+                  <table className="table table-borderless">
+                    <thead className="bg-primary">
+                      <tr className="bg-primary text-center">
+                        <th colSpan={4}>Life Insurance</th>
+                        <th colSpan={3}>General Insurance</th>
+                        <th colSpan={3}>Health Insurance</th>
+                        <th colSpan={3}>Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style={{ backgroundColor: "#DAEEF3" }}>
+                        <th>Status</th>
+                        <th>Cases</th>
+                        <th>Claim Amount</th>
+                        <th>Customers</th>
+                        <th>Cases </th>
+                        <th>Claim Amount</th>
+                        <th>Customers</th>
+                        <th>Cases </th>
+                        <th>Claim Amount</th>
+                        <th>Customers</th>
+                        <th>Cases </th>
+                        <th>Claim Amount</th>
+                        <th>Customers</th>
+                      </tr>
+                      {data?.nerPartnerOmbudsmanCount ? (
+                        data?.nerPartnerOmbudsmanCount?.map((res) => {
+                          return (
+                            <tr>
+                              <th style={{ backgroundColor: "#DAEEF3" }}>
+                                {res.status}
+                              </th>
+                              <td>{res.count?.caseLi}</td>
+                              <td>{res.count?.claimCaseLi}</td>
+                              <td>{res.count?.allCustomerMonthLi}</td>
+                              <td>{res.count?.caseHi}</td>
+                              <td>{res.count?.claimCaseHi}</td>
+                              <td>{res.count?.allCustomerMonthHi}</td>
+                              <td>{res.count?.caseGi}</td>
+                              <td>{res.count?.claimCaseGi}</td>
+                              <td>{res.count?.allCustomerMonthGi}</td>
+                              <td>{res.count?.case}</td>
+                              <td>{res.count?.claimCase}</td>
+                              <td>{res.count?.allCustomerMonth}</td>
+                            </tr>
+                          );
+                        })
+                      ) : (
+                        <tr className="text-center">No Data</tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </CardBody>
+          </Card>
+        </Collapse>
+        <Collapse
+          isOpen={collapse === "ombudsman" && ombudsmanSec == "ombudsmanFive"}
+        >
+          <Card>
+            <CardBody>
+              <h1>B2C Resend Cases(Monthly)-(Ombudsman Pending) </h1>
+              <div className="container">
+                <div className="row">
+                  <table className="table table-borderless">
+                    <thead className="bg-primary">
+                      <tr className="bg-primary text-center">
+                        <th>S.No</th>
+                        <th>Name</th>
+                        <th>Policy Number</th>
+                        <th>Claim Amount</th>
+                        <th>Count </th>
+                        <th>Latest Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {data?.resendB2CCases ? (
+                        Object.entries(data.resendB2CCases)?.map((res, i) => {
+                          return (
+                            <tr>
+                              <td>{i + 1}</td>
+                              <td>{res[1]?.name}</td>
+                              <td>{res[1]?.policyNumber}</td>
+                              <td>{res[1]?.claimAmount}</td>
+                              <td>{res[1]?.statusCount}</td>
+                              <td>{res[1]?.latestDate}</td>
+                            </tr>
+                          );
+                        })
+                      ) : (
+                        <tr className="text-center">No Data</tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </CardBody>
+          </Card>
+        </Collapse>
+
+        <Collapse
+          isOpen={collapse === "ombudsman" && ombudsmanSec == "ombudsmanSix"}
+        >
+          <Card>
+            <CardBody>
+              <h1>Partner Resend Cases(Monthly)-(Ombudsman Pending) </h1>
+              <div className="container">
+                <div className="row">
+                  <table className="table table-borderless">
+                    <thead className="bg-primary">
+                      <tr className="bg-primary text-center">
+                        <th>S.No</th>
+                        <th>Name</th>
+                        <th>Policy Number</th>
+                        <th>Claim Amount</th>
+                        <th>Count </th>
+                        <th>Latest Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {data?.resendPartnerCases ? (
+                        Object.entries(data.resendPartnerCases)?.map(
+                          (res, i) => {
+                            return (
+                              <tr>
+                                <td>{i + 1}</td>
+                                <td>{res[1]?.name}</td>
+                                <td>{res[1]?.policyNumber}</td>
+                                <td>{res[1]?.claimAmount}</td>
+                                <td>{res[1]?.statusCount}</td>
+                                <td>{res[1]?.latestDate}</td>
+                              </tr>
+                            );
+                          }
+                        )
+                      ) : (
+                        <tr className="text-center">No Data</tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </CardBody>
           </Card>
         </Collapse>
@@ -1930,9 +2958,30 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
-                    onClick={() => mailingHandler("mailingOne")}
+                    onClick={() => {
+                      mailingHandler("mailingOne");
+                      dispatch({
+                        type: "B2C_MAILING_COUNT",
+                        state: { ...filterObj, dateWise, ...isDateSelected },
+                      });
+                    }}
                   >
                     B2C Mailing Count(Monthly)
+                  </button>
+                </li>
+                <li className="mr-3">
+                  <button
+                    className="m-0 btn btn-primary rounded"
+                    color="primary"
+                    onClick={() => {
+                      mailingHandler("mailingTwo");
+                      dispatch({
+                        type: "PARTNER_MAILING_COUNT",
+                        state: { ...filterObj, dateWise, ...isDateSelected },
+                      });
+                    }}
+                  >
+                    Partner Mailing Count(Monthly)
                   </button>
                 </li>
               </ul>
@@ -1945,7 +2994,126 @@ const DefaultDashboard = ({ intl, match }) => {
         <Collapse isOpen={collapse === "mailing" && mailingSec == "mailingOne"}>
           <Card>
             <CardBody>
-              <h1>Mailing Section </h1>
+              <h1>B2C Mailing Dashboard(Monthly) </h1>
+              <div className="container">
+                <div className="row">
+                  <table className="table table-borderless">
+                    <thead className="bg-primary">
+                      <tr className="bg-primary text-center">
+                        <th colSpan={4}>Life Insurance</th>
+                        <th colSpan={3}>General Insurance</th>
+                        <th colSpan={3}>Health Insurance</th>
+                        <th colSpan={3}>Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style={{ backgroundColor: "#DAEEF3" }}>
+                        <th>Status</th>
+                        <th>Cases</th>
+                        <th>Claim Amount</th>
+                        <th>Customers</th>
+                        <th>Cases </th>
+                        <th>Claim Amount</th>
+                        <th>Customers</th>
+                        <th>Cases </th>
+                        <th>Claim Amount</th>
+                        <th>Customers</th>
+                        <th>Cases </th>
+                        <th>Claim Amount</th>
+                        <th>Customers</th>
+                      </tr>
+                      {data?.b2cMailingCount ? (
+                        data?.b2cMailingCount?.map((res) => {
+                          return (
+                            <tr>
+                              <th style={{ backgroundColor: "#DAEEF3" }}>
+                                {res.status}
+                              </th>
+                              <td>{res.count?.caseLi}</td>
+                              <td>{res.count?.claimCaseLi}</td>
+                              <td>{res.count?.allCustomerMonthLi}</td>
+                              <td>{res.count?.caseHi}</td>
+                              <td>{res.count?.claimCaseHi}</td>
+                              <td>{res.count?.allCustomerMonthHi}</td>
+                              <td>{res.count?.caseGi}</td>
+                              <td>{res.count?.claimCaseGi}</td>
+                              <td>{res.count?.allCustomerMonthGi}</td>
+                              <td>{res.count?.case}</td>
+                              <td>{res.count?.claimCase}</td>
+                              <td>{res.count?.allCustomerMonth}</td>
+                            </tr>
+                          );
+                        })
+                      ) : (
+                        <tr className="text-center">No Data</tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </CardBody>
+          </Card>
+        </Collapse>
+        <Collapse isOpen={collapse === "mailing" && mailingSec == "mailingTwo"}>
+          <Card>
+            <CardBody>
+              <h1>Partner Mailing Dashboard(Monthly) </h1>
+              <div className="container">
+                <div className="row">
+                  <table className="table table-borderless">
+                    <thead className="bg-primary">
+                      <tr className="bg-primary text-center">
+                        <th colSpan={4}>Life Insurance</th>
+                        <th colSpan={3}>General Insurance</th>
+                        <th colSpan={3}>Health Insurance</th>
+                        <th colSpan={3}>Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style={{ backgroundColor: "#DAEEF3" }}>
+                        <th>Status</th>
+                        <th>Cases</th>
+                        <th>Claim Amount</th>
+                        <th>Customers</th>
+                        <th>Cases </th>
+                        <th>Claim Amount</th>
+                        <th>Customers</th>
+                        <th>Cases </th>
+                        <th>Claim Amount</th>
+                        <th>Customers</th>
+                        <th>Cases </th>
+                        <th>Claim Amount</th>
+                        <th>Customers</th>
+                      </tr>
+                      {data?.partnerMailingCount ? (
+                        data?.partnerMailingCount?.map((res) => {
+                          return (
+                            <tr>
+                              <th style={{ backgroundColor: "#DAEEF3" }}>
+                                {res.status}
+                              </th>
+                              <td>{res.count?.caseLi}</td>
+                              <td>{res.count?.claimCaseLi}</td>
+                              <td>{res.count?.allCustomerMonthLi}</td>
+                              <td>{res.count?.caseHi}</td>
+                              <td>{res.count?.claimCaseHi}</td>
+                              <td>{res.count?.allCustomerMonthHi}</td>
+                              <td>{res.count?.caseGi}</td>
+                              <td>{res.count?.claimCaseGi}</td>
+                              <td>{res.count?.allCustomerMonthGi}</td>
+                              <td>{res.count?.case}</td>
+                              <td>{res.count?.claimCase}</td>
+                              <td>{res.count?.allCustomerMonth}</td>
+                            </tr>
+                          );
+                        })
+                      ) : (
+                        <tr className="text-center">No Data</tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </CardBody>
           </Card>
         </Collapse>

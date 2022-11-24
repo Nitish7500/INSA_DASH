@@ -4,11 +4,14 @@ import { connect } from 'react-redux';
 
 import AppLayout from 'layout/AppLayout';
 import Pages from './pages';
+// import BotTranscript from './BotTranscript';
 // import { ProtectedRoute, UserRole } from 'helpers/authHelper';
 
 const Dashboards = React.lazy(() =>
-  import(/* webpackChunkName: "dashboards" */ './dashboards')
+  import(/* webpackChunkName: "dashboards" */ './dashboards') 
 );
+
+const BotTranscript = React.lazy(() => import("./BotTranscript/BotTranscript"))
 
 const App = ({ match }) => {
   const history = useHistory();
@@ -29,6 +32,15 @@ const App = ({ match }) => {
             <Route
               path={`${match.url}/pages`}
               render={(props) => <Pages {...props} />}
+            />
+            <Redirect
+            exact
+            path={`${match.url}/`}
+            to={`${match.url}/botTranscript`}
+            />
+            <Route
+            path={`${match.url}/botTranscript`}
+            render={(props) => <BotTranscript {...props} />}
             />
             <Redirect to="/error" />
           </Switch>
