@@ -612,9 +612,10 @@ function LeadSection() {
                         {i + 1}
                       </td>
                       <td id="leadTableRowCellTwo">
-                        <button className="btn btn-primary m-0 p-0 ">CC</button>
+                        {/* <button id="lead" className="btn btn-primary m-0 p-0 ">CC</button> */}
                         <button
                           className="btn btn-primary m-0 p-0 "
+                          id="leadLM"
                           onClick={() => {
                             setopenLeadAssign(true);
                             setassignToUser({
@@ -632,6 +633,7 @@ function LeadSection() {
                         </button>
                         <button
                           className="btn btn-primary m-0 p-0 "
+                          id="leadAE"
                           onClick={() => {
                             setopenExpertAssign(true);
                             setassignToExpert({
@@ -645,6 +647,7 @@ function LeadSection() {
                         </button>
                         <button className="btn btn-primary m-0 p-0 ">CH</button>
                         <button
+                        id="leadAL"
                           className="btn btn-primary m-0 p-0 "
                           onClick={() => {
                             setsingleLeadData(res);
@@ -654,6 +657,7 @@ function LeadSection() {
                           AL
                         </button>
                         <button
+                        id="leadRL"
                           className="btn btn-primary m-0 p-0 "
                           onClick={() => {
                             setsingleLeadData(res)
@@ -662,23 +666,23 @@ function LeadSection() {
                         >
                           RL
                         </button>
-                        <button className="btn btn-primary m-0 p-0 ">CL</button>
-                        <button className="btn btn-primary m-0 p-0 ">ET</button>
-                        <button className="btn btn-primary m-0 p-0 ">FU</button>
-                        <button className="btn btn-primary m-0 p-0 ">
+                        <button id="leadCL" className="btn btn-primary m-0 p-0 ">CL</button>
+                        <button id="leadET" className="btn btn-primary m-0 p-0 ">ET</button>
+                        <button id="leadFU" className="btn btn-primary m-0 p-0 ">FU</button>
+                        <button id="leadCLL" className="btn btn-primary m-0 p-0 ">
                           CLL
                         </button>
-                        <button className="btn btn-primary m-0 p-0 ">UD</button>
-                        <button className="btn btn-primary m-0 p-0 ">PS</button>
-                        <button className="btn btn-primary m-0 p-0 ">SH</button>
-                        <button className="btn btn-primary m-0 p-0 ">CF</button>
-                        <button className="btn btn-primary m-0 p-0 ">
+                        <button id="leadUD" className="btn btn-primary m-0 p-0 ">UD</button>
+                        <button id="leadPS" className="btn btn-primary m-0 p-0 ">PS</button>
+                        <button id="leadSH" className="btn btn-primary m-0 p-0 ">SH</button>
+                        <button id="leadCF" className="btn btn-primary m-0 p-0 ">CF</button>
+                        <button id="leadSMU" className="btn btn-primary m-0 p-0 ">
                           SMU
                         </button>
-                        <button className="btn btn-primary m-0 p-0 ">
+                        <button id="leadNCF" className="btn btn-primary m-0 p-0 ">
                           NCF
                         </button>
-                        <button className="btn btn-primary m-0 p-0 ">
+                        <button id="leadCLL" className="btn btn-primary m-0 p-0 ">
                           CLL
                         </button>{" "}
                         {/* <FontAwesomeIcon
@@ -753,6 +757,7 @@ function LeadSection() {
           <div className="container">
             <div className="row">
               <select
+              id="assignDropdownUser"
                 value={assignToUser.assignTo}
                 className="w-80 mt-3 py-2"
                 onChange={(e) =>
@@ -767,12 +772,14 @@ function LeadSection() {
             </div>
             <div className="mt-3 d-flex justify-content-center">
               <button
+              id="closeAssignUserModal"
                 className="btn btn-danger rounded mr-2"
                 onClick={() => setopenLeadAssign(false)}
               >
                 Close
               </button>
               <button
+              id="saveAssignUserModal"
                 className="btn btn-primary rounded ml-2"
                 onClick={() => {
                   setopenLeadAssign(false);
@@ -818,6 +825,7 @@ function LeadSection() {
           <div className="container">
             <div className="row">
               <select
+              id="assignExpertModal"
                 value={assignToExpert.assignTo}
                 className="w-80 mt-3 py-2"
                 onChange={(e) =>
@@ -836,12 +844,14 @@ function LeadSection() {
             </div>
             <div className="mt-3 d-flex justify-content-center">
               <button
+              id="closeAssignExpertModal"
                 className="btn btn-danger rounded mr-2"
                 onClick={() => setopenExpertAssign(false)}
               >
                 Close
               </button>
               <button
+              id="saveAssignExpertBtn"
                 className="btn btn-primary rounded ml-2"
                 onClick={() => {
                   setopenExpertAssign(false);
@@ -891,12 +901,14 @@ function LeadSection() {
             </div>
             <div className="mt-3 d-flex justify-content-center">
               <button
+              id="NoacceptLeadConfirmation"
                 className="btn btn-danger rounded mr-2"
                 onClick={() => setopenAcceptLead(false)}
               >
                 No
               </button>
               <button
+              id="YesacceptLeadConfirmation"
                 className="btn btn-primary rounded ml-2"
                 onClick={() => {
                   setopenAcceptLead(false);
