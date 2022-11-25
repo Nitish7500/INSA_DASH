@@ -261,6 +261,12 @@ html {
   color:aqua !important;
 }
 
+
+#leadTable > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+        background-color: aliceblue !important;
+     }
+     
+
 @media screen and (max-width: 600px) {
     .flex {
         flex-wrap: wrap;

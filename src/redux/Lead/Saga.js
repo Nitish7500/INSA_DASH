@@ -1,3 +1,4 @@
+import moment from "moment";
 import { put, take, takeEvery } from "redux-saga/effects";
 import { bearerRequest, request } from "services/requests.services";
 
@@ -55,9 +56,12 @@ function* getInsuranceCompany(action){
 
 function* getLeadDataByStatus(action){
     try {
+
+        const {status="PENDING", pageIndex = 0, pageSize = 50, keyword="", selectedSortOrder} = action.state
+
         const data = yield request(
             "GET",
-            `https://api.stage.insurancesamadhan.com/lead/?status=${action.state?.status}&pageIndex=${action.state?.pageIndex}&pageSize=${action.state?.pageSize}&keyword=${action.state?.keyword}`,
+            `https://api.stage.insurancesamadhan.com/lead/?status=${status}&pageIndex=${pageIndex}&pageSize=${pageSize}&keyword=${keyword}${selectedSortOrder ? `&selectedSortOrder=${selectedSortOrder}`:""}`,
         )
 
         yield put({type:"LEAD_DATA_WITH_STATUS_SUCCESS", data:data.data})
@@ -87,6 +91,143 @@ function* getLeadUsers(action){
       }
 }
 
+function* getLeadDataByEmailPhone(action){
+    try {
+        const data = yield request(
+            "POST",
+            "https://api.stage.insurancesamadhan.com/lead/searchByID",
+            {...action.state}
+        )
+
+        yield put({type:"SEARCH_BY_MAIL_AND_PHONE_SUCCESS", data:data})
+
+    } catch (error) {
+        yield put({
+            type: "SEARCH_BY_MAIL_AND_PHONE_FAILED",
+            message: "Failed to get data !",
+          });
+      }
+}
+
+function* downloadLeadReport(action){
+    try {
+        let from = moment(action.fromDate).valueOf()
+        let to = moment(action.tillDate).valueOf()
+        const data = yield request(
+            "GET",
+            `https://api.stage.insurancesamadhan.com/analytics/csv/lead?fromDate=${from}&tillDate=${to}`,
+        )
+
+        yield put({type:"LEAD_DOWNLOAD_REPORT_SUCCESS",data:data})
+
+    } catch (error) {
+        console.log(error)
+        yield put({
+            type: "LEAD_DOWNLOAD_REPORT_FAILED",
+            message: "Failed to get data !",
+          });
+      }
+}
+
+
+function* getMisselingUser(action){
+    try {
+        const data = yield request(
+            "POST",
+            "https://api.stage.insurancesamadhan.com/filtration/misselling/get",
+            {...action.state}
+        )
+
+        yield put({type:"LEAD_GET_MISSELLING_SUCCESS", data:data})
+
+    } catch (error) {
+        yield put({
+            type: "LEAD_GET_MISSELLING_FAILED",
+            message: "Failed to get data !",
+          });
+      }
+}
+function* saveAssignToUser(action){
+    try {
+        console.log(action)
+        const data = yield request(
+            "POST",
+            "https://api.stage.insurancesamadhan.com/lead/assign",
+            {...action.state}
+        )
+
+        yield put({type:"LEAD_ASSIGN_USER_SAVE_SUCCESS"})
+
+    } catch (error) {
+        yield put({
+            type: "LEAD_ASSIGN_USER_SAVE_FAILED",
+            message: "Failed to get data !",
+          });
+      }
+}
+
+
+function* saveAssignToExpert(action){
+    try {
+        const data = yield request(
+            "POST",
+            "https://api.stage.insurancesamadhan.com/lead/assignExpert",
+            {...action.state}
+        )
+
+        yield put({type:"LEAD_ASSIGN_EXPERT_SAVE_SUCCESS"})
+
+    } catch (error) {
+        console.log(error)
+        yield put({
+            type: "LEAD_ASSIGN_EXPERT_SAVE_FAILED",
+            message: "Failed to get data !",
+          });
+      }
+}
+
+function* acceptLead(action){
+    try {
+        const {_id} = action.state
+        const data = yield request(
+            "PUT",
+            `https://api.stage.insurancesamadhan.com/lead/${_id}`,
+            {...action.state}
+        )
+
+        yield put({type:"LEAD_ACCEPT_LEAD_SUCCESS"})
+
+    } catch (error) {
+        console.log(error)
+        yield put({
+            type: "LEAD_ACCEPT_LEAD_FAILED",
+            message: "Failed to get data !",
+          });
+      }
+}
+
+
+function* rejectLead(action){
+    try {
+        console.log(action)
+        const {_id} = action.state
+        const data = yield request(
+            "PUT",
+            `https://api.stage.insurancesamadhan.com/lead/${_id}`,
+            {...action.state}
+        )
+
+        yield put({type:"LEAD_REJECT_LEAD_SUCCESS"})
+
+    } catch (error) {
+        console.log(error)
+        yield put({
+            type: "LEAD_REJECT_LEAD_FAILED",
+            message: "Failed to get data !",
+          });
+      }
+}
+
 
 
 export default function* leadSaga(){
@@ -95,4 +236,12 @@ export default function* leadSaga(){
     yield takeEvery("LEAD_INSURANCE_COMPANY", getInsuranceCompany)
     yield takeEvery("LEAD_DATA_WITH_STATUS",getLeadDataByStatus)
     yield takeEvery("LEAD_USERS",getLeadUsers)
+    yield takeEvery("SEARCH_BY_MAIL_AND_PHONE",getLeadDataByEmailPhone)
+    yield takeEvery("LEAD_DOWNLOAD_REPORT",downloadLeadReport)
+    yield takeEvery("LEAD_GET_MISSELLING",getMisselingUser)
+    yield takeEvery("LEAD_ASSIGN_USER_SAVE",saveAssignToUser)
+    yield takeEvery("LEAD_ASSIGN_EXPERT_SAVE",saveAssignToExpert)
+    yield takeEvery("LEAD_ACCEPT_LEAD",acceptLead)
+    yield takeEvery("LEAD_REJECT_LEAD",rejectLead)
+
 }

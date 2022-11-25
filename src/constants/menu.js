@@ -632,6 +632,13 @@ const data = [
     icon:"",
     label:"Bot Transcript",
     to:`${adminRoot}/botTranscript`,
+    roles:[ UserRole.Admin, UserRole.Executive]
+  },
+  {
+    id:"leads",
+    icon:"",
+    label:"Leads",
+    to:`${adminRoot}/leads`,
     roles:[UserRole.Admin, UserRole.Executive]
   }
   // {
