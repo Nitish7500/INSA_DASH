@@ -521,9 +521,7 @@ function* getPartnerOMBCount(action) {
       "POST",
       "https://api.stage.insurancesamadhan.com/partnerApi/getOmdCount",
       {
-        user_id: null,
-        KeyRefresh: false,
-        dateWise: "Monthly",
+        ...action.state
       }
     );
 

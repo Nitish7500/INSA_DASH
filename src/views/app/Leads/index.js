@@ -6,6 +6,10 @@ const Default = React.lazy(() => {
   import("./Leads");
 });
 
+const CommHistory = React.lazy(() => {
+  import("./CommunicationHistory")
+})
+
 function Leads({ match }) {
   <Suspense fallback={<div className="loading"></div>}>
     <Switch>
@@ -13,7 +17,14 @@ function Leads({ match }) {
       <Route
         path={`${match.url}/default`}
         render={(props) => <Default {...props} />}
-      />
+      >
+        
+      {/* <Route
+      path={`leed/comm`}
+      render={(props) => <CommHistory {...props} />}
+      /> */}
+      </Route>
+      {/* CommunicationHistory */}
       <Redirect to="/error" />
     </Switch>
   </Suspense>;

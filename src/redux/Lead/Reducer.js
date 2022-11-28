@@ -11,12 +11,24 @@ import {
   LEAD_ASSIGN_USER_SAVE_FAILED,
   LEAD_ASSIGN_USER_SAVE_SUCCESS,
   LEAD_ASSIGN_USER_SUCCESS,
+  LEAD_COMM_HISTORY_ADD_COMMENT,
+  LEAD_COMM_HISTORY_ADD_COMMENT_FAILED,
+  LEAD_COMM_HISTORY_ADD_COMMENT_SUCCESS,
+  LEAD_COMM_HISTORY_UPDATE_COMMENT,
+  LEAD_COMM_HISTORY_UPDATE_COMMENT_FAILED,
+  LEAD_COMM_HISTORY_UPDATE_COMMENT_SUCCESS,
   LEAD_DATA_WITH_STATUS,
   LEAD_DATA_WITH_STATUS_FAILED,
   LEAD_DATA_WITH_STATUS_SUCCESS,
   LEAD_DOWNLOAD_REPORT,
   LEAD_DOWNLOAD_REPORT_FAILED,
   LEAD_DOWNLOAD_REPORT_SUCCESS,
+  LEAD_FETCH_BY_ID,
+  LEAD_FETCH_BY_ID_FAILED,
+  LEAD_FETCH_BY_ID_SUCCESS,
+  LEAD_FILTRATION_DATA,
+  LEAD_FILTRATION_DATA_FAILED,
+  LEAD_FILTRATION_DATA_SUCCESS,
   LEAD_GET_MISSELLING,
   LEAD_GET_MISSELLING_FAILED,
   LEAD_GET_MISSELLING_SUCCESS,
@@ -42,6 +54,8 @@ const initialState = {
   leadUsers: {},
   message: "",
   leadReportData: "",
+  fetchedLead:{},
+  filtrationData:{},
 };
 
 export default (state = initialState, action) => {
@@ -151,8 +165,47 @@ export default (state = initialState, action) => {
     case LEAD_REJECT_LEAD_FAILED:
       return { ...state, message: "Failed to Accept" };
 
+    case LEAD_COMM_HISTORY_UPDATE_COMMENT:
+      return { ...state };
+
+    case LEAD_COMM_HISTORY_UPDATE_COMMENT_SUCCESS:
+      return { ...state, message: action.message };
+
+    case LEAD_COMM_HISTORY_UPDATE_COMMENT_FAILED:
+      return { ...state, message: action.message };
+
+      
+
+    case LEAD_COMM_HISTORY_ADD_COMMENT:
+      return { ...state };
+
+    case LEAD_COMM_HISTORY_ADD_COMMENT_SUCCESS:
+      return { ...state, message: action.message };
+
+    case LEAD_COMM_HISTORY_ADD_COMMENT_FAILED:
+      return { ...state, message: action.message };
+
+
+
+    case LEAD_FETCH_BY_ID:
+      return {...state}
+
+    case LEAD_FETCH_BY_ID_SUCCESS:
+      return {...state, fetchedLead:action.data}
+
+    case LEAD_FETCH_BY_ID_FAILED:
+      return {...state, message:action.message}
+
+    case LEAD_FILTRATION_DATA:
+      return {...state}
+
+    case LEAD_FILTRATION_DATA_SUCCESS:
+      return {...state, filtrationData:action.data}
+
+    case LEAD_FILTRATION_DATA_FAILED:
+      return {...state, message:action.message}
+
     default:
-      console.log("--------------------------");
       return { ...state };
   }
 };

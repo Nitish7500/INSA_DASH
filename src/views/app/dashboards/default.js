@@ -145,7 +145,7 @@ const DefaultDashboard = ({ intl, match }) => {
     if (dateObj.endDate && dateObj.startDate) {
       setisDateSelected({ ...filterObj, ...dateObj });
       setDateWise("");
-      stateEmptyFunc()
+      stateEmptyFunc();
     }
   }, [dateObj]);
 
@@ -156,12 +156,12 @@ const DefaultDashboard = ({ intl, match }) => {
     setResolutionSection("");
     setregSection("");
     setleadSection("");
-  }
+  };
 
   const handleDateWiseChange = (e) => {
     setDateWise(e.target.value);
     setDateObj({ ...dateObj, endDate: "" });
-    stateEmptyFunc()
+    stateEmptyFunc();
   };
 
   return (
@@ -179,8 +179,12 @@ const DefaultDashboard = ({ intl, match }) => {
               id="ex1"
               name="user_id"
               onChange={(e) => {
-                stateEmptyFunc()
-                setFilterObj({ ...filterObj, [e.target.name]: e.target.value === "--All--" ? null : e.target.value });
+                stateEmptyFunc();
+                setFilterObj({
+                  ...filterObj,
+                  [e.target.name]:
+                    e.target.value === "--All--" ? null : e.target.value,
+                });
               }}
             >
               <option selected>--All--</option>
@@ -236,17 +240,17 @@ const DefaultDashboard = ({ intl, match }) => {
               name="omdLocation"
               value={ombObj.omdLocation}
               onChange={(e) => {
-                stateEmptyFunc()
+                stateEmptyFunc();
                 setOmbObj({ ...ombObj, [e.target.name]: e.target.value });
               }}
             >
               <option selected disabled>
                 Select Location
               </option>
-              <option value={'All'}>--All--</option>
+              <option value={"All"}>--All--</option>
               {data.states?.length
                 ? data.states?.map((x) => {
-                    return <option value={x.name} >{x.name}</option>;
+                    return <option value={x.name}>{x.name}</option>;
                   })
                 : null}
             </select>
@@ -259,7 +263,7 @@ const DefaultDashboard = ({ intl, match }) => {
               name="selectedStatus"
               value={ombObj.selectedStatus}
               onChange={(e) => {
-                stateEmptyFunc()
+                stateEmptyFunc();
                 setOmbObj({ ...ombObj, [e.target.name]: e.target.value });
               }}
             >
@@ -437,10 +441,26 @@ const DefaultDashboard = ({ intl, match }) => {
                   className="mx-auto text-light mb-2"
                   style={{ width: "75%" }}
                 >
-                  <div className="p-2 bg-primary mb-3 p-2">
+                  <div className="p-2 bg-primary mb-3 p-2 d-flex flex-wrap justify-content-between">
                     <h2 className="p-0 m-0 font-weight-light pl-2 py-1">
                       All Lead Buckets
                     </h2>
+                    <button
+                      className="btn btn-warning py-1"
+                      onClick={() => {
+                        dispatch({
+                          type: "ALL_LEAD_BUCKET",
+                          state: {
+                            ...filterObj,
+                            dailyAll: "Total",
+                            ...isDateSelected,
+                            KeyRefresh: true,
+                          },
+                        });
+                      }}
+                    >
+                      Refresh
+                    </button>
                   </div>
 
                   <div className="container">
@@ -526,10 +546,26 @@ const DefaultDashboard = ({ intl, match }) => {
                   className="mx-auto text-light mb-2"
                   style={{ width: "75%" }}
                 >
-                  <div className="p-2 bg-primary mb-3 p-2">
+                  <div className="p-2 bg-primary mb-3 p-2 d-flex justify-content-between">
                     <h2 className="p-0 m-0 font-weight-light pl-2 py-1">
                       Today's Lead Buckets
                     </h2>
+                    <button
+                      className="btn btn-warning py-1"
+                      onClick={() => {
+                        dispatch({
+                          type: "TODAY_LEAD_BUCKET",
+                          state: {
+                            ...filterObj,
+                            dailyAll: "Daily",
+                            ...isDateSelected,
+                            KeyRefresh: true,
+                          },
+                        });
+                      }}
+                    >
+                      Refresh
+                    </button>
                   </div>
 
                   <div className="container">
@@ -615,10 +651,26 @@ const DefaultDashboard = ({ intl, match }) => {
                   className="mx-auto text-light mb-2"
                   style={{ width: "75%" }}
                 >
-                  <div className="p-2 bg-primary mb-3 p-2">
+                  <div className="p-2 bg-primary mb-3 p-2 d-flex justify-content-between">
                     <h2 className="p-0 m-0 font-weight-light pl-2 py-1">
                       Leads Marketing Channel Dashboard(Monthly)
                     </h2>
+                    <button
+                      className="btn btn-warning py-1"
+                      onClick={() => {
+                        dispatch({
+                          type: "MONTHLY_LEAD_BUCKET",
+                          state: {
+                            ...filterObj,
+                            dailyAll: "Monthly",
+                            ...isDateSelected,
+                            KeyRefresh: true,
+                          },
+                        });
+                      }}
+                    >
+                      Refresh
+                    </button>
                   </div>
 
                   <div className="container">
@@ -704,10 +756,25 @@ const DefaultDashboard = ({ intl, match }) => {
                   className="mx-auto text-light mb-2"
                   style={{ width: "75%" }}
                 >
-                  <div className="p-2 bg-primary mb-3 p-2">
+                  <div className="p-2 bg-primary mb-3 p-2 d-flex justify-content-between">
                     <h2 className="p-0 m-0 font-weight-light pl-2 py-1">
                       Leads Experts Dashboard
                     </h2>
+                    <button
+                      className="btn btn-warning py-1"
+                      onClick={() => {
+                        dispatch({
+                          type: "LEAD_EXPERT_BUCKET",
+                          state: {
+                            ...filterObj,
+                            ...isDateSelected,
+                            KeyRefresh: true,
+                          },
+                        });
+                      }}
+                    >
+                      Refresh
+                    </button>
                   </div>
 
                   <div className="container">
@@ -735,10 +802,21 @@ const DefaultDashboard = ({ intl, match }) => {
                   className="mx-auto text-light mb-2"
                   style={{ width: "75%" }}
                 >
-                  <div className="p-2 bg-primary mb-3 p-2">
+                  <div className="p-2 bg-primary mb-3 p-2 d-flex justify-content-between">
                     <h2 className="p-0 m-0 font-weight-light pl-2 py-1">
                       Buckets Count
                     </h2>
+                    <button
+                      className="btn btn-warning py-1"
+                      onClick={() => {
+                        dispatch({
+                          type: "LEAD_BUCKET_COUNT",
+                          state: { ...filterObj, KeyRefresh: true },
+                        });
+                      }}
+                    >
+                      Refresh
+                    </button>
                   </div>
 
                   <div className="container">
@@ -845,8 +923,20 @@ const DefaultDashboard = ({ intl, match }) => {
         >
           <Card>
             <CardBody>
-              <h1>Complaint Dashboard </h1>
-
+              <div className="bg-primary mb-3 p-1 d-flex justify-content-between">
+                <h1 className="m-0">Complaint Dashboard </h1>
+                <button
+                  className="btn btn-warning py-0"
+                  onClick={() => {
+                    dispatch({
+                      type: "COMPLAINT_DASHBOARD",
+                      state: { ...filterObj, KeyRefresh: true },
+                    });
+                  }}
+                >
+                  Refresh
+                </button>
+              </div>
               <div className="container">
                 <div className="row">
                   {data.complaintDashboard ? (
@@ -869,7 +959,25 @@ const DefaultDashboard = ({ intl, match }) => {
         >
           <Card>
             <CardBody>
-              <h1>B2C Registration Section </h1>
+              <div className="bg-primary mb-3 p-1 d-flex justify-content-between">
+                <h1 className="m-0">B2C Registration Section </h1>
+                <button
+                  className="btn btn-warning py-1"
+                  onClick={() => {
+                    dispatch({
+                      type: "B2C_REGISTRATION",
+                      state: {
+                        ...filterObj,
+                        dateWise,
+                        ...isDateSelected,
+                        KeyRefresh: true,
+                      },
+                    });
+                  }}
+                >
+                  Refresh
+                </button>
+              </div>
               <div className="container">
                 <div className="row">
                   {data.b2cRegistration ? (
@@ -889,9 +997,9 @@ const DefaultDashboard = ({ intl, match }) => {
                             header="Claim Amount"
                             labels={["Li", "Hi", "Gi"]}
                             chartData={[
-                              data?.b2cRegistration?.claimCaseLi?.slice(2,),
-                              data?.b2cRegistration?.claimCaseHi?.slice(2,),
-                              data?.b2cRegistration?.claimCaseGi?.slice(2,),
+                              data?.b2cRegistration?.claimCaseLi?.slice(2),
+                              data?.b2cRegistration?.claimCaseHi?.slice(2),
+                              data?.b2cRegistration?.claimCaseGi?.slice(2),
                             ]}
                           />
                           <Chart
@@ -1131,7 +1239,26 @@ const DefaultDashboard = ({ intl, match }) => {
         >
           <Card>
             <CardBody>
-              <h1>B2C Registration Cases(Monthly) </h1>
+              <div className="bg-primary mb-3 p-1 d-flex justify-content-between">
+                <h1 className="m-0">B2C Registration Cases(Monthly) </h1>
+                <button
+                  className="btn btn-warning py-1"
+                  onClick={() => {
+                    dispatch({
+                      type: "B2C_REGISTRATION_CASES",
+                      state: {
+                        ...filterObj,
+                        dateWise,
+                        ...isDateSelected,
+                        type: "Registration Data",
+                        KeyRefresh: true,
+                      },
+                    });
+                  }}
+                >
+                  Refresh
+                </button>
+              </div>
 
               <div className="container">
                 <div className="row">
@@ -1173,7 +1300,27 @@ const DefaultDashboard = ({ intl, match }) => {
         >
           <Card>
             <CardBody>
-              <h1>Partner Registration Dashboard(Monthly) </h1>
+              <div className="bg-primary mb-3 p-1 d-flex justify-content-between">
+                <h1 className="m-0">
+                  Partner Registration Dashboard(Monthly){" "}
+                </h1>
+                <button
+                  className="btn btn-warning py-1"
+                  onClick={() => {
+                    dispatch({
+                      type: "PARTNER_REGISTRATION",
+                      state: {
+                        ...filterObj,
+                        dateWise,
+                        ...isDateSelected,
+                        KeyRefresh: true,
+                      },
+                    });
+                  }}
+                >
+                  Refresh
+                </button>
+              </div>
               <div className="container">
                 <div className="row">
                   {" "}
@@ -1192,9 +1339,9 @@ const DefaultDashboard = ({ intl, match }) => {
                         header="Claim Amount"
                         labels={["Li", "Hi", "Gi"]}
                         chartData={[
-                          data?.partnerRegistration?.claimCaseLi?.slice(2,),
-                          data?.partnerRegistration?.claimCaseHi?.slice(2,),
-                          data?.partnerRegistration?.claimCaseGi?.slice(2,),
+                          data?.partnerRegistration?.claimCaseLi?.slice(2),
+                          data?.partnerRegistration?.claimCaseHi?.slice(2),
+                          data?.partnerRegistration?.claimCaseGi?.slice(2),
                         ]}
                       />
                       <Chart
@@ -1410,7 +1557,25 @@ const DefaultDashboard = ({ intl, match }) => {
         >
           <Card>
             <CardBody>
-              <h1>B2C Resolution Dashboard </h1>
+              <div className="bg-primary mb-3 p-1 d-flex justify-content-between">
+                <h1 className="m-0 p-0 py-1">B2C Resolution Dashboard </h1>
+                <button
+                  className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  onClick={() => {
+                    dispatch({
+                      type: "B2C_RESOLUTION",
+                      state: {
+                        ...filterObj,
+                        dateWise,
+                        ...isDateSelected,
+                        KeyRefresh: true,
+                      },
+                    });
+                  }}
+                >
+                  Refresh
+                </button>
+              </div>
               <div className="container">
                 <div className="row">
                   {dateWise === "Yearly" ? (
@@ -1428,9 +1593,9 @@ const DefaultDashboard = ({ intl, match }) => {
                         header="Claim Amount"
                         labels={["Li", "Hi", "Gi"]}
                         chartData={[
-                          data.b2cResolution?.claimCaseLi?.slice(2,),
-                          data.b2cResolution?.claimCaseHi?.slice(2,),
-                          data.b2cResolution?.claimCaseGi?.slice(2,),
+                          data.b2cResolution?.claimCaseLi?.slice(2),
+                          data.b2cResolution?.claimCaseHi?.slice(2),
+                          data.b2cResolution?.claimCaseGi?.slice(2),
                         ]}
                       />
                       <Chart
@@ -1758,7 +1923,25 @@ const DefaultDashboard = ({ intl, match }) => {
         >
           <Card>
             <CardBody>
-              <h1>Partner Resolution Dashboard </h1>
+              <div className="bg-primary mb-3 p-1 d-flex justify-content-between">
+                <h1 className="m-o p-0">Partner Resolution Dashboard </h1>
+                <button
+                  className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  onClick={() => {
+                    dispatch({
+                      type: "PARTNER_RESOLUTION",
+                      state: {
+                        ...filterObj,
+                        dateWise,
+                        ...isDateSelected,
+                        KeyRefresh: true,
+                      },
+                    });
+                  }}
+                >
+                  Refresh
+                </button>
+              </div>
               <div className="container">
                 <div className="row">
                   {dateWise === "Yearly" ? (
@@ -1776,9 +1959,9 @@ const DefaultDashboard = ({ intl, match }) => {
                         header="Claim Amount"
                         labels={["Li", "Hi", "Gi"]}
                         chartData={[
-                          data.partnerResolution?.claimCaseLi?.slice(2,),
-                          data.partnerResolution?.claimCaseHi?.slice(2,),
-                          data.partnerResolution?.claimCaseGi?.slice(2,),
+                          data.partnerResolution?.claimCaseLi?.slice(2),
+                          data.partnerResolution?.claimCaseHi?.slice(2),
+                          data.partnerResolution?.claimCaseGi?.slice(2),
                         ]}
                       />
                       <Chart
@@ -1978,7 +2161,27 @@ const DefaultDashboard = ({ intl, match }) => {
         >
           <Card>
             <CardBody>
-              <h1>B2C Settled Cases(Monthly) </h1>
+              <div className="bg-primary mb-3 p-1 d-flex justify-content-between">
+                <h1 className="m-o p-0">B2C Settled Cases(Monthly) </h1>
+
+                <button
+                  className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  onClick={() => {
+                    dispatch({
+                      type: "B2C_SATTLED",
+                      state: {
+                        ...filterObj,
+                        dateWise,
+                        ...isDateSelected,
+                        type: "Settled Data",
+                        KeyRefresh: true,
+                      },
+                    });
+                  }}
+                >
+                  Refresh
+                </button>
+              </div>
               <div className="container">
                 <div className="row font-weight-bold">
                   <DashboardCard
@@ -2079,7 +2282,26 @@ const DefaultDashboard = ({ intl, match }) => {
         >
           <Card>
             <CardBody>
-              <h1>Partner Sattled Cases(Monthly) </h1>
+              <div className="bg-primary mb-3 p-1 d-flex justify-content-between">
+                <h1 className="m-o p-0">Partner Sattled Cases(Monthly) </h1>
+                <button
+                  className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  onClick={() => {
+                    dispatch({
+                      type: "PARTNER_SATTLED_CASES",
+                      state: {
+                        ...filterObj,
+                        dateWise,
+                        ...isDateSelected,
+                        type: "Settled Data",
+                        KeyRefresh: true,
+                      },
+                    });
+                  }}
+                >
+                  Refresh
+                </button>
+              </div>
               <div className="container">
                 <div className="row font-weight-bold">
                   <DashboardCard
@@ -2152,7 +2374,26 @@ const DefaultDashboard = ({ intl, match }) => {
         >
           <Card>
             <CardBody>
-              <h1>B2C Invoice Cases(Monthly) </h1>
+              <div className="bg-primary mb-3 p-1 d-flex justify-content-between">
+                <h1 className="m-o p-0">B2C Invoice Cases(Monthly) </h1>
+                <button
+                  className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  onClick={() => {
+                    dispatch({
+                      type: "B2C_INVOICE_RAISED",
+                      state: {
+                        ...filterObj,
+                        dateWise,
+                        ...isDateSelected,
+                        type: "Invoice Data",
+                        KeyRefresh: true,
+                      },
+                    });
+                  }}
+                >
+                  Refresh
+                </button>
+              </div>
               <div className="container">
                 <div
                   className="row font-weight-bold"
@@ -2279,7 +2520,26 @@ const DefaultDashboard = ({ intl, match }) => {
         >
           <Card>
             <CardBody>
-              <h1>Partner Invoice Cases(Monthly) </h1>
+              <div className="bg-primary mb-3 p-1 d-flex justify-content-between">
+                <h1 className="m-o p-0">Partner Invoice Cases(Monthly) </h1>
+                <button
+                  className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  onClick={() => {
+                    dispatch({
+                      type: "PARTNER_INVOICE",
+                      state: {
+                        ...filterObj,
+                        dateWise,
+                        ...isDateSelected,
+                        type: "Invoice Data",
+                        KeyRefresh: true,
+                      },
+                    });
+                  }}
+                >
+                  Refresh
+                </button>
+              </div>
               <div className="container">
                 <div className="row font-weight-bold">
                   <DashboardCard
@@ -2388,6 +2648,20 @@ const DefaultDashboard = ({ intl, match }) => {
           <Card>
             <CardBody>
               {/* <h1>Parnter Dashboard </h1> */}
+              <div className="bg-primary mb-3 p-1 d-flex justify-content-between">
+                <h1 className="m-o p-0">Partner Dashboard(All Cases)</h1>
+                <button
+                  className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  onClick={() => {
+                    dispatch({
+                      type: "LEGAL_PARTNER_DASHBOARD",
+                      state: { ...filterObj, KeyRefresh: true },
+                    });
+                  }}
+                >
+                  Refresh
+                </button>
+              </div>
               <div className="container">
                 <div className="row font-weight-bold">
                   <DashboardCard
@@ -2592,7 +2866,25 @@ const DefaultDashboard = ({ intl, match }) => {
         >
           <Card>
             <CardBody>
-              <h1>B2C Ombudsman Dashboard(Monthly) </h1>
+              <div className=" mb-3 p-1 d-flex justify-content-between">
+                <h1 className="m-o p-0">B2C Ombudsman Dashboard(Monthly) </h1>
+                <button
+                  className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  onClick={() => {
+                    dispatch({
+                      type: "B2C_OMBUDSMAN_COUNT",
+                      state: {
+                        ...filterObj,
+                        dateWise,
+                        ...isDateSelected,
+                        KeyRefresh: true,
+                      },
+                    });
+                  }}
+                >
+                  Refresh
+                </button>
+              </div>
               <div className="container">
                 <div className="row">
                   <table className="table table-borderless">
@@ -2660,7 +2952,27 @@ const DefaultDashboard = ({ intl, match }) => {
         >
           <Card>
             <CardBody>
-              <h1>Partner Ombudsman Dashboard(Monthly) </h1>
+              <div className="mb-3 p-1 d-flex justify-content-between">
+                <h1 className="m-o p-0">
+                  Partner Ombudsman Dashboard(Monthly)dsf{" "}
+                </h1>
+                <button
+                  className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  onClick={() => {
+                    dispatch({
+                      type: "PARTNER_OMBUDSMAN_COUNT",
+                      state: {
+                        ...filterObj,
+                        dateWise,
+                        ...isDateSelected,
+                        KeyRefresh: true,
+                      },
+                    });
+                  }}
+                >
+                  Refresh
+                </button>
+              </div>
               <div className="container">
                 <div className="row">
                   <table className="table table-borderless">
@@ -2726,7 +3038,26 @@ const DefaultDashboard = ({ intl, match }) => {
         >
           <Card>
             <CardBody>
-              <h1>New Ombudsman Count(B2C)(Yearly) </h1>
+              <div className=" mb-3 p-1 d-flex justify-content-between">
+                <h1 className="m-o p-0">New Ombudsman Count(B2C)(Yearly) </h1>
+                <button
+                  className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  onClick={() => {
+                    dispatch({
+                      type: "NEW_OMBUDSMAN_COUNT_B2C",
+                      state: {
+                        ...filterObj,
+                        dateWise,
+                        ...isDateSelected,
+                        omdLocation: ombObj.omdLocation,
+                        KeyRefresh: true,
+                      },
+                    });
+                  }}
+                >
+                  Refresh
+                </button>
+              </div>
               <div className="container">
                 <div className="row">
                   <table className="table table-borderless">
@@ -2792,7 +3123,28 @@ const DefaultDashboard = ({ intl, match }) => {
         >
           <Card>
             <CardBody>
-              <h1>New Ombudsman Count(Partner)(Yearly) </h1>
+              <div className="bg-primary mb-3 p-1 d-flex justify-content-between">
+                <h1 className="m-o p-0">
+                  New Ombudsman Count(Partner)(Yearly){" "}
+                </h1>
+                <button
+                  className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  onClick={() => {
+                    dispatch({
+                      type: "NEW_OMBUDSMAN_COUNT_PARTNER",
+                      state: {
+                        ...filterObj,
+                        dateWise,
+                        ...isDateSelected,
+                        omdLocation: ombObj.omdLocation,
+                        KeyRefresh: true,
+                      },
+                    });
+                  }}
+                >
+                  Refresh
+                </button>
+              </div>
               <div className="container">
                 <div className="row">
                   <table className="table table-borderless">
@@ -2857,7 +3209,28 @@ const DefaultDashboard = ({ intl, match }) => {
         >
           <Card>
             <CardBody>
-              <h1>B2C Resend Cases(Monthly)-(Ombudsman Pending) </h1>
+              <div className=" mb-3 p-1 d-flex justify-content-between">
+                <h1 className="m-o p-0">
+                  B2C Resend Cases(Monthly)-(Ombudsman Pending){" "}
+                </h1>
+                <button
+                  className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  onClick={() => {
+                    dispatch({
+                      type: "OMBUDSMAN_RESEND_CASES_B2C",
+                      state: {
+                        ...filterObj,
+                        dateWise,
+                        ...isDateSelected,
+                        selectedStatus: ombObj.selectedStatus,
+                        KeyRefresh: true,
+                      },
+                    });
+                  }}
+                >
+                  Refresh
+                </button>
+              </div>
               <div className="container">
                 <div className="row">
                   <table className="table table-borderless">
@@ -2901,7 +3274,28 @@ const DefaultDashboard = ({ intl, match }) => {
         >
           <Card>
             <CardBody>
-              <h1>Partner Resend Cases(Monthly)-(Ombudsman Pending) </h1>
+              <div className="bg-primary mb-3 p-1 d-flex justify-content-between">
+                <h1 className="m-o p-0">
+                  Partner Resend Cases(Monthly)-(Ombudsman Pending){" "}
+                </h1>
+                <button
+                  className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  onClick={() => {
+                    dispatch({
+                      type: "OMBUDSMAN_RESEND_CASES_PARTNER",
+                      state: {
+                        ...filterObj,
+                        dateWise,
+                        ...isDateSelected,
+                        selectedStatus: ombObj.selectedStatus,
+                        KeyRefresh: true,
+                      },
+                    });
+                  }}
+                >
+                  Refresh
+                </button>
+              </div>
               <div className="container">
                 <div className="row">
                   <table className="table table-borderless">
@@ -2994,7 +3388,26 @@ const DefaultDashboard = ({ intl, match }) => {
         <Collapse isOpen={collapse === "mailing" && mailingSec == "mailingOne"}>
           <Card>
             <CardBody>
-              <h1>B2C Mailing Dashboard(Monthly) </h1>
+              <div className=" mb-3 p-1 d-flex justify-content-between">
+                <h1 className="m-o p-0">B2C Mailing Dashboard(Monthly) </h1>
+
+                <button
+                  className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  onClick={() => {
+                    dispatch({
+                      type: "B2C_MAILING_COUNT",
+                      state: {
+                        ...filterObj,
+                        dateWise,
+                        ...isDateSelected,
+                        KeyRefresh: true,
+                      },
+                    });
+                  }}
+                >
+                  Refresh
+                </button>
+              </div>
               <div className="container">
                 <div className="row">
                   <table className="table table-borderless">
@@ -3057,7 +3470,25 @@ const DefaultDashboard = ({ intl, match }) => {
         <Collapse isOpen={collapse === "mailing" && mailingSec == "mailingTwo"}>
           <Card>
             <CardBody>
-              <h1>Partner Mailing Dashboard(Monthly) </h1>
+              <div className=" mb-3 p-1 d-flex justify-content-between">
+                <h1 className="m-o p-0">Partner Mailing Dashboard(Monthly) </h1>
+                <button
+                  className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  onClick={() => {
+                    dispatch({
+                      type: "PARTNER_MAILING_COUNT",
+                      state: {
+                        ...filterObj,
+                        dateWise,
+                        ...isDateSelected,
+                        KeyRefresh: true,
+                      },
+                    });
+                  }}
+                >
+                  Refresh
+                </button>
+              </div>
               <div className="container">
                 <div className="row">
                   <table className="table table-borderless">

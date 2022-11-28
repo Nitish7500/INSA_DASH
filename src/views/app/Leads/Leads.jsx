@@ -12,6 +12,13 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { CSVLink, CSVDownload } from "react-csv";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Redirect, useHistory } from "react-router-dom";
+// import {
+//   Accordion,
+//   AccordionBody,
+//   AccordionHeader,
+//   AccordionItem,
+// } from 'reactstrap';
 
 function LeadSection() {
   const [activeButton, setactiveButton] = useState("");
@@ -40,10 +47,17 @@ function LeadSection() {
   const [singleLeadData, setsingleLeadData] = useState({});
 
   const [openRejectLead, setopenRejectLead] = useState(false);
-  const [rejectReason, setrejectReason] = useState("")
-  
+  const [rejectReason, setrejectReason] = useState("");
+
+  const [downloadCound, setdownloadCound] = useState(1);
+
+  const [filtrationData, setFiltrationData] = useState(false);
+
+  const [customerCallLogs, setcustomerCallLogs] = useState(false)
+  const [callLogAccordion, setcallLogAccordion] = useState(false)
 
   const dispatch = useDispatch();
+  const history = useHistory();
   const state = useSelector((state) => state.leadReducer);
   console.log(state);
 
@@ -84,8 +98,17 @@ function LeadSection() {
   };
 
   const createExcel = () => {
-    console.log(document.getElementById("csvDownloadBTN").click());
+    // console.log(document.getElementById("csvDownloadBTN")?.click());
     // document.getElementById("csvDownload").click()
+  };
+
+  useEffect(() => {
+    console.log(document.getElementById("csvDownloadBTN")?.click());
+  }, [state.leadReportData, downloadCound]);
+
+  const commHistoryHandler = (currentLead) => {
+    // <Redirect to="/lead/comm/:id" />
+    history.push({ pathname: `usercomment/`, state: currentLead });
   };
 
   return (
@@ -566,6 +589,7 @@ function LeadSection() {
                 id="downloadReport"
                 onClick={() => {
                   createExcel();
+                  setdownloadCound(downloadCound + 1);
                   dispatch({ type: "LEAD_DOWNLOAD_REPORT", ...reportDate });
                 }}
               >
@@ -587,9 +611,9 @@ function LeadSection() {
         <div className="table-responsive mt-4 px-3" id="leadTableSection">
           <table className="table table-bordered" id="leadTable">
             <thead>
-              <tr>
+              <tr className="">
                 <th>S.No</th>
-                <th>Action</th>
+                <th className="w-20">Action</th>
                 <th>Lead Id</th>
                 <th>OTP Verified</th>
                 <th>Name</th>
@@ -614,7 +638,7 @@ function LeadSection() {
                       <td id="leadTableRowCellTwo">
                         {/* <button id="lead" className="btn btn-primary m-0 p-0 ">CC</button> */}
                         <button
-                          className="btn btn-primary m-0 p-0 "
+                          className="btn btn-inherit m-0 p-0 mr-2"
                           id="leadLM"
                           onClick={() => {
                             setopenLeadAssign(true);
@@ -629,10 +653,13 @@ function LeadSection() {
                             });
                           }}
                         >
-                          AT
+                          <img
+                            style={{ width: "15px", height: "15px" }}
+                            src="https://icons.veryicon.com/png/o/miscellaneous/forestry-in-yiliang/task-25.png"
+                          />
                         </button>
                         <button
-                          className="btn btn-primary m-0 p-0 "
+                          className="btn btn-inherit m-0 p-0 mr-2"
                           id="leadAE"
                           onClick={() => {
                             setopenExpertAssign(true);
@@ -643,47 +670,136 @@ function LeadSection() {
                             });
                           }}
                         >
-                          AE
+                          <img
+                            style={{ width: "15px", height: "15px" }}
+                            src="https://www.veryicon.com/download/png/business/background-management-system/safety-compliance?s=256"
+                          />
                         </button>
-                        <button className="btn btn-primary m-0 p-0 ">CH</button>
                         <button
-                        id="leadAL"
-                          className="btn btn-primary m-0 p-0 "
+                          onClick={() => {
+                            commHistoryHandler(res);
+                          }}
+                          id="leadCommHistoryBtn"
+                          className="btn btn-inherit m-0 p-0 mr-2"
+                        >
+                          <img
+                            style={{ width: "15px", height: "15px" }}
+                            src="https://cdn-icons-png.flaticon.com/512/6396/6396259.png"
+                            alt="Communication history"
+                          />
+                        </button>
+                        <button
+                          id="leadAL"
+                          className="btn btn-inherit m-0 p-0 mr-2"
                           onClick={() => {
                             setsingleLeadData(res);
                             setopenAcceptLead(true);
                           }}
                         >
-                          AL
+                          <img
+                            style={{ width: "15px", height: "15px" }}
+                            src="https://uxwing.com/wp-content/themes/uxwing/download/checkmark-cross/accept-icon.png"
+                          />
                         </button>
                         <button
-                        id="leadRL"
-                          className="btn btn-primary m-0 p-0 "
+                          id="leadRL"
+                          className="btn btn-inherit m-0 p-0 mr-2"
                           onClick={() => {
-                            setsingleLeadData(res)
+                            setsingleLeadData(res);
                             setopenRejectLead(true);
                           }}
                         >
-                          RL
+                          <img
+                            style={{ width: "15px", height: "15px" }}
+                            src="https://upload.wikimedia.org/wikipedia/commons/3/37/Thumbs_down_red_with_minus_sign.svg"
+                          />
                         </button>
-                        <button id="leadCL" className="btn btn-primary m-0 p-0 ">CL</button>
-                        <button id="leadET" className="btn btn-primary m-0 p-0 ">ET</button>
-                        <button id="leadFU" className="btn btn-primary m-0 p-0 ">FU</button>
-                        <button id="leadCLL" className="btn btn-primary m-0 p-0 ">
+                        <button
+                          id="leadCL"
+                          className="btn btn-inherit m-0 p-0 mr-2"
+                        >
+                          <img
+                            style={{ width: "15px", height: "15px" }}
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Cross_red_circle.svg/480px-Cross_red_circle.svg.png"
+                          />
+                        </button>
+                        <button
+                          id="leadET"
+                          className="btn btn-primary m-0 p-0 mr-2"
+                        >
+                          ET
+                        </button>
+                        <button
+                          id="leadFU"
+                          className="btn btn-primary m-0 p-0 mr-2"
+                        >
+                          FU
+                        </button>
+                        <button
+                          id="leadCLL"
+                          className="btn btn-primary m-0 p-0 mr-2"
+                        >
                           CLL
                         </button>
-                        <button id="leadUD" className="btn btn-primary m-0 p-0 ">UD</button>
-                        <button id="leadPS" className="btn btn-primary m-0 p-0 ">PS</button>
-                        <button id="leadSH" className="btn btn-primary m-0 p-0 ">SH</button>
-                        <button id="leadCF" className="btn btn-primary m-0 p-0 ">CF</button>
-                        <button id="leadSMU" className="btn btn-primary m-0 p-0 ">
+                        <br />
+                        <button
+                          id="leadUD"
+                          className="btn btn-primary m-0 p-0 mr-2"
+                        >
+                          UD
+                        </button>
+                        <button
+                          id="leadPS"
+                          className="btn btn-primary m-0 p-0 mr-2"
+                        >
+                          PS
+                        </button>
+                        <button
+                          id="leadSH"
+                          className="btn btn-primary m-0 p-0 mr-2"
+                        >
+                          SH
+                        </button>
+                        <button
+                          id="leadCF"
+                          className="btn btn-primary m-0 p-0 mr-2"
+                        >
+                          CF
+                        </button>
+                        <button
+                          id="leadSMU"
+                          className="btn btn-primary m-0 p-0 mr-2"
+                        >
                           SMU
                         </button>
-                        <button id="leadNCF" className="btn btn-primary m-0 p-0 ">
+                        <button
+                          id="leadNCF"
+                          className="btn btn-primary m-0 p-0 mr-2"
+                        >
                           NCF
                         </button>
-                        <button id="leadCLL" className="btn btn-primary m-0 p-0 ">
-                          CLL
+                        <button id="leadCallLogsForCustomer" className="btn btn-inherit m-0 p-0"
+                          onClick={() => {setcustomerCallLogs(true)}}
+                        >
+                          <img 
+                            style={{ width: "15px", height: "10px" }} src="https://cdn.iconscout.com/icon/premium/png-256-thumb/call-log-2435492-2062736.png" alt="Call logs" />
+                        </button>
+                        <button
+                          id="leadCLL"
+                          className="btn btn-inherit m-0 p-0"
+                          onClick={() => {
+                            dispatch({
+                              type: "LEAD_FILTRATION_DATA",
+                              state: { leadId: res._id },
+                            });
+                            setFiltrationData(true);
+                          }}
+                        >
+                          <img
+                            style={{ width: "15px", height: "10px" }}
+                            src="https://img.favpng.com/17/3/13/computer-icons-portable-network-graphics-scalable-vector-graphics-computer-file-svg-filter-effects-png-favpng-B7g0uf4SsjtseHhPDZqxwu4fV.jpg"
+                            alt=""
+                          />
                         </button>{" "}
                         {/* <FontAwesomeIcon
                           icon={faPhone}
@@ -696,7 +812,6 @@ function LeadSection() {
                         <FontAwesomeIcon icon="fa-sharp fa-solid fa-clock-rotate-left" /> */}
                         <img src="" alt="" />
                         {/* <FontAwesomeIcon icon={fa} /> */}
-                        {"Action"}
                       </td>
                       <td id="leadTableRowCellThree">{res.leadId}</td>
                       <td id="leadTableRowCellFour">
@@ -757,7 +872,7 @@ function LeadSection() {
           <div className="container">
             <div className="row">
               <select
-              id="assignDropdownUser"
+                id="assignDropdownUser"
                 value={assignToUser.assignTo}
                 className="w-80 mt-3 py-2"
                 onChange={(e) =>
@@ -772,14 +887,14 @@ function LeadSection() {
             </div>
             <div className="mt-3 d-flex justify-content-center">
               <button
-              id="closeAssignUserModal"
+                id="closeAssignUserModal"
                 className="btn btn-danger rounded mr-2"
                 onClick={() => setopenLeadAssign(false)}
               >
                 Close
               </button>
               <button
-              id="saveAssignUserModal"
+                id="saveAssignUserModal"
                 className="btn btn-primary rounded ml-2"
                 onClick={() => {
                   setopenLeadAssign(false);
@@ -825,7 +940,7 @@ function LeadSection() {
           <div className="container">
             <div className="row">
               <select
-              id="assignExpertModal"
+                id="assignExpertModal"
                 value={assignToExpert.assignTo}
                 className="w-80 mt-3 py-2"
                 onChange={(e) =>
@@ -837,21 +952,20 @@ function LeadSection() {
               >
                 <option disabled>Select User</option>
                 {state.assigUser?.map((res) => {
-                  console.log(res, assignToExpert);
                   return <option value={res.user_id}>{res.name}</option>;
                 })}
               </select>
             </div>
             <div className="mt-3 d-flex justify-content-center">
               <button
-              id="closeAssignExpertModal"
+                id="closeAssignExpertModal"
                 className="btn btn-danger rounded mr-2"
                 onClick={() => setopenExpertAssign(false)}
               >
                 Close
               </button>
               <button
-              id="saveAssignExpertBtn"
+                id="saveAssignExpertBtn"
                 className="btn btn-primary rounded ml-2"
                 onClick={() => {
                   setopenExpertAssign(false);
@@ -901,20 +1015,20 @@ function LeadSection() {
             </div>
             <div className="mt-3 d-flex justify-content-center">
               <button
-              id="NoacceptLeadConfirmation"
+                id="NoacceptLeadConfirmation"
                 className="btn btn-danger rounded mr-2"
                 onClick={() => setopenAcceptLead(false)}
               >
                 No
               </button>
               <button
-              id="YesacceptLeadConfirmation"
+                id="YesacceptLeadConfirmation"
                 className="btn btn-primary rounded ml-2"
                 onClick={() => {
                   setopenAcceptLead(false);
                   dispatch({
                     type: "LEAD_ACCEPT_LEAD",
-                    state: { ...singleLeadData, status:"ACCEPTED" },
+                    state: { ...singleLeadData, status: "ACCEPTED" },
                   });
                   dispatch({
                     type: "LEAD_DATA_WITH_STATUS",
@@ -961,7 +1075,7 @@ function LeadSection() {
                 className="col-10 d-block p-2 form-control border"
                 rows={4}
                 value={rejectReason}
-                onChange={e => setrejectReason(e.target.value)}
+                onChange={(e) => setrejectReason(e.target.value)}
               ></textarea>
             </div>
             <div className="mt-3 d-flex justify-content-center">
@@ -979,7 +1093,11 @@ function LeadSection() {
                   setopenRejectLead(false);
                   dispatch({
                     type: "LEAD_REJECT_LEAD",
-                    state: { ...singleLeadData, reject_reason:rejectReason, status:"REJECTED" },
+                    state: {
+                      ...singleLeadData,
+                      reject_reason: rejectReason,
+                      status: "REJECTED",
+                    },
                   });
                   dispatch({
                     type: "LEAD_DATA_WITH_STATUS",
@@ -998,6 +1116,189 @@ function LeadSection() {
           </div>
         </ModalBody>
       </Modal>
+{/* ----------------------------------------------> Call Log for customers */}
+
+
+<Modal
+        isOpen={customerCallLogs}
+        toggle={() => {
+          setcustomerCallLogs(false);
+        }}
+        size="lg"
+      >
+        <ModalHeader
+          className="py-3 text-primary"
+          toggle={() => {
+            setcustomerCallLogs(false);
+          }}
+        >
+          Call Logs For Customers
+        </ModalHeader>
+        <ModalBody>
+          {/* <span className="h6">Confirmation</span> */}
+          <div className="container">
+            <div className="row">
+                <input className="form col-4 p-1 mx-2" type={"date"} />
+                <input className="form col-4 p-1 mx-2" type={"date"} />
+                <button className="btn btn-warning col-2">Fetch</button>
+                {/* <Accordion open={callLogAccordion} toggle={(id) => setcallLogAccordion(!callLogAccordion)}>
+                <AccordionItem>
+          <AccordionHeader targetId="1">Accordion Item 1</AccordionHeader>
+          <AccordionBody accordionId="1">
+            <strong>This is the first item&#39;s accordion body.</strong>
+            You can modify any of this with custom CSS or overriding our default
+            variables. It&#39;s also worth noting that just about any HTML can
+            go within the <code>.accordion-body</code>, though the transition
+            does limit overflow.
+          </AccordionBody>
+        </AccordionItem>
+                </Accordion> */}
+            </div>
+            <div className="mt-3 d-flex justify-content-center">
+              <button
+                id="rejectionNoBtn"
+                className="btn btn-danger rounded mr-2"
+                onClick={() => setcustomerCallLogs(false)}
+              >
+                No
+              </button>
+              <button
+                id="rejectionYesBtn"
+                className="btn btn-primary rounded ml-2"
+                onClick={() => {
+                  setcustomerCallLogs(false);
+                  dispatch({
+                    type: "LEAD_REJECT_LEAD",
+                    state: {
+                      ...singleLeadData,
+                      reject_reason: rejectReason,
+                      status: "REJECTED",
+                    },
+                  });
+                  dispatch({
+                    type: "LEAD_DATA_WITH_STATUS",
+                    state: {
+                      status: "PENDING",
+                      pageIndex: 0,
+                      pageSize: 50,
+                      keyword: "",
+                    },
+                  });
+                }}
+              >
+                Yes
+              </button>
+            </div>
+          </div>
+        </ModalBody>
+      </Modal>
+
+
+      {/* -----------------------> Filtration data Modal */}
+
+
+
+      <Modal
+        isOpen={filtrationData}
+        toggle={() => {
+          setFiltrationData(false);
+        }}
+        size="lg"
+      >
+        <ModalHeader
+          className="py-3 text-primary"
+          toggle={() => {
+            setFiltrationData(false);
+          }}
+        >
+          Questions/ Answers
+        </ModalHeader>
+        <ModalBody>
+          {/* <span className="h6">Confirmation</span> */}
+          <div className="container">
+            <div className="row">
+              <h5>LEAD ID :-</h5>
+            </div>
+            <div className="border d-flex flex-wrap border border-top-warning ">
+              <div className="d-flex container mt-4 border-bottom pb-3">
+                <div className=" w-70"><span className="h6 my-2 font-weight">Question</span></div>
+                <div className="border-left pl-4"><span className="h6 font-weight">Answer</span></div>
+              </div>
+              <div className="d-flex container mt-4 border-bottom pb-3">
+                <div className=" w-70"><span className="h6 my-2 font-weight-light">Date Of Hospitalisation</span></div>
+                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.dateOfHospitalisation ?? "NA"}</span></div>
+              </div>
+              <div className="d-flex container mt-4 border-bottom pb-3">
+                <div className=" w-70"><span className="h6 my-2 font-weight-light">Date Of Discharge</span></div>
+                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.dateOfDischarge ?? "NA"}</span></div>
+              </div>
+              <div className="d-flex container mt-4 border-bottom pb-3">
+                <div className=" w-70"><span className="h6 my-2 font-weight-light">Date Of Rejection</span></div>
+                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.dateOfRejection ?? "NA"}</span></div>
+              </div>
+              <div className="d-flex container mt-4 border-bottom pb-3">
+                <div className=" w-70"><span className="h6 my-2 font-weight-light">Date Of Document Submission</span></div>
+                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.dateOfDocumentSubmission ?? "NA"}</span></div>
+              </div>
+              <div className="d-flex container mt-4 border-bottom pb-3">
+                <div className=" w-70"><span className="h6 my-2 font-weight-light">Claim Amount</span></div>
+                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.claimAmount ?? "NA"}</span></div>
+              </div>
+              <div className="d-flex container mt-4 border-bottom pb-3">
+                <div className=" w-70"><span className="h6 my-2 font-weight-light">Reason Of Rejection	</span></div>
+                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.reasonOfRejection ?? "NA"}</span></div>
+              </div>
+              <div className="d-flex container mt-4 border-bottom pb-3">
+                <div className=" w-70"><span className="h6 my-2 font-weight-light">Date Of Last Communication	</span></div>
+                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.dateOfLastCommunication ?? "NA"}</span></div>
+              </div>
+              <div className="d-flex container mt-4 border-bottom pb-3">
+                <div className=" w-70"><span className="h6 my-2 font-weight-light">Applied Claim Amount	</span></div>
+                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.appliedClaimAmount ?? "NA"}</span></div>
+              </div>
+              <div className="d-flex container mt-4 border-bottom pb-3">
+                <div className=" w-70"><span className="h6 my-2 font-weight-light">Approved Claim Amount	</span></div>
+                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.approvedClaimAmount ?? "NA"}</span></div>
+              </div>
+              <div className="d-flex container mt-4 border-bottom pb-3">
+                <div className=" w-70"><span className="h6 my-2 font-weight-light">Sum Insured	</span></div>
+                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.sumInsured ?? "NA"}</span></div>
+              </div>
+              <div className="d-flex container mt-4 border-bottom pb-3">
+                <div className=" w-70"><span className="h6 my-2 font-weight-light">Hospital Name	</span></div>
+                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.hospitalName ?? "NA"}</span></div>
+              </div>
+              <div className="d-flex container mt-4 border-bottom pb-3">
+                <div className=" w-70"><span className="h6 my-2 font-weight-light">Patient Relationship With Policyholder	</span></div>
+                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.patientRelationshipWithPolicyholder ?? "NA"}</span></div>
+              </div>
+              <div className="d-flex container mt-4 border-bottom pb-3">
+                <div className=" w-70"><span className="h6 my-2 font-weight-light">Problem Statement	</span></div>
+                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.problemStatement ?? "NA"}</span></div>
+              </div>
+              <div className="d-flex container mt-4 border-bottom pb-3">
+                <div className=" w-70"><span className="h6 my-2 font-weight-light">Policy Type	</span></div>
+                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.policyType ?? "NA"}</span></div>
+              </div>
+              <div className="d-flex container mt-4 border-bottom pb-3">
+                <div className=" w-70"><span className="h6 my-2 font-weight-light">patientName	</span></div>
+                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.patientName ?? "NA"}</span></div>
+              </div>
+            </div>
+            <div className="mt-3 d-flex justify-content-center">
+              <button
+                id="rejectionNoBtn"
+                className="btn btn-danger rounded mr-2"
+                onClick={() => setFiltrationData(false)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </ModalBody>
+      </Modal>
+
+
     </div>
   );
 }

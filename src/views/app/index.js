@@ -19,6 +19,9 @@ const Dashboards = React.lazy(() =>
 
 const BotTranscript = React.lazy(() => import("./BotTranscript/BotTranscript"));
 const Leads = React.lazy(() => import("./Leads/Leads"));
+const LeadCommHistory = React.lazy(() =>
+  import("./Leads/CommunicationHistory")
+);
 
 const App = ({ match }) => {
   const history = useHistory();
@@ -53,7 +56,12 @@ const App = ({ match }) => {
             <Route
               path={`${match.url}/leads`}
               render={(props) => <Leads {...props} />}
-            />
+            >
+            </Route>
+              <Route
+                path={`${match.url}/usercomment`}
+                render={(props) => <LeadCommHistory {...props} />}
+              />
             <Redirect to="/error" />
           </Switch>
         </Suspense>
