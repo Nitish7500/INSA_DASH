@@ -1,7 +1,13 @@
 import {
+  CALL_LOGS_FOR_CUSTOMER,
+  CALL_LOGS_FOR_CUSTOMER_FAILED,
+  CALL_LOGS_FOR_CUSTOMER_SUCCESS,
   LEAD_ACCEPT_LEAD,
   LEAD_ACCEPT_LEAD_FAILED,
   LEAD_ACCEPT_LEAD_SUCCESSS,
+  LEAD_ADD_FOLLOW_UP,
+  LEAD_ADD_FOLLOW_UP_FAILED,
+  LEAD_ADD_FOLLOW_UP_SUCCESS,
   LEAD_ASSIGN_EXPERT,
   LEAD_ASSIGN_EXPERT_FAILED,
   LEAD_ASSIGN_EXPERT_SUCCESS,
@@ -11,6 +17,9 @@ import {
   LEAD_ASSIGN_USER_SAVE_FAILED,
   LEAD_ASSIGN_USER_SAVE_SUCCESS,
   LEAD_ASSIGN_USER_SUCCESS,
+  LEAD_CANCEL_LEAD,
+  LEAD_CANCEL_LEAD_FAILED,
+  LEAD_CANCEL_LEAD_SUCCESS,
   LEAD_COMM_HISTORY_ADD_COMMENT,
   LEAD_COMM_HISTORY_ADD_COMMENT_FAILED,
   LEAD_COMM_HISTORY_ADD_COMMENT_SUCCESS,
@@ -32,12 +41,21 @@ import {
   LEAD_GET_MISSELLING,
   LEAD_GET_MISSELLING_FAILED,
   LEAD_GET_MISSELLING_SUCCESS,
+  LEAD_GET_POLICY_TYPE,
+  LEAD_GET_POLICY_TYPE_COMPLAINT_TYPE,
+  LEAD_GET_POLICY_TYPE_COMPLAINT_TYPE_FAILED,
+  LEAD_GET_POLICY_TYPE_COMPLAINT_TYPE_SUCCESS,
+  LEAD_GET_POLICY_TYPE_FAILED,
+  LEAD_GET_POLICY_TYPE_SUCCESS,
   LEAD_INSURANCE_COMPANY,
   LEAD_INSURANCE_COMPANY_FAILED,
   LEAD_INSURANCE_COMPANY_SUCCESS,
   LEAD_REJECT_LEAD,
   LEAD_REJECT_LEAD_FAILED,
   LEAD_REJECT_LEAD_SUCCESSS,
+  Lead_UPDATE_LEAD,
+  Lead_UPDATE_LEAD_FAILED,
+  Lead_UPDATE_LEAD_SUCCESS,
   LEAD_USERS,
   LEAD_USERS_FAILED,
   LEAD_USERS_SUCCESS,
@@ -54,8 +72,11 @@ const initialState = {
   leadUsers: {},
   message: "",
   leadReportData: "",
-  fetchedLead:{},
-  filtrationData:{},
+  fetchedLead: {},
+  filtrationData: {},
+  callLogsCustomer: {},
+  policyType: [],
+  complaintType: [],
 };
 
 export default (state = initialState, action) => {
@@ -174,8 +195,6 @@ export default (state = initialState, action) => {
     case LEAD_COMM_HISTORY_UPDATE_COMMENT_FAILED:
       return { ...state, message: action.message };
 
-      
-
     case LEAD_COMM_HISTORY_ADD_COMMENT:
       return { ...state };
 
@@ -185,25 +204,77 @@ export default (state = initialState, action) => {
     case LEAD_COMM_HISTORY_ADD_COMMENT_FAILED:
       return { ...state, message: action.message };
 
-
-
     case LEAD_FETCH_BY_ID:
-      return {...state}
+      return { ...state };
 
     case LEAD_FETCH_BY_ID_SUCCESS:
-      return {...state, fetchedLead:action.data}
+      return { ...state, fetchedLead: action.data };
 
     case LEAD_FETCH_BY_ID_FAILED:
-      return {...state, message:action.message}
+      return { ...state, message: action.message };
 
     case LEAD_FILTRATION_DATA:
-      return {...state}
+      return { ...state };
 
     case LEAD_FILTRATION_DATA_SUCCESS:
-      return {...state, filtrationData:action.data}
+      return { ...state, filtrationData: action.data };
 
     case LEAD_FILTRATION_DATA_FAILED:
-      return {...state, message:action.message}
+      return { ...state, message: action.message };
+
+    case CALL_LOGS_FOR_CUSTOMER:
+      return { ...state };
+
+    case CALL_LOGS_FOR_CUSTOMER_SUCCESS:
+      return { ...state, callLogsCustomer: action.data };
+
+    case CALL_LOGS_FOR_CUSTOMER_FAILED:
+      return { ...state, message: action.message };
+
+    case LEAD_CANCEL_LEAD:
+      return { ...state };
+
+    case LEAD_CANCEL_LEAD_SUCCESS:
+      return { ...state };
+
+    case LEAD_CANCEL_LEAD_FAILED:
+      return { ...state, message: action.message };
+
+    case LEAD_GET_POLICY_TYPE:
+      return { ...state };
+
+    case LEAD_GET_POLICY_TYPE_SUCCESS:
+      return { ...state, policyType: action.data };
+
+    case LEAD_GET_POLICY_TYPE_FAILED:
+      return { ...state, message: action.message };
+
+    case LEAD_GET_POLICY_TYPE_COMPLAINT_TYPE:
+      return { ...state };
+
+    case LEAD_GET_POLICY_TYPE_COMPLAINT_TYPE_SUCCESS:
+      return { ...state, complaintType: action.data };
+
+    case LEAD_GET_POLICY_TYPE_COMPLAINT_TYPE_FAILED:
+      return { ...state, message: action.message };
+
+    case Lead_UPDATE_LEAD:
+      return { ...state };
+
+    case Lead_UPDATE_LEAD_SUCCESS:
+      return { ...state, message: "Lead Updated Successfully !" };
+
+    case Lead_UPDATE_LEAD_FAILED:
+      return { ...state, message: action.message };
+
+    case LEAD_ADD_FOLLOW_UP:
+      return { ...state };
+
+    case LEAD_ADD_FOLLOW_UP_SUCCESS:
+      return { ...state, message: "Follow Up added Successfully !" };
+
+    case LEAD_ADD_FOLLOW_UP_FAILED:
+      return { ...state, message: action.message };
 
     default:
       return { ...state };

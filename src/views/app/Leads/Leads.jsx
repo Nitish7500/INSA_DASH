@@ -1,8 +1,26 @@
 import {
+  faArrowLeft,
+  faCircleXmark,
+  faClockRotateLeft,
+  faCloudArrowUp,
   faContactBook,
+  faFileExport,
+  faFilter,
+  faFolderOpen,
+  faHandsHolding,
+  faListCheck,
+  faMessage,
   faNoteSticky,
   faPencil,
+  faPenToSquare,
   faPhone,
+  faPhoneSquare,
+  faTable,
+  faThumbsDown,
+  faThumbsUp,
+  faTriangleExclamation,
+  faWifi,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment from "moment";
@@ -11,16 +29,26 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { CSVLink, CSVDownload } from "react-csv";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Collapse,
+  Card,
+  CardBody,
+} from "reactstrap";
 import { Redirect, useHistory } from "react-router-dom";
-// import {
-//   Accordion,
-//   AccordionBody,
-//   AccordionHeader,
-//   AccordionItem,
-// } from 'reactstrap';
+import Select from "react-select";
+import { currentUser } from "constants/defaultValues";
+import EditLead from "./EditLead";
+
+// import
 
 function LeadSection() {
+  const [editPage, seteditPage] = useState(false);
+  const [currLead, setcurrLead] = useState({});
   const [activeButton, setactiveButton] = useState("");
   const [status, setStatus] = useState({ status: "PENDING" });
   const [searchByMail, setsearchByMail] = useState("");
@@ -53,23 +81,81 @@ function LeadSection() {
 
   const [filtrationData, setFiltrationData] = useState(false);
 
-  const [customerCallLogs, setcustomerCallLogs] = useState(false)
-  const [callLogAccordion, setcallLogAccordion] = useState(false)
+  const [customerCallLogs, setcustomerCallLogs] = useState(false);
+  const [callLogAccordion, setcallLogAccordion] = useState(false);
+
+  const [hoverMessage, sethoverMessage] = useState({
+    index: "",
+    name: "",
+  });
+
+  const [callLogCustomer, setcallLogCustomer] = useState({
+    startTime: moment().subtract(1, "months").format("YYYY-MM-DD"),
+    endTime: moment().format("YYYY-MM-DD"),
+    customer_number: "",
+  });
+
+  const [openNewCustomerForm, setopenNewCustomerForm] = useState(false);
+  const [openCustomerForm, setopenCustomerForm] = useState(false);
+
+  const [sendMessageToUser, setsendMessageToUser] = useState(false);
+  const [textMessageToCustomer, settextMessageToCustomer] = useState({
+    data: {},
+    message: `Good Morning/Evening Sir/Ma'am,
+  Greetings of the day!
+  I am Ashish Dalal from Insurance Samadhan. As per our discussion on call, we require some of your documents to go through your case. Please share the following documents:
+  1. Complete Policy Pack
+  2. Discharge summary
+  3. Final Bill
+  4. Rejection letter / Settlement letter/ Query letter
+  5. Mail communication if any
+  You can either whatsapp the documents on 9310487592 or mail on ashishdalal@insurancesamadhan.com.
+  Thank You and Have a Nice Day!`,
+  });
+
+  const [statusHistory, setstatusHistory] = useState({
+    open: false,
+    data: {},
+  });
+
+  const [problemStatement, setproblemStatement] = useState(false);
+
+  const [followUpObj, setfollowUpObj] = useState({
+    open: false,
+    com_by: "Admin",
+    com_date: "",
+    com_dis: "",
+    follow_date: "",
+    status: "FOLLOWUP",
+    id: "",
+    followUpDesc: "",
+  });
+
+  const [leadCancelDetail, setleadCancelDetail] = useState({
+    open: false,
+    data: {},
+    state: {},
+  });
+  const [uploadDocForm, setuploadDocForm] = useState({ lead: {}, open: false });
 
   const dispatch = useDispatch();
   const history = useHistory();
   const state = useSelector((state) => state.leadReducer);
-  console.log(state);
+  console.log(state, callLogCustomer);
+
+  const getData = () => {
+    dispatch({
+      type: "LEAD_DATA_WITH_STATUS",
+      state: { status: "PENDING", pageIndex: 0, pageSize: 50, keyword: "" },
+    });
+  };
 
   useEffect(() => {
     dispatch({ type: "LEAD_ASSIGN_USER" });
     dispatch({ type: "LEAD_ASSIGN_EXPERT" });
     dispatch({ type: "LEAD_INSURANCE_COMPANY" });
-    dispatch({
-      type: "LEAD_DATA_WITH_STATUS",
-      state: { status: "PENDING", pageIndex: 0, pageSize: 50, keyword: "" },
-    });
     dispatch({ type: "LEAD_USERS" });
+    getData();
   }, [1]);
 
   const handleClick = (e, status) => {
@@ -111,7 +197,9 @@ function LeadSection() {
     history.push({ pathname: `usercomment/`, state: currentLead });
   };
 
-  return (
+  return editPage ? (
+    <EditLead lead={currLead} seteditPage={seteditPage} getData={getData} />
+  ) : (
     <div className="bg-inherit pt-5">
       <div className="w-95 d-flex justify-content-center">
         <div
@@ -597,7 +685,6 @@ function LeadSection() {
                 Download
               </button>
             </div>
-            {console.log(state.leadReportData.split(","))}
             {state.leadReportData.length ? (
               // console.log(state.leadReportData.split(","))
               <CSVLink
@@ -636,182 +723,680 @@ function LeadSection() {
                         {i + 1}
                       </td>
                       <td id="leadTableRowCellTwo">
-                        {/* <button id="lead" className="btn btn-primary m-0 p-0 ">CC</button> */}
-                        <button
-                          className="btn btn-inherit m-0 p-0 mr-2"
-                          id="leadLM"
-                          onClick={() => {
-                            setopenLeadAssign(true);
-                            setassignToUser({
-                              ...assignToUser,
-                              assignTo: res.assign_to,
-                              id: res._id,
-                            });
-                            dispatch({
-                              type: "LEAD_GET_MISSELLING",
-                              state: { leadId: res.assign_to },
-                            });
-                          }}
-                        >
-                          <img
-                            style={{ width: "15px", height: "15px" }}
-                            src="https://icons.veryicon.com/png/o/miscellaneous/forestry-in-yiliang/task-25.png"
-                          />
-                        </button>
-                        <button
-                          className="btn btn-inherit m-0 p-0 mr-2"
-                          id="leadAE"
-                          onClick={() => {
-                            setopenExpertAssign(true);
-                            setassignToExpert({
-                              ...assignToExpert,
-                              assignTo: res.expert_to,
-                              id: res._id,
-                            });
-                          }}
-                        >
-                          <img
-                            style={{ width: "15px", height: "15px" }}
-                            src="https://www.veryicon.com/download/png/business/background-management-system/safety-compliance?s=256"
-                          />
-                        </button>
-                        <button
-                          onClick={() => {
-                            commHistoryHandler(res);
-                          }}
-                          id="leadCommHistoryBtn"
-                          className="btn btn-inherit m-0 p-0 mr-2"
-                        >
-                          <img
-                            style={{ width: "15px", height: "15px" }}
-                            src="https://cdn-icons-png.flaticon.com/512/6396/6396259.png"
-                            alt="Communication history"
-                          />
-                        </button>
-                        <button
-                          id="leadAL"
-                          className="btn btn-inherit m-0 p-0 mr-2"
-                          onClick={() => {
-                            setsingleLeadData(res);
-                            setopenAcceptLead(true);
-                          }}
-                        >
-                          <img
-                            style={{ width: "15px", height: "15px" }}
-                            src="https://uxwing.com/wp-content/themes/uxwing/download/checkmark-cross/accept-icon.png"
-                          />
-                        </button>
-                        <button
-                          id="leadRL"
-                          className="btn btn-inherit m-0 p-0 mr-2"
-                          onClick={() => {
-                            setsingleLeadData(res);
-                            setopenRejectLead(true);
-                          }}
-                        >
-                          <img
-                            style={{ width: "15px", height: "15px" }}
-                            src="https://upload.wikimedia.org/wikipedia/commons/3/37/Thumbs_down_red_with_minus_sign.svg"
-                          />
-                        </button>
-                        <button
-                          id="leadCL"
-                          className="btn btn-inherit m-0 p-0 mr-2"
-                        >
-                          <img
-                            style={{ width: "15px", height: "15px" }}
-                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Cross_red_circle.svg/480px-Cross_red_circle.svg.png"
-                          />
-                        </button>
-                        <button
-                          id="leadET"
-                          className="btn btn-primary m-0 p-0 mr-2"
-                        >
-                          ET
-                        </button>
-                        <button
-                          id="leadFU"
-                          className="btn btn-primary m-0 p-0 mr-2"
-                        >
-                          FU
-                        </button>
-                        <button
-                          id="leadCLL"
-                          className="btn btn-primary m-0 p-0 mr-2"
-                        >
-                          CLL
-                        </button>
-                        <br />
-                        <button
-                          id="leadUD"
-                          className="btn btn-primary m-0 p-0 mr-2"
-                        >
-                          UD
-                        </button>
-                        <button
-                          id="leadPS"
-                          className="btn btn-primary m-0 p-0 mr-2"
-                        >
-                          PS
-                        </button>
-                        <button
-                          id="leadSH"
-                          className="btn btn-primary m-0 p-0 mr-2"
-                        >
-                          SH
-                        </button>
-                        <button
+                        <div>
+                          <button
+                            className="btn btn-inherit m-0 p-0 mr-2"
+                            id="leadCallCustomer"
+                          >
+                            <div className="position-relative py-3">
+                              {hoverMessage.index == i + 1 &&
+                              hoverMessage.name === "callCustomer" ? (
+                                <span
+                                  className="shadow-lg p-1 font-weight-bold position-absolute bg-white h-10"
+                                  style={{
+                                    top: "-20px",
+                                    zIndex: 2,
+                                    whiteSpace: "pre",
+                                  }}
+                                >
+                                  {"Call Customer"}
+                                </span>
+                              ) : null}
+                              <FontAwesomeIcon
+                                color="#2b009f"
+                                size="lg"
+                                icon={faPhone}
+                                onMouseOver={() =>
+                                  sethoverMessage({
+                                    name: "callCustomer",
+                                    index: i + 1,
+                                  })
+                                }
+                                onMouseLeave={() =>
+                                  sethoverMessage({ name: "", index: 0 })
+                                }
+                              />
+                            </div>
+                          </button>
+                          <button
+                            className="btn btn-inherit m-0 p-0 mr-2"
+                            id="leadLM"
+                            onClick={() => {
+                              setopenLeadAssign(true);
+                              setassignToUser({
+                                ...assignToUser,
+                                assignTo: res.assign_to,
+                                id: res._id,
+                              });
+                              dispatch({
+                                type: "LEAD_GET_MISSELLING",
+                                state: { leadId: res.assign_to },
+                              });
+                            }}
+                          >
+                            <div className="position-relative py-3">
+                              {hoverMessage.index == i + 1 &&
+                              hoverMessage.name === "assignToUser" ? (
+                                <span
+                                  className="shadow-lg p-1 font-weight-bold position-absolute bg-white h-10"
+                                  style={{
+                                    top: "-20px",
+                                    zIndex: 2,
+                                    whiteSpace: "pre",
+                                  }}
+                                >
+                                  {"Assign to User"}
+                                </span>
+                              ) : null}
+                              <FontAwesomeIcon
+                                color="#2b009f"
+                                size="lg"
+                                icon={faListCheck}
+                                onMouseOver={() =>
+                                  sethoverMessage({
+                                    name: "assignToUser",
+                                    index: i + 1,
+                                  })
+                                }
+                                onMouseLeave={() =>
+                                  sethoverMessage({ name: "", index: 0 })
+                                }
+                              />
+                            </div>
+                          </button>
+                          <button
+                            className="btn btn-inherit m-0 p-0 mr-2"
+                            id="leadAE"
+                            onClick={() => {
+                              setopenExpertAssign(true);
+                              setassignToExpert({
+                                ...assignToExpert,
+                                assignTo: res.expert_to,
+                                id: res._id,
+                              });
+                            }}
+                          >
+                            <div className="position-relative py-3">
+                              {hoverMessage.index == i + 1 &&
+                              hoverMessage.name === "assignToExpert" ? (
+                                <span
+                                  className="shadow-lg p-1 font-weight-bold position-absolute bg-white h-10"
+                                  style={{
+                                    top: "-20px",
+                                    zIndex: 2,
+                                    whiteSpace: "pre",
+                                  }}
+                                >
+                                  {"Assign to Expert"}
+                                </span>
+                              ) : null}
+                              <FontAwesomeIcon
+                                color="#2b009f"
+                                size="lg"
+                                icon={faFileExport}
+                                onMouseOver={() =>
+                                  sethoverMessage({
+                                    name: "assignToExpert",
+                                    index: i + 1,
+                                  })
+                                }
+                                onMouseLeave={() => sethoverMessage(0)}
+                              />
+                            </div>
+                          </button>
+                          <button
+                            onClick={() => {
+                              commHistoryHandler(res);
+                            }}
+                            id="leadCommHistoryBtn"
+                            className="btn btn-inherit m-0 p-0 mr-2"
+                          >
+                            <div className="position-relative py-3">
+                              {hoverMessage.index == i + 1 &&
+                              hoverMessage.name === "CommHistory" ? (
+                                <span
+                                  className="shadow-lg p-1 font-weight-bold position-absolute bg-white h-10"
+                                  style={{
+                                    top: "-20px",
+                                    zIndex: 2,
+                                    whiteSpace: "pre",
+                                  }}
+                                >
+                                  {"Communication history"}
+                                </span>
+                              ) : null}
+                              <FontAwesomeIcon
+                                color="#2b009f"
+                                size="lg"
+                                icon={faClockRotateLeft}
+                                onMouseOver={() =>
+                                  sethoverMessage({
+                                    name: "CommHistory",
+                                    index: i + 1,
+                                  })
+                                }
+                                onMouseLeave={() =>
+                                  sethoverMessage({ name: "", index: 0 })
+                                }
+                              />
+                            </div>
+                          </button>
+                          <button
+                            id="leadAL"
+                            className="btn btn-inherit m-0 p-0 mr-2"
+                            onClick={() => {
+                              setsingleLeadData(res);
+                              setopenAcceptLead(true);
+                            }}
+                          >
+                            <div className="position-relative py-3">
+                              {hoverMessage.index == i + 1 &&
+                              hoverMessage.name === "acceptLead" ? (
+                                <span
+                                  className="shadow-lg p-1 font-weight-bold position-absolute bg-white h-10"
+                                  style={{
+                                    top: "-20px",
+                                    zIndex: 2,
+                                    whiteSpace: "pre",
+                                  }}
+                                >
+                                  {"Accept Lead"}
+                                </span>
+                              ) : null}
+                              <FontAwesomeIcon
+                                color="green"
+                                size="lg"
+                                icon={faThumbsUp}
+                                onMouseOver={() =>
+                                  sethoverMessage({
+                                    name: "acceptLead",
+                                    index: i + 1,
+                                  })
+                                }
+                                onMouseLeave={() =>
+                                  sethoverMessage({ name: "", index: 0 })
+                                }
+                              />
+                            </div>
+                          </button>
+                          <button
+                            id="leadRL"
+                            className="btn btn-inherit m-0 p-0 mr-2"
+                            onClick={() => {
+                              setsingleLeadData(res);
+                              setopenRejectLead(true);
+                            }}
+                          >
+                            <div className="position-relative py-3">
+                              {hoverMessage.index == i + 1 &&
+                              hoverMessage.name === "rejectLead" ? (
+                                <span
+                                  className="shadow-lg p-1 font-weight-bold position-absolute bg-white h-10"
+                                  style={{
+                                    top: "-20px",
+                                    zIndex: 2,
+                                    whiteSpace: "pre",
+                                  }}
+                                >
+                                  {"Reject Lead"}
+                                </span>
+                              ) : null}
+                              <FontAwesomeIcon
+                                color="red"
+                                size="lg"
+                                icon={faThumbsDown}
+                                onMouseOver={() =>
+                                  sethoverMessage({
+                                    name: "rejectLead",
+                                    index: i + 1,
+                                  })
+                                }
+                                onMouseLeave={() =>
+                                  sethoverMessage({ name: "", index: 0 })
+                                }
+                              />
+                            </div>
+                          </button>
+                          <button
+                            id="leadCL"
+                            className="btn btn-inherit m-0 p-0 mr-2"
+                            onClick={() => {
+                              setleadCancelDetail({
+                                ...leadCancelDetail,
+                                open: true,
+                                data: res,
+                              });
+                            }}
+                          >
+                            <div className="position-relative py-3">
+                              {hoverMessage.index == i + 1 &&
+                              hoverMessage.name === "cancelLead" ? (
+                                <span
+                                  className="shadow-lg p-1 font-weight-bold position-absolute bg-white h-10"
+                                  style={{
+                                    top: "-20px",
+                                    zIndex: 2,
+                                    whiteSpace: "pre",
+                                  }}
+                                >
+                                  {"Cancel Lead"}
+                                </span>
+                              ) : null}
+                              <FontAwesomeIcon
+                                color="red"
+                                size="lg"
+                                icon={faXmark}
+                                onMouseOver={() =>
+                                  sethoverMessage({
+                                    name: "cancelLead",
+                                    index: i + 1,
+                                  })
+                                }
+                                onMouseLeave={() =>
+                                  sethoverMessage({ name: "", index: 0 })
+                                }
+                              />
+                            </div>
+                          </button>
+                          <button
+                            id="leadET"
+                            className="btn btn-inherit m-0 p-0 mr-2"
+                            onClick={() => {
+                              setcurrLead(res);
+                              seteditPage(true);
+                            }}
+                          >
+                            <div className="position-relative py-3">
+                              {hoverMessage.index == i + 1 &&
+                              hoverMessage.name === "editTask" ? (
+                                <span
+                                  className="shadow-lg p-1 font-weight-bold position-absolute bg-white h-10"
+                                  style={{
+                                    top: "-20px",
+                                    zIndex: 2,
+                                    whiteSpace: "pre",
+                                  }}
+                                >
+                                  {"Edit Task"}
+                                </span>
+                              ) : null}
+                              <FontAwesomeIcon
+                                color="#2b009f"
+                                size="lg"
+                                icon={faPenToSquare}
+                                onMouseOver={() =>
+                                  sethoverMessage({
+                                    name: "editTask",
+                                    index: i + 1,
+                                  })
+                                }
+                                onMouseLeave={() =>
+                                  sethoverMessage({ name: "", index: 0 })
+                                }
+                              />
+                            </div>
+                          </button>
+                          <button
+                            id="leadFollowUp"
+                            className="btn btn-inherit m-0 p-0 mr-2"
+                            onClick={() => {
+                              setfollowUpObj({
+                                ...followUpObj,
+                                id: res._id,
+                                open: true,
+                              });
+                            }}
+                          >
+                            <div className="position-relative py-3">
+                              {hoverMessage.index == i + 1 &&
+                              hoverMessage.name === "followUp" ? (
+                                <span
+                                  className="shadow-lg p-1 font-weight-bold position-absolute bg-white h-10"
+                                  style={{
+                                    top: "-20px",
+                                    zIndex: 2,
+                                    whiteSpace: "pre",
+                                  }}
+                                >
+                                  {"Follow Up"}
+                                </span>
+                              ) : null}
+                              <FontAwesomeIcon
+                                color="#2b009f"
+                                size="lg"
+                                icon={faPhone}
+                                onMouseOver={() =>
+                                  sethoverMessage({
+                                    name: "followUp",
+                                    index: i + 1,
+                                  })
+                                }
+                                onMouseLeave={() =>
+                                  sethoverMessage({ name: "", index: 0 })
+                                }
+                              />
+                            </div>
+                          </button>
+                          <button
+                            id="leadCallLogsForCustomer"
+                            className="btn btn-inherit m-0 p-0"
+                            onClick={() => {
+                              setcallLogCustomer({
+                                ...callLogCustomer,
+                                customer_number: res.phone,
+                              });
+                              setcustomerCallLogs(true);
+                            }}
+                          >
+                            <div className="position-relative py-3">
+                              {hoverMessage.index == i + 1 &&
+                              hoverMessage.name === "callLogsForLead" ? (
+                                <span
+                                  className="shadow-lg p-1 font-weight-bold position-absolute bg-white h-10"
+                                  style={{
+                                    top: "-20px",
+                                    zIndex: 2,
+                                    whiteSpace: "pre",
+                                  }}
+                                >
+                                  {"Call Logs for Lead"}
+                                </span>
+                              ) : null}
+                              <FontAwesomeIcon
+                                color="#2b009f"
+                                size="lg"
+                                icon={faPhoneSquare}
+                                onMouseOver={() =>
+                                  sethoverMessage({
+                                    name: "callLogsForLead",
+                                    index: i + 1,
+                                  })
+                                }
+                                onMouseLeave={() =>
+                                  sethoverMessage({ name: "", index: 0 })
+                                }
+                              />
+                            </div>
+                          </button>
+                          <br />
+                          <button
+                            id="leadUD"
+                            className="btn btn-inherit m-0 p-0 mr-2"
+                            onClick={() => {
+                              setuploadDocForm({
+                                ...uploadDocForm,
+                                lead: res,
+                                open: true,
+                              });
+                            }}
+                          >
+                            <div className="position-relative py-3">
+                              {hoverMessage.index == i + 1 &&
+                              hoverMessage.name === "uploadDoc" ? (
+                                <span
+                                  className="shadow-lg p-1 font-weight-bold position-absolute bg-white h-10"
+                                  style={{
+                                    top: "-20px",
+                                    zIndex: 2,
+                                    whiteSpace: "pre",
+                                  }}
+                                >
+                                  {"Upload Document"}
+                                </span>
+                              ) : null}
+                              <FontAwesomeIcon
+                                color="#2b009f"
+                                size="lg"
+                                icon={faCloudArrowUp}
+                                onMouseOver={() =>
+                                  sethoverMessage({
+                                    name: "uploadDoc",
+                                    index: i + 1,
+                                  })
+                                }
+                                onMouseLeave={() =>
+                                  sethoverMessage({ name: "", index: 0 })
+                                }
+                              />
+                            </div>
+                          </button>
+                          <button
+                            id="leadPS"
+                            className="btn btn-inherit m-0 p-0 mr-2"
+                            onClick={() => {
+                              setproblemStatement(true);
+                            }}
+                          >
+                            <div className="position-relative py-3">
+                              {hoverMessage.index == i + 1 &&
+                              hoverMessage.name === "problemStatement" ? (
+                                <span
+                                  className="shadow-lg p-1 font-weight-bold position-absolute bg-white h-10"
+                                  style={{
+                                    top: "-20px",
+                                    zIndex: 2,
+                                    whiteSpace: "pre",
+                                  }}
+                                >
+                                  {"Problem Statement"}
+                                </span>
+                              ) : null}
+                              <FontAwesomeIcon
+                                color="#2b009f"
+                                size="lg"
+                                icon={faTriangleExclamation}
+                                onMouseOver={() =>
+                                  sethoverMessage({
+                                    name: "problemStatement",
+                                    index: i + 1,
+                                  })
+                                }
+                                onMouseLeave={() =>
+                                  sethoverMessage({ name: "", index: 0 })
+                                }
+                              />
+                            </div>
+                          </button>
+                          <button
+                            id="leadSH"
+                            className="btn btn-inherit m-0 p-0 mr-2"
+                            onClick={() =>
+                              setstatusHistory({
+                                ...statusHistory,
+                                open: true,
+                                data: res,
+                              })
+                            }
+                          >
+                            <div className="position-relative py-3">
+                              {hoverMessage.index == i + 1 &&
+                              hoverMessage.name === "statusHistory" ? (
+                                <span
+                                  className="shadow-lg p-1 font-weight-bold position-absolute bg-white h-10"
+                                  style={{
+                                    top: "-20px",
+                                    zIndex: 2,
+                                    whiteSpace: "pre",
+                                  }}
+                                >
+                                  {"Status History"}
+                                </span>
+                              ) : null}
+                              <FontAwesomeIcon
+                                color="#2b009f"
+                                size="lg"
+                                icon={faWifi}
+                                onMouseOver={() =>
+                                  sethoverMessage({
+                                    name: "statusHistory",
+                                    index: i + 1,
+                                  })
+                                }
+                                onMouseLeave={() =>
+                                  sethoverMessage({ name: "", index: 0 })
+                                }
+                              />
+                            </div>
+                          </button>
+                          <button
+                            id="leadCustoemrForm"
+                            className="btn btn-inherit m-0 p-0 mr-2"
+                          >
+                            <div className="position-relative py-3">
+                              {hoverMessage.index == i + 1 &&
+                              hoverMessage.name === "customerform" ? (
+                                <span
+                                  className="shadow-lg p-1 font-weight-bold position-absolute bg-white h-10"
+                                  style={{
+                                    top: "-20px",
+                                    zIndex: 2,
+                                    whiteSpace: "pre",
+                                  }}
+                                >
+                                  {"Customer Form"}
+                                </span>
+                              ) : null}
+                              <FontAwesomeIcon
+                                color="#2b009f"
+                                size="lg"
+                                icon={faTriangleExclamation}
+                                onMouseOver={() =>
+                                  sethoverMessage({
+                                    name: "customerform",
+                                    index: i + 1,
+                                  })
+                                }
+                                onMouseLeave={() =>
+                                  sethoverMessage({ name: "", index: 0 })
+                                }
+                              />
+                            </div>
+                          </button>
+                          {/* <button
                           id="leadCF"
                           className="btn btn-primary m-0 p-0 mr-2"
                         >
                           CF
-                        </button>
-                        <button
-                          id="leadSMU"
-                          className="btn btn-primary m-0 p-0 mr-2"
-                        >
-                          SMU
-                        </button>
-                        <button
-                          id="leadNCF"
-                          className="btn btn-primary m-0 p-0 mr-2"
-                        >
-                          NCF
-                        </button>
-                        <button id="leadCallLogsForCustomer" className="btn btn-inherit m-0 p-0"
-                          onClick={() => {setcustomerCallLogs(true)}}
-                        >
-                          <img 
-                            style={{ width: "15px", height: "10px" }} src="https://cdn.iconscout.com/icon/premium/png-256-thumb/call-log-2435492-2062736.png" alt="Call logs" />
-                        </button>
-                        <button
-                          id="leadCLL"
-                          className="btn btn-inherit m-0 p-0"
-                          onClick={() => {
-                            dispatch({
-                              type: "LEAD_FILTRATION_DATA",
-                              state: { leadId: res._id },
-                            });
-                            setFiltrationData(true);
-                          }}
-                        >
-                          <img
-                            style={{ width: "15px", height: "10px" }}
-                            src="https://img.favpng.com/17/3/13/computer-icons-portable-network-graphics-scalable-vector-graphics-computer-file-svg-filter-effects-png-favpng-B7g0uf4SsjtseHhPDZqxwu4fV.jpg"
-                            alt=""
-                          />
-                        </button>{" "}
-                        {/* <FontAwesomeIcon
-                          icon={faPhone}
-                          style={{ cursor: "pointer" }}
-                          color="#9c27b0"
-                          fontSize={"1.2rem"}
-                        />
-                        <FontAwesomeIcon icon={faContactBook} />
-                        <FontAwesomeIcon icon={faNoteSticky} />
-                        <FontAwesomeIcon icon="fa-sharp fa-solid fa-clock-rotate-left" /> */}
-                        <img src="" alt="" />
-                        {/* <FontAwesomeIcon icon={fa} /> */}
+                        </button> */}
+                          <button
+                            id="leadSMU"
+                            className="btn btn-inherit m-0 p-0 mr-2"
+                            onClick={() => {
+                              setsendMessageToUser(true);
+                              settextMessageToCustomer({
+                                ...textMessageToCustomer,
+                                data: res,
+                              });
+                            }}
+                          >
+                            <div className="position-relative py-3">
+                              {hoverMessage.index == i + 1 &&
+                              hoverMessage.name === "sendMsgToUser" ? (
+                                <span
+                                  className="shadow-lg p-1 font-weight-bold position-absolute bg-white h-10"
+                                  style={{
+                                    top: "-20px",
+                                    zIndex: 2,
+                                    whiteSpace: "pre",
+                                  }}
+                                >
+                                  {"Send Message To User"}
+                                </span>
+                              ) : null}
+                              <FontAwesomeIcon
+                                color="red"
+                                size="lg"
+                                icon={faMessage}
+                                onMouseOver={() =>
+                                  sethoverMessage({
+                                    name: "sendMsgToUser",
+                                    index: i + 1,
+                                  })
+                                }
+                                onMouseLeave={() =>
+                                  sethoverMessage({ name: "", index: 0 })
+                                }
+                              />
+                            </div>
+                          </button>
+                          <button
+                            id="leadNCF"
+                            className="btn btn-inherit m-0 p-0 mr-2"
+                            onClick={() => setopenNewCustomerForm(true)}
+                          >
+                            <div className="position-relative py-3">
+                              {hoverMessage.index == i + 1 &&
+                              hoverMessage.name === "newCustomerForm" ? (
+                                <span
+                                  className="shadow-lg p-1 font-weight-bold position-absolute bg-white h-10"
+                                  style={{
+                                    top: "-20px",
+                                    zIndex: 2,
+                                    whiteSpace: "pre",
+                                  }}
+                                >
+                                  {"New Customer Form"}
+                                </span>
+                              ) : null}
+                              <FontAwesomeIcon
+                                color="#2b009f"
+                                size="lg"
+                                icon={faTable}
+                                onMouseOver={() =>
+                                  sethoverMessage({
+                                    name: "newCustomerForm",
+                                    index: i + 1,
+                                  })
+                                }
+                                onMouseLeave={() =>
+                                  sethoverMessage({ name: "", index: 0 })
+                                }
+                              />
+                            </div>
+                          </button>
+                          <button
+                            id="leadCLL"
+                            className="btn btn-inherit m-0 p-0"
+                            onClick={() => {
+                              dispatch({
+                                type: "LEAD_FILTRATION_DATA",
+                                state: { leadId: res._id },
+                              });
+                              setFiltrationData(true);
+                            }}
+                          >
+                            <div className="position-relative py-3">
+                              {hoverMessage.index == i + 1 &&
+                              hoverMessage.name === "callLogLead" ? (
+                                <span
+                                  className="shadow-lg p-1 font-weight-bold position-absolute bg-white h-10"
+                                  style={{
+                                    width: "100px",
+                                    top: "-20px",
+                                    xIndex: "1",
+                                    whiteSpace: "pre",
+                                  }}
+                                >
+                                  {"Filtration Data"}
+                                </span>
+                              ) : null}
+                              <FontAwesomeIcon
+                                color="#2b009f"
+                                size="lg"
+                                icon={faFilter}
+                                onMouseOver={() =>
+                                  sethoverMessage({
+                                    name: "callLogLead",
+                                    index: i + 1,
+                                  })
+                                }
+                                onMouseLeave={() =>
+                                  sethoverMessage({ name: "", index: 0 })
+                                }
+                              />
+                            </div>
+                          </button>{" "}
+                        </div>
                       </td>
                       <td id="leadTableRowCellThree">{res.leadId}</td>
                       <td id="leadTableRowCellFour">
@@ -853,6 +1438,7 @@ function LeadSection() {
 
       {/* -------------------------------------> Assign to user */}
       <Modal
+        id="leadAssignToUserModal"
         isOpen={openLeadAssign}
         toggle={() => {
           setopenLeadAssign(false);
@@ -921,6 +1507,7 @@ function LeadSection() {
       </Modal>
       {/*-------------------------------------> Assign To Exprt */}
       <Modal
+        id="leadAssignToExpertModal"
         isOpen={openExpertAssign}
         toggle={() => {
           setopenExpertAssign(false);
@@ -993,6 +1580,7 @@ function LeadSection() {
 
       {/* ---------------> Confirm Accept Lead */}
       <Modal
+        id="leadAcceptLeadModal"
         isOpen={openAcceptLead}
         toggle={() => {
           setopenAcceptLead(false);
@@ -1051,6 +1639,7 @@ function LeadSection() {
       {/* ----------------------------------------------> Confirm Modal for reject Lead */}
 
       <Modal
+        id="confirmationOnRejection"
         isOpen={openRejectLead}
         toggle={() => {
           setopenRejectLead(false);
@@ -1116,10 +1705,10 @@ function LeadSection() {
           </div>
         </ModalBody>
       </Modal>
-{/* ----------------------------------------------> Call Log for customers */}
+      {/* ----------------------------------------------> Call Log for customers */}
 
-
-<Modal
+      <Modal
+        id="leadCallLogModal"
         isOpen={customerCallLogs}
         toggle={() => {
           setcustomerCallLogs(false);
@@ -1138,21 +1727,92 @@ function LeadSection() {
           {/* <span className="h6">Confirmation</span> */}
           <div className="container">
             <div className="row">
-                <input className="form col-4 p-1 mx-2" type={"date"} />
-                <input className="form col-4 p-1 mx-2" type={"date"} />
-                <button className="btn btn-warning col-2">Fetch</button>
-                {/* <Accordion open={callLogAccordion} toggle={(id) => setcallLogAccordion(!callLogAccordion)}>
-                <AccordionItem>
-          <AccordionHeader targetId="1">Accordion Item 1</AccordionHeader>
-          <AccordionBody accordionId="1">
-            <strong>This is the first item&#39;s accordion body.</strong>
-            You can modify any of this with custom CSS or overriding our default
-            variables. It&#39;s also worth noting that just about any HTML can
-            go within the <code>.accordion-body</code>, though the transition
-            does limit overflow.
-          </AccordionBody>
-        </AccordionItem>
-                </Accordion> */}
+              <input
+                value={callLogCustomer.startTime}
+                name="startTime"
+                onChange={(e) =>
+                  setcallLogCustomer({
+                    ...callLogCustomer,
+                    [e.target.name]: e.target.value,
+                  })
+                }
+                className="form col-4 p-1 mx-2"
+                type={"date"}
+              />
+              <input
+                value={callLogCustomer.endTime}
+                name="endTime"
+                onChange={(e) =>
+                  setcallLogCustomer({
+                    ...callLogCustomer,
+                    [e.target.name]: e.target.value,
+                  })
+                }
+                className="form col-4 p-1 mx-2"
+                type={"date"}
+              />
+              <button
+                className="btn btn-warning col-2"
+                onClick={() => {
+                  dispatch({
+                    type: "CALL_LOGS_FOR_CUSTOMER",
+                    state: { ...callLogCustomer },
+                  });
+                }}
+              >
+                Fetch
+              </button>
+              <div
+                className="container w-100 bg-white shadow border mt-3 py-3 d-flex justify-content-between mb-2"
+                onClick={() => {
+                  setcallLogAccordion(!callLogAccordion);
+                  setcallLogCustomer({
+                    startTime: "",
+                    endTime: "",
+                    customer_number: "",
+                  });
+                }}
+                style={{ cursor: "pointer" }}
+              >
+                {" "}
+                <span>Call Logs For :- </span>{" "}
+                <span>{callLogCustomer.customer_number}</span>{" "}
+                <sapn>{"<"}</sapn>
+              </div>
+              <Collapse
+                isOpen={callLogAccordion}
+                toggle={(id) => {
+                  setcallLogAccordion(!callLogAccordion);
+                  setcallLogCustomer({
+                    startTime: "",
+                    endTime: "",
+                    customer_number: "",
+                  });
+                }}
+                className="bg-info"
+              >
+                <Card>
+                  <CardBody>
+                    <div className="table-responsive">
+                      <div className="table">
+                        <table>
+                          <thead>
+                            <tr className="bg-light">
+                              <th>S. No</th>
+                              <th>Call Type</th>
+                              <th>Call Start Time</th>
+                              <th>Call Duration</th>
+                              <th>Recording play/pause</th>
+                              <th>Recording Download</th>
+                            </tr>
+                          </thead>
+                          <tbody>{}</tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </CardBody>
+                </Card>
+              </Collapse>
             </div>
             <div className="mt-3 d-flex justify-content-center">
               <button
@@ -1162,43 +1822,15 @@ function LeadSection() {
               >
                 No
               </button>
-              <button
-                id="rejectionYesBtn"
-                className="btn btn-primary rounded ml-2"
-                onClick={() => {
-                  setcustomerCallLogs(false);
-                  dispatch({
-                    type: "LEAD_REJECT_LEAD",
-                    state: {
-                      ...singleLeadData,
-                      reject_reason: rejectReason,
-                      status: "REJECTED",
-                    },
-                  });
-                  dispatch({
-                    type: "LEAD_DATA_WITH_STATUS",
-                    state: {
-                      status: "PENDING",
-                      pageIndex: 0,
-                      pageSize: 50,
-                      keyword: "",
-                    },
-                  });
-                }}
-              >
-                Yes
-              </button>
             </div>
           </div>
         </ModalBody>
       </Modal>
 
-
       {/* -----------------------> Filtration data Modal */}
 
-
-
       <Modal
+        id="leadFiltrationModal"
         isOpen={filtrationData}
         toggle={() => {
           setFiltrationData(false);
@@ -1221,68 +1853,193 @@ function LeadSection() {
             </div>
             <div className="border d-flex flex-wrap border border-top-warning ">
               <div className="d-flex container mt-4 border-bottom pb-3">
-                <div className=" w-70"><span className="h6 my-2 font-weight">Question</span></div>
-                <div className="border-left pl-4"><span className="h6 font-weight">Answer</span></div>
+                <div className=" w-70">
+                  <span className="h6 my-2 font-weight">Question</span>
+                </div>
+                <div className="border-left pl-4">
+                  <span className="h6 font-weight">Answer</span>
+                </div>
               </div>
               <div className="d-flex container mt-4 border-bottom pb-3">
-                <div className=" w-70"><span className="h6 my-2 font-weight-light">Date Of Hospitalisation</span></div>
-                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.dateOfHospitalisation ?? "NA"}</span></div>
+                <div className=" w-70">
+                  <span className="h6 my-2 font-weight-light">
+                    Date Of Hospitalisation
+                  </span>
+                </div>
+                <div className="border-left pl-4">
+                  <span className="h6 font-weight-light">
+                    {state.filtrationData?.dateOfHospitalisation ?? "NA"}
+                  </span>
+                </div>
               </div>
               <div className="d-flex container mt-4 border-bottom pb-3">
-                <div className=" w-70"><span className="h6 my-2 font-weight-light">Date Of Discharge</span></div>
-                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.dateOfDischarge ?? "NA"}</span></div>
+                <div className=" w-70">
+                  <span className="h6 my-2 font-weight-light">
+                    Date Of Discharge
+                  </span>
+                </div>
+                <div className="border-left pl-4">
+                  <span className="h6 font-weight-light">
+                    {state.filtrationData?.dateOfDischarge ?? "NA"}
+                  </span>
+                </div>
               </div>
               <div className="d-flex container mt-4 border-bottom pb-3">
-                <div className=" w-70"><span className="h6 my-2 font-weight-light">Date Of Rejection</span></div>
-                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.dateOfRejection ?? "NA"}</span></div>
+                <div className=" w-70">
+                  <span className="h6 my-2 font-weight-light">
+                    Date Of Rejection
+                  </span>
+                </div>
+                <div className="border-left pl-4">
+                  <span className="h6 font-weight-light">
+                    {state.filtrationData?.dateOfRejection ?? "NA"}
+                  </span>
+                </div>
               </div>
               <div className="d-flex container mt-4 border-bottom pb-3">
-                <div className=" w-70"><span className="h6 my-2 font-weight-light">Date Of Document Submission</span></div>
-                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.dateOfDocumentSubmission ?? "NA"}</span></div>
+                <div className=" w-70">
+                  <span className="h6 my-2 font-weight-light">
+                    Date Of Document Submission
+                  </span>
+                </div>
+                <div className="border-left pl-4">
+                  <span className="h6 font-weight-light">
+                    {state.filtrationData?.dateOfDocumentSubmission ?? "NA"}
+                  </span>
+                </div>
               </div>
               <div className="d-flex container mt-4 border-bottom pb-3">
-                <div className=" w-70"><span className="h6 my-2 font-weight-light">Claim Amount</span></div>
-                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.claimAmount ?? "NA"}</span></div>
+                <div className=" w-70">
+                  <span className="h6 my-2 font-weight-light">
+                    Claim Amount
+                  </span>
+                </div>
+                <div className="border-left pl-4">
+                  <span className="h6 font-weight-light">
+                    {state.filtrationData?.claimAmount ?? "NA"}
+                  </span>
+                </div>
               </div>
               <div className="d-flex container mt-4 border-bottom pb-3">
-                <div className=" w-70"><span className="h6 my-2 font-weight-light">Reason Of Rejection	</span></div>
-                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.reasonOfRejection ?? "NA"}</span></div>
+                <div className=" w-70">
+                  <span className="h6 my-2 font-weight-light">
+                    Reason Of Rejection{" "}
+                  </span>
+                </div>
+                <div className="border-left pl-4">
+                  <span className="h6 font-weight-light">
+                    {state.filtrationData?.reasonOfRejection ?? "NA"}
+                  </span>
+                </div>
               </div>
               <div className="d-flex container mt-4 border-bottom pb-3">
-                <div className=" w-70"><span className="h6 my-2 font-weight-light">Date Of Last Communication	</span></div>
-                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.dateOfLastCommunication ?? "NA"}</span></div>
+                <div className=" w-70">
+                  <span className="h6 my-2 font-weight-light">
+                    Date Of Last Communication{" "}
+                  </span>
+                </div>
+                <div className="border-left pl-4">
+                  <span className="h6 font-weight-light">
+                    {state.filtrationData?.dateOfLastCommunication ?? "NA"}
+                  </span>
+                </div>
               </div>
               <div className="d-flex container mt-4 border-bottom pb-3">
-                <div className=" w-70"><span className="h6 my-2 font-weight-light">Applied Claim Amount	</span></div>
-                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.appliedClaimAmount ?? "NA"}</span></div>
+                <div className=" w-70">
+                  <span className="h6 my-2 font-weight-light">
+                    Applied Claim Amount{" "}
+                  </span>
+                </div>
+                <div className="border-left pl-4">
+                  <span className="h6 font-weight-light">
+                    {state.filtrationData?.appliedClaimAmount ?? "NA"}
+                  </span>
+                </div>
               </div>
               <div className="d-flex container mt-4 border-bottom pb-3">
-                <div className=" w-70"><span className="h6 my-2 font-weight-light">Approved Claim Amount	</span></div>
-                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.approvedClaimAmount ?? "NA"}</span></div>
+                <div className=" w-70">
+                  <span className="h6 my-2 font-weight-light">
+                    Approved Claim Amount{" "}
+                  </span>
+                </div>
+                <div className="border-left pl-4">
+                  <span className="h6 font-weight-light">
+                    {state.filtrationData?.approvedClaimAmount ?? "NA"}
+                  </span>
+                </div>
               </div>
               <div className="d-flex container mt-4 border-bottom pb-3">
-                <div className=" w-70"><span className="h6 my-2 font-weight-light">Sum Insured	</span></div>
-                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.sumInsured ?? "NA"}</span></div>
+                <div className=" w-70">
+                  <span className="h6 my-2 font-weight-light">
+                    Sum Insured{" "}
+                  </span>
+                </div>
+                <div className="border-left pl-4">
+                  <span className="h6 font-weight-light">
+                    {state.filtrationData?.sumInsured ?? "NA"}
+                  </span>
+                </div>
               </div>
               <div className="d-flex container mt-4 border-bottom pb-3">
-                <div className=" w-70"><span className="h6 my-2 font-weight-light">Hospital Name	</span></div>
-                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.hospitalName ?? "NA"}</span></div>
+                <div className=" w-70">
+                  <span className="h6 my-2 font-weight-light">
+                    Hospital Name{" "}
+                  </span>
+                </div>
+                <div className="border-left pl-4">
+                  <span className="h6 font-weight-light">
+                    {state.filtrationData?.hospitalName ?? "NA"}
+                  </span>
+                </div>
               </div>
               <div className="d-flex container mt-4 border-bottom pb-3">
-                <div className=" w-70"><span className="h6 my-2 font-weight-light">Patient Relationship With Policyholder	</span></div>
-                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.patientRelationshipWithPolicyholder ?? "NA"}</span></div>
+                <div className=" w-70">
+                  <span className="h6 my-2 font-weight-light">
+                    Patient Relationship With Policyholder{" "}
+                  </span>
+                </div>
+                <div className="border-left pl-4">
+                  <span className="h6 font-weight-light">
+                    {state.filtrationData
+                      ?.patientRelationshipWithPolicyholder ?? "NA"}
+                  </span>
+                </div>
               </div>
               <div className="d-flex container mt-4 border-bottom pb-3">
-                <div className=" w-70"><span className="h6 my-2 font-weight-light">Problem Statement	</span></div>
-                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.problemStatement ?? "NA"}</span></div>
+                <div className=" w-70">
+                  <span className="h6 my-2 font-weight-light">
+                    Problem Statement{" "}
+                  </span>
+                </div>
+                <div className="border-left pl-4">
+                  <span className="h6 font-weight-light">
+                    {state.filtrationData?.problemStatement ?? "NA"}
+                  </span>
+                </div>
               </div>
               <div className="d-flex container mt-4 border-bottom pb-3">
-                <div className=" w-70"><span className="h6 my-2 font-weight-light">Policy Type	</span></div>
-                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.policyType ?? "NA"}</span></div>
+                <div className=" w-70">
+                  <span className="h6 my-2 font-weight-light">
+                    Policy Type{" "}
+                  </span>
+                </div>
+                <div className="border-left pl-4">
+                  <span className="h6 font-weight-light">
+                    {state.filtrationData?.policyType ?? "NA"}
+                  </span>
+                </div>
               </div>
               <div className="d-flex container mt-4 border-bottom pb-3">
-                <div className=" w-70"><span className="h6 my-2 font-weight-light">patientName	</span></div>
-                <div className="border-left pl-4"><span className="h6 font-weight-light">{state.filtrationData?.patientName ?? "NA"}</span></div>
+                <div className=" w-70">
+                  <span className="h6 my-2 font-weight-light">
+                    patientName{" "}
+                  </span>
+                </div>
+                <div className="border-left pl-4">
+                  <span className="h6 font-weight-light">
+                    {state.filtrationData?.patientName ?? "NA"}
+                  </span>
+                </div>
               </div>
             </div>
             <div className="mt-3 d-flex justify-content-center">
@@ -1297,8 +2054,806 @@ function LeadSection() {
           </div>
         </ModalBody>
       </Modal>
+      {/* ---------------------------------> Open New Customer form? */}
+      <Modal
+        id="leadNewCustomerModal"
+        isOpen={openNewCustomerForm}
+        toggle={() => {
+          setopenNewCustomerForm(!openNewCustomerForm);
+        }}
+        size="lg"
+      >
+        <ModalHeader>Customer Detail Form</ModalHeader>
+        <ModalBody>
+          <div className="d-flex justify-content-center">
+            <button
+              className="btn btn-warning rounded"
+              onClick={() => {
+                setopenCustomerForm(true);
+              }}
+            >
+              CUSTOMER DETAIL FORM
+            </button>
+          </div>
+        </ModalBody>
+        <ModalFooter>
+          <div className="d-flex">
+            <button
+              className="btn btn-danger rounded"
+              onClick={() => setopenNewCustomerForm(false)}
+            >
+              Close
+            </button>
+          </div>
+        </ModalFooter>
+      </Modal>
+      <Modal
+        id="leadNewCustomerModalSec"
+        isOpen={openCustomerForm}
+        toggle={() => setopenCustomerForm(false)}
+        size="lg"
+      >
+        <ModalHeader>Claim Is ShortSettled Form</ModalHeader>
+        <ModalBody>
+          <div className="form-group">
+            <div className="">
+              <label for="policyTypeInput" className="">
+                Policy Type
+              </label>
+              <select
+                className="form-control border-0 border"
+                id="policyTypeInput"
+              >
+                <option>NA</option>
+                <option>Individual</option>
+                <option>Family Floater</option>
+                <option>Group</option>
+                <option>Bank</option>
+                <option>Card</option>
+              </select>
+            </div>
+            <div className="form-control border-0">
+              <label for="complaintHolderName">Complaint Holder Name</label>
+              <input
+                type={"text"}
+                className="form-control border"
+                id="complaintHolderName"
+              />
+            </div>
+            <div className="form-control border-0">
+              <label for="claimentName">Claimant Name</label>
+              <input
+                type={"text"}
+                className="border form-control border-dark"
+                id="claimentName"
+              />
+            </div>
+            <div className="form-control border-0">
+              <label for="diseasedName">Diseased Name</label>
+              <input
+                type={"text"}
+                className="border form-control border-dark"
+                id="diseasedName"
+              />
+            </div>
+            <div className="form-control border-0">
+              <label for="nomineeName">Nominee Name</label>
+              <input
+                type={"text"}
+                className="border form-control border-dark"
+                id="nomineeName"
+              />
+            </div>
+            <div className="form-control border-0">
+              <label for="nameOfPrevComp">Name Of Previous Company</label>
+              <input
+                type={"text"}
+                className="border form-control border-dark"
+                id="nameOfPrevComp"
+              />
+            </div>
+            <div className="form-control border-0">
+              <label for="nameOfPatient">Name Of Patient</label>
+              <input
+                type={"text"}
+                className="border form-control border-dark"
+                id="nameOfPatient"
+              />
+            </div>
+            <div className="form-control border-0">
+              <label for="nameOfTpa">Name Of TPA</label>
+              <input
+                type={"text"}
+                className="border form-control border-dark"
+                id="nameOfTpa"
+              />
+            </div>
+            <div className="form-control border-0">
+              <label for="dateOfIncident">Date Of Incident</label>
+              <input
+                type={"date"}
+                className="border form-control border-dark"
+                id="dateOfIncident"
+              />
+            </div>
+            <div className="form-control border-0">
+              <label for="dateOfFirstInsurance">Date Of First Insurance</label>
+              <input
+                type={"date"}
+                className="border form-control border-dark"
+                id="dateOfFirstInsurance"
+              />
+            </div>
+            <div className="form-control border-0">
+              <label for="policyNumberNewCustomer">Policy Number</label>
+              <input
+                type={"text"}
+                className="border form-control border-dark"
+                id="policyNumberNewCustomer"
+              />
+            </div>
+            <div className="form-control border-0">
+              <label for="newCustomerNewHospital">Hospital Name</label>
+              <input
+                type={"text"}
+                className="border form-control border-dark"
+                id="newCustomerNewHospital"
+              />
+            </div>
+            <div className="form-control border-0">
+              <label for="newCustomerSumInsured">Sum Insured</label>
+              <input
+                type={"number"}
+                className="border form-control border-dark"
+                id="newCustomerSumInsured"
+              />
+            </div>
+            <div className="form-control border-0">
+              <label for="nameOfDisease">Name of Disease</label>
+              <input
+                type={"text"}
+                className="border form-control border-dark"
+                id="nameOfDisease"
+              />
+            </div>
+            <div className="form-control border-0">
+              <label for="cashlessOrReimbursment">
+                Cashless/ Reimbursement
+              </label>
+              <select
+                className="form-control border"
+                id="cashlessOrReimbursment"
+              >
+                <option>NA</option>
+                <option>Cashless</option>
+                <option>Reimbursment is Applied</option>
+              </select>
+            </div>
+            <div className="form-control border-0">
+              <label id="newCustomerComplaintV">
+                Customer's Complaint Version Along With Why Hospitalisation Is
+                Required
+              </label>
+              <input
+                className="
+                                  form-control border-0"
+                type={"file"}
+                id="newCustomerComplaintV"
+              />
+            </div>
+            <div className="form-control border-0">
+              <label id="newCustomerMoreThanOnePolicy">
+                Do You Have More Than 1 Policy?
+              </label>
+              <select
+                className="form-control border"
+                placeholder="Select"
+                id="newCustomerMoreThanOnePolicy"
+              >
+                <option value={""}>Select</option>
+                <option value={"Yes"}>Yes</option>
+                <option value={"No"}>No</option>
+              </select>
+            </div>
+            <div className="form-control border-0">
+              <label id="newCustomerPolicyPorted">Is Your Policy Ported?</label>
+              <select
+                className="form-control border"
+                placeholder="Select"
+                id="newCustomerPolicyPorted"
+              >
+                <option value={""}>Select</option>
+                <option value={"Yes"}>Yes</option>
+                <option value={"No"}>No</option>
+              </select>
+            </div>
+            <div className="form-control border-0">
+              <label id="receiveClainRejLett">
+                Did You Receive Your Claim Rejection Letter?
+              </label>
+              <select className="form-control border" id="receiveClainRejLett">
+                <option value={""}>Select</option>
+                <option value={"Yes"}>Yes</option>
+                <option value={"No"}>No</option>
+              </select>
+            </div>
+            <div className="form-control border-0">
+              <label for="newCusEvidence">Evidence</label>
+              <input
+                className="form-control border-0"
+                type={"file"}
+                id="newCusEvidence"
+              />
+            </div>
+            <div className="form-control border-0">
+              <label id="prevClainHistory">Previous Claim History?</label>
+              <select className="form-control border" id="prevClainHistory">
+                <option value={""}>Select</option>
+                <option value={"Yes"}>Yes</option>
+                <option value={"No"}>No</option>
+              </select>
+            </div>
+            <div className="form-control border-0">
+              <label id="approachedIncComp">
+                Have You Approached Insurance Company?
+              </label>
+              <select className="form-control border" id="approachedIncComp">
+                <option value={""}>Select</option>
+                <option value={"Yes"}>Yes</option>
+                <option value={"No"}>No</option>
+              </select>
+            </div>
+            <div className="form-control border-0">
+              <label id="approachedIncOmbuds">
+                Have You Approached Insurance Ombudsman?
+              </label>
+              <select className="form-control border" id="approachedIncOmbuds">
+                <option value={""}>Select</option>
+                <option value={"Yes"}>Yes</option>
+                <option value={"No"}>No</option>
+              </select>
+            </div>
+            <div className="form-control border-0">
+              <label for="newCusClaimAmtApp">Claim Amount Applied</label>
+              <input
+                className="form-control border"
+                type={"number"}
+                id="newCusClaimAmtApp"
+              />
+            </div>
+            <div className="form-control border-0">
+              <label for="clainAmtSettled">
+                Claim Amount Settled By Company
+              </label>
+              <input
+                className="form-control border"
+                type={"number"}
+                id="clainAmtSettled"
+              />
+            </div>
+            <div className="form-control border-0">
+              <label for="amtToBeFought">Amount To Be Fought</label>
+              <input
+                className="form-control border"
+                type={"number"}
+                id="amtToBeFought"
+              />
+            </div>
+            <div className="form-control border-0">
+              <label for="claimSattlementDate">Claim Settlement Date</label>
+              <input
+                className="form-control border"
+                type={"date"}
+                id="claimSattlementDate"
+              />
+            </div>
+            <div className="form-control border-0">
+              <label for="newCusReasonOfDeduction">
+                Reason Of ShortSettlement/ Deduction
+              </label>
+              <textarea
+                rows={4}
+                className="form-control border"
+                type={"date"}
+                id="newCusReasonOfDeduction"
+                placeholder="Reason Of ShortSettlement/ Deduction"
+              />
+            </div>
+            <div className="form-control border-0">
+              <label for="newCusNeedToBePaid">
+                Customer's Version Of Why Balance Amount Needs To Be Paid
+              </label>
+              <input
+                className="form-control border"
+                type={"file"}
+                id="newCusNeedToBePaid"
+              />
+            </div>
+            <div className="form-control border-0">
+              <label id="receivedLetter">
+                Did You Receive Settlement Letter?
+              </label>
+              <select className="form-control border" id="receivedLetter">
+                <option value={""}>Select</option>
+                <option value={"Yes"}>Yes</option>
+                <option value={"No"}>No</option>
+              </select>
+            </div>
+            <div className="form-control border-0">
+              <label for="newCusCommentBox">Comment Box</label>
+              <textarea
+                rows={4}
+                className="form-control border"
+                placeholder="Comment Box Filtration"
+                id="newCusCommentBox"
+              />
+            </div>
+            <div className="form-control border-0">
+              <label for="newCusDocSelection">Document Section</label>
+              <Select
+                // defaultValue={[colourOptions[2], colourOptions[3]]}
+                isMulti
+                name="colors"
+                options={[
+                  { value: "chocolate", label: "Chocolate" },
+                  { value: "strawberry", label: "Strawberry" },
+                  { value: "vanilla", label: "Vanilla" },
+                ]}
+                className="basic-multi-select"
+                classNamePrefix="select"
+              />
+            </div>
+          </div>
+        </ModalBody>
+        <ModalFooter>
+          <div className="d-flex ">
+            <button
+              className="btn btn-danger rounded mr-2"
+              onClick={() => {
+                setopenCustomerForm(false);
+              }}
+            >
+              CLOSE
+            </button>
+            <button className="btn btn-primary rounded mr-2">
+              COPY PREVIOUS DATA
+            </button>
+            <button className="btn btn-primary rounded mr-2">SUBMIT</button>
+          </div>
+        </ModalFooter>
+      </Modal>
 
+      {/* ----------------------------------> Send Message to user */}
+      <Modal
+        id="leadSendMessageToUser"
+        isOpen={sendMessageToUser}
+        toggle={() => {
+          setsendMessageToUser(!sendMessageToUser);
+        }}
+      >
+        <ModalHeader>
+          <sapn className="h4">Text Message to Customer</sapn>
+        </ModalHeader>
+        <ModalBody>
+          <div className="form-group">
+            <div className="form-control border-0">
+              <span>Text Message</span>
+              <textarea
+                className="form-control border mt-3"
+                rows={10}
+                value={textMessageToCustomer.message}
+                onChange={(e) => {
+                  settextMessageToCustomer({
+                    ...textMessageToCustomer,
+                    message: e.target.value,
+                  });
+                }}
+              ></textarea>
+              <div className="d-flex justify-content-end mt-4">
+                <button
+                  className="btn btn-danger mr-3 rounded"
+                  onClick={() => setsendMessageToUser(false)}
+                >
+                  Close
+                </button>
+                <button
+                  className="btn btn-primary rounded"
+                  onClick={() => {
+                    dispatch({
+                      type: "LEAD_SEND_MESSAGE_TO_USER",
+                      state: { ...textMessageToCustomer },
+                    });
+                  }}
+                >
+                  Send
+                </button>
+              </div>
+            </div>
+          </div>
+        </ModalBody>
+      </Modal>
 
+      {/* -------------------------> Status History */}
+
+      <Modal
+        id="leadStatusHistoryModal"
+        isOpen={statusHistory.open}
+        toggle={() => {
+          setstatusHistory({ ...statusHistory, open: !statusHistory });
+        }}
+      >
+        <ModalHeader>
+          <span className="text-primary font-weight-bold"> Stauts History</span>
+        </ModalHeader>
+        <ModalBody>
+          <div className="container">
+            <h4>User Details</h4>
+            <div className="mb-2">
+              <sapn className="h5">Id : </sapn>
+              <span className="h6">{statusHistory.data?._id}</span>
+            </div>
+            <div className="mb-2">
+              <span className="h5">Name : </span>
+              <span className="h6">{statusHistory.data?.name}</span>
+            </div>
+            <div className="mb-2">
+              <span className="h5">Name : </span>
+              <span className="h6"> {statusHistory.data?.email}</span>
+            </div>
+            <div className="table-responsive mt-3">
+              <div className="table table-bordered">
+                <table className="border">
+                  <thead className="font-weight-bold bg-muted">
+                    <tr>
+                      <th>Status</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {statusHistory.data?.statusHistory?.length ? (
+                      statusHistory.data?.statusHistory?.map((res) => {
+                        return (
+                          <tr className="">
+                            <td>{res.currStatus}</td>
+                            <td>
+                              {moment(res.date).format("YYYY-MM-DD: HH:MM")}
+                            </td>
+                          </tr>
+                        );
+                      })
+                    ) : (
+                      <tr>No Data</tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <button
+              className="btn btn-danger"
+              onClick={() => {
+                setstatusHistory({ ...statusHistory, open: false });
+              }}
+            >
+              Close
+            </button>
+          </div>
+        </ModalBody>
+      </Modal>
+
+      {/* ------------------> Problem statement */}
+
+      <Modal
+        id="leadProblemStatementModal"
+        isOpen={problemStatement}
+        toggle={() => setproblemStatement(!problemStatement)}
+      >
+        <ModalHeader>
+          <div>
+            <span className="h4 text-primary">Problem Statement</span>
+          </div>
+        </ModalHeader>
+        <ModalBody>
+          <div className="form-group">
+            <div className="form-control border-0">
+              <label className="font-weight-bold">Problem Statement</label>
+              <textarea className="form-control border" rows={5} />
+              <button
+                className="btn btn-danger mt-3"
+                onClick={() => setproblemStatement(false)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </ModalBody>
+      </Modal>
+
+      {/* ----------------------> Follow Up Modal */}
+
+      <Modal
+        id="leadFollowUpModal"
+        isOpen={followUpObj.open}
+        toggle={() => setfollowUpObj({ ...followUpObj, open: false })}
+      >
+        <ModalHeader>
+          <span className="h4"> Add Follow Up</span>
+        </ModalHeader>
+        <ModalBody>
+          <div className="form-group">
+            <div className="form-control border-0">
+              <label className="" for="leadFollowUpDate">
+                Follow Date
+              </label>
+              <input
+                type={"date"}
+                id="idleadFollowUpDate"
+                className="form-control border"
+                value={followUpObj.follow_date}
+                name="follow_date"
+                onChange={(e) =>
+                  setfollowUpObj({
+                    ...followUpObj,
+                    [e.target.name]: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <div className="form-control border-0">
+              <label className="" for="leadFollowUpCommDate">
+                Communication Date
+              </label>
+              <input
+                type={"date"}
+                id="idleadFollowUpCommDate"
+                className="form-control border"
+                value={followUpObj.com_date}
+                name="com_date"
+                onChange={(e) =>
+                  setfollowUpObj({
+                    ...followUpObj,
+                    [e.target.name]: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <div className="form-control border-0">
+              <label className="" for="leadFollowUpDes">
+                Communication Description
+              </label>
+              <select
+                id="idleadFollowUpDes"
+                className="form-control border"
+                value={followUpObj.com_dis}
+                name="com_dis"
+                onChange={(e) =>
+                  setfollowUpObj({
+                    ...followUpObj,
+                    [e.target.name]: e.target.value,
+                  })
+                }
+              >
+                <option selected disabled value={""}>
+                  Select
+                </option>
+                <option value={"running"}>running</option>
+                <option value={"testing"}>testing</option>
+                <option value={"Other"}>Other</option>
+              </select>
+            </div>
+            {followUpObj.com_dis == "Other" ? (
+              <div className="form-control border-0">
+                <label htmlFor="followUpTextarea"></label>
+                <textarea
+                  rows={3}
+                  name="followUpDesc"
+                  id="followUpTextarea"
+                  className="form-control border"
+                  value={followUpObj.followUpDesc}
+                  onChange={(e) => {
+                    setfollowUpObj({
+                      ...followUpObj,
+                      [e.target.name]: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+            ) : null}
+          </div>
+
+          <button
+            className="btn-sm btn-primary ml-2 mr-2"
+            onClick={() => {
+              dispatch({
+                type: "LEAD_ADD_FOLLOW_UP",
+                state: { ...followUpObj },
+              });
+              setfollowUpObj({
+                open: false,
+                com_by: "Admin",
+                com_date: "",
+                com_dis: "",
+                follow_date: "",
+                status: "FOLLOWUP",
+                id: "",
+                followUpDesc: "",
+              });
+            }}
+          >
+            Submit
+          </button>
+          <button
+            id="followUpClose"
+            className="btn-sm btn-danger"
+            onClick={() => {
+              setfollowUpObj({ ...followUpObj, open: false });
+            }}
+          >
+            Close
+          </button>
+        </ModalBody>
+      </Modal>
+
+      {/*-------------------------------Cancel Lead */}
+      <Modal
+        id="LeadCancelLeadModal"
+        isOpen={leadCancelDetail.open}
+        toggle={() => setleadCancelDetail({ ...leadCancelDetail, open: false })}
+      >
+        <ModalHeader>
+          <span className="h4 text-primary"> Cancel Lead</span>
+        </ModalHeader>
+        <ModalBody>
+          <div className="form-group">
+            <div className="form-control border-0">
+              <label for="cancelLeadCommDate" className="font-weight-bold">
+                Communication Date
+              </label>
+              <input
+                id="cancelLeadCommDate"
+                type={"date"}
+                value={leadCancelDetail?.state?.date}
+                className="form-control border"
+                name="date"
+                onChange={(e) => {
+                  setleadCancelDetail({
+                    ...leadCancelDetail,
+                    state: {
+                      ...leadCancelDetail.state,
+                      [e.target.name]: e.target.value,
+                    },
+                  });
+                }}
+              />
+            </div>
+            <div className="form-control border-0">
+              <label for="cancelLeadCommDesc" className="font-weight-bold">
+                Communication Description
+              </label>
+              <select
+                id="cancelLeadCommDesc"
+                className="form-control border"
+                name="desc"
+                value={leadCancelDetail?.state?.desc}
+                onChange={(e) => {
+                  setleadCancelDetail({
+                    ...leadCancelDetail,
+                    state: {
+                      ...leadCancelDetail.state,
+                      [e.target.name]: e.target.value,
+                    },
+                  });
+                }}
+              >
+                <option selected disabled>
+                  Select Status
+                </option>
+                <option>Ringing</option>
+                <option>Testing</option>
+                <option>Other</option>
+              </select>
+              {leadCancelDetail.state?.desc === "Other" ? (
+                <div className="form-control border-0">
+                  <label
+                    for="cancelLeadCommdescText"
+                    className="font-weight-bold"
+                  >
+                    Description
+                  </label>
+                  <textarea
+                    rows={3}
+                    id="cancelLeadCommdescText"
+                    type={"date"}
+                    className="form-control border"
+                    name="userInput"
+                    onChange={(e) => {
+                      setleadCancelDetail({
+                        ...leadCancelDetail,
+                        state: {
+                          ...leadCancelDetail.state,
+                          [e.target.name]: e.target.value,
+                        },
+                      });
+                    }}
+                  />
+                </div>
+              ) : null}
+              <div className="d-flex justify-content-end mt-3">
+                <button
+                  className="btn btn-danger mr-3"
+                  onClick={() => {
+                    setleadCancelDetail({
+                      ...leadCancelDetail,
+                      open: false,
+                      state: {},
+                    });
+                  }}
+                >
+                  Close
+                </button>
+                {console.log(currentUser)}
+                <button
+                  className="btn btn-primary"
+                  onClick={() => {
+                    leadCancelDetail.state?.date &&
+                    (leadCancelDetail?.state?.userInput ||
+                      leadCancelDetail?.state?.desc)
+                      ? dispatch({
+                          type: "LEAD_CANCEL_LEAD",
+                          state: {
+                            ...leadCancelDetail,
+                            data: {
+                              ...leadCancelDetail.data,
+                              communication: [
+                                ...leadCancelDetail.data.communication,
+                                {
+                                  com_date: leadCancelDetail.state?.date,
+                                  com_dis:
+                                    leadCancelDetail?.state?.userInput &&
+                                    leadCancelDetail.state?.desc === "Other"
+                                      ? leadCancelDetail?.state?.userInput
+                                      : leadCancelDetail?.state?.desc,
+                                  com_by: currentUser?.data?.userType,
+                                  id: leadCancelDetail.data?._id,
+                                },
+                              ],
+                              status: "CANCELLED",
+                            },
+                          },
+                        })
+                      : null;
+                    setleadCancelDetail({
+                      ...leadCancelDetail,
+                      open: false,
+                      state: {},
+                    });
+                  }}
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </ModalBody>
+      </Modal>
+
+      {/* --------------------------> Upload Document */}
+
+      <Modal
+        id="leadUploadDocModal"
+        isOpen={uploadDocForm.open}
+        toggle={() => {
+          setuploadDocForm({ ...uploadDocForm, open: false });
+        }}
+      >
+        <ModalHeader>
+          <sapn className="alert-primary">Documents Upload</sapn>
+        </ModalHeader>
+        <ModalBody>
+          <div class="alert alert-dark" role="alert">
+            This is a dark alert—check it out!
+          </div>
+        </ModalBody>
+      </Modal>
     </div>
   );
 }

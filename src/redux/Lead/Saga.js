@@ -1,6 +1,10 @@
 import moment from "moment";
 import { put, take, takeEvery } from "redux-saga/effects";
-import { bearerRequest, request } from "services/requests.services";
+import {
+  bearerRequest,
+  knowlarityPostApi,
+  request,
+} from "services/requests.services";
 
 function* getAssignUsers(action) {
   try {
@@ -231,9 +235,8 @@ function* updateLeadComment(action) {
       type: "LEAD_COMM_HISTORY_UPDATE_COMMENT_SUCCESS",
       message: "Comment Updated !",
     });
-    
-    yield getLeadDataById({state:{id:action.state?.lead_id}})
 
+    yield getLeadDataById({ state: { id: action.state?.lead_id } });
   } catch (error) {
     console.log(error);
     yield put({
@@ -253,7 +256,7 @@ function* getLeadDataById(action) {
 
     yield put({
       type: "LEAD_FETCH_BY_ID_SUCCESS",
-      data:data.data[0]
+      data: data.data[0],
     });
   } catch (error) {
     console.log(error);
@@ -264,54 +267,205 @@ function* getLeadDataById(action) {
   }
 }
 
-function* leadAddComment(action){
-    console.log(action)
-    try {
-        const { id } = action.state;
-        const data = yield request(
-          "POST",
-          `https://api.stage.insurancesamadhan.com/lead/addComm`,
-          [{
-            com_by:action.state?.com_by,
-            com_dis:action.state?.com_dis,
-            id:action.state?.id,
-            userType: action.state?.userType
-          }]
-        );
-    
-        yield put({
-          type: "LEAD_COMM_HISTORY_ADD_COMMENT_SUCCESS",
-          message:"Comment Added Successfully !"
-        });
+function* leadAddComment(action) {
+  console.log(action);
+  try {
+    const { id } = action.state;
+    const data = yield request(
+      "POST",
+      `https://api.stage.insurancesamadhan.com/lead/addComm`,
+      [
+        {
+          com_by: action.state?.com_by,
+          com_dis: action.state?.com_dis,
+          id: action.state?.id,
+          userType: action.state?.userType,
+        },
+      ]
+    );
 
-        yield getLeadDataById({state:{id:action.state?.id}})
+    yield put({
+      type: "LEAD_COMM_HISTORY_ADD_COMMENT_SUCCESS",
+      message: "Comment Added Successfully !",
+    });
 
+    yield getLeadDataById({ state: { id: action.state?.id } });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: "LEAD_COMM_HISTORY_ADD_COMMENT_FAILED",
+      message: "Failed to get data !",
+    });
+  }
+}
 
-      } catch (error) {
-        console.log(error);
-        yield put({
-          type: "LEAD_COMM_HISTORY_ADD_COMMENT_FAILED",
-          message: "Failed to get data !",
-        });
-      }}
+function* getLeadFiltrationData(action) {
+  try {
+    const data = yield request(
+      "POST",
+      `https://api.stage.insurancesamadhan.com/filtration/hi/get`,
+      { ...action.state }
+    );
 
-function* getLeadFiltrationData(action){
-    try {
-        const data = yield request(
-          "POST",
-          `https://api.stage.insurancesamadhan.com/filtration/hi/get`,
-          {...action.state}
-        );
-    
-        yield put({ type: "LEAD_FILTRATION_DATA_SUCCESS", data: data.data });
-      } catch (error) {
-        console.log(error);
-        yield put({
-          type: "LEAD_FILTRATION_DATA_FAILED",
-          message: "Failed to get data !",
-        });
-      }
-    
+    yield put({ type: "LEAD_FILTRATION_DATA_SUCCESS", data: data.data });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: "LEAD_FILTRATION_DATA_FAILED",
+      message: "Failed to get data !",
+    });
+  }
+}
+
+function* getCallLogsCustomer(action) {
+  try {
+    const { startTime, endTime, customer_number } = action.state;
+
+    const data = yield knowlarityPostApi(
+      "GET",
+      `account/calllog?start_time=${startTime}&end_time=${endTime}&customer_number=${customer_number}`
+    );
+
+    yield put({ type: "CALL_LOGS_FOR_CUSTOMER_SUCCESS", data: data.data });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: "CALL_LOGS_FOR_CUSTOMER_FAILED",
+      message: "Failed to get data !",
+    });
+  }
+}
+
+function* sendMessageToUser(action) {
+  try {
+    const data = yield request(
+      "POST",
+      `https://api.stage.insurancesamadhan.com/lead/sendSmsData`,
+      { ...action.state }
+    );
+
+    yield put({ type: "LEAD_SEND_MESSAGE_TO_USER_SUCCESS", data: data.data });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: "LEAD_SEND_MESSAGE_TO_USER_FAILED",
+      message: "Failed to get data !",
+    });
+  }
+}
+
+function* cancelLead(action) {
+  try {
+    const data = yield request(
+      "PUT",
+      `https://api.stage.insurancesamadhan.com/lead/${action.state?.data?._id}`,
+      { ...action.state.data }
+    );
+
+    yield put({ type: "LEAD_CANCEL_LEAD_SUCCESS", data: data.data });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: "LEAD_CANCEL_LEAD_FAILED",
+      message: "Failed to get data !",
+    });
+  }
+}
+
+function* getPolicyType(action) {
+  try {
+    const data = yield request(
+      "GET",
+      `https://api.stage.insurancesamadhan.com/policy_type`
+    );
+
+    yield put({ type: "LEAD_GET_POLICY_TYPE_SUCCESS", data: data.data });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: "LEAD_GET_POLICY_TYPE_FAILED",
+      message: "Failed to get data !",
+    });
+  }
+}
+
+function* getComplaintType(action) {
+  try {
+    const data = yield request(
+      "GET",
+      `https://api.stage.insurancesamadhan.com/complaint_type/?policyTypeId=${action.state.policyType}`
+    );
+
+    yield put({
+      type: "LEAD_GET_POLICY_TYPE_COMPLAINT_TYPE_SUCCESS",
+      data: data.data,
+    });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: "LEAD_GET_POLICY_TYPE_COMPLAINT_TYPE_FAILED",
+      message: "Failed to get data !",
+    });
+  }
+}
+
+function* updateLead(action) {
+  console.log(action);
+  try {
+    const data = yield request(
+      "PUT",
+      `https://api.stage.insurancesamadhan.com/lead/${action.state?._id}`,
+      { ...action.state }
+    );
+    yield put({ type: "Lead_UPDATE_LEAD_SUCCESS", data: data.data });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: "Lead_UPDATE_LEAD_FAILED",
+      message: "Failed to get data !",
+    });
+  }
+}
+
+function* addFollowUp(action) {
+  console.log("---------------------", action);
+
+  try {
+    let followUpObj = action.state;
+    console.log(
+      followUpObj.follow_date && followUpObj.com_date && followUpObj.id
+    );
+
+    if (followUpObj.follow_date && followUpObj.com_date && followUpObj.id) {
+      const data = yield request(
+        "PUT",
+        `https://api.stage.insurancesamadhan.com/lead/update/${action.state?.id}`,
+        {
+          communication: [
+            {
+              id: followUpObj.id,
+              com_date: followUpObj.com_date,
+              com_dis:
+                followUpObj.followUpDesc && followUpObj.com_dis == "Other"
+                  ? followUpObj.followUpDesc
+                  : followUpObj.com_dis,
+              com_by: followUpObj.com_by,
+            },
+          ],
+          follow_date: followUpObj.follow_date,
+          id: followUpObj.id,
+          status: followUpObj.status,
+        }
+      );
+      yield put({ type: "Lead_UPDATE_LEAD_SUCCESS", data: data.data });
+    }
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: "Lead_UPDATE_LEAD_FAILED",
+      message: "Failed to get data !",
+    });
+  }
 }
 
 export default function* leadSaga() {
@@ -329,6 +483,13 @@ export default function* leadSaga() {
   yield takeEvery("LEAD_REJECT_LEAD", rejectLead);
   yield takeEvery("LEAD_COMM_HISTORY_UPDATE_COMMENT", updateLeadComment);
   yield takeEvery("LEAD_FETCH_BY_ID", getLeadDataById);
-  yield takeEvery("LEAD_COMM_HISTORY_ADD_COMMENT",leadAddComment )
-  yield takeEvery("LEAD_FILTRATION_DATA", getLeadFiltrationData)
+  yield takeEvery("LEAD_COMM_HISTORY_ADD_COMMENT", leadAddComment);
+  yield takeEvery("LEAD_FILTRATION_DATA", getLeadFiltrationData);
+  yield takeEvery("CALL_LOGS_FOR_CUSTOMER", getCallLogsCustomer);
+  yield takeEvery("LEAD_SEND_MESSAGE_TO_USER", sendMessageToUser);
+  yield takeEvery("LEAD_CANCEL_LEAD", cancelLead);
+  yield takeEvery("LEAD_GET_POLICY_TYPE", getPolicyType);
+  yield takeEvery("LEAD_GET_POLICY_TYPE_COMPLAINT_TYPE", getComplaintType);
+  yield takeEvery("Lead_UPDATE_LEAD", updateLead);
+  yield takeEvery("LEAD_ADD_FOLLOW_UP", addFollowUp);
 }
