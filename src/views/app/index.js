@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 
 import AppLayout from "layout/AppLayout";
 import Pages from "./pages";
+import Customer from "./Customer/Customer";
 // import BotTranscript from './BotTranscript';
 // import { ProtectedRoute, UserRole } from 'helpers/authHelper';
 
@@ -22,6 +23,8 @@ const Leads = React.lazy(() => import("./Leads/Leads"));
 const LeadCommHistory = React.lazy(() =>
   import("./Leads/CommunicationHistory")
 );
+
+const DigiLocker = React.lazy(() => import("./Customer/DigiLocker"));
 
 const App = ({ match }) => {
   const history = useHistory();
@@ -56,12 +59,20 @@ const App = ({ match }) => {
             <Route
               path={`${match.url}/leads`}
               render={(props) => <Leads {...props} />}
-            >
-            </Route>
-              <Route
-                path={`${match.url}/usercomment`}
-                render={(props) => <LeadCommHistory {...props} />}
-              />
+            ></Route>
+            <Route
+              path={`${match.url}/usercomment`}
+              render={(props) => <LeadCommHistory {...props} />}
+            />
+
+            <Route
+              path={`${match.url}/customer`}
+              render={(props) => <Customer />}
+            ></Route>
+            <Route
+              path={`${match.url}/digilocker/:id`}
+              render={(props) => <DigiLocker />}
+            />
             <Redirect to="/error" />
           </Switch>
         </Suspense>

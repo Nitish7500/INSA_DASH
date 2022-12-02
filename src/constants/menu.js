@@ -640,7 +640,14 @@ const data = [
     label:"Leads",
     to:`${adminRoot}/leads`,
     roles:[UserRole.Admin, UserRole.Executive]
-  }
+  },
+  {
+    id:"customer",
+    icon:"",
+    label:"Customer",
+    to:`${adminRoot}/customer`,
+    roles:[UserRole.Admin, UserRole.Executive]
+  },
   // {
   //   id: 'applications',
   //   icon: 'iconsminds-air-balloon-1',

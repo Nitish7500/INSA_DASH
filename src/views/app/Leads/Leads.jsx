@@ -43,6 +43,7 @@ import { Redirect, useHistory } from "react-router-dom";
 import Select from "react-select";
 import { currentUser } from "constants/defaultValues";
 import EditLead from "./EditLead";
+import ReactPaginate from "react-paginate";
 
 // import
 
@@ -138,24 +139,42 @@ function LeadSection() {
   });
   const [uploadDocForm, setuploadDocForm] = useState({ lead: {}, open: false });
 
+  //-------------------------------Pagination
+
+  const [currentPage, setcurrentPage] = useState(0);
+
   const dispatch = useDispatch();
   const history = useHistory();
   const state = useSelector((state) => state.leadReducer);
   console.log(state, callLogCustomer);
 
-  const getData = () => {
+  const getData = ({ status = "PENDING", pageIndex = 0, pageSize = 50 }) => {
+    console.log(
+      "======================================",
+      status,
+      pageIndex,
+      pageSize
+    );
     dispatch({
       type: "LEAD_DATA_WITH_STATUS",
-      state: { status: "PENDING", pageIndex: 0, pageSize: 50, keyword: "" },
+      state: {
+        status: status,
+        pageIndex: pageIndex,
+        pageSize: pageSize,
+        keyword: "",
+      },
     });
   };
+
+  useEffect(() => {
+    getData({ pageIndex: currentPage });
+  }, [currentPage]);
 
   useEffect(() => {
     dispatch({ type: "LEAD_ASSIGN_USER" });
     dispatch({ type: "LEAD_ASSIGN_EXPERT" });
     dispatch({ type: "LEAD_INSURANCE_COMPANY" });
     dispatch({ type: "LEAD_USERS" });
-    getData();
   }, [1]);
 
   const handleClick = (e, status) => {
@@ -193,8 +212,18 @@ function LeadSection() {
   }, [state.leadReportData, downloadCound]);
 
   const commHistoryHandler = (currentLead) => {
-    // <Redirect to="/lead/comm/:id" />
     history.push({ pathname: `usercomment/`, state: currentLead });
+  };
+
+  //------------------------------------> Pagination
+  let itemsPerPage = 50;
+  const [itemOffset, setItemOffset] = useState(0);
+  const pageCount = Math.ceil(
+    state.leadDataByStatus?.totalRecords / itemsPerPage
+  );
+
+  const handlePageClick = (event) => {
+    setcurrentPage(event.selected);
   };
 
   return editPage ? (
@@ -503,30 +532,6 @@ function LeadSection() {
         style={{ borderRadius: "5px" }}
         id="leadSearcDiv"
       >
-        {/* <div className="d-flex mt-5 px-5 border border-info shadow">
-          <div className="border-1 mb-3 w-40">
-            <label className="d-block" for="fromDate">
-              From Date
-            </label>
-            <input
-              className="w-80 py-2 border border-dark"
-              id="fromDate"
-              placeholder="From Date"
-              type={"date"}
-            />
-          </div>
-          <div className="border-1 mb-3 w-40">
-            <label className="d-block" for="fromDate">
-              From Date
-            </label>
-            <input
-              className="w-80 py-2 border border-dark"
-              id="fromDate"
-              placeholder="From Date"
-              type={"date"}
-            />
-          </div>
-        </div> */}
         <div className="d-flex mt-5 container">
           <div className="mb-3 w-40">
             <label
@@ -720,7 +725,7 @@ function LeadSection() {
                   return (
                     <tr id="leadTableRow">
                       <td className="font-weight-bold" id="leadTableCellOne">
-                        {i + 1}
+                        {i + 1 + currentPage * itemsPerPage}
                       </td>
                       <td id="leadTableRowCellTwo">
                         <div>
@@ -1432,6 +1437,27 @@ function LeadSection() {
               )}
             </tbody>
           </table>
+          <div className="d-flex justify-content-center">
+            <ReactPaginate
+              breakLabel="..."
+              nextLabel="next >"
+              onPageChange={handlePageClick}
+              pageClassName="page-item"
+              pageLinkClassName="page-link"
+              previousClassName="page-item"
+              previousLinkClassName="page-link"
+              nextClassName="page-item"
+              nextLinkClassName="page-link"
+              breakClassName="page-item"
+              breakLinkClassName="page-link"
+              containerClassName="pagination"
+              activeClassName="active"
+              pageRangeDisplayed={5}
+              pageCount={pageCount}
+              previousLabel="< previous"
+              renderOnZeroPageCount={null}
+            />
+          </div>
         </div>
       </div>
       {/* --------------------------> Modal */}
@@ -2500,9 +2526,9 @@ function LeadSection() {
               <span className="h5">Name : </span>
               <span className="h6"> {statusHistory.data?.email}</span>
             </div>
-            <div className="table-responsive mt-3">
-              <div className="table table-bordered">
-                <table className="border">
+            <div className="">
+              <div className="table-responsive mt-3">
+                <table className=" table border">
                   <thead className="font-weight-bold bg-muted">
                     <tr>
                       <th>Status</th>
