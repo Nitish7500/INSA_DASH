@@ -398,7 +398,7 @@ function Users() {
       </div>
       {/* --------------------------------> Add OR Edit User Modal */}
       <Modal
-        size="lg"
+        size="xl"
         isOpen={addUser}
         toggle={() => {
           setaddUser(!addUser);
@@ -410,6 +410,7 @@ function Users() {
             <div className="form-group d-flex flex-wrap">
               <div className="form-control border-0">
                 <label
+                  style={{fontSize:"1rem"}}
                   className="form-control border-0 font-weight-bold"
                   htmlFor="userFormName"
                 >
@@ -418,7 +419,7 @@ function Users() {
                 <input
                   disabled={editUser}
                   onChange={handleChange}
-                  className="from-control border w-100 py-2"
+                  className="from-control border w-100 py-2 border-bold"
                   value={name}
                   name="name"
                   placeholder="Enter Name"
@@ -428,6 +429,7 @@ function Users() {
               <hr />
               <div className="form-control border-0">
                 <label
+                  style={{fontSize:"1rem"}}
                   className="form-control border-0 font-weight-bold"
                   htmlFor="userFormEmail"
                 >
@@ -436,7 +438,7 @@ function Users() {
                 <input
                   disabled={editUser}
                   onChange={handleChange}
-                  className="from-control border w-100 py-2"
+                  className="from-control border w-100 py-2 border-bold"
                   value={email}
                   name="email"
                   placeholder="Enter Email"
@@ -445,6 +447,7 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
+                  style={{fontSize:"1rem"}}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormNumber"
                 >
@@ -452,7 +455,7 @@ function Users() {
                 </label>
                 <input
                   onChange={handleChange}
-                  className="from-control border w-100 py-2"
+                  className="from-control border w-100 py-2 border-bold"
                   value={mobile}
                   name="mobile"
                   placeholder="Enter Mobile Number"
@@ -461,6 +464,7 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
+                  style={{fontSize:"1rem"}}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormGender"
                 >
@@ -469,7 +473,7 @@ function Users() {
                 <select
                   onChange={handleChange}
                   id="userFormAddEditGender"
-                  className="from-controle border w-100 py-2"
+                  className="from-controle border w-100 py-2 border-bold"
                   value={gender}
                   name="gender"
                 >
@@ -483,6 +487,7 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
+                  style={{fontSize:"1rem"}}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormProfileInfo"
                 >
@@ -490,7 +495,7 @@ function Users() {
                 </label>
                 <textarea
                   onChange={handleChange}
-                  className="from-control border w-100 py-2"
+                  className="from-control border w-100 py-2 border-bold"
                   value={profile_information}
                   name="profile_information"
                   placeholder="Profile Information"
@@ -500,6 +505,7 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
+                  style={{fontSize:"1rem"}}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormUserType"
                 >
@@ -508,7 +514,7 @@ function Users() {
                 <select
                   onChange={handleChange}
                   id="userFormAddEditUserType"
-                  className="from-controle border w-100 py-2"
+                  className="from-controle border w-100 py-2 border-bold"
                   value={group}
                   name="group"
                 >
@@ -522,6 +528,7 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
+                  style={{fontSize:"1rem"}}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormUserStatus"
                 >
@@ -530,7 +537,7 @@ function Users() {
                 <select
                   onChange={handleChange}
                   id="userFormAddEditUserStatus"
-                  className="from-controle border w-100 py-2"
+                  className="from-controle border w-100 py-2 border-bold"
                   value={status}
                   name="status"
                 >
@@ -544,6 +551,7 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
+                  style={{fontSize:"1rem"}}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormUserInAnyPolicy"
                 >
@@ -552,7 +560,7 @@ function Users() {
                 <select
                   onChange={handleChange}
                   id="userFormAddEditUserInAnyPolicy"
-                  className="from-controle border w-100 py-2"
+                  className="from-controle border w-100 py-2 border-bold"
                   value={expert}
                   name="expert"
                 >
@@ -566,6 +574,7 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
+                  style={{fontSize:"1rem"}}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormUserInAnyPolicy"
                 >
@@ -574,7 +583,7 @@ function Users() {
                 <select
                   onChange={handleChange}
                   id="userFormUserInAnyPolicy"
-                  className="from-controle border w-100 py-2"
+                  className="from-controle border w-100 py-2 border-bold" 
                   value={expert_policy_type}
                   name="expert_policy_type"
                 >
@@ -590,6 +599,7 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
+                  style={{fontSize:"1rem"}}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormUserExpertType"
                 >
@@ -598,7 +608,7 @@ function Users() {
                 <select
                   onChange={handleChange}
                   id="userFormUserExpertType"
-                  className="from-controle border w-100 py-2"
+                  className="from-controle border w-100 py-2 border-bold"
                   value={expertType}
                   name="expertType"
                 >
@@ -611,6 +621,7 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
+                  style={{fontSize:"1rem"}}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormExpertPer"
                 >
@@ -618,7 +629,7 @@ function Users() {
                 </label>
                 <input
                   onChange={handleChange}
-                  className="from-control border w-100 py-2"
+                  className="from-control border w-100 py-2 border-bold"
                   value={expertPercentage}
                   name="expertPercentage"
                   type="number"
@@ -629,6 +640,7 @@ function Users() {
 
               <div className="form-control border-0">
                 <label
+                  style={{fontSize:"1rem"}}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormBankName"
                 >
@@ -636,7 +648,7 @@ function Users() {
                 </label>
                 <input
                   onChange={handleChange}
-                  className="from-control border w-100 py-2"
+                  className="from-control border w-100 py-2 border-bold"
                   value={bankName}
                   name="bankName"
                   placeholder="Enter Bank Name"
@@ -652,7 +664,7 @@ function Users() {
                 </label>
                 <input
                   onChange={handleChange}
-                  className="from-control border w-100 py-2"
+                  className="from-control border w-100 py-2 border-bold"
                   value={accountNumber}
                   name="accountNumber"
                   placeholder="Enter Account Number"
@@ -661,6 +673,7 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
+                  style={{fontSize:"1rem"}}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormBranch"
                 >
@@ -668,7 +681,7 @@ function Users() {
                 </label>
                 <input
                   onChange={handleChange}
-                  className="from-control border w-100 py-2"
+                  className="from-control border w-100 py-2 border-bold"
                   value={branch}
                   name="branch"
                   placeholder="Enter Branch Name"
@@ -676,12 +689,13 @@ function Users() {
                 />
               </div>
               <div className="form-control border-0">
-                <label className="form-control border-0" htmlFor="userFormIFSC">
-                  IFSC font-weight-bold{" "}
+                <label
+                  style={{fontSize:"1rem"}} className="form-control border-0" htmlFor="userFormIFSC">
+                  IFSC Code
                 </label>
                 <input
                   onChange={handleChange}
-                  className="from-control border w-100 py-2"
+                  className="from-control border w-100 py-2 border-bold"
                   value={ifsc}
                   name={"ifsc"}
                   placeholder="Enter IFSC"
@@ -690,6 +704,7 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
+                  style={{fontSize:"1rem"}}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormPanNo"
                 >
@@ -697,7 +712,7 @@ function Users() {
                 </label>
                 <input
                   onChange={handleChange}
-                  className="from-control border w-100 py-2"
+                  className="from-control border w-100 py-2 border-bold"
                   value={panNumber}
                   name="panNumber"
                   placeholder="Enter PAN Number"
@@ -706,6 +721,7 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
+                  style={{fontSize:"1rem"}}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormLegalExpert"
                 >
@@ -714,7 +730,7 @@ function Users() {
                 <select
                   onChange={handleChange}
                   id="userFormLegalExpert"
-                  className="from-controle border w-100 py-2"
+                  className="from-controle border w-100 py-2 border-bold"
                   value={legalExpert}
                   name="legalExpert"
                 >
@@ -728,6 +744,7 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
+                  style={{fontSize:"1rem"}}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormLegalExecutive"
                 >
@@ -736,7 +753,7 @@ function Users() {
                 <select
                   onChange={handleChange}
                   id="userFormLegalExecutive"
-                  className="from-controle border w-100 py-2"
+                  className="from-controle border w-100 py-2 border-bold"
                   value={legalExecutive?.toString()}
                   name="legalExecutive"
                 >
@@ -751,7 +768,8 @@ function Users() {
               {console.log(legalExecutiveArr)}
               {legalExecutive == "True" || legalExecutive == true ? (
                 <div className="form-control border-0">
-                  <label className="font-weight-bold">
+                  <label
+                  style={{fontSize:"1rem"}} className="font-weight-bold">
                     Select Legal Executive
                   </label>
                   <Select
@@ -760,7 +778,7 @@ function Users() {
                     isMulti
                     name="legalExecutiveTeam"
                     options={legalExecutiveArr}
-                    className="basic-multi-select"
+                    className="basic-multi-select border-bold"
                     classNamePrefix="select"
                     onChange={(value) => {
                       setlegalExecutiveTeam(value);
@@ -771,6 +789,7 @@ function Users() {
               {legalExecutive == "False" || legalExecutive === false ? (
                 <div className="form-control border-0">
                   <label
+                  style={{fontSize:"1rem"}}
                     className="form-control border-0 font-weight-bold"
                     htmlFor="userFormLegalSubExecutive"
                   >
@@ -779,7 +798,7 @@ function Users() {
                   <select
                     onChange={handleChange}
                     id="userFormLegalSubExecutive"
-                    className="from-controle border w-100 py-2"
+                    className="from-controle border w-100 py-2 border-bold"
                     value={legalSubExecutive?.toString()}
                     name="legalSubExecutive"
                   >
@@ -798,11 +817,12 @@ function Users() {
                 legalExecutive === false) &&
               (legalSubExecutive === "True" || legalSubExecutive === true) ? (
                 <div className="form-control border-0">
-                  <label className="font-weight-bold">
+                  <label
+                  style={{fontSize:"1rem"}} className="font-weight-bold">
                     Select Legal Sub-Executive
                   </label>
                   <select
-                    className="form-control border"
+                    className="form-control border border-bold"
                     id="userAddEditLegalExecutive"
                     name="legalSubExecutiveLead"
                     onChange={handleChange}
@@ -817,6 +837,7 @@ function Users() {
 
               <div className="form-control border-0">
                 <label
+                  style={{fontSize:"1rem"}}
                   className="form-control border-0 font-weight-bold"
                   htmlFor="userFormUserTypeSelect"
                 >
@@ -825,7 +846,7 @@ function Users() {
                 <select
                   onChange={handleChange}
                   id="userFormUserTypeSelect"
-                  className="from-controle border w-100 py-2"
+                  className="from-controle border w-100 py-2 border-bold"
                   value={userOperations}
                   name="userOperations"
                 >
@@ -843,6 +864,7 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
+                  style={{fontSize:"1rem"}}
                   className="form-control border-0 font-weight-bold"
                   htmlFor="userFormUserTypeSelect"
                 >
@@ -1017,7 +1039,8 @@ function Users() {
               </div>
 
               <div className="form-control border-0">
-                <label className="form-control border-0 font-weight-bold">
+                <label className="form-control border-0 font-weight-bold " 
+                  style={{fontSize:"1rem"}} >
                   User Handle Bucket Type
                 </label>
                 <div className="form-control border">
@@ -1038,14 +1061,15 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
-                  className="form-control border-0 font-weight-bold"
+                  className="form-control border-0 font-weight-bold display-5"
+                  style={{fontSize:"1rem"}}
                   htmlFor="userFormPassword"
                 >
                   Password
                 </label>
                 <input
                   onChange={handleChange}
-                  className="from-control border w-100 py-2"
+                  className="from-control border w-100 py-2 border-bold"
                   value={password}
                   name="password"
                   type="password"
