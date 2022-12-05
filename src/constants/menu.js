@@ -648,6 +648,13 @@ const data = [
     to:`${adminRoot}/customer`,
     roles:[UserRole.Admin, UserRole.Executive]
   },
+  {
+    id:"users",
+    icon:"",
+    label:"Users",
+    to:`${adminRoot}/users`,
+    roles:[UserRole.Admin, UserRole.Executive]
+  },
   // {
   //   id: 'applications',
   //   icon: 'iconsminds-air-balloon-1',

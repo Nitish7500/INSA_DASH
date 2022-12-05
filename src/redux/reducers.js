@@ -6,6 +6,7 @@ import bucket from "./Dashboard/reducer";
 import botTranscript from "./BotTranscript/Reducer";
 import leadReducer from "./Lead/Reducer";
 import customer from "./Customer/Reducer";
+import user from "./Users/Reducer"
 
 const reducers = combineReducers({
   menu,
@@ -15,6 +16,7 @@ const reducers = combineReducers({
   botTranscript,
   leadReducer,
   customer,
+  user
 });
 
 export default reducers;

@@ -25,6 +25,7 @@ const LeadCommHistory = React.lazy(() =>
 );
 
 const DigiLocker = React.lazy(() => import("./Customer/DigiLocker"));
+const Users = React.lazy(() => import("./Users/Users"))
 
 const App = ({ match }) => {
   const history = useHistory();
@@ -72,6 +73,10 @@ const App = ({ match }) => {
             <Route
               path={`${match.url}/digilocker/:id`}
               render={(props) => <DigiLocker />}
+            />
+            <Route
+            path={`${match.url}/users`}
+            render={props => <Users/> }
             />
             <Redirect to="/error" />
           </Switch>
