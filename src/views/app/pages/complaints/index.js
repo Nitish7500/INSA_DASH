@@ -1,3 +1,4 @@
+import Communication from 'containers/pages/Communication';
 import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import ComplaintDetails from '../../../../containers/complaints/complaint-details';
@@ -24,6 +25,10 @@ const PagesProduct = ({ match }) => (
       <Route
         path={`${match.url}/complaint-details`}
         render={(props) => <ComplaintDetails {...props} />}
+      />
+      <Route 
+        path={`${match.url}/complaint/communication`}
+        render={(props) => <Communication />}
       />
       <Redirect to="/error" />
     </Switch>

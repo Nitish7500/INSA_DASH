@@ -119,7 +119,7 @@ const DataListPages = ({ match }) => {
       />
       <ListPageListing
         items={items}
-        displayMode={displayMode}
+        displayMode={"displayMode"}
         currentPage={currentPage}
         totalPage={totalPage}
         onChangePage={setCurrentPage}

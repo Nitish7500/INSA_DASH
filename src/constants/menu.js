@@ -462,13 +462,13 @@ const data = [
       {
         id: 'account-buckets',
         label: 'Account Buckets',
-        to: `${adminRoot}/pages/profile`,
+        to: `${adminRoot}/pages/product`,
         roles: [UserRole.Admin, UserRole.Executive],
         subs: [
           {
             icon: 'simple-icon-share',
             label: 'Resolved',
-            to: `${adminRoot}/pages/profile/social`,
+            to: `${adminRoot}/pages/product/data-list`,
           },
           {
             icon: 'simple-icon-link',

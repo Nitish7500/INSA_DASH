@@ -5,6 +5,7 @@ import botTranscriptSaga from "./BotTranscript/Saga";
 import leadSaga from "./Lead/Saga";
 import customer from "./Customer/Saga";
 import user from "./Users/Saga"
+import complaint from "./Complaint/Saga";
 
 export default function* rootSaga() {
   yield all([
@@ -14,5 +15,6 @@ export default function* rootSaga() {
     leadSaga(),
     customer(),
     user(),
+    complaint(),
   ]);
 }

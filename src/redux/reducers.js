@@ -7,6 +7,7 @@ import botTranscript from "./BotTranscript/Reducer";
 import leadReducer from "./Lead/Reducer";
 import customer from "./Customer/Reducer";
 import user from "./Users/Reducer"
+import complaint from "./Complaint/Reducer";
 
 const reducers = combineReducers({
   menu,
@@ -16,7 +17,8 @@ const reducers = combineReducers({
   botTranscript,
   leadReducer,
   customer,
-  user
+  user,
+  complaint
 });
 
 export default reducers;
