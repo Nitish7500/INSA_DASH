@@ -8,7 +8,13 @@ export const UserRole = {
 
 export const tinyMceApiKey = '0sj8gdgjk9z142gxzuv3f5t0meq0q6gxvuowe0avsommw26a';
 
+export const adminStatusChangePasswords =  {
+  'Shilpa Mam': '1234',
+  'Ruchi Mam': '9876',
+  'Bhavana': '0000',
+}
 
+export const awsUrl= 'https://staging-insa.s3.ap-south-1.amazonaws.com/';
 /* 
 Menu Types:
 "menu-default", "menu-sub-hidden", "menu-hidden"

@@ -152,6 +152,236 @@ function* getComments(action){
       }
 }
 
+function* getUserBasedData(action){
+    console.log(action)
+    try {
+        const data = yield request(
+          "POST",
+          `https://api.stage.insurancesamadhan.com/insurance/getUserBasedData`,
+          {...action.state}
+        );
+        yield put({ type: "COMPLAINANT_GET_USER_BASED_DATA_SUCCESS", data: data.data });
+      } catch (error) {
+        console.log(error)
+        yield put({
+          type: "COMPLAINANT_GET_USER_BASED_DATA_FAILED",
+          message: "Failed to add Comment !",
+        });
+      }
+}
+
+function* getUserBucket(action){
+  try {
+    const data = yield request(
+      "GET",
+      `https://api.stage.insurancesamadhan.com/insurance/getStatusBuckets`,
+    );
+    yield put({ type: "COMPLAINANT_GET_STATUS_BUCKET_SUCCESS", data: data.data });
+  } catch (error) {
+    console.log(error)
+    yield put({
+      type: "COMPLAINANT_GET_STATUS_BUCKET_FAILED",
+      message: "Failed to add Comment !",
+    });
+  }
+}
+
+function* updateComplpaintStatus(action){
+  try {
+    const data = yield request(
+      "POST",
+      `https://api.stage.insurancesamadhan.com/insurance/updateManyToMany`,
+      {...action.state}
+    );
+    yield put({ type: "COMPLAINANT_UPDATE_COMPLAINT_STATUS_SUCCESS", message:data.message });
+  } catch (error) {
+    console.log(error)
+    yield put({
+      type: "COMPLAINANT_UPDATE_COMPLAINT_STATUS_FAILED",
+      message: "Failed to add Comment !",
+    });
+  }
+}
+
+function* getOptionBasedData(action){
+  try {
+    const data = yield request(
+      "POST",
+      `https://api.stage.insurancesamadhan.com/insurance/optionBasedData`,
+      {...action.state}
+    );
+    yield put({ type: "COMPLAINANT_USER_DETAIL_HANDLE_COMPLAINT_SUCCESS", data:data.data });
+  } catch (error) {
+    console.log(error)
+    yield put({
+      type: "COMPLAINANT_USER_DETAIL_HANDLE_COMPLAINT_FAILED",
+      message: "Failed to add Comment !",
+    });
+  }
+}
+
+function* complaintUpdateInfo(action){
+  try {
+    const data = yield request(
+      "POST",
+      `https://api.stage.insurancesamadhan.com/insurance/updateMultipleUserData`,
+      {...action.state}
+    );
+    yield put({ type: "COMPLAINANT_UPDATE_INFORMATION_SUCCESS", message:data.message });
+  } catch (error) {
+    console.log(error)
+    yield put({
+      type: "COMPLAINANT_UPDATE_INFORMATION_FAILED",
+      message: "Failed to add Comment !",
+    });
+  }
+}
+
+function* getStates(action){
+  try {
+    const data = yield request(
+      "GET",
+      `https://api.stage.insurancesamadhan.com/ombudsman/state`,
+    );
+    yield put({ type: "COMPLAINT_STATES_SUCCESS", data:data.data });
+  } catch (error) {
+    console.log(error)
+    yield put({
+      type: "COMPLAINT_STATES_FAILED",
+      message: "Failed to add Comment !",
+    });
+  }
+}
+
+function* getAllInsa(action){
+  try {
+    const data = yield request(
+      "GET",
+      `https://api.stage.insurancesamadhan.com/insurance/getAllInsa`,
+    );
+    yield put({ type: "COMPLAINT_GET_ALL_INSA_SUCCESS", data:data.data });
+  } catch (error) {
+    console.log(error)
+    yield put({
+      type: "COMPLAINT_GET_ALL_INSA_FAILED",
+      message: "Failed to add Comment !",
+    });
+  }
+}
+
+function* getPoliciesForEsc(action){
+  try {
+    const data = yield request(
+      "POST",
+      `https://api.stage.insurancesamadhan.com/insurance/getAllForEscalation`,
+      {...action.state}
+    );
+    let temp = data.data?.map(res => {
+      return {value:res._id, label:`${res.policyNumber} -- ${res.name}`}
+    })
+    yield put({ type: "COMPLAINANT_GET_POLICY_FOR_ESCALATION_SUCCESS", data:temp });
+  } catch (error) {
+    console.log(error)
+    yield put({
+      type: "COMPLAINANT_GET_POLICY_FOR_ESCALATION_FAILED",
+      message: "Failed to add Comment !",
+    });
+  }
+}
+
+function* docUploadGetData(action){
+  console.log(action)
+  try {
+    const data = yield request(
+      "GET",
+      `https://api.stage.insurancesamadhan.com/insurance/${action.state.id}`,
+    );
+    yield request(
+      "POST",
+      `https://api.stage.insurancesamadhan.com/insurance/igmsDoc/${data.data[0]?.userId}/${btoa(data.data[0]?.policyNumber)}`,
+      action.state.file
+    );
+    yield request(
+      "POST",
+      "https://api.stage.insurancesamadhan.com/insurance/docUpload",
+      {
+        id:action.state.id,
+        policy_number:data.data[0]?.policyNumber,
+        userId:data.data[0]?.userId
+      }
+
+    )
+    yield put({ type: "COMPLAINT_DOC_UPLOAD_GET_API_SUCCESS", data:data.data });
+  } catch (error) {
+    console.log(error)
+    yield put({
+      type: "COMPLAINT_DOC_UPLOAD_GET_API_FAILED",
+      message: "Failed to add Comment !",
+    });
+  }
+}
+
+// function* uploadDoc(action){
+//   try {
+//     const data = yield request(
+//       "POST",
+//       `https://api.stage.insurancesamadhan.com/insurance/igmsDoc/${action.state.id}/${action.state.policyNumber}`,
+//       action.state.file
+//     );
+//     dispatch({
+//       type: "COMPLAINT_UPLOAD_DOC",
+//       state: {
+//         policyNumber: state.docUploadGet[0]?.policyNumber,
+//         id: state.docUploadGet[0]?.userId,
+//         file:formData
+//       },
+//     });
+
+//     yield put({ type: "COMPLAINT_UPLOAD_DOC_SUCCESS", message:data.message });
+//   } catch (error) {
+//     console.log(error)
+//     yield put({
+//       type: "COMPLAINT_UPLOAD_DOC_FAILED",
+//       message: "Failed to Upload !",
+//     });
+//   }
+// }
+
+function* uploadMulUserData(action){
+  try {
+    const data = yield request(
+      "POST",
+      `https://api.stage.insurancesamadhan.com/insurance/updateMultipleUserData`,
+      {...action.state}
+    );
+
+    yield put({ type: "COMPLAINT_UPLOAD_MUL_USER_DATA_SUCCESS", message:data.message });
+  } catch (error) {
+    console.log(error)
+    yield put({
+      type: "COMPLAINT_UPLOAD_MUL_USER_DATA_FAILED",
+      message: "Failed to add Comment !",
+    });
+  }
+}
+
+
+function* getLead(action){
+  try {
+    const data = yield request(
+      "GET",
+      `https://api.stage.insurancesamadhan.com/lead/${action.state.id}`,
+    );
+    yield put({ type: "COMPLAINT_GET_LEAD_SUCCESS", data:data.data });
+  } catch (error) {
+    console.log(error)
+    yield put({
+      type: "COMPLAINT_GET_LEAD_FAILED",
+      message: "Failed to add Comment !",
+    });
+  }
+}
+
 export default function* complaint(){
     yield takeEvery("COMPLAINT_GET_WAIVEOFF", getWaiveOffUsers)
     yield takeEvery("COMPLAINT_FEE_OPERATION",feeOperation)
@@ -162,4 +392,15 @@ export default function* complaint(){
     yield takeEvery("COMPLAINT_ADD_COMMENT",addComment)
     yield takeEvery("COMPLAINT_UPDATE_COMMENT",updateComment)
     yield takeEvery("COMPLAINT_GET_COMMENTS", getComments)
+    yield takeEvery("COMPLAINANT_GET_USER_BASED_DATA",getUserBasedData)
+    yield takeEvery("COMPLAINANT_GET_STATUS_BUCKET",getUserBucket)
+    yield takeEvery("COMPLAINANT_UPDATE_COMPLAINT_STATUS", updateComplpaintStatus)
+    yield takeEvery("COMPLAINANT_USER_DETAIL_HANDLE_COMPLAINT",getOptionBasedData)
+    yield takeEvery("COMPLAINANT_UPDATE_INFORMATION", complaintUpdateInfo)
+    yield takeEvery("COMPLAINT_STATES", getStates);
+    yield takeEvery("COMPLAINT_GET_ALL_INSA",getAllInsa)
+    yield takeEvery("COMPLAINANT_GET_POLICY_FOR_ESCALATION",getPoliciesForEsc)
+    yield takeEvery("COMPLAINT_DOC_UPLOAD_GET_API",docUploadGetData)
+    yield takeEvery("COMPLAINT_UPLOAD_MUL_USER_DATA",uploadMulUserData)
+    yield takeEvery("COMPLAINT_GET_LEAD", getLead)
 }

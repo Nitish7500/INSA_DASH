@@ -1,8 +1,8 @@
 import { currentUser } from "constants/defaultValues";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
 
@@ -11,6 +11,8 @@ function Communication() {
   const location = useLocation();
   const { state } = location;
   const dispatch = useDispatch();
+  const storage = useSelector((state) => state.complaint);
+  console.log(state);
 
   const [open, setOpen] = useState(false);
   const [comment, setComment] = useState({
@@ -28,13 +30,25 @@ function Communication() {
     com_dis: "",
   });
 
+  const getCommArr = () => {
+    dispatch({
+      type: "COMPLAINT_GET_COMMENTS",
+      state: { id: state._id },
+    });
+  };
+
+  useEffect(() => {
+    getCommArr();
+  }, [state._id]);
+
   const handleUpdateComment = () => {
     dispatch({
-        type:"COMPLAINT_GET_COMMENTS",
-        state:{id:state._id}
-    })
-
-  }
+      type: "COMPLAINT_UPDATE_COMMENT",
+      state: { ...editComment, insurance_id: state._id },
+    });
+    seteditComment({ ...editComment, open: false });
+    getCommArr();
+  };
 
   return (
     <div className="bg-inherit pt-5">
@@ -98,17 +112,15 @@ function Communication() {
               </tr>
             </thead>
             <tbody>
-              {state.communication?.map((res) => {
-                {
-                  console.log("-------------------------------->", res);
-                }
+              {storage.comments[0]?.communication?.map((res,i) => {
                 return (
-                  <tr>
+                  <tr key={i}>
                     <td>{res.com_date}</td>
                     <td>{res.com_by}</td>
                     <td>{res.com_dis}</td>
                     <td>
                       <FontAwesomeIcon
+                        id="complaintEditIcon"
                         icon={faPencil}
                         className="text-primary"
                         size="lg"
@@ -154,6 +166,7 @@ function Communication() {
               <div className=" col-12 my-3 d-flex justify-content-between">
                 <span>Do you want to send notification ?</span>
                 <input
+                id="ComplaintcommCheckbox"
                   type={"checkbox"}
                   onChange={(e) => {
                     setComment({
@@ -166,6 +179,7 @@ function Communication() {
               <div className="col-12 mb-3">
                 <label>Communication Date</label>
                 <input
+                id="ComplaintcommDate"
                   className="form-control border-bold"
                   type={"date"}
                   onChange={(e) => {
@@ -181,7 +195,7 @@ function Communication() {
               </select> */}
               </div>
               <textarea
-                id="inputOnRejectionLead"
+                id="ComplaintcommDes"
                 className="col-10 d-block p-2 form-control border ml-3"
                 rows={4}
                 value={comment?.com_dis}
@@ -192,14 +206,14 @@ function Communication() {
             </div>
             <div className="mt-3 d-flex justify-content-center">
               <button
-                id="rejectionNoBtn"
+                id="complaintCommClose"
                 className="btn btn-danger rounded mr-2"
                 onClick={() => setOpen(false)}
               >
                 Close
               </button>
               <button
-                id="rejectionYesBtn"
+                id="complaintCommSave"
                 className="btn btn-primary rounded ml-2"
                 onClick={() => {
                   comment.com_date && comment.com_dis
@@ -231,6 +245,7 @@ function Communication() {
           <div>
             <label>Communication Description</label>
             <textarea
+                id="complaintCommEditDes"
               className="form-control border-bold"
               rows={4}
               value={editComment.com_dis}
@@ -241,6 +256,7 @@ function Communication() {
           </div>
           <div className="d-flex justify-content-end mt-3">
             <button
+                id="complaintCommEditClose"
               className="btn btn-danger rounded mr-2"
               onClick={() => {
                 seteditComment({ ...editComment, open: false });
@@ -249,14 +265,9 @@ function Communication() {
               CLOSE
             </button>
             <button
+                id="complaintCommEditSave"
               className="btn btn-success rounded "
-              onClick={() => {
-                dispatch({
-                  type: "COMPLAINT_UPDATE_COMMENT",
-                  state: { ...editComment, insurance_id: state._id },
-                });
-                seteditComment({ ...editComment, open: false });
-              }}
+              onClick={handleUpdateComment}
             >
               SAVE
             </button>

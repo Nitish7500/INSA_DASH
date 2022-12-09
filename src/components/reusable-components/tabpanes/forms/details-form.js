@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import React, { useEffect, useState } from 'react'
 import { Button, Card, CardBody, Form, FormGroup, Input, Label, Modal, ModalBody, Row } from 'reactstrap'
 import { claimRejectionTypes, education, gender, movementOfCase, occupation, policyTypes, realtionships } from 'constants/formValues';
-import { assignIGMS, assignLegalExpert, assignOmbudsman, getAllInsa, getAllStates, getComplaintTypesByPolicyTypeId, getFirstDraftData, getInsuranceCompanyNamesByPolicyTypeId, getLegalUserData, getPolicyTypes, getUserBasedData } from 'services/complaints.services';
+import { assignIGMS, assignLegalExpert, assignOmbudsman, fetchAllUserPolicy, fetchCompIds, fetchDocs, fetchDraftMail, fetchHtmlPage, fetchLead, findByUserId, findLegalByComplaintId, getAllForEscalationByUserId, getAllInsa, getAllStates, getCompanyNoticeData, getComplaintTypesByPolicyTypeId, getCurrentInvoiceCount, getFirstDraftData, getInsuranceCompanyNamesByPolicyTypeId, getLegalUserData, getPolicyTypes, getUserBasedData, omdRemindMail, userAdmin } from 'services/complaints.services';
 
 const options = [
     { value: '', label: 'Select an Option' },
@@ -30,6 +30,13 @@ export default function DetailsForm({ heading, details }) {
     const [allCompanies, setAllCompanies] = useState([]);
     const [allOmbudsman, setAllOmbudsman] = useState([]);
     const [allLegalExecutives, setAllLegalExecutives] = useState([]);
+    const [userAdminData, setuserAdminData] = useState([]);
+    const [findLegalByComplaintIdData, setfindLegalByComplaintIdData] = useState([])
+    const [allEscalationData, setallEscalationData] = useState([]);
+    const [compIdsData, setcompIdsData] = useState([]);
+    const [htmlPageData, sethtmlPageData] = useState({});
+    const [allUserPolicy, setallUserPolicy] = useState([]);
+    const [userFoundData, setuserFoundData] = useState([])
 
     // objects nested in api response
     let complaint = details?.complaintTypeId;
@@ -38,7 +45,7 @@ export default function DetailsForm({ heading, details }) {
     let wholeAddress = details?.wholeAddress;
     let insuranceCompany = details?.insuranceCompanyId;
     let policyType = details?.policyTypeId;
-    let complaintType = details.complaintTypeId;
+    let complaintType = details?.complaintTypeId;
     
     // IDs of all important objects
     let policyTypeId = policyType ? policyType._id : '';
@@ -160,16 +167,184 @@ export default function DetailsForm({ heading, details }) {
         //     setIsLoaded(true);
         // }
         // getFirstDraft();
-    
-        
+
+
+        getCurrentInvoiceCountFunc();
+        omdRemindMailFunc();
+        getLegalUserDataFunc();
+        getCompanyNoticeDataFunc();
+        getComplaintDocFunc();
+        getLeadData();
+        getDraftMailFunc();
+        getUserAdminFunc();
+        getFindLegalByComFunc();
+        getAllForEscFunc();
+        getCompIdsFunc();
+        getHtmlPageFunc();
+        getAllUserPoliciesFunc();
+        findByUserIdFunc();
+        getFirstDraftFunc();
     }, []);
+
+    const getCurrentInvoiceCountFunc = async () => {
+        try {
+            const {data} = await getCurrentInvoiceCount();
+            // setAllCompanies(data.data);
+        } catch (error) {
+            console.log('All Companies / IGMS ', error);
+        }
+    }
+    console.log(details)
+
+    const omdRemindMailFunc = async () => {
+        try {
+            const {data} = await omdRemindMail(details._id);
+            // setAllCompanies(data.data);
+        } catch (error) {
+            console.log('All Companies / IGMS ', error);
+        }
+    }
+
+    const getLegalUserDataFunc = async (id) => {
+        try {
+            const {data} = await getLegalUserData(details._id);
+            // setAllCompanies(data.data);
+        } catch (error) {
+            console.log('All Companies / IGMS ', error);
+        }
+    }
+
+    
+    const getCompanyNoticeDataFunc = async (id) => {
+        try {
+            const {data} = await getCompanyNoticeData(details.policyNumber);
+            // setAllCompanies(data.data);
+        } catch (error) {
+            console.log('All Companies / IGMS ', error);
+        }
+    }
+
+    const getComplaintDocFunc = async () => {
+        
+        try {
+            const {data} = await fetchDocs( details.userId?._id ,details._id);
+            // setInsuranceCompanies(data);
+            // console.log(insuranceCompanies);
+        } catch (error) {
+            console.log("States",error)
+        }
+        setIsLoaded(true);   
+    }
+
+    const getLeadData = async () => {
+        try {
+            console.log(details.leadId)
+            const {data} = await fetchLead( details.leadId?._id);
+            // setInsuranceCompanies(data);
+            // console.log(insuranceCompanies);
+        } catch (error) {
+            console.log("States",error)
+        }
+        setIsLoaded(true);   
+    }
+
+    const getDraftMailFunc = async () => {
+        try {
+            const {data} = await fetchDraftMail( details.userId?._id,);
+            // setInsuranceCompanies(data);
+            // console.log(insuranceCompanies);
+        } catch (error) {
+            console.log("States",error)
+        }
+        setIsLoaded(true);   
+    }
+
+    const getUserAdminFunc = async () => {
+        try {
+            const {data} = await userAdmin( details.userId?._id,);
+            setuserAdminData(data);
+        } catch (error) {
+            console.log("States",error)
+        }
+        setIsLoaded(true);  
+    }
+
+    const getFindLegalByComFunc = async () => {
+        try {
+            const {data} = await findLegalByComplaintId( {userId:details.userId?._id},);
+            setfindLegalByComplaintIdData(data);
+        } catch (error) {
+            console.log("States",error)
+        }
+        setIsLoaded(true); 
+    } 
+
+    const getAllForEscFunc = async () => {
+        try {
+            const {data} = await getAllForEscalationByUserId( {userId:details.userId?._id},);
+            setallEscalationData(data);
+        } catch (error) {
+            console.log("States",error)
+        }
+        setIsLoaded(true); 
+    } 
+
+    const getCompIdsFunc = async () => {
+        try {
+            const {data} = await fetchCompIds( details.userId?._id);
+            setcompIdsData(data);
+        } catch (error) {
+            console.log("States",error)
+        }
+        setIsLoaded(true); 
+    } 
+
+    const getHtmlPageFunc = async () => {
+        try {
+            const {data} = await fetchHtmlPage( details?._id);
+            sethtmlPageData(data);
+        } catch (error) {
+            console.log("States",error)
+        }
+        setIsLoaded(true); 
+    }
+
+    const getAllUserPoliciesFunc = async () => {
+        try {
+            const {data} = await fetchAllUserPolicy( details?.complaintTypeId?.name,details.userId?._id);
+            setallUserPolicy(data);
+        } catch (error) {
+            console.log("States",error)
+        }
+        setIsLoaded(true);    
+    }
+
+    const getFirstDraftFunc = async () => {
+        try {
+            const {data} = await getFirstDraftData( details);
+            setFirstDraft(data);
+        } catch (error) {
+            console.log("States",error)
+        }
+        setIsLoaded(true); 
+    }
+
+    const findByUserIdFunc = async () => {
+        try {
+            const {data} = await findByUserId(details.userId?._id);
+            setuserFoundData(data);
+        } catch (error) {
+            console.log("States",error)
+        }
+        setIsLoaded(true); 
+    }
     
     //getting all complaint types on the basis of policy type selected
     const getComplaintTypes = async (id) => {
         let policyTypeId = id;
         try {
             const {data} = await getComplaintTypesByPolicyTypeId(policyTypeId);
-            setComplaintTypes(data);
+            // setComplaintTypes(data);
             // console.log(complaintTypes);
         } catch (error) {
             console.log("States",error)
@@ -190,6 +365,8 @@ export default function DetailsForm({ heading, details }) {
         setIsLoaded(true);
     }
     
+
+
     // function handling policytype id :: insurance type id
     const handleSelectInsurancetype = (insuranceTypeId) => {
         let policyTypeId = insuranceTypeId;
@@ -197,6 +374,7 @@ export default function DetailsForm({ heading, details }) {
         getComplaintTypes(policyTypeId);
         getInsuranceCompanies(policyTypeId);
     }
+
 
     // console.log(details);
 
@@ -272,7 +450,7 @@ export default function DetailsForm({ heading, details }) {
 
                 }}
                     // validationSchema={SignupSchema}
-                    // onSubmit={onSubmit}
+                    onSubmit={(onSubmit) => {console.log("cadfs")}}
                 >
                 {({
                     handleSubmit,

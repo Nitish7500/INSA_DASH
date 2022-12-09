@@ -18,7 +18,7 @@ export default function IGMSForm ({ heading, details, complaintId }) {
     const {IGMS_Token, IGMS_date, escalation_date, IGMSLoginDOB, IGMS_Done, IGMS_No, response_date_igms, response_date_igms1, igmsResponseReceived, igmsRequirementReceived, igms_content, response_data_igms, response_data2_igms} = details;
 
     const escalationDate = (escalation_date != undefined) ? new Date(escalation_date) : null;
-    const igmsDate = (IGMS_date != undefined) ? formatDate(IGMS_date) : null;
+    const igmsDate = (IGMS_date != undefined) ? new Date(IGMS_date) : null;
 
     // console.log(new Date(response_date_igms));
 
@@ -41,12 +41,12 @@ export default function IGMSForm ({ heading, details, complaintId }) {
                 <Formik initialValues={{
                     igmsTokenNo: IGMS_Token ? IGMS_Token : '',
                     igmsdate: igmsDate ? igmsDate : null,
-                    igmsEscalationDate: escalationDate ? escalationDate : null,
+                    igmsEscalationDate: escalationDate && new Date(escalationDate) != "Invalid Date" ? escalationDate : null,
                     igmsLoginDob: IGMSLoginDOB ? new Date(IGMSLoginDOB) : null,
                     igmsDoneBy: IGMS_Done ? IGMS_Done : null,
                     firstResponseFromIGMSDate: response_date_igms ? new Date(response_date_igms) : null,
                     secondResponseFromIGMSDate: response_date_igms1 ? new Date(new Date(response_date_igms)) : null,
-                    secondIgmsEscalationDate: escalationDate ? escalationDate : null,
+                    secondIgmsEscalationDate: escalationDate &&  new Date(escalationDate) != "Invalid Date" ? escalationDate : null,
                     isResponseRecieved: igmsResponseReceived ? igmsResponseReceived : '',
                     isRequirementRecieved: igmsRequirementReceived ? igmsRequirementReceived : '',
                     igmsContent: igms_content ? igms_content : '',
@@ -81,6 +81,7 @@ export default function IGMSForm ({ heading, details, complaintId }) {
                                     <Colxx xxs="12" lg="3">
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">IGMS Date</Label>
+                                            {console.log(values)}
                                             <FormikDatePicker
                                                 name="igmsdate"
                                                 value={values.igmsdate}
@@ -99,6 +100,7 @@ export default function IGMSForm ({ heading, details, complaintId }) {
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
+                                            {console.log("--------------", new Date(escalationDate))}
                                         </FormGroup>
                                     </Colxx>
                                     {/* Form Column 4 */}

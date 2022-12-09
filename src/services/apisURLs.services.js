@@ -34,7 +34,11 @@ export const apisURLs = {
     setStatusPOST : baseURLs.regular + 'insurance/setStatus',
     getUserBasedDataPOST : baseURLs.regular + 'insurance/getUserBasedData',
     assignCompanyPOST : baseURLs.regular + 'insurance/assignIGMS',
-    assignOmbudsmanPOST : baseURLs.regular + 'insurance/assignOMD'
+    assignOmbudsmanPOST : baseURLs.regular + 'insurance/assignOMD',
+    getDraftMail : baseURLs.regular + "draftMailAuto/getDraftMail/",
+    getCompIds : baseURLs.regular + "insurance/compIds",
+    getHtmlPage : baseURLs.regular + "insurance/getHtmlPage",
+    getAllUserPolicy : baseURLs.regular + "insurance/getAllUserPolicy"
 }
 
 

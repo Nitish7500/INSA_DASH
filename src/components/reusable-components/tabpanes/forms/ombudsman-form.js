@@ -36,11 +36,11 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
     const log = (e) => {
         e.preventDefault()
         if (editorRef.current) {
-        console.log(editorRef.current.getContent());
+        console.log({ hearing_points :editorRef.current.getContent()});
         }
     };
 
-    const { ombudsman_c_date, courier_number_doc, courierNumberDocArr, complainFormSendDate, form6ASendDate, VIAFormUploadedDate, ombudsman_submit_date, courier_date, courier_number, form6AMail, stateName, omb_first_date, omb_sec_date, expert_customer_date, hearingComment, check_status, omd_reward_date, refundSingleClaim, paymentRefundInt, rewardType, hearing_points, ombudsmanPendingReasonListing, ombudsmanPendingReason,  } = details;
+    const { ombudsman_c_date, courier_number_doc, omdNonComplianceDate, courier_date, courierNumberDocArr, complainFormSendDate, form6ASendDate, VIAFormUploadedDate, ombudsman_submit_date, ombudsman_doc_date, courier_number, form6AMail, stateName, omb_first_date, omb_sec_date, expert_customer_date, hearingComment, check_status, omd_reward_date, refundSingleClaim, paymentRefundInt, rewardType, hearing_points, ombudsmanPendingReasonListing, ombudsmanPendingReason, oc_number } = details;
 
     return (
         <Card>
@@ -48,35 +48,36 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
                 <h2 className="mb-4">{heading}</h2>
                 <Formik initialValues={{
                     //formvalues fetched from api will be stored here
-                    ombudsmanComplaintDate: ombudsman_c_date ? new Date(ombudsman_c_date) : null,
-                    ccRecentDate: courier_date ? new Date(courier_date) : null,
+                    ombudsman_c_date: ombudsman_c_date ? new Date(ombudsman_c_date) : null,
+                    ombudsman_doc_date: ombudsman_doc_date ? new Date(ombudsman_doc_date) : null,
                     ccDate: '',
-                    ccRecentNo: courier_number_doc ? courier_number_doc : '',
-                    cpFormPushDate: complainFormSendDate ? new Date(complainFormSendDate) : null,
+                    courier_number_doc: courier_number_doc ? courier_number_doc : '',
+                    complainFormSendDate: complainFormSendDate ? new Date(complainFormSendDate) : null,
                     ccNumbers: courierNumberDocArr ? courierNumberDocArr : '',
-                    ombudsmanComplaintNumber : courier_number_doc ? courier_number_doc : '',
-                    form6aPushedDate: form6ASendDate ? new Date(form6ASendDate) : null,
-                    form6aReceivedDate: VIAFormUploadedDate ? new Date(VIAFormUploadedDate) : null,
-                    form6aSubmissionDate: ombudsman_submit_date ? new Date(ombudsman_submit_date) : null,
-                    form6aCourierDate: courier_date ? new Date(courier_date) : '',
-                    form6aCourierNo: courier_number ? courier_number : '',
-                    isForm6AThroughMail: form6AMail ? form6AMail : '',
-                    ombudsmanLocation: stateName ? stateName : '',
-                    firstHearingDate: omb_first_date ? new Date(omb_first_date) : '',
-                    callDate: expert_customer_date ? new Date(expert_customer_date) : null,
+                    oc_number : oc_number ? oc_number : '',
+                    form6APushedDate: form6ASendDate ? new Date(form6ASendDate) : null,
+                    VIAFormUploadedDate: VIAFormUploadedDate ? new Date(VIAFormUploadedDate) : null,
+                    ombudsman_submit_date: ombudsman_submit_date ? new Date(ombudsman_submit_date) : null,
+                    courier_date: courier_date ? new Date(courier_date) : '',
+                    courier_number: courier_number ? courier_number : '',
+                    form6AMail: form6AMail ? form6AMail : '',
+                    stateName: stateName ? stateName : '',
+                    omb_first_date: omb_first_date ? new Date(omb_first_date) : '',
+                    expert_customer_date: expert_customer_date ? new Date(expert_customer_date) : null,
                     hearingComment: hearingComment ? hearingComment : '',
-                    calledCustForRewardStatus: check_status ? check_status : '',
-                    ombudsmanRewardDate: omd_reward_date ? new Date(omd_reward_date) : '',
+                    check_status: check_status ? check_status : '',
+                    omd_reward_date: omd_reward_date ? new Date(omd_reward_date) : '',
                     claimAmount : refundSingleClaim ? refundSingleClaim : '',
                     interest : paymentRefundInt ? paymentRefundInt : '',
-                    secondCallDate: omb_sec_date ? new Date(omb_sec_date) : '',
-                    resolutionType: rewardType ? rewardType : '',
+                    omb_sec_date: omb_sec_date ? new Date(omb_sec_date) : '',
+                    rewardType: rewardType ? rewardType : '',
                     hearingPoints : hearing_points ? hearing_points : '',
                     ombudsmanPendingReasonListing : ombudsmanPendingReasonListing ? ombudsmanPendingReasonListing : '',
                     ombudsmanPendingReason: ombudsmanPendingReason ? ombudsmanPendingReason : '',
+                    omdNonComplianceDate : omdNonComplianceDate ? omdNonComplianceDate : "",
                 }}
                     // validationSchema={SignupSchema}
-                    // onSubmit={onSubmit}
+                    onSubmit={e => {console.log(e)}}
                 >
                 {({
                     handleSubmit,
@@ -86,7 +87,7 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
                     handleBlur,
                     values
                 }) => (
-                    <Form className="av-tooltip tooltip-label-right">
+                    <Form className="av-tooltip tooltip-label-right" onSubmit={e => {e.preventDefault();console.log(e.target[0])}}>
                         <Row className="mb-4">
                             <Colxx xxs="12" lg="12" className="mb-5">
 
@@ -98,8 +99,8 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Ombudsman Complaint Date</Label>
                                             <FormikDatePicker
-                                                name="ombudsmanComplaintDate"
-                                                value={values.ombudsmanComplaintDate}
+                                                name="ombudsman_c_date"
+                                                value={values.ombudsman_c_date}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -110,8 +111,8 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Complaint Courier Recent Date</Label>
                                             <FormikDatePicker
-                                                name="ccRecentDate"
-                                                value={values.ccRecentDate}
+                                                name="ombudsman_doc_date"
+                                                value={values.ombudsman_doc_date}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -133,7 +134,7 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
                                     <Colxx xxs="12" lg="3">
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Complaint Courier Recent Number</Label>
-                                            <Field className="form-control" name="ccRecentNo" />
+                                            <Field className="form-control" name="courier_number_doc" onChange={setFieldValue} />
                                         </FormGroup>
                                     </Colxx>
                                 </Row>
@@ -145,8 +146,8 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Complaint Form Pushed Date</Label>
                                             <FormikDatePicker
-                                                name="cpFormPushDate"
-                                                value={values.cpFormPushDate}
+                                                name="complainFormSendDate"
+                                                value={values.complainFormSendDate}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -164,8 +165,8 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Ombudsman Complaint Number</Label>
                                             <Input
-                                                name="ombudsmanComplaintNumber"
-                                                value={values.ombudsmanComplaintNumber}
+                                                name="oc_number"
+                                                value={values.oc_number}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -181,8 +182,8 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Form 6A Pushed Date</Label>
                                             <FormikDatePicker
-                                                name="form6aPushedDate"
-                                                value={values.form6aPushedDate}
+                                                name="form6APushedDate"
+                                                value={values.form6APushedDate}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -193,8 +194,8 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Form 6A Received Date</Label>
                                             <FormikDatePicker
-                                                name="form6aReceivedDate"
-                                                value={values.form6aReceivedDate}
+                                                name="VIAFormUploadedDate"
+                                                value={values.VIAFormUploadedDate}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -205,8 +206,8 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Form 6A submission date</Label>
                                             <FormikDatePicker
-                                                name="form6aSubmissionDate"
-                                                value={values.form6aSubmissionDate}
+                                                name="ombudsman_submit_date"
+                                                value={values.ombudsman_submit_date}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -217,8 +218,8 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Form 6A Courier Date</Label>
                                             <FormikDatePicker
-                                                name="form6aCourierDate"
-                                                value={values.form6aCourierDate}
+                                                name="courier_date"
+                                                value={values.courier_date}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -232,7 +233,7 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
                                     <Colxx xxs="12" lg="3">
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Form 6A Courier Number</Label>
-                                            <Field className="form-control" name="form6aCourierNo" />
+                                            <Field className="form-control" name="courier_number" value={values.courier_number} onChange={setFieldValue} />
                                         </FormGroup>
                                     </Colxx>
                                     {/* Form Column 2 */}
@@ -240,8 +241,8 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
                                         <FormGroup className="error-l-100">
                                             <br />
                                             <FormikCheckbox
-                                                name="isForm6AThroughMail"
-                                                value={values.isForm6AThroughMail}
+                                                name="form6AMail"
+                                                value={values.form6AMail}
                                                 label="Form 6A through Mail"
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
@@ -252,9 +253,9 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
                                     <Colxx xxs="12" lg="3">
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Ombudsman Location</Label>
-                                            <select name="ombudsmanLocation"
+                                            <select name="stateName"
                                                     className="form-control"
-                                                    value={values.ombudsmanLocation}
+                                                    value={values.stateName}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 >
@@ -274,8 +275,8 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Date 1st</Label>
                                             <FormikDatePicker
-                                                name="firstHearingDate"
-                                                value={values.firstHearingDate}
+                                                name="omb_first_date"
+                                                value={values.omb_first_date}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -286,8 +287,8 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Date 2nd</Label>
                                             <FormikDatePicker
-                                                name="secondHearingDate"
-                                                value={values.secondHearingDate}
+                                                name="omb_sec_date"
+                                                value={values.omb_sec_date}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -298,8 +299,8 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Call between Expert and Customer Date</Label>
                                             <FormikDatePicker
-                                                name="callDate"
-                                                value={values.callDate}
+                                                name="expert_customer_date"
+                                                value={values.expert_customer_date}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -331,10 +332,10 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
                                             <Label className="d-block">Called Customer or Not to Check Reward Status</Label>
                                             <FormikCustomRadioGroup
                                                 inline
-                                                name="calledCustForRewardStatus"
+                                                name="check_status"
                                                 id="calledCustForRewardStatus"
                                                 label="Which of these?"
-                                                value={values.calledCustForRewardStatus}
+                                                value={values.check_status}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                                 options={calledCustForRewardStatus}
@@ -346,8 +347,8 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Ombudsman Reward Date</Label>
                                             <FormikDatePicker
-                                                name="ombudsmanRewardDate"
-                                                value={values.ombudsmanRewardDate}
+                                                name="omd_reward_date"
+                                                value={values.omd_reward_date}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -358,8 +359,8 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Ombudsman Award Non Compliance Sent Date</Label>
                                             <FormikDatePicker
-                                                name="SecondCallDate"
-                                                value={values.secondCallDate}
+                                                name="omdNonComplianceDate"
+                                                value={values.omdNonComplianceDate}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -369,9 +370,9 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
                                     <Colxx xxs="12" lg="3">
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Resolution Type</Label>
-                                            <select name="resolutionType"
+                                            <select name="rewardType"
                                                 className="form-control"
-                                                value={values.resolutionType}
+                                                value={values.rewardType}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
                                             >
@@ -419,7 +420,7 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
                                     <Colxx xxs="12" lg="12">
                                         <FormGroup className="error-l-100">
                                             <Label>Ombudsman Pending Reason Listing</Label>
-                                            <Input type="textarea" rows="2" name="ombudsmanPendingReason" id="ombudsmanPendingReason" value={values.ombudsmanPendingReasonListing} />
+                                            <Input type="textarea" rows="2" name="ombudsmanPendingReasonListing" id="ombudsmanPendingReason" value={values.ombudsmanPendingReasonListing} />
                                         </FormGroup>
                                     </Colxx>
                                 </Row>
@@ -454,7 +455,7 @@ export default function OmbudsmanForm ({ heading, details, complaintId }) {
                             </Colxx>
                             {/* Wrapping Column ends */}
                             <Colxx xxs="12" lg="12" className="text-center">
-                                <Button color="primary" type="submit">
+                                <Button color="primary" type="">
                                     Submit
                                 </Button>
                             </Colxx>

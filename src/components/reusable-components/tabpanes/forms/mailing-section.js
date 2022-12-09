@@ -11,6 +11,7 @@ import { Editor } from '@tinymce/tinymce-react';
 import { tinyMceApiKey } from 'constants/defaultValues';
 import { useQuery } from 'hooks/useQuery';
 import { formatDate } from 'helpers/CommonHelper';
+import moment from 'moment';
 
 
 export default function MailingSectionForm ({ heading, details, complaintId }) {
@@ -28,23 +29,25 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
 
     // console.log(details);
     
-    // const onSubmit = (values, { setSubmitting }) => {
-    //     const payload = {
-    //       ...values,
-    //       reactSelect: values.reactSelect.map((t) => t.value),
-    //     };
-    //     setTimeout(() => {
-    //       console.log(JSON.stringify(payload, null, 2));
-    //       setSubmitting(false);
-    //     }, 1000);
-    // };
+    const onSubmit = (values, { setSubmitting }) => {
+        console.log(values)
+        values.preventDefault()
+        const payload = {
+          ...values,
+          reactSelect: values.reactSelect.map((t) => t.value),
+        };
+        setTimeout(() => {
+          console.log(JSON.stringify(payload, null, 2));
+          setSubmitting(false);
+        }, 1000);
+    };
                 
-    // destructuring the required keys from API response
+    // destructuring the required keys from API response draftSharedBool
     const {complaint_date, response_date, complaint_escalation_date, requirementRaisedDate, requirementRevertedDate, requirementSentDate, response_date_company, draftSharedDate, reminderSentDate } = details;
-    
+    console.log("===============================>", moment(complaint_escalation_date).toISOString())
     const complaintDate = (complaint_date != undefined) ? formatDate(complaint_date) : null;
     const firstResponseDateFromCompany = (response_date != undefined) ? formatDate(response_date) : null;
-    const escalationDateSentToCompany = (complaint_escalation_date != undefined) ? formatDate(complaint_escalation_date) : null;
+    const escalationDateSentToCompany = (complaint_escalation_date != undefined) ? new Date(complaint_escalation_date) : null;
     const reqRaisedDate = (requirementRaisedDate != undefined) ? formatDate(requirementRaisedDate) : null;
     const reqRevertedDate = (requirementRevertedDate != undefined) ? formatDate(requirementRevertedDate) : null;
     const firstReminderSentDate = (firstReminderSentDate != undefined) ? new Date(requirementSentDate) : null;
@@ -56,8 +59,9 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
         <Card>
             <CardBody>
                 <h2 className="mb-4">{heading}</h2>
+                {console.log(details)}
                 <Formik initialValues={{
-                    isCustomerIdRegistered: '',
+                    isCustomerIdRegistered: details.service_id ? details.service_id : "",
                     complaintNumber: details.complaint_number ? details.complaint_number : '',
                     complaintDate: complaintDate ? complaintDate : null,
                     firstResponseDateFromCompany: firstResponseDateFromCompany,
@@ -67,8 +71,8 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
                     firstReminderSentDate: firstReminderSentDate,
                     secondResponseDateFromCompany: secondResponseDateFromCompany,
                     isDraftSentByCustomer: details ? details.is_draft_mail_send : '',
-                    isDraftShared: details ? details.is_draft_mail_send : '',
-                    customerDraftSharedDate: customerDraftSharedDate,
+                    isDraftShared: details ? details.draftSharedBool : '',
+                    customerDraftSharedDate: customerDraftSharedDate ? customerDraftSharedDate : new Date(details.draftSharedDate) ,
                     isAcknowledgementReceived: details ? details.is_acknowledgement : '',
                     isRequirementMailSent: details ? details.isRequirement : '',
                     isRequirementMailRevert: details ? details.isRequirementReverted : '',
@@ -76,7 +80,7 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
                     isFirstReminderMailSentToCompany: details ? details.reminder_first : '',
                     firstResponseType: details ? details.firstResponseType : '',
                     complaintDelayReason: details ? details.complaintDelayReason : '',
-                    isFirstEscalationSent: '',
+                    isFirstEscalationSent: details ? details.escalation_first : "",
                     isEscalationShared: '',
                     firstCustomerDraftSharedDate: '',
                     isSecondResponseFromCompany: details ? details.response_company2 : '',
@@ -85,7 +89,7 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
                     secondResponseType: details ? details.secondResponseType : '',
                 }}
                     // validationSchema={SignupSchema}
-                    // onSubmit={onSubmit}
+                    onSubmit={onSubmit}
                 >
                 {({
                     handleSubmit,
@@ -128,24 +132,24 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
                                     <Colxx xxs="12" lg="3">
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Complaint Date</Label>
-                                            <FormikDatePicker
+                                            {/* <FormikDatePicker
                                                 name="complaintDate"
-                                                value={values.complaintDate}
+                                                value={values.complaintDate ? values.complaintDate : ""}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
-                                            />
+                                            /> */}
                                         </FormGroup>
                                     </Colxx>
                                     {/* Form Column 4 */}
                                     <Colxx xxs="12" lg="3">
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">First Response Date from Company </Label>
-                                            <FormikDatePicker
+                                            {/* <FormikDatePicker
                                                 name="firstResponseDateFromCompany"
-                                                value={values.firstResponseDateFromCompany}
+                                                value={values.firstResponseDateFromCompany ? values.firstResponseDateFromCompany : ""}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
-                                            />
+                                            /> */}
                                         </FormGroup>
                                     </Colxx>
                                 </Row>
@@ -158,7 +162,7 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
                                             <Label className="d-block">Escalation Date Sent to Company</Label>
                                             <FormikDatePicker
                                                 name="escalationDateSentToCompany"
-                                                value={values.escalationDateSentToCompany}
+                                                value={values.escalationDateSentToCompany && values.escalationDateSentToCompany != "Invalid Date" ? values.escalationDateSentToCompany : ""}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -168,9 +172,10 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
                                     <Colxx xxs="12" lg="3">
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Requirement Raised Date</Label>
+                                            {console.log(values)}
                                             <FormikDatePicker
                                                 name="reqRaisedDate"
-                                                value={values.reqRaisedDate}
+                                                value={values.reqRaisedDate ? values.reqRaisedDate : ""}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -182,7 +187,7 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
                                             <Label className="d-block">Requirement Reverted Date</Label>
                                             <FormikDatePicker
                                                 name="reqRevertedDate"
-                                                value={values.reqRevertedDate}
+                                                value={values.reqRevertedDate ? values.reqRevertedDate : ""}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -194,7 +199,7 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
                                             <Label className="d-block">Reminder Sent Date</Label>
                                             <FormikDatePicker
                                                 name="firstReminderSentDate"
-                                                value={values.firstReminderSentDate}
+                                                value={values.firstReminderSentDate ? values.firstReminderSentDate : ""}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -210,7 +215,7 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
                                             <Label className="d-block">Second Response Date from Company</Label>
                                             <FormikDatePicker
                                                 name="secondResponseDateFromCompany"
-                                                value={values.secondResponseDateFromCompany}
+                                                value={values.secondResponseDateFromCompany ? values.secondResponseDateFromCompany : ""}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -251,7 +256,7 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
                                             <Label className="d-block">Draft shared with the customer Date</Label>
                                             <FormikDatePicker
                                                 name="customerDraftSharedDate"
-                                                value={values.customerDraftSharedDate}
+                                                value={values.customerDraftSharedDate ? values.customerDraftSharedDate : ""}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -416,7 +421,7 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
                                             <Label className="d-block">Draft shared with the customer Date</Label>
                                             <FormikDatePicker
                                                 name="firstCustomerDraftSharedDate"
-                                                value={values.firstCustomerDraftSharedDate}
+                                                value={values.firstCustomerDraftSharedDate ? values.firstCustomerDraftSharedDate : ""}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />
@@ -463,9 +468,10 @@ export default function MailingSectionForm ({ heading, details, complaintId }) {
                                     <Colxx xxs="12" lg="3">
                                         <FormGroup className="error-l-100">
                                             <Label className="d-block">Reminder Sent Date</Label>
+                                            {console.log("-----------------------?", values)}
                                             <FormikDatePicker
                                                 name="secondReminderSentDate"
-                                                value={values.secondReminderSentDate}
+                                                value={values.secondReminderSentDate ? values.secondReminderSentDate : ""}
                                                 onChange={setFieldValue}
                                                 onBlur={setFieldTouched}
                                             />

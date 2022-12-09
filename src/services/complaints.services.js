@@ -31,8 +31,8 @@ const getPolicyTypes = async () => {
     return await request('GET', apisURLs.policyType);
 }
 
-const getFirstDraftData = async () => {
-    return await request('GET', apisURLs.firstDraftData);
+const getFirstDraftData = async (data) => {
+    return await request('POST', apisURLs.firstDraftData, data);
 }
 
 const getUserBasedData = async () => {
@@ -54,15 +54,15 @@ const getComplaintDetailsById = async (complaintId) => {
 }
 
 const getAllForEscalationByUserId = async (userId) => {
-    return await request('GET', apisURLs.getAllForEscalation, userId);
+    return await request('POST', apisURLs.getAllForEscalation, userId);
 }
 
 const findByUserId = async (userId) => {
-    return await request('GET', apisURLs.findByUserId, userId);
+    return await request('GET', apisURLs.findByUserId, {userId});
 }
 
 const findLegalByComplaintId = async (complaintId) => {
-    return await request('GET', apisURLs.findLegalByComplaintId, complaintId);
+    return await request('POST', apisURLs.findLegalByComplaintId, complaintId);
 }
 
 const getComplaintTypesByPolicyTypeId = async (policyTypeId) => {
@@ -89,12 +89,31 @@ const fetchDocs = async (id1, id2) => {
     return await request('GET', apisURLs.docs + id1 + '/' + id2);
 }
 
+const fetchDraftMail = async (userId, policies) => {
+    return await request("GET", apisURLs.getDraftMail + userId + `?policyNos=` + policies )
+}
+
 const getLegalUserData = async (id) => {
     return await request('GET', apisURLs.getLegalUserData + id);
 }
 
-const getCompanyNoticeData = async (id) => {
-    return await request('GET', apisURLs.getCompanyNoticeData, id);
+const getCompanyNoticeData = async (num) => {
+    return await request('POST', apisURLs.getCompanyNoticeData, {policyNumber : num});
+}
+
+const fetchCompIds = async (id) => {
+    return await request("POST", apisURLs.getCompIds, {userId: id})
+}
+
+const fetchHtmlPage = async (id) => {
+    return await request("POST", apisURLs.getHtmlPage, {id:id})
+}
+
+const fetchAllUserPolicy = async (complaintType, userId) => {
+    return await request("POST", apisURLs.getAllUserPolicy, {
+        complaintType:complaintType,
+        userId:userId
+    })
 }
 
 const omdRemindMail = async (id) => {
@@ -102,7 +121,7 @@ const omdRemindMail = async (id) => {
 }
 
 const getCurrentInvoiceCount = async (headers) => {
-    return await request('GET', apisURLs.getCurrentInvoiceCount, headers)
+    return await request('POST', apisURLs.getCurrentInvoiceCount, headers)
 }
 
 const getComplaints = async function fetchData(selectedPageSize, currentPage, search, statusLabel) {
@@ -152,5 +171,9 @@ export {
     getAllInsa,
     getComplaints,
     downloadComplaintsReport,
-    downloadCustomerReport
+    downloadCustomerReport,
+    fetchDraftMail,
+    fetchCompIds,
+    fetchHtmlPage,
+    fetchAllUserPolicy
 }
