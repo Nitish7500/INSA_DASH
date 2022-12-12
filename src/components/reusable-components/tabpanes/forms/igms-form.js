@@ -7,8 +7,9 @@ import * as Yup from 'yup';
 import React, { useState } from 'react'
 import { Button, Card, CardBody, CustomInput, Form, FormGroup, Input, Label, Modal, ModalBody, Row } from 'reactstrap'
 import { formatDate } from 'helpers/CommonHelper';
+import moment from 'moment';
 
-export default function IGMSForm ({ heading, details, complaintId }) {
+export default function IGMSForm ({ heading, details, complaintId, handleFormChange }) {
 
     const [documentUploadModal, setDocumentUploadModal] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -38,202 +39,153 @@ export default function IGMSForm ({ heading, details, complaintId }) {
         <Card>
             <CardBody>
                 <h2 className="mb-4">{heading}</h2>
-                <Formik initialValues={{
-                    igmsTokenNo: IGMS_Token ? IGMS_Token : '',
-                    igmsdate: igmsDate ? igmsDate : null,
-                    igmsEscalationDate: escalationDate && new Date(escalationDate) != "Invalid Date" ? escalationDate : null,
-                    igmsLoginDob: IGMSLoginDOB ? new Date(IGMSLoginDOB) : null,
-                    igmsDoneBy: IGMS_Done ? IGMS_Done : null,
-                    firstResponseFromIGMSDate: response_date_igms ? new Date(response_date_igms) : null,
-                    secondResponseFromIGMSDate: response_date_igms1 ? new Date(new Date(response_date_igms)) : null,
-                    secondIgmsEscalationDate: escalationDate &&  new Date(escalationDate) != "Invalid Date" ? escalationDate : null,
-                    isResponseRecieved: igmsResponseReceived ? igmsResponseReceived : '',
-                    isRequirementRecieved: igmsRequirementReceived ? igmsRequirementReceived : '',
-                    igmsContent: igms_content ? igms_content : '',
-                    resDataIgms: response_data_igms ? response_data_igms : '',
-                    secondResDataIgms: response_data2_igms ? response_data2_igms : '',   
-                }}
-                    // validationSchema={SignupSchema}
-                    // onSubmit={onSubmit}
-                >
-                {({
-                    handleSubmit,
-                    setFieldValue,
-                    setFieldTouched,
-                    handleChange,
-                    handleBlur,
-                    values
-                }) => (
-                    <Form className="av-tooltip tooltip-label-right">
-                        <Row className="mb-4">
-                            <Colxx xxs="12" lg="12" className="mb-5">
-
-                                {/* Form Row */}
-                                <Row className='mb-3'>
-                                    {/* Form Column 1 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">IGMS Token Number</Label>
-                                            <Field className="form-control" name="igmsTokenNo" />
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column 2 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">IGMS Date</Label>
-                                            {console.log(values)}
-                                            <FormikDatePicker
-                                                name="igmsdate"
-                                                value={values.igmsdate}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column 3 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">IGMS Escalation Date</Label>
-                                            <FormikDatePicker
-                                                name="igmsEscalationDate"
-                                                value={values.igmsEscalationDate}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            />
-                                            {console.log("--------------", new Date(escalationDate))}
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column 4 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">IGMS Login DOB</Label>
-                                            <FormikDatePicker
-                                                name="igmsLoginDob"
-                                                value={values.igmsLoginDob}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                </Row>
-
-                                {/* Form Row */}
-                                <Row className='mb-3'>
-                                    {/* Form Column 1 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">IGMS Done By</Label>
-                                            <Field className="form-control" name="igmsDoneBy" />
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column 2 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">First Response date from IGMS</Label>
-                                            <FormikDatePicker
-                                                name="firstResponseFromIGMSDate"
-                                                value={values.firstResponseFromIGMSDate}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column 3 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">Second Response date from IGMS</Label>
-                                            <FormikDatePicker
-                                                name="secondResponseFromIGMSDate"
-                                                value={values.secondResponseFromIGMSDate}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column 4 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">IGMS Escalation Date</Label>
-                                            <FormikDatePicker
-                                                name="secondIgmsEscalationDate"
-                                                value={values.secondIgmsEscalationDate}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                </Row>
-
-                                {/* Form Row */}
-                                <Row className='mb-3'>
-                                    {/* Form Column 1 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-150">
-                                            <FormikCheckbox
-                                                name="isResponseRecieved"
-                                                value={values.isResponseRecieved}
-                                                label="Response Recieved"
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-
-                                    {/* Form Column 2 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-150">
-                                            <FormikCheckbox
-                                                name="isRequirementRecieved"
-                                                value={values.isRequirementRecieved}
-                                                label="Requirement Recieved"
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                </Row>
-
-                                {/* Textarea */}
-                                <Row className='mb-4'>
-                                    <Colxx xxs="12" lg="12">
-                                        <FormGroup className="error-l-100">
-                                            <Label>IGMS Content</Label>
-                                            <Input type="textarea" rows="2" name="igmsContent" id="igmsContent" value={values.igmsContent}/>
-                                        </FormGroup>
-                                    </Colxx>
-                                </Row>
-
-                                {/* Textarea */}
-                                <Row className='mb-4'>
-                                    <Colxx xxs="12" lg="12">
-                                        <FormGroup className="error-l-100">
-                                            <Label>Response Data From IGMS</Label>
-                                            <Input type="textarea" rows="2" name="resDataIgms" id="resDataIgms" value={values.resDataIgms} />
-                                        </FormGroup>
-                                    </Colxx>
-                                </Row>
-
-                                {/* Textarea */}
-                                <Row className='mb-4'>
-                                    <Colxx xxs="12" lg="12">
-                                        <FormGroup className="error-l-100">
-                                            <Label>Second Response Data From IGMS</Label>
-                                            <Input type="textarea" rows="2" name="secondResDataIgms" id="secondResDataIgms" value={values.secondResDataIgms} />
-                                        </FormGroup>
-                                    </Colxx>
-                                </Row>
-                            
-                            </Colxx>
-                            {/* Wrapping Column ends */}
-                            <Colxx xxs="12" lg="12" className="text-center">
-                                <Button color="primary" type="submit">
-                                    Submit
-                                </Button>
-                            </Colxx>
-                        </Row>
-                    </Form>
-                )}
-                </Formik>
+                <div className='container'>
+                    <div className='row'>
+                        <div className='col-sm-3'>
+                            <label>IGMS Token Number</label>
+                            <input className='form-control' type={"text"} name="IGMS_Token" value={details.IGMS_Token} onChange={handleFormChange} />
+                        </div>
+                        <div className='col-sm-3'>
+                            <label>IGMS Date</label>
+                            {console.log(details.IGMS_date)}
+                            <input className='form-control' type={"date"} name="IGMS_date" value={details.IGMS_date ? moment(details.IGMS_date).format("YYYY-MM-DD") : ""} onChange={handleFormChange} />
+                        </div>
+                        <div className='col-sm-3'>
+                            <label>IGMS Escalation Date</label>
+                            <input className='form-control' type={"date"} name="escalation_date" value={details.escalation_date ? moment(details.escalation_date).format("YYYY-MM-DD") : ""} onChange={handleFormChange} />
+                        </div>
+                        <div className='col-sm-3'>
+                            <label>IGMS Login DOB</label>
+                            <input className='form-control' type={"date"} name="IGMSLoginDOB"  value={details.IGMSLoginDOB ? moment(details.IGMSLoginDOB).format("YYYY-MM-DD") : ""} onChange={handleFormChange} />
+                        </div>
+                    </div>
+                    <div className='row mt-4'>
+                        <div className='col-sm-3'>
+                            <label>IGMS Done By</label>
+                            <select className='form-control' name="IGMS_Done"  value={details.IGMS_Done} onChange={handleFormChange} >
+                                
+                                <option value="PAN-No">Pan No.</option>
+                                <option value="Mobile-No">Mobile No.</option>
+                                <option value="LandLine-No">Landline No.</option>
+                                <option value="Voter-ID-No">Voter ID card number</option>
+                                <option value="Ration-Card-No">Ration Card No.</option>
+                                <option value="Passport-No">Passport No.</option>
+                                <option value="DOB">Date of Birth</option>
+                            </select>
+                        </div>
+                        <div className='col-sm-3'>
+                            <label>First Response date from IGMS</label>
+                            <input
+                          type="date"
+                          class="form-control"
+                          value={details.response_date_igms ? moment(details.response_date_igms).format("YYYY-MM-DD") : ""}
+                          name="response_date_igms"
+                          onChange={handleFormChange}
+                        />
+                        </div>
+                        <div class="col-sm-3">
+                      <label>Second Response date from IGMS</label>
+                      <div class="input-group">
+                        <input
+                          type="date"
+                          class="form-control"
+                          value={details.response_date_igms1 ? moment(details.response_date_igms1).format("YYYY-MM-DD") : ""}
+                          name="response_date_igms1"
+                          onChange={handleFormChange}
+                        />
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <label>IGMS Escalation Date</label>
+                      <div class="input-group">
+                        <input
+                          type="date"
+                          class="form-control"
+                          value={details.escalation_date ? moment(details.escalation_date).format("YYYY-MM-DD") : ""}
+                          name="escalation_date"
+                          onChange={handleFormChange}
+                          placeholder="Response Date..."
+                        />
+                      </div>
+                    </div>
+                    </div>
+                    <div className='row mt-4'>
+                    <div class="col-sm-3 d-flex">
+                      <label>Response Received</label>
+                      <div class=" ml-3 mt-1">
+                        <input
+                          type="checkbox"
+                          class="form-control"
+                          value={details.igmsResponseReceived}
+                          name="igmsResponseReceived"
+                          onChange={handleFormChange}
+                          placeholder="Response Date..."
+                        />
+                      </div>
+                    </div>
+                    <div class="col-sm-3 d-flex">
+                      <label>Requirement Received</label>
+                      <div class="ml-3 mt-1">
+                        <input
+                          type="checkbox"
+                          class="form-control"
+                          value={details.igmsRequirementReceived}
+                          name="igmsRequirementReceived"
+                          onChange={handleFormChange}
+                          placeholder="Response Date..."
+                        />
+                      </div>
+                    </div>
+                    </div>
+                    <div className='row mt-4'>
+                    <div class="col-sm-12">
+                      <label>IGMS Content</label>
+                      <div class="input-group">
+                        <textarea
+                        rows={5}
+                          type="textarea"
+                          class="form-control"
+                          value={details.igms_content}
+                          name="igms_content"
+                          onChange={handleFormChange}
+                          placeholder="Response Data..."
+                        />
+                      </div>
+                    </div>
+                    </div>
+                    <div class="row mt-4">
+                    <div class="col-sm-12">
+                      <label>Response Data From IGMS</label>
+                      <div class="input-group">
+                        <textarea
+                        rows={5}
+                          type="textarea"
+                          class="form-control"
+                          value={details.response_data_igms}
+                          name="response_date_igms"
+                          onChange={handleFormChange}
+                          placeholder="Response Data..."
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-4">
+                    <div class="col-sm-12">
+                      <label>Second Response Data From IGMS</label>
+                      <div class="input-group">
+                        <textarea
+                        rows={5}
+                          type="textarea"
+                          class="form-control"
+                          value={details.response_data2_igms}
+                          name="response_data2_igms"
+                          onChange={handleFormChange}
+                          placeholder="Response Data..."
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
             </CardBody>
         </Card>
     )

@@ -1,569 +1,554 @@
 //mailing section nested form
 
-import { Colxx } from 'components/common/CustomBootstrap'
-import { FormikCheckbox, FormikCustomCheckboxGroup, FormikCustomRadioGroup, FormikDatePicker } from 'containers/form-validations/FormikFields'
-import { Field, Formik } from 'formik'
-import * as Yup from 'yup';
-import React, { useRef, useState } from 'react'
-import { Button, Card, CardBody, CustomInput, Form, FormGroup, Input, Label, Modal, ModalBody, Row } from 'reactstrap'
-import { complaintDelayReason, firstResponseType, isAcknowledgementReceived, isCustomerIDRegistered, isDraftSentByCustomer, isFirstEscalationSent, isFirstReminderMailSentToCompany, isFirstResponseFromCompany, isRequirementMailRevert, isRequirementMailSent, isSecondReminderMailSentToCompany, isSecondResponseFromCompany, secondResponseType } from 'constants/formValues';
-import { Editor } from '@tinymce/tinymce-react';
-import { tinyMceApiKey } from 'constants/defaultValues';
-import { useQuery } from 'hooks/useQuery';
-import { formatDate } from 'helpers/CommonHelper';
-import moment from 'moment';
+import { Colxx } from "components/common/CustomBootstrap";
+import {
+  FormikCheckbox,
+  FormikCustomCheckboxGroup,
+  FormikCustomRadioGroup,
+  FormikDatePicker,
+} from "containers/form-validations/FormikFields";
+import { Field, Formik } from "formik";
+import * as Yup from "yup";
+import React, { useRef, useState } from "react";
+import {
+  Button,
+  Card,
+  CardBody,
+  CustomInput,
+  Form,
+  FormGroup,
+  Input,
+  Label,
+  Modal,
+  ModalBody,
+  Row,
+} from "reactstrap";
+import {
+  complaintDelayReason,
+  firstResponseType,
+  isAcknowledgementReceived,
+  isCustomerIDRegistered,
+  isDraftSentByCustomer,
+  isFirstEscalationSent,
+  isFirstReminderMailSentToCompany,
+  isFirstResponseFromCompany,
+  isRequirementMailRevert,
+  isRequirementMailSent,
+  isSecondReminderMailSentToCompany,
+  isSecondResponseFromCompany,
+  secondResponseType,
+} from "constants/formValues";
+import { Editor } from "@tinymce/tinymce-react";
+import { tinyMceApiKey } from "constants/defaultValues";
+import { useQuery } from "hooks/useQuery";
+import { formatDate } from "helpers/CommonHelper";
+import moment from "moment";
 
+export default function MailingSectionForm({
+    earlierMailsRef,
+    escalationPointsRef,
+  heading,
+  details,
+  complaintId,
+  handleFormChange,
+}) {
+  const [documentUploadModal, setDocumentUploadModal] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-export default function MailingSectionForm ({ heading, details, complaintId }) {
+  const editorRef = useRef(null);
+  const log = (e) => {
+    e.preventDefault();
+    if (editorRef.current) {
+      console.log(editorRef.current.getContent());
+    }
+  };
 
-    const [documentUploadModal, setDocumentUploadModal] = useState(false);
-    const [isLoaded, setIsLoaded] = useState(false);
+  // console.log(details);
 
-    const editorRef = useRef(null);
-    const log = (e) => {
-        e.preventDefault()
-        if (editorRef.current) {
-        console.log(editorRef.current.getContent());
-        }
+  const onSubmit = (values, { setSubmitting }) => {
+    console.log(values);
+    values.preventDefault();
+    const payload = {
+      ...values,
+      reactSelect: values.reactSelect.map((t) => t.value),
     };
+    setTimeout(() => {
+      console.log(JSON.stringify(payload, null, 2));
+      setSubmitting(false);
+    }, 1000);
+  };
 
-    // console.log(details);
-    
-    const onSubmit = (values, { setSubmitting }) => {
-        console.log(values)
-        values.preventDefault()
-        const payload = {
-          ...values,
-          reactSelect: values.reactSelect.map((t) => t.value),
-        };
-        setTimeout(() => {
-          console.log(JSON.stringify(payload, null, 2));
-          setSubmitting(false);
-        }, 1000);
-    };
-                
-    // destructuring the required keys from API response draftSharedBool
-    const {complaint_date, response_date, complaint_escalation_date, requirementRaisedDate, requirementRevertedDate, requirementSentDate, response_date_company, draftSharedDate, reminderSentDate } = details;
-    console.log("===============================>", moment(complaint_escalation_date).toISOString())
-    const complaintDate = (complaint_date != undefined) ? formatDate(complaint_date) : null;
-    const firstResponseDateFromCompany = (response_date != undefined) ? formatDate(response_date) : null;
-    const escalationDateSentToCompany = (complaint_escalation_date != undefined) ? new Date(complaint_escalation_date) : null;
-    const reqRaisedDate = (requirementRaisedDate != undefined) ? formatDate(requirementRaisedDate) : null;
-    const reqRevertedDate = (requirementRevertedDate != undefined) ? formatDate(requirementRevertedDate) : null;
-    const firstReminderSentDate = (firstReminderSentDate != undefined) ? new Date(requirementSentDate) : null;
-    const customerDraftSharedDate = (customerDraftSharedDate != undefined) ? new Date(draftSharedDate) : null;
-    const secondResponseDateFromCompany = (secondResponseDateFromCompany != undefined) ? new Date(response_date_company) : null;
-    const secondReminderSentDate = (secondReminderSentDate != undefined) ? new Date(reminderSentDate) : null;
-    
-    return (
-        <Card>
-            <CardBody>
-                <h2 className="mb-4">{heading}</h2>
-                {console.log(details)}
-                <Formik initialValues={{
-                    isCustomerIdRegistered: details.service_id ? details.service_id : "",
-                    complaintNumber: details.complaint_number ? details.complaint_number : '',
-                    complaintDate: complaintDate ? complaintDate : null,
-                    firstResponseDateFromCompany: firstResponseDateFromCompany,
-                    escalationDateSentToCompany: escalationDateSentToCompany,
-                    reqRaisedDate: reqRaisedDate,
-                    reqRevertedDate: reqRevertedDate,
-                    firstReminderSentDate: firstReminderSentDate,
-                    secondResponseDateFromCompany: secondResponseDateFromCompany,
-                    isDraftSentByCustomer: details ? details.is_draft_mail_send : '',
-                    isDraftShared: details ? details.draftSharedBool : '',
-                    customerDraftSharedDate: customerDraftSharedDate ? customerDraftSharedDate : new Date(details.draftSharedDate) ,
-                    isAcknowledgementReceived: details ? details.is_acknowledgement : '',
-                    isRequirementMailSent: details ? details.isRequirement : '',
-                    isRequirementMailRevert: details ? details.isRequirementReverted : '',
-                    isFirstResponseFromCompany: details ? details.response_company : '',
-                    isFirstReminderMailSentToCompany: details ? details.reminder_first : '',
-                    firstResponseType: details ? details.firstResponseType : '',
-                    complaintDelayReason: details ? details.complaintDelayReason : '',
-                    isFirstEscalationSent: details ? details.escalation_first : "",
-                    isEscalationShared: '',
-                    firstCustomerDraftSharedDate: '',
-                    isSecondResponseFromCompany: details ? details.response_company2 : '',
-                    isSecondReminderMailSentToCompany: details ? details.reminder_second : '',
-                    secondReminderSentDate: secondReminderSentDate,
-                    secondResponseType: details ? details.secondResponseType : '',
-                }}
-                    // validationSchema={SignupSchema}
-                    onSubmit={onSubmit}
+  // destructuring the required keys from API response draftSharedBool
+  const {
+    complaint_date,
+    response_date,
+    complaint_escalation_date,
+    requirementRaisedDate,
+    requirementRevertedDate,
+    requirementSentDate,
+    response_date_company,
+    draftSharedDate,
+    reminderSentDate,
+  } = details;
+  console.log(
+    "===============================>",
+    moment(complaint_escalation_date).toISOString()
+  );
+  const complaintDate =
+    complaint_date != undefined ? formatDate(complaint_date) : null;
+  const firstResponseDateFromCompany =
+    response_date != undefined ? formatDate(response_date) : null;
+  const escalationDateSentToCompany =
+    complaint_escalation_date != undefined
+      ? new Date(complaint_escalation_date)
+      : null;
+  const reqRaisedDate =
+    requirementRaisedDate != undefined
+      ? formatDate(requirementRaisedDate)
+      : null;
+  const reqRevertedDate =
+    requirementRevertedDate != undefined
+      ? formatDate(requirementRevertedDate)
+      : null;
+  const firstReminderSentDate =
+    firstReminderSentDate != undefined ? new Date(requirementSentDate) : null;
+  const customerDraftSharedDate =
+    customerDraftSharedDate != undefined ? new Date(draftSharedDate) : null;
+  const secondResponseDateFromCompany =
+    secondResponseDateFromCompany != undefined
+      ? new Date(response_date_company)
+      : null;
+  const secondReminderSentDate =
+    secondReminderSentDate != undefined ? new Date(reminderSentDate) : null;
+
+
+  return (
+    <Card>
+      <CardBody>
+        <h2 className="mb-4">{heading}</h2>
+        {console.log(details)}
+        <div className="container mb-5 pb-5">
+          <div className="row">
+            <div className="col-sm-3">
+              <label>Customer ID is Register</label>
+              <select
+                class="form-control"
+                value={details.service_id}
+                name="service_id"
+                formControlName="service_id"
+                onChange={handleFormChange}
+              >
+                <option value={""}> Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+            <div className="col-sm-3">
+              <label>Complaint Number</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  value={details.complaint_number}
+                  name="complaint_number"
+                  onChange={handleFormChange}
+                />
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <label>Choose Date Type -</label>
+              <div class="input-group">
+                <select
+                  class="form-control"
+                  value={details.selectDate}
+                  name="selectDate"
+                  formControlName="sample"
                 >
-                {({
-                    handleSubmit,
-                    setFieldValue,
-                    setFieldTouched,
-                    handleChange,
-                    handleBlur,
-                    values
-                }) => (
-                    <Form className="av-tooltip tooltip-label-right">
-                        <Row className="mb-4">
-                            <Colxx xxs="12" lg="12" className="mb-5">
-
-                                {/* Form Row */}
-                                <Row className='mb-3'>
-                                    {/* Form Column 1 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label>Customer ID is Register</Label><br />
-                                            <FormikCustomRadioGroup
-                                                inline
-                                                name="isCustomerIdRegistered"
-                                                id="isCustomerIdRegistered"
-                                                label="Which of these?"
-                                                value={values.isCustomerIdRegistered}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                                options={isCustomerIDRegistered}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column 2 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label>Complaint Number</Label>
-                                            <Field className="form-control" name="complaintNumber" />
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column 3 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">Complaint Date</Label>
-                                            {/* <FormikDatePicker
-                                                name="complaintDate"
-                                                value={values.complaintDate ? values.complaintDate : ""}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            /> */}
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column 4 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">First Response Date from Company </Label>
-                                            {/* <FormikDatePicker
-                                                name="firstResponseDateFromCompany"
-                                                value={values.firstResponseDateFromCompany ? values.firstResponseDateFromCompany : ""}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            /> */}
-                                        </FormGroup>
-                                    </Colxx>
-                                </Row>
-                            
-                                {/* Form Row */}
-                                <Row className='mb-3'>
-                                    {/* Form Column 1 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">Escalation Date Sent to Company</Label>
-                                            <FormikDatePicker
-                                                name="escalationDateSentToCompany"
-                                                value={values.escalationDateSentToCompany && values.escalationDateSentToCompany != "Invalid Date" ? values.escalationDateSentToCompany : ""}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column 2 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">Requirement Raised Date</Label>
-                                            {console.log(values)}
-                                            <FormikDatePicker
-                                                name="reqRaisedDate"
-                                                value={values.reqRaisedDate ? values.reqRaisedDate : ""}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column 3 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">Requirement Reverted Date</Label>
-                                            <FormikDatePicker
-                                                name="reqRevertedDate"
-                                                value={values.reqRevertedDate ? values.reqRevertedDate : ""}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column 4 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">Reminder Sent Date</Label>
-                                            <FormikDatePicker
-                                                name="firstReminderSentDate"
-                                                value={values.firstReminderSentDate ? values.firstReminderSentDate : ""}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                </Row>
-
-                                {/* Form Row */}
-                                <Row className='mb-3'>
-                                    {/* Form Column 1 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">Second Response Date from Company</Label>
-                                            <FormikDatePicker
-                                                name="secondResponseDateFromCompany"
-                                                value={values.secondResponseDateFromCompany ? values.secondResponseDateFromCompany : ""}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column 2 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">Draft Mail Sent by customer or Not</Label>
-                                            <FormikCustomRadioGroup
-                                                inline
-                                                name="isDraftSentByCustomer"
-                                                id="isDraftSentByCustomer"
-                                                label="Which of these?"
-                                                value={values.isDraftSentByCustomer}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                                options={isDraftSentByCustomer}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column 3 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">Is draft shared ?</Label>
-                                            <FormikCheckbox
-                                                name="isDraftShared"
-                                                value={values.isDraftShared}
-                                                label="Draft shared with the customer"
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column 4 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">Draft shared with the customer Date</Label>
-                                            <FormikDatePicker
-                                                name="customerDraftSharedDate"
-                                                value={values.customerDraftSharedDate ? values.customerDraftSharedDate : ""}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                </Row>
-                            
-                                {/* Form Row */}
-                                <Row className='mb-3'>
-                                    {/* Form Column 1 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">Acknowledgement Received or Not</Label>
-                                            <FormikCustomRadioGroup
-                                                inline
-                                                name="isAcknowledgementReceived"
-                                                id="isAcknowledgementReceived"
-                                                label="Which of these?"
-                                                value={values.isAcknowledgementReceived}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                                options={isAcknowledgementReceived}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column 2 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">Requirement Mail Sent By Company</Label>
-                                            <FormikCustomRadioGroup
-                                                inline
-                                                name="isRequirementMailSent"
-                                                id="isRequirementMailSent"
-                                                label="Which of these?"
-                                                value={values.isRequirementMailSent}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                                options={isRequirementMailSent}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column 3 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">Requirement Mail Revert Sent By Customer</Label>
-                                            <FormikCustomRadioGroup
-                                                inline
-                                                name="isRequirementMailRevert"
-                                                id="isRequirementMailRevert"
-                                                label="Which of these?"
-                                                value={values.isRequirementMailRevert}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                                options={isRequirementMailRevert}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                </Row>
-                            
-                                <h5>First Response Data</h5><hr />
-                                {/* Form Row */}
-                                <Row className='mb-3'>
-                                    {/* Form Column 1 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">First Response from Company</Label>
-                                            <FormikCustomRadioGroup
-                                                inline
-                                                name="isFirstResponseFromCompany"
-                                                id="isFirstResponseFromCompany"
-                                                label="Which of these?"
-                                                value={values.isFirstResponseFromCompany}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                                options={isFirstResponseFromCompany}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column 2 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">Reminder Mail Sent to Company</Label>
-                                            <FormikCustomRadioGroup
-                                                inline
-                                                name="isFirstReminderMailSentToCompany"
-                                                id="isFirstReminderMailSentToCompany"
-                                                label="Which of these?"
-                                                value={values.isFirstReminderMailSentToCompany}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                                options={isFirstReminderMailSentToCompany}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column 3 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">First Response Type</Label>
-                                            <select name="firstResponseType"
-                                                    className="form-control"
-                                                    value={values.firstResponseType}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                >
-                                                {firstResponseType.map((item) => (
-                                                    <option value={item.value}>{item.label}</option>
-                                                ))}
-                                            </select>
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column 4 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">Complaint delay reason</Label>
-                                            <select name="complaintDelayReason"
-                                                    className="form-control"
-                                                    value={values.complaintDelayReason}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                >
-                                                {complaintDelayReason.map((item) => (
-                                                    <option value={item.value}>{item.label}</option>
-                                                ))}
-                                            </select>
-                                        </FormGroup>
-                                    </Colxx>
-                                </Row>
-
-                                {/* Form Row */}
-                                <Row className='mb-3'>
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label>First Escalation Sent or Not</Label><br />
-                                            <FormikCustomRadioGroup
-                                                inline
-                                                name="isFirstEscalationSent"
-                                                id="isFirstEscalationSent"
-                                                label="Which of these?"
-                                                value={values.isFirstEscalationSent}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                                options={isFirstEscalationSent}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">Escalation shared with the customer</Label>
-                                            <FormikCheckbox
-                                                name="isEscalationShared"
-                                                value={values.isEscalationShared}
-                                                label="Draft shared with the customer"
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">Draft shared with the customer Date</Label>
-                                            <FormikDatePicker
-                                                name="firstCustomerDraftSharedDate"
-                                                value={values.firstCustomerDraftSharedDate ? values.firstCustomerDraftSharedDate : ""}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                </Row>
-
-                                <h5>Second Response Data</h5><hr />
-                                {/* Form Row */}
-                                <Row className='mb-3'>
-                                    {/* Form Column 1 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">Second Response from Company</Label>
-                                            <FormikCustomRadioGroup
-                                                inline
-                                                name="isSecondResponseFromCompany"
-                                                id="isSecondResponseFromCompany"
-                                                label="Which of these?"
-                                                value={values.isSecondResponseFromCompany}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                                options={isSecondResponseFromCompany}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column 2 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">Reminder Mail Sent to Company</Label>
-                                            <FormikCustomRadioGroup
-                                                inline
-                                                name="isSecondReminderMailSentToCompany"
-                                                id="isSecondReminderMailSentToCompany"
-                                                label="Which of these?"
-                                                value={values.isSecondReminderMailSentToCompany}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                                options={isSecondReminderMailSentToCompany}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column 3 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">Reminder Sent Date</Label>
-                                            {console.log("-----------------------?", values)}
-                                            <FormikDatePicker
-                                                name="secondReminderSentDate"
-                                                value={values.secondReminderSentDate ? values.secondReminderSentDate : ""}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                    {/* Form Column 4 */}
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">Second Response Type</Label>
-                                            <select name="secondResponseType"
-                                                    className="form-control"
-                                                    value={values.secondResponseType}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                >
-                                                {secondResponseType.map((item) => (
-                                                    <option value={item.value}>{item.label}</option>
-                                                ))}
-                                            </select>
-                                        </FormGroup>
-                                    </Colxx>
-                                </Row>
-
-                                {/* Texr=tarea */}
-                                <Row className='mb-4'>
-                                    <Colxx xxs="12" lg="12">
-                                        <FormGroup className="error-l-100">
-                                            <Label>Escalation Mail Points</Label>
-                                            <Editor
-                                                apiKey={tinyMceApiKey}
-                                                onInit={(evt, editor) => editorRef.current = editor}
-                                                initialValue = {values.escalationMailPoints}
-                                                init={{
-                                                height: 500,
-                                                menubar: false,
-                                                plugins: [
-                                                    'advlist autolink lists link image charmap print preview anchor',
-                                                    'searchreplace visualblocks code fullscreen',
-                                                    'insertdatetime media table paste code help wordcount'
-                                                ],
-                                                toolbar: 'undo redo | formatselect | ' +
-                                                'bold italic backcolor | alignleft aligncenter ' +
-                                                'alignright alignjustify | bullist numlist outdent indent | ' +
-                                                'removeformat | help',
-                                                content_style: 'body { font-family:Work Sans,Helvetica,Arial,sans-serif; font-size:14px }'
-                                                }}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                </Row>
-
-                                {/* Texr=tarea */}
-                                <Row className='mb-4'>
-                                    <Colxx xxs="12" lg="12">
-                                        <FormGroup className="error-l-100">
-                                            <Label>Earlier Mail Editors</Label>
-                                            <Editor
-                                                apiKey={tinyMceApiKey}
-                                                onInit={(evt, editor) => editorRef.current = editor}
-                                                initialValue = {values.earlierMailEditors}
-                                                init={{
-                                                height: 500,
-                                                menubar: false,
-                                                plugins: [
-                                                    'advlist autolink lists link image charmap print preview anchor',
-                                                    'searchreplace visualblocks code fullscreen',
-                                                    'insertdatetime media table paste code help wordcount'
-                                                ],
-                                                toolbar: 'undo redo | formatselect | ' +
-                                                'bold italic backcolor | alignleft aligncenter ' +
-                                                'alignright alignjustify | bullist numlist outdent indent | ' +
-                                                'removeformat | help',
-                                                content_style: 'body { font-family:Work Sans,Helvetica,Arial,sans-serif; font-size:14px }'
-                                                }}
-                                            />
-                                        </FormGroup>
-                                    </Colxx>
-                                </Row>
-                            
-                            </Colxx>
-                            {/* Wrapping Column ends */}
-                            <Colxx xxs="12" lg="12" className="text-center">
-                                <Button color="primary" type="button">
-                                    Submit
-                                </Button>
-                            </Colxx>
-                        </Row>
-                    </Form>
-                )}
-                </Formik>
-            </CardBody>
-        </Card>
-    )
+                  <option value={""}>Select Type</option>
+                  <option value="compDate">Complaint Date</option>
+                  <option value="respDate">
+                    First Response Date from Company
+                  </option>
+                  <option value="secRespDate">
+                    Second Response Date from Company
+                  </option>
+                  <option value="compEsclDate">
+                    Escalation Date Sent to Company
+                  </option>
+                  <option value="reqRaisedDate">Requirement Raised Date</option>
+                  <option value="reqRevertDate">
+                    Requirement Reverted Date
+                  </option>
+                  <option value="firstRemSentDate">
+                    First Reminder Sent Date
+                  </option>
+                  <option value="secRemSentDate">
+                    Second Reminder Sent Date
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div className="col-sm-3">
+              <label>First Response Date from Company</label>
+              <div class="input-group">
+                <input
+                  type="date"
+                  class="form-control"
+                  value="caseone.response_date_company"
+                  name="response_date_company"
+                  onChange={handleFormChange}
+                  placeholder="Response Date..."
+                />
+              </div>
+            </div>
+          </div>
+          <div className="row mt-4">
+            <div className="col-sm-3">
+              <label>Escalation Date Sent to Company</label>
+              <input
+                type="date"
+                class="form-control"
+                value={details.complaint_escalation_date}
+                name="complaint_escalation_date"
+                onChange={handleFormChange}
+                placeholder="Response Date..."
+              />
+            </div>
+            <div className="col-sm-3">
+              <label>Requirement Raised Date</label>
+              <input
+                type="date"
+                class="form-control"
+                value={details.requirementRaisedDate}
+                name="requirementRaisedDate"
+                onChange={handleFormChange}
+                placeholder="Requirement Date..."
+              />
+            </div>
+            <div className="col-sm-3">
+              <label>Requirement Reverted Date</label>
+              <input
+                type="date"
+                class="form-control"
+                value={details.requirementRevertedDate}
+                name="requirementRevertedDate"
+                onChange={handleFormChange}
+                placeholder="Requirement Date..."
+              />
+            </div>
+            <div className="col-sm-3">
+              <label>First Reminder Sent Date</label>
+              <input
+                type="date"
+                class="form-control"
+                value={details.requirementSentDate}
+                name="requirementSentDate"
+                onChange={handleFormChange}
+                placeholder="Response Date..."
+              />
+            </div>
+          </div>
+          <div className="row mt-4">
+            <div className="col-sm-3">
+              <label>Second Response Date from Company</label>
+              <input
+                type="date"
+                class="form-control"
+                value={details?.reminderSentDate}
+                name="reminderSentDate"
+                onChange={handleFormChange}
+                placeholder="Requirement Date..."
+              />
+            </div>
+            <div className="col-sm-3">
+              <label>Draft Mail Sent by customer or Not</label>
+              <select
+                class="form-control"
+                value={details.is_draft_mail_send}
+                onChange={handleFormChange}
+                name="is_draft_mail_send"
+              >
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+            <div className="col-sm-3">
+              <label>Draft shared with the customer</label>
+              <div class="input-group">
+                <input
+                  type="checkbox"
+                  name="draftSharedBool"
+                  class="form-control"
+                  onChange={handleFormChange}
+                  value={details?.draftSharedBool}
+                />
+              </div>
+            </div>
+            <div className="col-sm-3">
+              <label>Draft shared with the customer Date</label>
+              <input
+                type="date"
+                class="form-control"
+                value={details?.draftSharedDate}
+                name="draftSharedDate"
+                //   onChange={handleFormChange}
+                placeholder="Requirement Date..."
+                disabled
+              />
+            </div>
+          </div>
+          <div className="row mt-4">
+            <div className="col-sm-3">
+              <label>Requirement Mail Sent By Company</label>
+              <select
+                class="form-control"
+                value={details.isRequirement}
+                name="isRequirement"
+                onChange={handleFormChange}
+              >
+                <optio value={""}></optio>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+            <div className="col-sm-3">
+              <label>Requirement Mail Revert Sent By Customer</label>
+              <select
+                class="form-control"
+                value={details.isRequirementReverted}
+                name="isRequirementReverted"
+                onChange={handleFormChange}
+              >
+                <optio value={""}></optio>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+          </div>
+          <h4>First Response Data</h4>
+          <hr />
+          <div className="row">
+            <div className="col-sm-3">
+              <label>First Response from Company</label>
+              <select
+                class="form-control"
+                value={details.response_company}
+                name="response_company"
+                onChange={handleFormChange}
+                disabled
+              >
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+            <div className="col-sm3">
+              <label>Reminder Mail Sent to Company</label>
+              <select
+                class="form-control"
+                value={details.reminder_first}
+                name="reminder_first"
+                onChange={handleFormChange}
+              >
+                <option value={""}></option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+            <div className="col-sm-3">
+              <label>Complaint delay reason</label>
+              <select
+                class="form-control"
+                value={details.complaintDelayReason}
+                name="complaintDelayReason"
+                onChange={handleFormChange}
+              >
+                <option value={""}>Select Delay Reason</option>
+                <option value="Customer not responding">
+                  Customer not responding
+                </option>
+                <option value="Customer responding but not doing the mail">
+                  Customer responding but not doing the mail
+                </option>
+                <option value="Customer is not fulfilling the requirements raised by the company">
+                  Customer is not fulfilling the requirements raised by the
+                  company
+                </option>
+                <option value="Company/Hospital is not fulfilling the requirements.">
+                  Company/Hospital is not fulfilling the requirements.
+                </option>
+                <option value="Customer is not fulfilling the requirements raised by the executive">
+                  Customer is not fulfilling the requirements raised by the
+                  executive
+                </option>
+                <option value="Not getting the approval from expert end">
+                  Not getting the approval from expert end
+                </option>
+                <option value="Others">Others</option>
+              </select>
+            </div>
+            <div className="col-sm-3">
+              <label>First Escalation Sent or Not</label>
+              <select
+                class="form-control"
+                value={details.escalation_first}
+                name="escalation_first"
+                onChange={handleFormChange}
+              >
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+          </div>
+          <div className="row mt-4">
+            <div className="col-sm-3">
+              <label>Escalation shared with the customer</label>
+              <input
+                type="checkbox"
+                name="escalationSharedBool"
+                class="form-control"
+                formControlName="escalationSharedBool"
+                value={details.escalationSharedBool}
+                onChange={handleFormChange}
+              />
+            </div>
+            <div className="col-sm-3">
+              <label>Requirement Mail Revert Sent By Customer</label>
+              <select
+                class="form-control"
+                value={details.isRequirementReverted}
+                name="isRequirementReverted"
+                onChange={handleFormChange}
+              >
+                <option value={""}></option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+          </div>
+          <h4>Second Response Data</h4>
+          <hr />
+          <div className="row">
+            <div className="col-sm-3">
+              <label>Second Response from Company</label>
+              <select
+                class="form-control"
+                value={details.response_company2}
+                name="response_company2"
+                onChange={handleFormChange}
+                disabled
+              >
+                <option value={""}></option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+            <div className="col-sm-3">
+              <label>Reminder Mail Sent to Company</label>
+              <select
+                class="form-control"
+                value={details.reminder_second}
+                name="reminder_second"
+                onChange={handleFormChange}
+              >
+                <option value={""}></option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+            <div className="col-sm-3">
+              <label>Reminder Sent Date</label>
+              <input
+                type="date"
+                class="form-control"
+                value={details.reminderSentDate}
+                name="reminderSentDate"
+                onChange={handleFormChange}
+                placeholder="Requirement Date..."
+              />
+            </div>
+            <div className="col-sm-8">
+              <label>Escalation Mail Points</label>
+              <Editor
+                id="Editor01"
+                apiKey={tinyMceApiKey}
+                onInit={(evt, editor) => (escalationPointsRef.current = editor)}
+                initialValue={details.escalationPoints}
+                init={{
+                  height: 500,
+                  menubar: false,
+                  plugins: [
+                    "advlist",
+                    "autolink",
+                    "lists",
+                    "link",
+                    "image",
+                    "charmap",
+                    "preview",
+                    "anchor",
+                    "searchreplace",
+                    "visualblocks",
+                    "code",
+                    "fullscreen",
+                    "insertdatetime",
+                    "media",
+                    "table",
+                    "code",
+                    "help",
+                    "wordcount",
+                  ],
+                  toolbar:
+                    "undo redo | blocks | " +
+                    "bold italic forecolor | alignleft aligncenter " +
+                    "alignright alignjustify | bullist numlist outdent indent | " +
+                    "removeformat | help",
+                  content_style:
+                    "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+                }}
+              />
+            </div>
+            <div className="col-sm-8">
+              <label>Escalation Mail Points</label>
+              <Editor
+                id="Editor02"
+                apiKey={tinyMceApiKey}
+                onInit={(evt, editor) => (earlierMailsRef.current = editor)}
+                initialValue={details.earlierMails}
+                init={{
+                  height: 500,
+                  menubar: false,
+                  plugins: [
+                    "advlist",
+                    "autolink",
+                    "lists",
+                    "link",
+                    "image",
+                    "charmap",
+                    "preview",
+                    "anchor",
+                    "searchreplace",
+                    "visualblocks",
+                    "code",
+                    "fullscreen",
+                    "insertdatetime",
+                    "media",
+                    "table",
+                    "code",
+                    "help",
+                    "wordcount",
+                  ],
+                  toolbar:
+                    "undo redo | blocks | " +
+                    "bold italic forecolor | alignleft aligncenter " +
+                    "alignright alignjustify | bullist numlist outdent indent | " +
+                    "removeformat | help",
+                  content_style:
+                    "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      </CardBody>
+    </Card>
+  );
 }
-

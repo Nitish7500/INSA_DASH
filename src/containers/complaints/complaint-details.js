@@ -1,55 +1,90 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Row,
-  Nav,
-  NavItem,
-  Button,
-  TabContent,
-  TabPane,
-} from 'reactstrap';
-import { NavLink, useLocation } from 'react-router-dom';
-import classnames from 'classnames';
-import Breadcrumb from 'containers/navs/Breadcrumb';
-import { Colxx } from 'components/common/CustomBootstrap';
-import DetailsForm from 'components/reusable-components/tabpanes/forms/details-form';
-import MailingSectionForm from 'components/reusable-components/tabpanes/forms/mailing-section';
-import IGMSForm from 'components/reusable-components/tabpanes/forms/igms-form';
-import OmbudsmanForm from 'components/reusable-components/tabpanes/forms/ombudsman-form';
-import ResolutionForm from 'components/reusable-components/tabpanes/forms/resolution-form';
-import LegalForm from 'components/reusable-components/tabpanes/forms/legal-form';
-import SavedEmail from 'components/reusable-components/tabpanes/forms/save-email';
-import GetEmailData from 'components/reusable-components/tabpanes/forms/get-email';
-import DocumentForm from 'components/reusable-components/tabpanes/forms/document-form';
-import NonResponsive from 'components/reusable-components/tabpanes/forms/non-responsive';
-import { getComplaintDetailsById } from 'services/complaints.services';
-import { useQuery } from 'hooks/useQuery';
-import OtherActions from 'components/reusable-components/tabpanes/forms/other-actions';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { adminRoot } from 'constants/defaultValues';
+import React, { useEffect, useState } from "react";
+import { Row, Nav, NavItem, Button, TabContent, TabPane } from "reactstrap";
+import { NavLink, useLocation } from "react-router-dom";
+import classnames from "classnames";
+import Breadcrumb from "containers/navs/Breadcrumb";
+import { Colxx } from "components/common/CustomBootstrap";
+import DetailsForm from "components/reusable-components/tabpanes/forms/details-form";
+import MailingSectionForm from "components/reusable-components/tabpanes/forms/mailing-section";
+import IGMSForm from "components/reusable-components/tabpanes/forms/igms-form";
+import OmbudsmanForm from "components/reusable-components/tabpanes/forms/ombudsman-form";
+import ResolutionForm from "components/reusable-components/tabpanes/forms/resolution-form";
+import LegalForm from "components/reusable-components/tabpanes/forms/legal-form";
+import SavedEmail from "components/reusable-components/tabpanes/forms/save-email";
+import GetEmailData from "components/reusable-components/tabpanes/forms/get-email";
+import DocumentForm from "components/reusable-components/tabpanes/forms/document-form";
+import NonResponsive from "components/reusable-components/tabpanes/forms/non-responsive";
+import { getComplaintDetailsById } from "services/complaints.services";
+import { useQuery } from "hooks/useQuery";
+import OtherActions from "components/reusable-components/tabpanes/forms/other-actions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { adminRoot } from "constants/defaultValues";
+import { useRef } from "react";
 
 const ComplaintDetails = ({ match }) => {
-  const [activeTab, setActiveTab] = useState('details');
+  const [activeTab, setActiveTab] = useState("details");
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
 
-  const { complaintId } = useQuery(['complaintId']);
+  const { complaintId } = useQuery(["complaintId"]);
+  const [formData, setformData] = useState({
+    name: "",
+    email: "",
+  });
+
+  const escalationPointsRef = useRef(null);
+  const earlierMailsRef = useRef(null);
+  const hearing_pointsRef = useRef(null);
+
   // console.log(complaintId);
 
   //getting Complaint by Id through complaints.services
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const {data} = await getComplaintDetailsById(complaintId);
+        const { data } = await getComplaintDetailsById(complaintId);
         setItems(data);
+        setformData(data);
+        console.log("--------------------------------------------");
       } catch (error) {
-        console.log("ComplaintDetails",error)
+        console.log("ComplaintDetails", error);
       }
       setIsLoaded(true);
-    }
+    };
     fetchData();
   }, []);
 
+  const handleFormChange = (e) => {
+    console.log(e.target.type);
+    if (e.target.type === "checkbox") {
+      setItems({ ...items, [e.target.name]: e.target.checked });
+    } else if (e.target.name === "alternatePhone") {
+      setItems({
+        ...items,
+        userId: { ...items.userId, [e.target.name]: e.target.value },
+      });
+    } else if (e.target.name === "consumerCourtDate") {
+      setItems({ ...items, legalSection: {} });
+    } else if (e.target.name === "courierNumberDocArr") {
+      setItems({
+        ...items,
+        courierNumberDocArr: [...items.courierNumberDocArr, e.ta],
+      });
+    } else {
+      setItems({ ...items, [e.target.name]: e.target.value });
+    }
+  };
+
+  const handleSubmit = () => {
+    console.log("dfssdsdddd");
+    console.log({
+      ...items,
+      escalationPoints: escalationPointsRef.current?.getContent(),
+      earlierMails: earlierMailsRef.current?.getContent(),
+      hearing_points:hearing_pointsRef.current?.getContent(),
+    });
+  };
 
   // const { messages } = intl;
   return !isLoaded ? (
@@ -58,7 +93,13 @@ const ComplaintDetails = ({ match }) => {
     <>
       <Row>
         <Colxx xxs="12" className="my-3">
-          <NavLink location={{}} to = {`${adminRoot}/pages/product/data-list`} className="mr-3"><FontAwesomeIcon icon={faArrowLeft} size="2x" /></NavLink>
+          <NavLink
+            location={{}}
+            to={`${adminRoot}/pages/product/data-list`}
+            className="mr-3"
+          >
+            <FontAwesomeIcon icon={faArrowLeft} size="2x" />
+          </NavLink>
           <h1>Complaint Details</h1>
           <Breadcrumb match={match} />
 
@@ -69,10 +110,10 @@ const ComplaintDetails = ({ match }) => {
                 location={{}}
                 to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
-                  active: activeTab === 'details',
-                  'nav-link': true,
+                  active: activeTab === "details",
+                  "nav-link": true,
                 })}
-                onClick={() => setActiveTab('details')}
+                onClick={() => setActiveTab("details")}
               >
                 <span>Complaint Details</span>
               </NavLink>
@@ -82,10 +123,10 @@ const ComplaintDetails = ({ match }) => {
                 location={{}}
                 to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
-                  active: activeTab === 'mailing',
-                  'nav-link': true,
+                  active: activeTab === "mailing",
+                  "nav-link": true,
                 })}
-                onClick={() => setActiveTab('mailing')}
+                onClick={() => setActiveTab("mailing")}
               >
                 <span>Mailing Section</span>
               </NavLink>
@@ -95,10 +136,10 @@ const ComplaintDetails = ({ match }) => {
                 location={{}}
                 to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
-                  active: activeTab === 'igms',
-                  'nav-link': true,
+                  active: activeTab === "igms",
+                  "nav-link": true,
                 })}
-                onClick={() => setActiveTab('igms')}
+                onClick={() => setActiveTab("igms")}
               >
                 <span>IGMS</span>
               </NavLink>
@@ -108,10 +149,10 @@ const ComplaintDetails = ({ match }) => {
                 location={{}}
                 to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
-                  active: activeTab === 'ombudsman',
-                  'nav-link': true,
+                  active: activeTab === "ombudsman",
+                  "nav-link": true,
                 })}
-                onClick={() => setActiveTab('ombudsman')}
+                onClick={() => setActiveTab("ombudsman")}
               >
                 <span>Ombudsman</span>
               </NavLink>
@@ -121,10 +162,10 @@ const ComplaintDetails = ({ match }) => {
                 location={{}}
                 to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
-                  active: activeTab === 'resolution',
-                  'nav-link': true,
+                  active: activeTab === "resolution",
+                  "nav-link": true,
                 })}
-                onClick={() => setActiveTab('resolution')}
+                onClick={() => setActiveTab("resolution")}
               >
                 <span>Resolution</span>
               </NavLink>
@@ -134,10 +175,10 @@ const ComplaintDetails = ({ match }) => {
                 location={{}}
                 to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
-                  active: activeTab === 'legal',
-                  'nav-link': true,
+                  active: activeTab === "legal",
+                  "nav-link": true,
                 })}
-                onClick={() => setActiveTab('legal')}
+                onClick={() => setActiveTab("legal")}
               >
                 <span>Legal</span>
               </NavLink>
@@ -147,10 +188,10 @@ const ComplaintDetails = ({ match }) => {
                 location={{}}
                 to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
-                  active: activeTab === 'saveEmail',
-                  'nav-link': true,
+                  active: activeTab === "saveEmail",
+                  "nav-link": true,
                 })}
-                onClick={() => setActiveTab('saveEmail')}
+                onClick={() => setActiveTab("saveEmail")}
               >
                 <span>Save Email</span>
               </NavLink>
@@ -160,10 +201,10 @@ const ComplaintDetails = ({ match }) => {
                 location={{}}
                 to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
-                  active: activeTab === 'getEmail',
-                  'nav-link': true,
+                  active: activeTab === "getEmail",
+                  "nav-link": true,
                 })}
-                onClick={() => setActiveTab('getEmail')}
+                onClick={() => setActiveTab("getEmail")}
               >
                 <span>Get Email Data</span>
               </NavLink>
@@ -173,10 +214,10 @@ const ComplaintDetails = ({ match }) => {
                 location={{}}
                 to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
-                  active: activeTab === 'document',
-                  'nav-link': true,
+                  active: activeTab === "document",
+                  "nav-link": true,
                 })}
-                onClick={() => setActiveTab('document')}
+                onClick={() => setActiveTab("document")}
               >
                 <span>Document</span>
               </NavLink>
@@ -186,10 +227,10 @@ const ComplaintDetails = ({ match }) => {
                 location={{}}
                 to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
-                  active: activeTab === 'nonResponsive',
-                  'nav-link': true,
+                  active: activeTab === "nonResponsive",
+                  "nav-link": true,
                 })}
-                onClick={() => setActiveTab('nonResponsive')}
+                onClick={() => setActiveTab("nonResponsive")}
               >
                 <span>Non Responsive</span>
               </NavLink>
@@ -199,10 +240,10 @@ const ComplaintDetails = ({ match }) => {
                 location={{}}
                 to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
-                  active: activeTab === 'others',
-                  'nav-link': true,
+                  active: activeTab === "others",
+                  "nav-link": true,
                 })}
-                onClick={() => setActiveTab('others')}
+                onClick={() => setActiveTab("others")}
               >
                 <span>Other Actions</span>
               </NavLink>
@@ -210,54 +251,113 @@ const ComplaintDetails = ({ match }) => {
           </Nav>
 
           <TabContent activeTab={activeTab}>
-
             <TabPane tabId="details">
-              <DetailsForm heading='Complaint Details Form' details={items} />
+              <DetailsForm
+                handleFormChange={handleFormChange}
+                heading="Complaint Details Form"
+                details={items}
+              />
             </TabPane>
 
             <TabPane tabId="mailing">
-              <MailingSectionForm heading='Mailing Section' details={items} complaintId={complaintId} />
+              <MailingSectionForm
+                handleFormChange={handleFormChange}
+                heading="Mailing Section"
+                details={items}
+                complaintId={complaintId}
+                escalationPointsRef={escalationPointsRef}
+                earlierMailsRef={earlierMailsRef}
+              />
             </TabPane>
 
             <TabPane tabId="igms">
-              <IGMSForm heading='IGMS Section' details={items} complaintId={complaintId} />
+              <IGMSForm
+                handleFormChange={handleFormChange}
+                heading="IGMS Section"
+                details={items}
+                complaintId={complaintId}
+              />
             </TabPane>
 
             <TabPane tabId="ombudsman">
-              <OmbudsmanForm heading='Ombudsman Section' details={items} complaintId={complaintId} />
+              <OmbudsmanForm
+              hearing_pointsRef={hearing_pointsRef}
+                handleFormChange={handleFormChange}
+                heading="Ombudsman Section"
+                details={items}
+                complaintId={complaintId}
+              />
             </TabPane>
 
             <TabPane tabId="resolution">
-              <ResolutionForm heading='Resolution Section' details={items} complaintId={complaintId} />
+              <ResolutionForm
+                handleFormChange={handleFormChange}
+                heading="Resolution Section"
+                details={items}
+                complaintId={complaintId}
+              />
             </TabPane>
 
             <TabPane tabId="legal">
-              <LegalForm heading='Legal Section' details={items} complaintId={complaintId} />
+              <LegalForm
+                handleFormChange={handleFormChange}
+                heading="Legal Section"
+                details={items}
+                complaintId={complaintId}
+              />
             </TabPane>
 
             <TabPane tabId="saveEmail">
-              <SavedEmail heading='Send Email Section' details={items} complaintId={complaintId} />
+              <SavedEmail
+                handleFormChange={handleFormChange}
+                heading="Send Email Section"
+                details={items}
+                complaintId={complaintId}
+              />
             </TabPane>
 
             <TabPane tabId="getEmail">
-              <GetEmailData heading='Get Email Data' details={items} complaintId={complaintId} />
+              <GetEmailData
+                handleFormChange={handleFormChange}
+                heading="Get Email Data"
+                details={items}
+                complaintId={complaintId}
+              />
             </TabPane>
-          
+
             <TabPane tabId="document">
-              <DocumentForm heading='Document Uploads' details={items} complaintId={complaintId} />
+              <DocumentForm
+                handleFormChange={handleFormChange}
+                heading="Document Uploads"
+                details={items}
+                complaintId={complaintId}
+              />
             </TabPane>
 
             <TabPane tabId="nonResponsive">
-              <NonResponsive heading='Non Responsive Customer Flow' details={items} complaintId={complaintId} />
+              <NonResponsive
+                handleFormChange={handleFormChange}
+                heading="Non Responsive Customer Flow"
+                details={items}
+                complaintId={complaintId}
+              />
             </TabPane>
 
             <TabPane tabId="others">
-              <OtherActions heading='Other Actions' details={items} complaintId={complaintId} />
+              <OtherActions
+                handleFormChange={handleFormChange}
+                heading="Other Actions"
+                details={items}
+                complaintId={complaintId}
+              />
             </TabPane>
-
           </TabContent>
-
         </Colxx>
+        <div className="ml-auto mr-auto">
+          <button className="btn btn-primary" onClick={handleSubmit}>
+            Submit
+          </button>
+        </div>
       </Row>
     </>
   );

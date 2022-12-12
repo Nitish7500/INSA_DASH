@@ -764,6 +764,7 @@ const DataListView = ({
                     name="finalPaidAt"
                     value={finalPayObj.finalPaidAt}
                     onChange={finalPayFunc}
+                    id="finalPayAt01"
                   />
                 </div>
                 <div className="mt-2">
@@ -774,6 +775,7 @@ const DataListView = ({
                     name="finalPayId"
                     value={finalPayObj.finalPayId}
                     onChange={finalPayFunc}
+                    id="finalPayId01"
                   />
                 </div>
 
@@ -817,6 +819,7 @@ const DataListView = ({
                 <div className="mt-2 d-flex justify-content-end">
                   <button className="btn btn-danger rounded">CLOSE</button>
                   <button
+                    id="finalPaySubmitBtn"
                     className="btn btn-primary rounded ml-2"
                     onClick={finalPaySubmit}
                   >
@@ -847,6 +850,7 @@ const DataListView = ({
             <div>
               <label>Claim Amount</label>
               <input
+              id="claimAmtDesc1"
                 className="form-control border-bold"
                 type={"number"}
                 value={addClaimAmtOpen.claimAmount}
@@ -857,6 +861,7 @@ const DataListView = ({
             <div>
               <label>Amount in Words</label>
               <input
+              id="claimAmtDesc2"
                 className="form-control border-bold"
                 type="text"
                 value={amtInWord}
@@ -865,6 +870,7 @@ const DataListView = ({
             </div>
             <div className="d-flex justify-content-end mt-3">
               <button
+              id="claimAmtDesModalClose"
                 className="btn btn-danger rounded mr-2"
                 onClick={() => {
                   setaddClaimAmtOpen({ ...addClaimAmtOpen, open: false });
@@ -873,6 +879,7 @@ const DataListView = ({
                 CLOSE
               </button>
               <button
+              id="claimAmtDesModalOpen"
                 className="btn btn-primary rounded"
                 onClick={() => {
                   dispatch({
@@ -925,9 +932,9 @@ const DataListView = ({
                 </tr>
               </thead>
               <tbody className="">
-                {complaint?.statusHistory?.map((res) => {
+                {complaint?.statusHistory?.map((res,i) => {
                   return (
-                    <tr>
+                    <tr key={i}>
                       <td>{res.currStatus}</td>
                       <td>{res.date}</td>
                     </tr>
@@ -957,6 +964,7 @@ const DataListView = ({
             <div className="d-flex">
               <div className="mr-4">
                 <input
+                id="complaintModal41"
                   className="form-control border-bold mr-4"
                   type={"date"}
                   name="start_time"
@@ -971,6 +979,7 @@ const DataListView = ({
               </div>
               <div className="mr-4">
                 <input
+                id="complaintModal42"
                   className="form-control border-bold"
                   name="end_time"
                   type={"date"}
@@ -985,6 +994,7 @@ const DataListView = ({
               </div>
               <div className="mt-auto mb-auto">
                 <button
+                id="complaintModaFetch"
                   className="btn btn-success rounded btn-xs"
                   onClick={() => {
                     dispatch({
@@ -1038,6 +1048,7 @@ const DataListView = ({
         toggle={() => {
           setseeDocumentOpen(!seeDocumentOpen);
         }}
+        id="complaintSeeDoc"
         size="lg"
       >
         <ModalHeader>
@@ -1058,9 +1069,9 @@ const DataListView = ({
             </div>
             <div className="mt-3">
               <label className="h4 mt-2"><u>All Documents</u></label>
-              {state.leadData[0]?.doc?.length ? state.leadData[0]?.doc?.map((res) => {
+              {state.leadData[0]?.doc?.length ? state.leadData[0]?.doc?.map((res,i) => {
                 return (
-                  <div className="mt-3">
+                  <div className="mt-3" id={i}>
                     <label className="h6 mr-3">{res} :- </label><label><a className="text-primary h6" href={`${awsUrl}upload/lead_docs/${complaint.leadId}/${res}`} target="_blank" > <u>Download Doc</u></a></label>
                     {/* <iframe
                       src={`${awsUrl}upload/lead_docs/${complaint.leadId}/${res}`}
@@ -1072,7 +1083,7 @@ const DataListView = ({
               }) : <div className="d-flex justify-content-center mt-3"><label className="h5">No Document Found</label></div>}
             </div>
             <div className="d-flex justify-content-center mt-4">
-              <button className="btn  btn-danger rounded px-5 py-1" onClick={() => {setseeDocumentOpen(false)}}>CLOSE </button>
+              <button id="complaintSeeDocClose" className="btn  btn-danger rounded px-5 py-1" onClick={() => {setseeDocumentOpen(false)}}>CLOSE </button>
             </div>
           </div>
         </ModalBody>
@@ -1356,6 +1367,7 @@ const DataListView = ({
                               <td>{res.claimAmount}</td>
                               <td>
                                 <input
+                                id="complaintModal601"
                                   className="form-control border-bold"
                                   type={"number"}
                                   name="fieldValue"
@@ -1370,6 +1382,7 @@ const DataListView = ({
                               </td>
                               <td>
                                 <button
+                                id="complaintModal6Update"
                                   className="btn btn-info py-1"
                                   onClick={() => {
                                     handleUpdateClaimAmt(i, res._id);

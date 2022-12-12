@@ -426,6 +426,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                     <div>
                       <label>Select the Status</label>
                       <select
+                      id="updateModal4"
                         className="form-control border-bold"
                         name="status"
                         onChange={(e) => {
@@ -486,7 +487,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             />
                             <label
                               class="custom-file-label"
-                              for="inputGroupFile01"
+                              for="inputGroupFile02"
                             >
                               Choose file
                             </label>
@@ -509,7 +510,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             />
                             <label
                               class="custom-file-label"
-                              for="inputGroupFile01"
+                              for="inputGroupFile03"
                             >
                               Choose file
                             </label>
@@ -532,7 +533,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             />
                             <label
                               class="custom-file-label"
-                              for="inputGroupFile01"
+                              for="inputGroupFile04"
                             >
                               Choose file
                             </label>
@@ -555,7 +556,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             />
                             <label
                               class="custom-file-label"
-                              for="inputGroupFile01"
+                              for="inputGroupFile05"
                             >
                               Choose file
                             </label>
@@ -578,7 +579,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             />
                             <label
                               class="custom-file-label"
-                              for="inputGroupFile01"
+                              for="inputGroupFile06"
                             >
                               Choose file
                             </label>
@@ -601,7 +602,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             />
                             <label
                               class="custom-file-label"
-                              for="inputGroupFile01"
+                              for="inputGroupFile07"
                             >
                               Choose file
                             </label>
@@ -624,7 +625,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             />
                             <label
                               class="custom-file-label"
-                              for="inputGroupFile01"
+                              for="inputGroupFile08"
                             >
                               Choose file
                             </label>
@@ -675,7 +676,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-4">
                           <label>First Response Date from Company</label>
                           <input
-                            id="mailingSection0"
+                            id="mailingSection04"
                             name="response_date"
                             className="form-control border-bold"
                             type={"date"}
@@ -715,6 +716,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-4">
                           <label>Reminder Sent Date</label>
                           <input
+                            id="mailingSection09"
                             name="requirementSentDate"
                             className="form-control border-bold"
                             type={"date"}
@@ -816,6 +818,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             {mailingSecObj.isRequirement === "Yes" ? (
                               <div className="col-sm-6">
                                 <Editor
+                                id="mailingSectionEditor01"
                                   apiKey={tinyMceApiKey}
                                   onInit={(evt, editor) =>
                                     (isReqEditorRef.current = editor)
@@ -878,6 +881,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             {mailingSecObj.isRequirementReverted == "Yes" ? (
                               <div className="col-sm-6">
                                 <Editor
+                                id="mailingSection09Editor02"
                                   apiKey={tinyMceApiKey}
                                   onInit={(evt, editor) =>
                                     (isReqRevEditorRef.current = editor)
@@ -938,6 +942,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             {mailingSecObj.is_draft_mail_send === "Yes" ? (
                               <div className="col-sm-6">
                                 <Editor
+                                id="mailingSectionEditor03"
                                   apiKey={tinyMceApiKey}
                                   onInit={(evt, editor) =>
                                     (isDraftEditorRef.current = editor)
@@ -998,6 +1003,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             {mailingSecObj.is_acknowledgement === "Yes" ? (
                               <div className="col-sm-6">
                                 <Editor
+                                id="mailingSectionEditor04"
                                   apiKey={tinyMceApiKey}
                                   onInit={(evt, editor) =>
                                     (isAckEditorRef.current = editor)
@@ -1058,6 +1064,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             {mailingSecObj.response_company === "Yes" ? (
                               <div className="col-sm-6">
                                 <Editor
+                                id="mailingSectioneditor05"
                                   apiKey={tinyMceApiKey}
                                   onInit={(evt, editor) =>
                                     (isResComEditorRef.current = editor)
@@ -1117,6 +1124,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             {mailingSecObj.reminder_first ? (
                               <div className="col-sm-6">
                                 <Editor
+                                id="mailingSectioneditor06"
                                   apiKey={tinyMceApiKey}
                                   onInit={(evt, editor) =>
                                     (isRemEditorRef.current = editor)
@@ -1192,6 +1200,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                                 </div>
                                 <div className="col-sm-4">
                                   <Editor
+                                id="mailingSectioneditor07"
                                     apiKey={tinyMceApiKey}
                                     onInit={(evt, editor) =>
                                       (isEscEditorRef.current = editor)
@@ -1252,6 +1261,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             {mailingSecObj.response_company2 === "Yes" ? (
                               <div className="col-sm-6">
                                 <Editor
+                                id="mailingSectioneditor08"
                                   apiKey={tinyMceApiKey}
                                   onInit={(evt, editor) =>
                                     (isResCom2EditorRef.current = editor)
@@ -1354,6 +1364,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                           <div className="mt-4 col-sm-6">
                             <label>Earlier Mails Editor</label>
                             <Editor
+                                id="mailingSectioneditor09"
                               apiKey={tinyMceApiKey}
                               onInit={(evt, editor) =>
                                 (mailEditoreditorRef.current = editor)
@@ -1395,6 +1406,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                           <div className="mt-4 col-sm-6">
                             <label>Escalation Mail Points</label>
                             <Editor
+                                id="mailingSectioneditor09"
                               apiKey={tinyMceApiKey}
                               onInit={(evt, editor) =>
                                 (mailPointeditorRef.current = editor)
@@ -1446,6 +1458,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-4">
                           <label>IGMS Token Number</label>
                           <input
+                          id="igmsSection01"
                             onChange={handleChangeIGMS}
                             className="form-control border-bold"
                             type={"text"}
@@ -1456,7 +1469,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                           <label>IGMS Date</label>
                           <input
                             onChange={handleChangeIGMS}
-                            id="mailingSection7"
+                            id="igmsSection02"
                             className="form-control border-bold"
                             name="IGMS_date"
                             type={"date"}
@@ -1465,6 +1478,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-4">
                           <label>IGMS Escalation Date</label>
                           <input
+                            id="igmsSection03"
                             onChange={handleChangeIGMS}
                             className="form-control border-bold"
                             name="escalation_date"
@@ -1474,6 +1488,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-4">
                           <label>IGMS Login DOB</label>
                           <input
+                            id="igmsSection03"
                             onChange={handleChangeIGMS}
                             className="form-control border-bold"
                             name="IGMSLoginDOB"
@@ -1483,6 +1498,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-4">
                           <label>First Response date from IGMS</label>
                           <input
+                            id="igmsSection05"
                             onChange={handleChangeIGMS}
                             className="form-control border-bold"
                             name="response_date_igms"
@@ -1492,6 +1508,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-4">
                           <label>Second Response date from IGMS</label>
                           <input
+                            id="igmsSection06"
                             onChange={handleChangeIGMS}
                             className="form-control border-bold"
                             name="response_date_igms1"
@@ -1501,6 +1518,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4">
                           <label>IGMS Done By:</label>
                           <select
+                            id="igmsSection07"
                             onChange={handleChangeIGMS}
                             className="form-control border-bold"
                             name="IGMS_Done"
@@ -1523,6 +1541,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                           <div className="col-sm-4">
                             <label>{igmsObj.IGMS_Done}</label>
                             <input
+                            id="igmsSection08"
                               className="form-control border-bold"
                               placeholder={igmsObj.IGMS_Done}
                               name="IGMS_No"
@@ -1533,6 +1552,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-12 mt-4">
                           <label>IGMS Content</label>
                           <input
+                            id="igmsSection09"
                             onChange={handleChangeIGMS}
                             className="form-control border-bold"
                             type={"text"}
@@ -1542,6 +1562,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-12 mt-4">
                           <label>Response Data From IGMS</label>
                           <input
+                            id="igmsSection10"
                             onChange={handleChangeIGMS}
                             className="form-control border-bold"
                             type={"text"}
@@ -1551,6 +1572,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-12 mt-4">
                           <label>Second Response Data From IGMS</label>
                           <input
+                            id="igmsSection11"
                             onChange={handleChangeIGMS}
                             className="form-control border-bold"
                             type={"text"}
@@ -1569,6 +1591,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4">
                           <label>Ombudsman Complaint Date</label>
                           <input
+                          id="ombudsmanSection01"
                             onChange={handleombudsmanObjChange}
                             className="form-control border-bold"
                             placeholder="Ombudsman Complaint Date..."
@@ -1579,6 +1602,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4">
                           <label>Complaint Courier Date</label>
                           <input
+                          id="ombudsmanSection02"
                             onChange={handleombudsmanObjChange}
                             className="form-control border-bold"
                             name="ombudsman_doc_date"
@@ -1588,6 +1612,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4">
                           <label>Complaint Courier Number</label>
                           <input
+                          id="ombudsmanSection03"
                             onChange={handleombudsmanObjChange}
                             className="form-control border-bold"
                             name="courier_number_doc"
@@ -1597,6 +1622,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4">
                           <label>Called Customer or Not</label>
                           <select
+                          id="ombudsmanSection04"
                             onChange={handleombudsmanObjChange}
                             className="form-control border-bold"
                             name="call_form6A"
@@ -1609,6 +1635,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4">
                           <label>Form 6A Received or Not</label>
                           <select
+                          id="ombudsmanSection05"
                             onChange={handleombudsmanObjChange}
                             className="form-control border-bold"
                             name="form6A_receive"
@@ -1621,6 +1648,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4">
                           <label>Form 6A Received Date</label>
                           <input
+                          id="ombudsmanSection06"
                             onChange={handleombudsmanObjChange}
                             className="form-control border-bold"
                             type={"date"}
@@ -1630,6 +1658,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4">
                           <label>Ombudsman Complaint Number</label>
                           <input
+                          id="ombudsmanSection07"
                             onChange={handleombudsmanObjChange}
                             className="form-control border-bold"
                             type={"text"}
@@ -1639,6 +1668,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4">
                           <label>Form 6A submission date</label>
                           <input
+                          id="ombudsmanSection08"
                             onChange={handleombudsmanObjChange}
                             className="form-control border-bold"
                             type={"date"}
@@ -1648,6 +1678,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4">
                           <label>Form 6A Courier Date</label>
                           <input
+                          id="ombudsmanSection09"
                             onChange={handleombudsmanObjChange}
                             className="form-control border-bold"
                             type={"date"}
@@ -1657,6 +1688,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4">
                           <label>Form 6A Courier Number</label>
                           <input
+                          id="ombudsmanSection10"
                             onChange={handleombudsmanObjChange}
                             className="form-control border-bold"
                             type={"text"}
@@ -1667,6 +1699,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4">
                           <label>Form 6A Received or Not</label>
                           <select
+                          id="ombudsmanSection11"
                             onChange={handleombudsmanObjChange}
                             className="form-control border-bold"
                             name="stateName"
@@ -1683,6 +1716,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4">
                           <label>Ombudsman Requirement sent date</label>
                           <input
+                          id="ombudsmanSection12"
                             onChange={handleombudsmanObjChange}
                             className="form-control border-bold"
                             type={"date"}
@@ -1692,6 +1726,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4">
                           <label>Called Customer or Not for Hearing date</label>
                           <select
+                          id="ombudsmanSection13"
                             onChange={handleombudsmanObjChange}
                             className="form-control border-bold"
                             name="call_Hearing"
@@ -1704,6 +1739,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4">
                           <label>Hearing Date Received or Not</label>
                           <select
+                          id="ombudsmanSection14"
                             onChange={handleombudsmanObjChange}
                             className="form-control border-bold"
                             name="hearing_receive"
@@ -1716,6 +1752,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4">
                           <label>Ombudsman Courier Number</label>
                           <input
+                          id="ombudsmanSection15"
                             onChange={handleombudsmanObjChange}
                             className="form-control border-bold"
                             type={"text"}
@@ -1732,6 +1769,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-3">
                           <label>Date 1st</label>
                           <input
+                          id="ombudsmanSection16"
                             onChange={handleombudsmanObjChange}
                             className="form-control border-bold"
                             type={"date"}
@@ -1742,6 +1780,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-3">
                           <label>Date 2nd</label>
                           <input
+                          id="ombudsmanSection17"
                             onChange={handleombudsmanObjChange}
                             className="form-control border-bold"
                             type={"date"}
@@ -1752,6 +1791,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-3">
                           <label>Complaint Form Pushed Date</label>
                           <input
+                          id="ombudsmanSection18"
                             onChange={handleombudsmanObjChange}
                             className="form-control border-bold"
                             type={"date"}
@@ -1762,6 +1802,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-3">
                           <label>Call between Expert and Customer Date</label>
                           <input
+                          id="ombudsmanSection19"
                             onChange={handleombudsmanObjChange}
                             className="form-control border-bold"
                             type={"date"}
@@ -1774,6 +1815,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             Called Customer or Not to Check Reward Status
                           </label>
                           <select
+                          id="ombudsmanSection20"
                             onChange={handleombudsmanObjChange}
                             className="form-control border-bold"
                             name="check_status"
@@ -1787,6 +1829,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-3">
                           <label>Ombudsman Reward Date</label>
                           <input
+                          id="ombudsmanSection21"
                             onChange={handleombudsmanObjChange}
                             className="form-control border-bold"
                             type={"date"}
@@ -1799,6 +1842,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             Called Customer or Not to Check Reward Status
                           </label>
                           <select
+                          id="ombudsmanSection22"
                             onChange={handleombudsmanObjChange}
                             className="form-control border-bold"
                             name="rewardType"
@@ -1840,6 +1884,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-3">
                           <label>Legal Notice</label>
                           <select
+                          id="legalSection01"
                             onChange={handlelegalSecChange}
                             className="form-control border-bold"
                             name="legal_notice"
@@ -1852,6 +1897,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-3">
                           <label>Legal Notice Date</label>
                           <input
+                          id="legalSection02"
                             onChange={handlelegalSecChange}
                             className="form-control border-bold"
                             type={"date"}
@@ -1861,6 +1907,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-3">
                           <label>Approx Fees</label>
                           <input
+                          id="legalSection03"
                             onChange={handlelegalSecChange}
                             className="form-control border-bold"
                             type={"text"}
@@ -1870,6 +1917,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-3">
                           <label>Courier Number of the Legal Notice</label>
                           <input
+                          id="legalSection04"
                             onChange={handlelegalSecChange}
                             className="form-control border-bold"
                             type={"text"}
@@ -1879,6 +1927,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-3">
                           <label>Legal Notice response received and date</label>
                           <input
+                          id="legalSection05"
                             onChange={handlelegalSecChange}
                             className="form-control border-bold"
                             type={"date"}
@@ -1888,6 +1937,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-3">
                           <label>Consumer courts subsequent filing dates</label>
                           <input
+                          id="legalSection06"
                             onChange={handlelegalSecChange}
                             className="form-control border-bold"
                             type={"date"}
@@ -1897,6 +1947,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-3">
                           <label>Call to the customer(Date 1)</label>
                           <input
+                          id="legalSection07"
                             onChange={handlelegalSecChange}
                             className="form-control border-bold"
                             type={"date"}
@@ -1906,6 +1957,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-3">
                           <label>Call to the customer(Date 2)</label>
                           <input
+                          id="legalSection08"
                             onChange={handlelegalSecChange}
                             className="form-control border-bold"
                             type={"date"}
@@ -1920,6 +1972,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-3">
                           <label>Court Date</label>
                           <input
+                          id="legalSection09"
                             onChange={handlelegalSecChange}
                             className="form-control border-bold"
                             type={"date"}
@@ -1929,6 +1982,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-3">
                           <label>Customer Court Location</label>
                           <select
+                          id="legalSection10"
                             className="form-control border-bold"
                             name="consumerCourtLocation"
                             onChange={handlelegalSecChange}
@@ -1942,6 +1996,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-3">
                           <label>Lawyer/ Law Firm Name</label>
                           <input
+                          id="legalSection11"
                             onChange={handlelegalSecChange}
                             className="form-control border-bold"
                             type={"text"}
@@ -1951,6 +2006,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-3">
                           <label>Lawyer/ Law Firm Number</label>
                           <input
+                          id="legalSection12"
                             onChange={handlelegalSecChange}
                             className="form-control border-bold"
                             type={"text"}
@@ -1960,6 +2016,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-3">
                           <label>Lawyer/ Law Firm Address</label>
                           <input
+                          id="legalSection13"
                             onChange={handlelegalSecChange}
                             className="form-control border-bold"
                             type={"text"}
@@ -1968,6 +2025,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         </div>
                         <div className="mt-4 col-sm-12">
                           <Editor
+                          id="legalSectionEditor1"
                             apiKey={tinyMceApiKey}
                             onInit={(evt, editor) =>
                               (editorRef.current = editor)
@@ -2018,6 +2076,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4">
                           <label>Resolution Date</label>
                           <input
+                          id="resolutionSection01"
                             onChange={handleresolutionSecChange}
                             className="form-control border-bold"
                             type={"date"}
@@ -2027,6 +2086,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4">
                           <label>Resolved Amount</label>
                           <input
+                          id="resolutionSection02"
                             onChange={handleresolutionSecChange}
                             className="form-control border-bold"
                             type={"text"}
@@ -2036,6 +2096,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4">
                           <label>Resolution Proof Type</label>
                           <input
+                          id="resolutionSection03"
                             onChange={handleresolutionSecChange}
                             className="form-control border-bold"
                             type={"text"}
@@ -2047,6 +2108,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-3">
                           <label>Resolution Proof</label>
                           <input
+                          id="resolutionSection04"
                             className="form-control border-bold"
                             type={"file"}
                             name="avatar"
@@ -2058,6 +2120,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-4 mt-3">
                           <label>Reward Type</label>
                           <select
+                          id="resolutionSection05"
                             className="form-control border-bold"
                             onChange={handleresolutionSecChange}
                             name="rewardType"
@@ -2091,6 +2154,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                           <div className="col-sm-4 mt-3">
                             <label>Refund</label>
                             <input
+                          id="resolutionSection06"
                               className="form-control border-bold"
                               type={"text"}
                               name="refundSingleClaim"
@@ -2129,6 +2193,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                                   : null}
                               </label>
                               <input
+                          id="refundSingleClaimInp"
                                 className="form-control border-bold"
                                 type={"text"}
                                 name="refundSingleClaim"
@@ -2157,6 +2222,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                                 </label>
 
                                 <input
+                                id="paymentRefundIntInp"
                                   className="form-control border-bold"
                                   type={"text"}
                                   name="paymentRefundInt"
@@ -2258,6 +2324,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-6 mt-3">
                           <label>Follow Date</label>
                           <input
+                          id="omdFollowDateInp"
                             type={"date"}
                             name="omdFollowDate"
                             className="form-control border-bold"
@@ -2273,6 +2340,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-6 mt-3">
                           <label>Follow Date</label>
                           <textarea
+                          id="omdFollowCommentInp"
                             rows={2}
                             type={"text"}
                             name="omdFollowComment"
@@ -2297,6 +2365,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-6 mt-3">
                           <label>Last Follow Date</label>
                           <input
+                          id="mailingLastDateInp"
                             name="mailingLastDate"
                             className="form-control border-bold"
                             onChange={(e) => {
@@ -2311,6 +2380,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-6 mt-3">
                           <label>Next Follow Date</label>
                           <input
+                          id="mailingNextDateInp"
                             name="mailingNextDate"
                             className="form-control border-bold"
                             onChange={(e) => {
@@ -2325,6 +2395,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <div className="col-sm-6 mt-3">
                           <label>Last Follow Date</label>
                           <textarea
+                          id="mailingCommentInp"
                             name="mailingComment"
                             className="form-control border-bold"
                             onChange={(e) => {
@@ -2345,6 +2416,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                       <div className="col-sm-6 mt-3">
                         <label>Select The User</label>
                         <select
+                        id="insaUserDropdown"
                           className="form-control border-bold"
                           name="insaUser"
                           onChange={(e) => {
@@ -2365,6 +2437,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                       <div className="col-sm-6 mt-3">
                         <label>Assignment To</label>
                         <select
+                        id="assignmentKeySelect"
                           className="form-control border-bold"
                           name="assignmentKey"
                           onChange={(e) => {
@@ -2407,6 +2480,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
             ) : null}
             <div className="d-flex justify-content-end mt-4">
               <button
+                id="CompupdateDataBtn"
                 className="btn btn-danger rounded py-2 px-5 mr-2"
                 onClick={() => setupdateData(false)}
               >

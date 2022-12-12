@@ -1,1029 +1,1058 @@
 //complaint details nested form
 
-import { Colxx } from 'components/common/CustomBootstrap'
-import { FormikCheckbox, FormikCustomCheckboxGroup, FormikCustomRadioGroup, FormikDatePicker } from 'containers/form-validations/FormikFields'
-import { Field, Formik } from 'formik'
-import * as Yup from 'yup';
-import React, { useEffect, useState } from 'react'
-import { Button, Card, CardBody, Form, FormGroup, Input, Label, Modal, ModalBody, Row } from 'reactstrap'
-import { claimRejectionTypes, education, gender, movementOfCase, occupation, policyTypes, realtionships } from 'constants/formValues';
-import { assignIGMS, assignLegalExpert, assignOmbudsman, fetchAllUserPolicy, fetchCompIds, fetchDocs, fetchDraftMail, fetchHtmlPage, fetchLead, findByUserId, findLegalByComplaintId, getAllForEscalationByUserId, getAllInsa, getAllStates, getCompanyNoticeData, getComplaintTypesByPolicyTypeId, getCurrentInvoiceCount, getFirstDraftData, getInsuranceCompanyNamesByPolicyTypeId, getLegalUserData, getPolicyTypes, getUserBasedData, omdRemindMail, userAdmin } from 'services/complaints.services';
-
+import { Colxx } from "components/common/CustomBootstrap";
+import {
+  FormikCheckbox,
+  FormikCustomCheckboxGroup,
+  FormikCustomRadioGroup,
+  FormikDatePicker,
+} from "containers/form-validations/FormikFields";
+import { Field, Formik } from "formik";
+import * as Yup from "yup";
+import React, { useEffect, useState } from "react";
+import {
+  Button,
+  Card,
+  CardBody,
+  Form,
+  FormGroup,
+  Input,
+  Label,
+  Modal,
+  ModalBody,
+  Row,
+} from "reactstrap";
+import {
+  claimRejectionTypes,
+  education,
+  gender,
+  movementOfCase,
+  occupation,
+  policyTypes,
+  realtionships,
+} from "constants/formValues";
+import {
+  assignIGMS,
+  assignLegalExpert,
+  assignOmbudsman,
+  fetchAllUserPolicy,
+  fetchCompIds,
+  fetchDocs,
+  fetchDraftMail,
+  fetchHtmlPage,
+  fetchLead,
+  findByUserId,
+  findLegalByComplaintId,
+  getAllForEscalationByUserId,
+  getAllInsa,
+  getAllStates,
+  getCompanyNoticeData,
+  getComplaintTypesByPolicyTypeId,
+  getCurrentInvoiceCount,
+  getFirstDraftData,
+  getInsuranceCompanyNamesByPolicyTypeId,
+  getLegalUserData,
+  getPolicyTypes,
+  getUserBasedData,
+  omdRemindMail,
+  userAdmin,
+} from "services/complaints.services";
+import { useSelector } from "react-redux";
 const options = [
-    { value: '', label: 'Select an Option' },
-    { value: 'Something', label: 'Something' },
-    { value: 'Anything', label: 'Anything' }
+  { value: "", label: "Select an Option" },
+  { value: "Something", label: "Something" },
+  { value: "Anything", label: "Anything" },
 ];
 
+export default function DetailsForm({ heading, details, handleFormChange }) {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [states, setStates] = useState([]);
+  const [districts, setdistricts] = useState([]);
+  const [policyTypes, setPolicyTypes] = useState([]);
+  const [complaintTypes, setComplaintTypes] = useState([]);
+  const [insuranceCompanies, setInsuranceCompanies] = useState([]);
+  const [firstDraft, setFirstDraft] = useState([]);
+  const [userBasedData, setUserBasedData] = useState([]);
+  const [allExecutives, setAllExecutives] = useState([]);
+  const [allExperts, setAllExperts] = useState([]);
+  const [allCompanies, setAllCompanies] = useState([]);
+  const [allOmbudsman, setAllOmbudsman] = useState([]);
+  const [allLegalExecutives, setAllLegalExecutives] = useState([]);
+  const [userAdminData, setuserAdminData] = useState([]);
+  const [findLegalByComplaintIdData, setfindLegalByComplaintIdData] = useState(
+    []
+  );
+  const [allEscalationData, setallEscalationData] = useState([]);
+  const [compIdsData, setcompIdsData] = useState([]);
+  const [htmlPageData, sethtmlPageData] = useState({});
+  const [allUserPolicy, setallUserPolicy] = useState([]);
+  const [userFoundData, setuserFoundData] = useState([]);
+  const state = useSelector((state) => state.complaint);
+  // console.log(state)
+  // objects nested in api response
+  let complaint = details?.complaintTypeId;
+  let user = details?.userId;
+  let lead = details?.leadId;
+  let wholeAddress = details?.wholeAddress;
+  let insuranceCompany = details?.insuranceCompanyId;
+  let policyType = details?.policyTypeId;
+  let complaintType = details?.complaintTypeId;
 
-export default function DetailsForm({ heading, details }) {
+  // IDs of all important objects
+  let policyTypeId = policyType ? policyType._id : "";
+  let complaintTypeId = complaint ? complaint._id : "";
+  let insuranceCompanyId = insuranceCompany ? insuranceCompany._id : "";
+  let leadId = lead ? lead._id : "";
+  let userId = user ? user._id : "";
 
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [states, setStates] = useState([]);
-    const [policyTypes, setPolicyTypes] = useState([]);
-    const [complaintTypes, setComplaintTypes] = useState([]);
-    const [insuranceCompanies, setInsuranceCompanies] = useState([]);
-    const [firstDraft, setFirstDraft] = useState([]);
-    const [userBasedData, setUserBasedData] = useState([]);
-    const [allExecutives, setAllExecutives] = useState([]);
-    const [allExperts, setAllExperts] = useState([]);
-    const [allCompanies, setAllCompanies] = useState([]);
-    const [allOmbudsman, setAllOmbudsman] = useState([]);
-    const [allLegalExecutives, setAllLegalExecutives] = useState([]);
-    const [userAdminData, setuserAdminData] = useState([]);
-    const [findLegalByComplaintIdData, setfindLegalByComplaintIdData] = useState([])
-    const [allEscalationData, setallEscalationData] = useState([]);
-    const [compIdsData, setcompIdsData] = useState([]);
-    const [htmlPageData, sethtmlPageData] = useState({});
-    const [allUserPolicy, setallUserPolicy] = useState([]);
-    const [userFoundData, setuserFoundData] = useState([])
+  // console.log(details);
 
-    // objects nested in api response
-    let complaint = details?.complaintTypeId;
-    let user = details?.userId;
-    let lead = details?.leadId;
-    let wholeAddress = details?.wholeAddress;
-    let insuranceCompany = details?.insuranceCompanyId;
-    let policyType = details?.policyTypeId;
-    let complaintType = details?.complaintTypeId;
-    
-    // IDs of all important objects
-    let policyTypeId = policyType ? policyType._id : '';
-    let complaintTypeId = complaint ? complaint._id : '';
-    let insuranceCompanyId = insuranceCompany ? insuranceCompany._id : '';
-    let leadId = lead ? lead._id : '';
-    let userId = user ? user._id : '';
+  let date = new Date(parseInt(user?.dob.substr(6)));
+  // console.log(date);
 
-    // console.log(details);
-    
-    let date = new Date(parseInt(user?.dob.substr(6)));
-    // console.log(date);
+  //getting all states (ombudsman state locations and districts)
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await getAllStates();
+        let dis = data?.filter((res) => res.name === details.stateN);
 
-    //getting all states (ombudsman state locations and districts)
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const {data} = await getAllStates();
-                setStates(data);
-            } catch (error) {
-                console.log("States",error)
-            }
-            setIsLoaded(true);
-        }
-        fetchData();
-        
-        //getting all policy types from api ::-- to be noted that policy type here is being referred to Insurance Type i.e. LI, GI, HI etc --::
-        const fetchPolicyType = async () => {
-            try {
-                const {data} = await getPolicyTypes();
-                setPolicyTypes(data);
-            } catch (error) {
-                console.log("Policy Types ",error)
-            }
-            setIsLoaded(true);
-        }
-        fetchPolicyType();
+        setdistricts(dis.district);
+        setStates(data);
+      } catch (error) {
+        console.log("States", error);
+      }
+      setIsLoaded(true);
+    };
+    fetchData();
 
-        // getting all complaint types and  Insurance companies details on the basis of policy type selected
-        handleSelectInsurancetype(policyTypeId);
+    //getting all policy types from api ::-- to be noted that policy type here is being referred to Insurance Type i.e. LI, GI, HI etc --::
+    const fetchPolicyType = async () => {
+      try {
+        const { data } = await getPolicyTypes();
+        setPolicyTypes(data);
+      } catch (error) {
+        console.log("Policy Types ", error);
+      }
+      setIsLoaded(true);
+    };
+    fetchPolicyType();
 
-        // getting complaint type if coming from api response
-        getComplaintTypes(complaintTypeId);
+    // getting all complaint types and  Insurance companies details on the basis of policy type selected
+    handleSelectInsurancetype(policyTypeId);
 
-        // getting insurance company type
-        getInsuranceCompanies(insuranceCompanyId);
+    // getting complaint type if coming from api response
+    getComplaintTypes(complaintTypeId);
 
-        // get user based data method with payload
-        const fetchUserBaseddata = async () => {
-            try {
-                const {data} = await getUserBasedData();
-                setUserBasedData(data);
-            } catch (error) {
-                console.log("Policy Types ",error)
-            }
-            setIsLoaded(true);
-        }
-        fetchUserBaseddata();
+    // getting insurance company type
+    getInsuranceCompanies(insuranceCompanyId);
 
-        //getting all Executives list
-        const fetchAllExecutives = async () => {
-            try {
-                const {data} = await getAllInsa();
-                setAllExecutives(data.data);
-            } catch (error) {
-                console.log('All INSA Executives ', error);
-            }
-            setIsLoaded(true);
-            // console.log('All Executives ', allExecutives);
-        }
-        fetchAllExecutives();
+    // get user based data method with payload
+    const fetchUserBaseddata = async () => {
+      try {
+        const { data } = await getUserBasedData();
+        setUserBasedData(data);
+      } catch (error) {
+        console.log("Policy Types ", error);
+      }
+      setIsLoaded(true);
+    };
+    fetchUserBaseddata();
 
-        //getting all Legal Experts
-        const fetchLegalExperts = async () => {
-            try {
-                const {data} = await assignLegalExpert();
-                setAllLegalExecutives(data.data);
-            } catch (error) {
-                console.log('All Legal Experts ', error);
-            }
-            setIsLoaded(true);
-            // console.log('All Legal Experts ', allLegalExecutives);
-        }
-        fetchLegalExperts();
-        
-        //getting all Ombudsman
-        const fetchAllOmbudsman = async () => {
-            try {
-                const {data} = await assignOmbudsman();
-                setAllOmbudsman(data.data);
-            } catch (error) {
-                console.log('All Ombudsman ', error);
-            }
-            setIsLoaded(true);
-            // console.log('All Ombudsman ', allOmbudsman);
-        }
-        fetchAllOmbudsman();
-        
-        //getting all Ombudsman
-        const fetchAllCompanyIgms = async () => {
-            try {
-                const {data} = await assignIGMS();
-                setAllCompanies(data.data);
-            } catch (error) {
-                console.log('All Companies / IGMS ', error);
-            }
-            setIsLoaded(true);
-            // console.log('All Companies / IGMS ', allCompanies);
-        }
-        fetchAllCompanyIgms();
+    //getting all Executives list
+    const fetchAllExecutives = async () => {
+      try {
+        const { data } = await getAllInsa();
+        setAllExecutives(data.data);
+      } catch (error) {
+        console.log("All INSA Executives ", error);
+      }
+      setIsLoaded(true);
+      // console.log('All Executives ', allExecutives);
+    };
+    fetchAllExecutives();
 
-        // const getFirstDraft = async () => {
-        //     try {
-        //         const {data} = await getFirstDraftData();
-        //         setFirstDraft(data);
-        //     } catch (error) {
-        //         console.log('First draft data ', error)
-        //     }
-        //     setIsLoaded(true);
-        // }
-        // getFirstDraft();
+    //getting all Legal Experts
+    const fetchLegalExperts = async () => {
+      try {
+        const { data } = await assignLegalExpert();
+        setAllLegalExecutives(data.data);
+      } catch (error) {
+        console.log("All Legal Experts ", error);
+      }
+      setIsLoaded(true);
+      // console.log('All Legal Experts ', allLegalExecutives);
+    };
+    fetchLegalExperts();
 
+    //getting all Ombudsman
+    const fetchAllOmbudsman = async () => {
+      try {
+        const { data } = await assignOmbudsman();
+        setAllOmbudsman(data.data);
+      } catch (error) {
+        console.log("All Ombudsman ", error);
+      }
+      setIsLoaded(true);
+      // console.log('All Ombudsman ', allOmbudsman);
+    };
+    fetchAllOmbudsman();
 
-        getCurrentInvoiceCountFunc();
-        omdRemindMailFunc();
-        getLegalUserDataFunc();
-        getCompanyNoticeDataFunc();
-        getComplaintDocFunc();
-        getLeadData();
-        getDraftMailFunc();
-        getUserAdminFunc();
-        getFindLegalByComFunc();
-        getAllForEscFunc();
-        getCompIdsFunc();
-        getHtmlPageFunc();
-        getAllUserPoliciesFunc();
-        findByUserIdFunc();
-        getFirstDraftFunc();
-    }, []);
+    //getting all Ombudsman
+    const fetchAllCompanyIgms = async () => {
+      try {
+        const { data } = await assignIGMS();
+        setAllCompanies(data.data);
+      } catch (error) {
+        console.log("All Companies / IGMS ", error);
+      }
+      setIsLoaded(true);
+      // console.log('All Companies / IGMS ', allCompanies);
+    };
+    fetchAllCompanyIgms();
 
-    const getCurrentInvoiceCountFunc = async () => {
-        try {
-            const {data} = await getCurrentInvoiceCount();
-            // setAllCompanies(data.data);
-        } catch (error) {
-            console.log('All Companies / IGMS ', error);
-        }
+    // const getFirstDraft = async () => {
+    //     try {
+    //         const {data} = await getFirstDraftData();
+    //         setFirstDraft(data);
+    //     } catch (error) {
+    //         console.log('First draft data ', error)
+    //     }
+    //     setIsLoaded(true);
+    // }
+    // getFirstDraft();
+
+    getCurrentInvoiceCountFunc();
+    omdRemindMailFunc();
+    getLegalUserDataFunc();
+    getCompanyNoticeDataFunc();
+    getComplaintDocFunc();
+    getLeadData();
+    getDraftMailFunc();
+    getUserAdminFunc();
+    getFindLegalByComFunc();
+    getAllForEscFunc();
+    getCompIdsFunc();
+    getHtmlPageFunc();
+    getAllUserPoliciesFunc();
+    findByUserIdFunc();
+    getFirstDraftFunc();
+  }, []);
+
+  const getCurrentInvoiceCountFunc = async () => {
+    try {
+      const { data } = await getCurrentInvoiceCount();
+      // setAllCompanies(data.data);
+    } catch (error) {
+      console.log("All Companies / IGMS ", error);
     }
-    console.log(details)
+  };
+  console.log(details);
 
-    const omdRemindMailFunc = async () => {
-        try {
-            const {data} = await omdRemindMail(details._id);
-            // setAllCompanies(data.data);
-        } catch (error) {
-            console.log('All Companies / IGMS ', error);
-        }
+  const omdRemindMailFunc = async () => {
+    try {
+      const { data } = await omdRemindMail(details._id);
+      // setAllCompanies(data.data);
+    } catch (error) {
+      console.log("All Companies / IGMS ", error);
     }
+  };
 
-    const getLegalUserDataFunc = async (id) => {
-        try {
-            const {data} = await getLegalUserData(details._id);
-            // setAllCompanies(data.data);
-        } catch (error) {
-            console.log('All Companies / IGMS ', error);
-        }
+  const getLegalUserDataFunc = async (id) => {
+    try {
+      const { data } = await getLegalUserData(details._id);
+      // setAllCompanies(data.data);
+    } catch (error) {
+      console.log("All Companies / IGMS ", error);
     }
+  };
 
-    
-    const getCompanyNoticeDataFunc = async (id) => {
-        try {
-            const {data} = await getCompanyNoticeData(details.policyNumber);
-            // setAllCompanies(data.data);
-        } catch (error) {
-            console.log('All Companies / IGMS ', error);
-        }
+  const getCompanyNoticeDataFunc = async (id) => {
+    try {
+      const { data } = await getCompanyNoticeData(details.policyNumber);
+      // setAllCompanies(data.data);
+    } catch (error) {
+      console.log("All Companies / IGMS ", error);
     }
+  };
 
-    const getComplaintDocFunc = async () => {
-        
-        try {
-            const {data} = await fetchDocs( details.userId?._id ,details._id);
-            // setInsuranceCompanies(data);
-            // console.log(insuranceCompanies);
-        } catch (error) {
-            console.log("States",error)
-        }
-        setIsLoaded(true);   
+  const getComplaintDocFunc = async () => {
+    try {
+      const { data } = await fetchDocs(details.userId?._id, details._id);
+      // setInsuranceCompanies(data);
+      // console.log(insuranceCompanies);
+    } catch (error) {
+      console.log("States", error);
     }
+    setIsLoaded(true);
+  };
 
-    const getLeadData = async () => {
-        try {
-            console.log(details.leadId)
-            const {data} = await fetchLead( details.leadId?._id);
-            // setInsuranceCompanies(data);
-            // console.log(insuranceCompanies);
-        } catch (error) {
-            console.log("States",error)
-        }
-        setIsLoaded(true);   
+  const getLeadData = async () => {
+    try {
+      console.log(details.leadId);
+      const { data } = await fetchLead(details.leadId?._id);
+      // setInsuranceCompanies(data);
+      // console.log(insuranceCompanies);
+    } catch (error) {
+      console.log("States", error);
     }
+    setIsLoaded(true);
+  };
 
-    const getDraftMailFunc = async () => {
-        try {
-            const {data} = await fetchDraftMail( details.userId?._id,);
-            // setInsuranceCompanies(data);
-            // console.log(insuranceCompanies);
-        } catch (error) {
-            console.log("States",error)
-        }
-        setIsLoaded(true);   
+  const getDraftMailFunc = async () => {
+    try {
+      const { data } = await fetchDraftMail(details.userId?._id);
+      // setInsuranceCompanies(data);
+      // console.log(insuranceCompanies);
+    } catch (error) {
+      console.log("States", error);
     }
+    setIsLoaded(true);
+  };
 
-    const getUserAdminFunc = async () => {
-        try {
-            const {data} = await userAdmin( details.userId?._id,);
-            setuserAdminData(data);
-        } catch (error) {
-            console.log("States",error)
-        }
-        setIsLoaded(true);  
+  const getUserAdminFunc = async () => {
+    try {
+      const { data } = await userAdmin(details.userId?._id);
+      setuserAdminData(data);
+    } catch (error) {
+      console.log("States", error);
     }
+    setIsLoaded(true);
+  };
 
-    const getFindLegalByComFunc = async () => {
-        try {
-            const {data} = await findLegalByComplaintId( {userId:details.userId?._id},);
-            setfindLegalByComplaintIdData(data);
-        } catch (error) {
-            console.log("States",error)
-        }
-        setIsLoaded(true); 
-    } 
-
-    const getAllForEscFunc = async () => {
-        try {
-            const {data} = await getAllForEscalationByUserId( {userId:details.userId?._id},);
-            setallEscalationData(data);
-        } catch (error) {
-            console.log("States",error)
-        }
-        setIsLoaded(true); 
-    } 
-
-    const getCompIdsFunc = async () => {
-        try {
-            const {data} = await fetchCompIds( details.userId?._id);
-            setcompIdsData(data);
-        } catch (error) {
-            console.log("States",error)
-        }
-        setIsLoaded(true); 
-    } 
-
-    const getHtmlPageFunc = async () => {
-        try {
-            const {data} = await fetchHtmlPage( details?._id);
-            sethtmlPageData(data);
-        } catch (error) {
-            console.log("States",error)
-        }
-        setIsLoaded(true); 
+  const getFindLegalByComFunc = async () => {
+    try {
+      const { data } = await findLegalByComplaintId({
+        userId: details.userId?._id,
+      });
+      setfindLegalByComplaintIdData(data);
+    } catch (error) {
+      console.log("States", error);
     }
+    setIsLoaded(true);
+  };
 
-    const getAllUserPoliciesFunc = async () => {
-        try {
-            const {data} = await fetchAllUserPolicy( details?.complaintTypeId?.name,details.userId?._id);
-            setallUserPolicy(data);
-        } catch (error) {
-            console.log("States",error)
-        }
-        setIsLoaded(true);    
+  const getAllForEscFunc = async () => {
+    try {
+      const { data } = await getAllForEscalationByUserId({
+        userId: details.userId?._id,
+      });
+      setallEscalationData(data);
+    } catch (error) {
+      console.log("States", error);
     }
+    setIsLoaded(true);
+  };
 
-    const getFirstDraftFunc = async () => {
-        try {
-            const {data} = await getFirstDraftData( details);
-            setFirstDraft(data);
-        } catch (error) {
-            console.log("States",error)
-        }
-        setIsLoaded(true); 
+  const getCompIdsFunc = async () => {
+    try {
+      const { data } = await fetchCompIds(details.userId?._id);
+      setcompIdsData(data);
+    } catch (error) {
+      console.log("States", error);
     }
+    setIsLoaded(true);
+  };
 
-    const findByUserIdFunc = async () => {
-        try {
-            const {data} = await findByUserId(details.userId?._id);
-            setuserFoundData(data);
-        } catch (error) {
-            console.log("States",error)
-        }
-        setIsLoaded(true); 
+  const getHtmlPageFunc = async () => {
+    try {
+      const { data } = await fetchHtmlPage(details?._id);
+      sethtmlPageData(data);
+    } catch (error) {
+      console.log("States", error);
     }
-    
-    //getting all complaint types on the basis of policy type selected
-    const getComplaintTypes = async (id) => {
-        let policyTypeId = id;
-        try {
-            const {data} = await getComplaintTypesByPolicyTypeId(policyTypeId);
-            // setComplaintTypes(data);
-            // console.log(complaintTypes);
-        } catch (error) {
-            console.log("States",error)
-        }
-        setIsLoaded(true);
+    setIsLoaded(true);
+  };
+
+  const getAllUserPoliciesFunc = async () => {
+    try {
+      const { data } = await fetchAllUserPolicy(
+        details?.complaintTypeId?.name,
+        details.userId?._id
+      );
+      setallUserPolicy(data);
+    } catch (error) {
+      console.log("States", error);
     }
-    
-    //getting all Insurance companies details on selecting insurance type
-    const getInsuranceCompanies = async (id) => {
-        let policyTypeId = id;
-        try {
-            const {data} = await getInsuranceCompanyNamesByPolicyTypeId(policyTypeId);
-            setInsuranceCompanies(data);
-            // console.log(insuranceCompanies);
-        } catch (error) {
-            console.log("States",error)
-        }
-        setIsLoaded(true);
+    setIsLoaded(true);
+  };
+
+  const getFirstDraftFunc = async () => {
+    try {
+      const { data } = await getFirstDraftData(details);
+      setFirstDraft(data);
+    } catch (error) {
+      console.log("States", error);
     }
-    
+    setIsLoaded(true);
+  };
 
-
-    // function handling policytype id :: insurance type id
-    const handleSelectInsurancetype = (insuranceTypeId) => {
-        let policyTypeId = insuranceTypeId;
-        // console.log('Policy Type ID ', policyTypeId);
-        getComplaintTypes(policyTypeId);
-        getInsuranceCompanies(policyTypeId);
+  const findByUserIdFunc = async () => {
+    try {
+      const { data } = await findByUserId(details.userId?._id);
+      setuserFoundData(data);
+    } catch (error) {
+      console.log("States", error);
     }
+    setIsLoaded(true);
+  };
 
+  //getting all complaint types on the basis of policy type selected
+  const getComplaintTypes = async (id) => {
+    let policyTypeId = id;
+    try {
+      const { data } = await getComplaintTypesByPolicyTypeId(policyTypeId);
+      // setComplaintTypes(data);
+      // console.log(complaintTypes);
+    } catch (error) {
+      console.log("States", error);
+    }
+    setIsLoaded(true);
+  };
 
-    // console.log(details);
+  //getting all Insurance companies details on selecting insurance type
+  const getInsuranceCompanies = async (id) => {
+    let policyTypeId = id;
+    try {
+      const { data } = await getInsuranceCompanyNamesByPolicyTypeId(
+        policyTypeId
+      );
+      setInsuranceCompanies(data);
+      // console.log(insuranceCompanies);
+    } catch (error) {
+      console.log("States", error);
+    }
+    setIsLoaded(true);
+  };
 
-    // const onSubmit = (values, { setSubmitting } ) => {
-    //     values.preventDefault()
-    //     const payload = {
-    //       ...values,
-    //       reactSelect: values.reactSelect.map((t) => t.value),
-    //     };
-    //     setTimeout(() => {
-    //       console.log(JSON.stringify(payload, null, 2));
-    //       setSubmitting(false);
-    //     }, 1000);
-    // };
+  // function handling policytype id :: insurance type id
+  const handleSelectInsurancetype = (insuranceTypeId) => {
+    let policyTypeId = insuranceTypeId;
+    // console.log('Policy Type ID ', policyTypeId);
+    getComplaintTypes(policyTypeId);
+    getInsuranceCompanies(policyTypeId);
+  };
 
-    return !isLoaded ? (
-        <div className="loading" />
-      ) : (
-        <Card>
-            <CardBody>
-                <h2 className="mb-5">{heading}</h2>
-                <Formik initialValues={{
-                    name : details ? details.name : '--',
-                    email : details ? details.email : '--',
-                    phone : details ? details.phone : '--',
-                    alternate : user ? user.alternatePhone : '--',
-                    income : details ? details.incomeLevel : '--',
-                    occupation : details ? details.occupation : '--',
-                    pincode : user ? user.pinCode :  '--',
-                    dob : date ? date : '--',
-                    state : user ? user.state :  '--',
-                    district: user ? user.district :  '--',
-                    nominee : details ? details.nominee : '--',
-                    deceased : details ? details.deceasedPerson : '--',
-                    gender : details ? details.gender : '--',
-                    pancard : details ? details.panNumber : '--',
-                    education : details ? details.education : '--',
-                    policyNumber : details ? details.policyNumber : '--',
-                    claimAmt : details.claimAmount ? details.claimAmount : '--',
-                    address : user ? user.address : '--',
-                    insuranceType : insuranceCompany ? insuranceCompany._id : '--',
-                    rejectionType : details ? details.claimRejectionType : '--',
-                    complaintType : complaintTypeId ? complaintTypeId : '--',
-                    relationship : details ? details.nomineeRelation : '--',
-                    policyType : details ? details.policyType : '--',
-                    insuranceCompanyType : insuranceCompanyId ? insuranceCompanyId : '--',
-                    caseMovement : details ? details.movementOfCase : '--',
-                    executiveName : details ? details.executiveName : '--',
-                    legalExecutiveAssigned : details ? details.assign_to_legalExpert : '--',
-                    expertAssigned : details ? details.assign_to_expert : '--',
-                    leadNumber : lead ? lead.leadId : '--',
-                    companyAssigned : details ? details.assignToCompanyIGMS : '--',
-                    status : details ? details.status : '--',
-                    ombudsmanAssigned : details ? details.assignToOmbudsman : '--',
-                    houseNumber : wholeAddress ? wholeAddress["DoorNo/Bldg/Name/Floor"] : '--',
-                    street : wholeAddress ? wholeAddress["Street/Area"] : '--',
-                    cityName : wholeAddress ? wholeAddress["City/Town/Panchayath/Village"] : '--',
-                    tehsil : wholeAddress ? wholeAddress["Taluk/Tehsil"] : '--',
-                    isACovidComplaint : details ? details.covidCheck : '--',
-                    isAServiceComplaint : details ? details.asAServiceCheck : '--',
-                    internalLegalExecutiveAssigned : details ? details.assigned_internal_legal_executive : '--',
-                    complaintStatement : details ? details.complaintStatement : '--',
-                    custCreatedEmail : details ? details.executive_created_email : '--',
-                    custCreatedPassword : details ? details.password : '--',
-                    approvedClaimAmt : details ? details.actualRefundAmount : '--',
-                    companyResponseDoc : '--',
-                    igmsDoc : '--',
-                    awardRejectedDoc : '--',
-                    ombudsmanDoc : '--',
-                    complaintCourierReceiptDoc : '--',
-                    form6aCourierReceiptDoc : '--',
-                    generatedAddress : wholeAddress ? wholeAddress.address : '',
+  // console.log(details);
 
+  // const onSubmit = (values, { setSubmitting } ) => {
+  //     values.preventDefault()
+  //     const payload = {
+  //       ...values,
+  //       reactSelect: values.reactSelect.map((t) => t.value),
+  //     };
+  //     setTimeout(() => {
+  //       console.log(JSON.stringify(payload, null, 2));
+  //       setSubmitting(false);
+  //     }, 1000);
+  // };
+
+  return !isLoaded ? (
+    <div className="loading" />
+  ) : (
+    <Card>
+      <CardBody>
+        <h2 className="mb-5">{heading}</h2>
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-3">
+              <label>Name</label>
+              <input
+                className="form-control"
+                name="name"
+                value={details.name}
+                onChange={handleFormChange}
+              />
+            </div>
+            <div className="col-sm-3">
+              <label>Email</label>
+              <input
+                disabled
+                className="form-control"
+                name="email"
+                value={details.email}
+                onChange={handleFormChange}
+              />
+            </div>
+            <div className="col-sm-3">
+              <label>Phone</label>
+              <input
+                disabled
+                className="form-control"
+                name="phone"
+                value={details.phone}
+                onChange={handleFormChange}
+              />
+            </div>
+            <div className="col-sm-3">
+              <label> Alternate Contact Number</label>
+              <input
+                disabled
+                className="form-control"
+                name="alternatePhone"
+                type={"number"}
+                value={details.user?.alternatePhone}
+                onChange={handleFormChange}
+              />
+            </div>
+          </div>
+          <div className="row mt-4">
+            <div className="col-sm-3">
+              <label> Income Level*(per month)</label>
+              <input
+                disabled
+                className="form-control"
+                name="incomeLevel"
+                type={"number"}
+                value={details.incomeLevel}
+                onChange={handleFormChange}
+              />
+            </div>
+            <div className="col-sm-3">
+              <label>PinCode</label>
+              <input
+                className="form-control"
+                name="pinCode"
+                value={details.pinCode}
+                onChange={handleFormChange}
+              />
+            </div>
+            <div className="col-sm-3">
+              <label>Gender</label>
+              <div className="d-flex">
+                <div className="d-flex">
+                  <label>Male</label>
+                  <input
+                    className="form-control ml-3"
+                    name="gender"
+                    type={"radio"}
+                    value="Male"
+                    checked={details.gender === "Male"}
+                    onChange={handleFormChange}
+                  />
+                </div>
+                <div className="d-flex ml-4">
+                  <label>Female</label>
+                  <input
+                    className="form-control ml-3"
+                    name="gender"
+                    type={"radio"}
+                    value="Female"
+                    checked={details.gender === "Female"}
+                    onChange={handleFormChange}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-sm-3">
+              <label>Education*</label>
+              <select
+                name="education"
+                className="form-control"
+                value={details.education}
+                onChange={handleFormChange}
+                // onBlur={handleBlur}
+              >
+                {education.map((level) => (
+                  <option value={level.value}>{level.label}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className="row mt-4">
+            <div className="col-sm-3">
+              <label>DOB</label>
+              <input
+                className="form-control"
+                name="dob"
+                type={"date"}
+                value={details.dob}
+                onChange={handleFormChange}
+              />
+            </div>
+            <div className="col-sm-3">
+              <label>Pan Card Number</label>
+              <input
+                className="form-control"
+                name="panNumber"
+                type={"text"}
+                value={details.panNumber}
+                onChange={handleFormChange}
+              />
+            </div>
+            <div className="col-sm-3">
+              <label>Select State</label>
+              <select
+                name="stateN"
+                className="form-control"
+                value={details.stateN}
+                onChange={handleFormChange}
+                // onBlur={handleBlur}
+              >
+                <option value="">Select a state..</option>
+                {states?.map((res) => {
+                  // console.log(res)
+                  return <option value={res.name}>{res.name}</option>;
+                })}
+                <option value="Bihar">Bihar</option>
+                <option value="2">2</option>
+              </select>
+            </div>
+            <div className="col-sm-3">
+              <label>Select District</label>
+              <select
+                name="district"
+                className="form-control"
+                value={details.districtName}
+                onChange={handleFormChange}
+                // onBlur={handleBlur}
+              >
+                <option value="">Select District</option>
+                {districts?.map((res) => {
+                  return <option>{res}</option>;
+                })}
+              </select>
+            </div>
+          </div>
+          <div className="row mt-4">
+            <div className="col-sm-3">
+              <label>Occupation</label>
+              <select
+                name="occupation"
+                className="form-control"
+                value={details.occupation}
+                onChange={handleFormChange}
+                // onBlur={handleBlur}
+              >
+                {occupation.map((key) => (
+                  <option value={key.value}>{key.label}</option>
+                ))}
+              </select>
+            </div>
+            <div className="col-sm-3">
+              <label>Nominee Name</label>
+              <input name="nominee" value={details.nominee} />
+            </div>
+            <div className="col-sm-3">
+              <label>Deceased Name</label>
+              <input
+                name="deceasedPerson"
+                className="form-control"
+                value={details.deceasedPerson}
+                onChange={handleFormChange}
+              />
+            </div>
+            <div className="col-sm-3">
+              <label> Policy Number</label>
+              <input
+                name="policyNumber"
+                className="form-control"
+                value={details.policyNumber}
+                onChange={handleFormChange}
+              />
+            </div>
+          </div>
+          <div className="row mt-4">
+            <div className="col-sm-3">
+              <label>Claim Amount</label>
+              <input
+                className="form-control"
+                type={"number"}
+                name="claimAmount"
+                value={details.claimAmount}
+                onChange={handleFormChange}
+              />
+            </div>
+            <div className="col-sm-6">
+              <label>Address</label>
+              <input
+                disabled
+                className="form-control"
+                type={"text"}
+                name="address"
+                value={details.address}
+                onChange={handleFormChange}
+              />
+            </div>
+            <div className="col-sm-3">
+              <label>Insurance Type</label>
+              <select
+                name="insuranceCompany"
+                className="form-control"
+                value={details.insuranceCompany?._id}
+                onChange={(e) => {
+                  handleSelectInsurancetype(e.target.value);
+                  handleFormChange(e);
                 }}
-                    // validationSchema={SignupSchema}
-                    onSubmit={(onSubmit) => {console.log("cadfs")}}
-                >
-                {({
-                    handleSubmit,
-                    setFieldValue,
-                    setFieldTouched,
-                    handleChange,
-                    handleBlur,
-                    values,
-                    errors,
-                    touched,
-                    isSubmitting,
-                }) => (
-                    <Form className="av-tooltip tooltip-label-right">
-                        <Row className="mb-4">
-                            <Colxx xxs="12" lg="12">
-
-                                {/* Form Row 1 */}
-                                <Row>
-                                    {/* Form Column 1 */}
-                                    <Colxx xxs="12" lg="3">
-
-                                        <FormGroup className="error-l-100">
-                                            <Label>Name</Label>
-                                            <Field className="form-control" name="name" onChange={handleChange} />
-                                        </FormGroup>
-
-                                        <FormGroup className="error-l-100">
-                                            <Label>Income Level*(per month)</Label>
-                                            <Field className="form-control" name="income" />
-                                        </FormGroup>
-                                        
-                                        <FormGroup className="error-l-100">
-                                            <Label className="d-block">DOB</Label>
-                                            <FormikDatePicker
-                                                name="dob"
-                                                value={values.dob}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            />
-                                            {/* <input type="date" name="d" id="" /> */}
-                                        </FormGroup>
-                                        
-                                        <FormGroup className="error-l-100">
-                                            <Label>Occupation</Label>
-                                            <select name="occupation"
-                                                    className="form-control"
-                                                    value={values.occupation}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                >
-                                                {occupation.map((key) => (
-                                                    <option value={key.value}>{key.label}</option>
-                                                ))}
-                                            </select>
-                                        </FormGroup>
-
-                                    </Colxx>
-
-                                    {/* Form Column 2 */}
-                                    <Colxx xxs="12" lg="3">
-                                        
-                                        <FormGroup className="error-l-100">
-                                            <Label>Email</Label>
-                                            <Field className="form-control" name="email" />
-                                        </FormGroup>
-
-                                        <FormGroup className="error-l-100">
-                                            <Label>Pincode</Label>
-                                            <Field className="form-control" name="pincode" />
-                                        </FormGroup>
-                                        
-                                        <FormGroup className="error-l-100">
-                                            <Label>Pan Card Number</Label>
-                                            <Field className="form-control" name="pancard" />
-                                        </FormGroup>
-                                        
-                                        <FormGroup className="error-l-100">
-                                            <Label>Nominee Name</Label>
-                                            <Field className="form-control" name="nominee" />
-                                        </FormGroup>
-                        
-                                    </Colxx>
-
-                                    {/* Form Column 3 */}
-                                    <Colxx xxs="12" lg="3">
-                                        
-                                        <FormGroup className="error-l-100">
-                                            <Label>Phone</Label>
-                                            <Field className="form-control" name="phone" />
-                                        </FormGroup>
-                                        
-                                        {/* :::::::: Radio Group :::::: */}
-                                        <FormGroup className="error-l-150 pt-2">
-                                            <Label className="d-block">Gender</Label>
-                                            <FormikCustomRadioGroup
-                                                inline
-                                                name="gender"
-                                                id="gender"
-                                                label="Which of these?"
-                                                value={values.gender}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                                options={gender}
-                                            />
-                                        </FormGroup>
-                                        
-                                        {/* ::::::::  Select Group  ::::::: */}
-                                        <FormGroup className="error-l-100 pt-1">
-                                            <Label>Select State</Label>
-                                            <select name="state"
-                                                    className="form-control"
-                                                    value={values.state}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                >
-                                                <option value="">Select a state..</option>
-                                                <option value="1">Bihar</option>
-                                                <option value="2">2</option>
-                                            </select>
-                                        </FormGroup>
-                                        
-                                        <FormGroup className="error-l-100">
-                                            <Label>Deceased Person</Label>
-                                            <Field className="form-control" name="deceased" />
-                                        </FormGroup>
-
-                                    </Colxx>
-
-                                    {/* Form Column 4 */}
-                                    <Colxx xxs="12" lg="3">
-                                        
-                                        <FormGroup className="error-l-100">
-                                            <Label>Alternate Contact Number</Label>
-                                            <Field className="form-control" name="alternate" />
-                                        </FormGroup>
-
-                                        {/* ::::::::  Select Group  ::::::: */}
-                                        <FormGroup className="error-l-100 pt-1">
-                                            <Label>Education*</Label>
-                                            <select name="education"
-                                                    className="form-control"
-                                                    value={values.education}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                >
-                                                {education.map((level) => (
-                                                    <option value={level.value}>{level.label}</option>
-                                                ))}
-                                            </select>
-                                        </FormGroup>
-
-                                        <FormGroup className="error-l-100">
-                                            <Label>Select District</Label>
-                                            <select name="district"
-                                                    className="form-control"
-                                                    value={values.district}
-                                                    onChange = {handleChange}
-                                                    onBlur={handleBlur}
-                                                >
-                                                <option value="">Select District</option>
-                                                <option value="1">Araria</option>
-                                                <option value="2">Arval</option>
-                                            </select>
-                                        </FormGroup>
-
-                                        <FormGroup className="error-l-100">
-                                            <Label>Nominee Name</Label>
-                                            <Field className="form-control" name="nominee" />
-                                        </FormGroup>
-
-                                    </Colxx>
-                                </Row>
-
-                                {/* Form Address Row */}
-                                <Row className='mb-4'>
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label>Policy Number</Label>
-                                            <Field className="form-control" name="policyNumber" />
-                                        </FormGroup>
-                                    </Colxx>
-                                    <Colxx xxs="12" lg="3">
-                                        <FormGroup className="error-l-100">
-                                            <Label>Claim Amount</Label>
-                                            <Field className="form-control" name="claimAmt" />
-                                        </FormGroup>
-                                    </Colxx>
-                                    <Colxx xxs="12" lg="6">
-                                        <FormGroup className="error-l-100">
-                                            <Label>Address</Label>
-                                            <Field className="form-control" name="address" />
-                                        </FormGroup>
-                                    </Colxx>
-                                </Row>
-
-                                {/* Form row 3 */}
-                                <Row className='mb-4'>
-                                    {/* Form Column 1 */}
-                                    <Colxx xxs="12" lg="3">
-
-                                        <FormGroup className="error-l-100 pt-1">
-                                            <Label>Insurance Type</Label>
-                                            <select name="insuranceType"
-                                                    className="form-control"
-                                                    value={values.insuranceType}
-                                                    onChange = { (e) => handleSelectInsurancetype(e.target.value) }
-                                                    onBlur={handleBlur}
-                                                >
-                                                {policyTypes.map((policyType) => (
-                                                    <option value={policyType._id}>{policyType.name}</option>
-                                                ))}
-                                            </select>
-                                        </FormGroup>
-                                        
-                                        <FormGroup className="error-l-100 pt-1">
-                                            <Label>Rejection Type</Label>
-                                            <select name="rejectionType"
-                                                    className="form-control"
-                                                    value={values.rejectionType}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                >
-                                                {claimRejectionTypes.map((type) => (
-                                                    <option value={type.value}>{type.label}</option>
-                                                ))}
-                                            </select>
-                                        </FormGroup>
-                                
-                                    </Colxx>
-
-                                    {/* Form Column 2 */}
-                                    <Colxx xxs="12" lg="3">
-                                        
-                                        <FormGroup className="error-l-100 pt-1">
-                                            <Label>Complaint Type</Label>
-                                            <select name="complaintType"
-                                                    className="form-control"
-                                                    value={values.complaintType}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                >
-                                                {complaintTypes.map((type) => (
-                                                    <option value={type._id}>{type.name}</option>
-                                                ))}
-                                            </select>
-                                        </FormGroup>
-
-                                        <FormGroup className="error-l-100 pt-1">
-                                            <Label>Relationship</Label>
-                                            <select name="relationship"
-                                                    className="form-control"
-                                                    value={values.relationship}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                >
-                                                {realtionships.map((key) => (
-                                                    <option value={key.value}>{key.label}</option>
-                                                ))}
-                                            </select>
-                                        </FormGroup>
-                                    </Colxx>
-
-                                    {/* Form Column 3 */}
-                                    <Colxx xxs="12" lg="3">
-                                        
-                                        {/* ::::::::  Select Group  ::::::: */}
-                                        <FormGroup className="error-l-100 pt-1">
-                                            <Label>Insurance Company Name</Label>
-                                            <select name="insuranceCompanyType"
-                                                className="form-control"
-                                                value={values.insuranceCompanyType}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                            >
-                                                {insuranceCompanies.map((insuranceCompany) => (
-                                                    <option value={insuranceCompany._id}>{insuranceCompany.name}</option>
-                                                ))}
-                                            </select>
-                                        </FormGroup>
-                                        
-                                        <FormGroup className="error-l-100 pt-1">
-                                            <Label>Movement of Case</Label>
-                                            <select name="caseMovement"
-                                                    className="form-control"
-                                                    value={values.caseMovement}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                >
-                                                {movementOfCase.map((movement) => (
-                                                    <option value={movement.value}>{movement.label}</option>
-                                                ))}
-                                            </select>
-                                        </FormGroup>
-
-                                    </Colxx>
-
-                                    {/* Form Column 4 */}
-                                    <Colxx xxs="12" lg="3">
-                                    
-                                        {/* ::::::::  Select Group  ::::::: */}
-                                        <FormGroup className="error-l-100 pt-1">
-                                            <Label>Policy Type</Label>
-                                            <select name="policyType"
-                                                    className="form-control"
-                                                    value={values.policyType}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                >
-                                                {policyTypes?.map((key) => (
-                                                    <option value={key.value}>{key.label}</option>
-                                                ))}
-                                            </select>
-                                        </FormGroup>
-
-                                    </Colxx>
-                                </Row>
-
-                                {/* Form row 4 */}
-                                <Row className='mb-4'>
-                                    {/* Form Column 1 */}
-                                    <Colxx xxs="12" lg="3">
-
-                                        <FormGroup className="error-l-100 pt-1">
-                                            <Label>Assign To</Label>
-                                            <select name="executiveName"
-                                                    className="form-control"
-                                                    value={values.executiveName}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                >
-                                                {allExecutives?.map((executive) => (
-                                                    <option value={executive.user_id}>{executive.user_id}</option>
-                                                ))}
-                                            </select>
-                                        </FormGroup>
-                                        
-                                        <FormGroup className="error-l-100 pt-1">
-                                            <Label>Assign to Legal Executive</Label>
-                                            <select name="legalExecutiveAssigned"
-                                                    className="form-control"
-                                                    value={values.legalExecutiveAssigned}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                >
-                                                {allLegalExecutives?.map((executive) => (
-                                                    <option value={executive.user_id}>{executive.user_id}</option>
-                                                ))}
-                                            </select>
-                                        </FormGroup>
-
-                                    </Colxx>
-
-                                    {/* Form Column 2 */}
-                                    <Colxx xxs="12" lg="3">
-                                        
-                                        <FormGroup className="error-l-100 pt-1">
-                                            <Label>Assign to Expert</Label>
-                                            <select name="expertAssigned"
-                                                    className="form-control"
-                                                    value={values.expertAssigned}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                >
-                                                {allExecutives?.map((executive) => (
-                                                    <option value={executive.user_id}>{executive.user_id}</option>
-                                                ))}
-                                            </select>
-                                        </FormGroup>
-
-                                        <FormGroup className="error-l-100 pt-1">
-                                            <Label>Lead Number</Label>
-                                            <Field className="form-control" name="leadNumber" disabled />
-                                        </FormGroup>
-                        
-                                    </Colxx>
-
-                                    {/* Form Column 3 */}
-                                    <Colxx xxs="12" lg="3">
-                                        
-                                        {/* ::::::::  Select Group  ::::::: */}
-                                        <FormGroup className="error-l-100 pt-1">
-                                            <Label>Assign To Company/IGMS</Label>
-                                            <select name="companyAssigned"
-                                                className="form-control"
-                                                value={values.companyAssigned}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                            >
-                                               {allCompanies?.map((company) => (
-                                                    <option value={company.user_id}>{company.user_id}</option>
-                                                ))}
-                                            </select>
-                                        </FormGroup>
-                                        
-                                        <FormGroup className="error-l-100 pt-1">
-                                            <Label>Status</Label>
-                                            <Field className="form-control" name="status" disabled />
-                                            {/* <select name="status"
-                                                    className="form-control"
-                                                    value={values.status}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                >
-                                                <option value="">Select Status</option>
-                                                <option value="1">Bihar</option>
-                                                <option value="2">2</option>
-                                            </select> */}
-                                        </FormGroup>
-
-                                    </Colxx>
-
-                                    {/* Form Column 4 */}
-                                    <Colxx xxs="12" lg="3">
-                                    
-                                        {/* ::::::::  Select Group  ::::::: */}
-                                        <FormGroup className="error-l-100 pt-1">
-                                            <Label>Assign To Ombudsman</Label>
-                                            <select name="ombudsmanAssigned"
-                                                className="form-control"
-                                                value={values.ombudsmanAssigned}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                            >
-                                                {allOmbudsman?.map((ombudsman) => (
-                                                    <option value={ombudsman.user_id}>{ombudsman.user_id}</option>
-                                                ))}
-                                            </select>
-                                        </FormGroup>
-
-                                    </Colxx>
-                                </Row>
-
-                                {/* Form row 5 */}
-                                <Row className='mb-4'>
-                                    {/* Form Column 1 */}
-                                    <Colxx xxs="12" lg="3">
-
-                                        <FormGroup className="error-l-100">
-                                            <Label>Door No./ Bldg/Name / Floor</Label>
-                                            <Field className="form-control" name="houseNumber" />
-                                        </FormGroup>
-
-                                        <FormGroup className="error-l-100">
-                                            <Label>Generated address</Label>
-                                            <Field className="form-control" name="generatedAddress" />
-                                        </FormGroup>
-
-                                    </Colxx>
-
-                                    {/* Form Column 2 */}
-                                    <Colxx xxs="12" lg="3">
-                                        
-                                        <FormGroup className="error-l-100">
-                                            <Label>Street / Area</Label>
-                                            <Field className="form-control" name="street" />
-                                        </FormGroup>
-                                        
-                                        <FormGroup className="error-l-150">
-                                            <Label className="d-block">Covid Complaint Check</Label>
-                                            <FormikCheckbox
-                                                name="isACovidComplaint"
-                                                value={values.isACovidComplaint}
-                                                label="Is it a Covid Complaint"
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            />
-                                        </FormGroup>
-                                        
-                                    </Colxx>
-
-                                    {/* Form Column 3 */}
-                                    <Colxx xxs="12" lg="3">
-                                        
-                                        <FormGroup className="error-l-100">
-                                            <Label>City / Town / Panchayath / Village</Label>
-                                            <Field className="form-control" name="cityName" />
-                                        </FormGroup>
-
-                                        <FormGroup className="error-l-150">
-                                            <Label className="d-block">Service Complaint Check</Label>
-                                            <FormikCheckbox
-                                                name="isAServiceComplaint"
-                                                value={values.isAServiceComplaint}
-                                                label="As a Service Complaint or not"
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            />
-                                        </FormGroup>
-
-                                    </Colxx>
-
-                                    {/* Form Column 4 */}
-                                    <Colxx xxs="12" lg="3">
-                                        
-                                        <FormGroup className="error-l-100">
-                                            <Label>Taluk / Tehsil</Label>
-                                            <Field className="form-control" name="tehsil" />
-                                        </FormGroup>
-
-                                        <FormGroup className="error-l-100 pt-1">
-                                            <Label>Assign To Internal Legal Executive</Label>
-                                            <select name="internalLegalExecutiveAssigned"
-                                                    className="form-control"
-                                                    value={values.internalLegalExecutiveAssigned}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                >
-                                                {allLegalExecutives?.map((executives) => (
-                                                    <option value={executives.user_id}>{executives.user_id}</option>
-                                                ))}
-                                            </select>
-                                        </FormGroup>
-
-                                    </Colxx>
-                                </Row>
-
-                                {/* Form row 6 */}
-                                <Row className='mb-4'>
-
-                                    <Colxx xxs="12" lg="12">
-
-                                        <Row className='mb-4'>
-                                            <Colxx xxs="12" lg="12">
-                                                <FormGroup className="error-l-100">
-                                                    <Label>Complaint Statement</Label>
-                                                    <Input type="textarea" rows="5" name="complaintStatement" id="statement" />
-                                                </FormGroup>
-                                            </Colxx>
-                                        </Row>
-
-                                        <h4 className='my-4'>Customer Care Executive Created Email Section</h4>
-                                        <Row className='mb-4'>
-                                            {/* Form Column 1 */}
-                                            <Colxx xxs="12" lg="3">
-                                                <FormGroup className="error-l-100">
-                                                    <Label>Email ID</Label>
-                                                    <Field className="form-control" name="custCreatedEmail" />
-                                                </FormGroup>
-                                            </Colxx>
-
-                                            {/* Form Column 2 */}
-                                            <Colxx xxs="12" lg="2">
-                                                <FormGroup className="error-l-100">
-                                                    <Label>Password</Label>
-                                                    <Field className="form-control" name="custCreatedPassword" />
-                                                </FormGroup>
-                                            </Colxx>
-
-                                            {/* Form Column 3 */}
-                                            <Colxx xxs="12" lg="3">
-                                                <FormGroup className="error-l-100">
-                                                    <Label>Approved Claim Amount</Label>
-                                                    <Field className="form-control" name="approvedClaimAmt" />
-                                                </FormGroup>
-                                            </Colxx>
-
-                                        </Row>
-                                    </Colxx>
-
-                                </Row>
-
-                            </Colxx>
-                            {/* Wrapping Column ends */}
-                            <Colxx xxs="12" lg="12" className="text-center">
-                                <Button color="primary" type="button">
-                                    Submit
-                                </Button>
-                            </Colxx>
-                        </Row>
-                    </Form>
-                )}
-                </Formik>
-            </CardBody>
-        </Card>
-    );
+                // onBlur={handleBlur}
+              >
+                {policyTypes.map((policyType) => {
+                  console.log(policyType);
+                  return (
+                    <option value={policyType._id}>{policyType.name}</option>
+                  );
+                })}
+              </select>
+            </div>
+          </div>
+          <div className="row mt-4">
+            <div className="col-sm-3">
+              {console.log("--------------", complaintType)}
+              <label>Select Complaint Type</label>
+              <select
+                name="complaintType"
+                className="form-control"
+                value={details.complaintType}
+                onChange={handleFormChange}
+                // onBlur={handleBlur}
+              >
+                {complaintTypes.map((type) => (
+                  <option value={type._id}>{type.name}</option>
+                ))}
+              </select>
+            </div>
+            <div className="col-sm-3">
+              <label>Select Company Name</label>
+              <select
+                name="insuranceCompanyId"
+                className="form-control"
+                value={details.insuranceCompanyId?._id}
+                onChange={handleFormChange}
+                //   onBlur={handleBlur}
+              >
+                {insuranceCompanies.map((insuranceCompany) => (
+                  <option value={insuranceCompany._id}>
+                    {insuranceCompany.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="col-sm-3">
+              <label>Policy Type</label>
+              <select
+                name="policyTypeId"
+                className="form-control"
+                value={details.policyTypeId?._id}
+                onChange={handleFormChange}
+                //   onBlur={handleBlur}
+              >
+                {console.log(policyTypes)}
+                {policyTypes?.map((key) => (
+                  <option value={key._id}>{key.name}</option>
+                ))}
+              </select>
+            </div>
+            <div className="col-sm-3">
+              <label>Rejection Type</label>
+              <select
+                name="claimRejectionType"
+                className="form-control"
+                value={details.claimRejectionType}
+                onChange={handleFormChange}
+                //   onBlur={handleBlur}
+              >
+                {claimRejectionTypes.map((type) => (
+                  <option value={type.value}>{type.label}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className="row mt-4">
+            <div className="col-sm-3">
+              <label>Relationship</label>
+              <select
+                name="familyRelation"
+                className="form-control"
+                value={details.familyRelation}
+                onChange={handleFormChange}
+                //   onBlur={handleBlur}
+              >
+                {realtionships.map((key) => (
+                  <option value={key.value}>{key.label}</option>
+                ))}
+              </select>
+            </div>
+            <div className="col-sm-3">
+              <label>Movement of Case</label>
+              <select
+                name="movementOfCase"
+                className="form-control"
+                value={details.movementOfCase}
+                onChange={handleFormChange}
+                //   onBlur={handleBlur}
+              >
+                {movementOfCase.map((movement) => (
+                  <option value={movement.value}>{movement.label}</option>
+                ))}
+              </select>
+            </div>
+            <div class="col-sm-3">
+              <label>Assign To</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  name="userName"
+                  class="form-control"
+                  value={details.assign_to ? details.assign_to : "-"}
+                  disabled
+                />
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <label>Assign To Expert</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  name="userName"
+                  class="form-control"
+                  value="{{ caseone.assign_to_expert ? caseone.assign_to_expert : '--' }}"
+                  disabled
+                />
+              </div>
+            </div>
+          </div>
+          <div className="row mt-4">
+            <div class="col-sm-3">
+              <label>Assign To Company/IGMS</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  name="userName"
+                  class="form-control"
+                  value={
+                    details.assignToCompanyIGMS
+                      ? details.assignToCompanyIGMS
+                      : "--"
+                  }
+                  disabled
+                />
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <label>Assign To Ombudsman</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  name="userName"
+                  class="form-control"
+                  value={
+                    details.assignToOmbudsman ? details.assignToOmbudsman : "--"
+                  }
+                  disabled
+                />
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <label>Assign To Legal Executive</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  name="userName"
+                  class="form-control"
+                  value={
+                    details.assignedLegalExecutive
+                      ? details.assignedLegalExecutive
+                      : "--"
+                  }
+                  disabled
+                />
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <label>Assign To Legal Sub Executive</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  name="userName"
+                  class="form-control"
+                  value={
+                    details.assignedLegalSubExecutive
+                      ? details.assignedLegalSubExecutive
+                      : "--"
+                  }
+                  disabled
+                />
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <label>Lead Number</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  name="userId"
+                  class="form-control"
+                  value={details.leadId ? details.leadId.leadId : "--"}
+                  disabled
+                />
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <label>Status</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  name="currentStatus"
+                  class="form-control"
+                  value={details.status ? details.status : "--"}
+                  disabled
+                />
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-sm-3">
+              <label>Door No./ Bldg/Name / Floor</label>
+              <input
+                className="form-control"
+                name="DoorNo/Bldg/Name/Floor"
+                value={
+                  details.wholeAddress["DoorNo/Bldg/Name/Floor"]
+                    ? details.wholeAddress["DoorNo/Bldg/Name/Floor"]
+                    : ""
+                }
+              />
+            </div>
+            <div className="col-sm-3">
+              <label>Street / Area</label>
+              <input
+                className="form-control"
+                name="DoorNo/Bldg/Name/Floor"
+                value={
+                  details.wholeAddress["Street/Area"]
+                    ? details.wholeAddress["Street/Area"]
+                    : ""
+                }
+              />
+            </div>
+            <div className="col-sm-3">
+              <label>City / Town / Panchayath / Village</label>
+              <input
+                className="form-control"
+                name="DoorNo/Bldg/Name/Floor"
+                value={
+                  details.wholeAddress["City/Town/Panchayath/Village"]
+                    ? details.wholeAddress["City/Town/Panchayath/Village"]
+                    : ""
+                }
+              />
+            </div>
+            <div className="col-sm-3">
+              <label>Taluk / Tehsil</label>
+              <input
+                className="form-control"
+                name="DoorNo/Bldg/Name/Floor"
+                value={
+                  details.wholeAddress["Taluk/Tehsil"]
+                    ? details.wholeAddress["Taluk/Tehsil"]
+                    : ""
+                }
+              />
+            </div>
+          </div>
+          <div className="row mt-4">
+            <div className="col-sm-3">
+              <label>Generated address</label>
+              <input
+                className="form-control"
+                name="DoorNo/Bldg/Name/Floor"
+                value={
+                  details.wholeAddress["address"]
+                    ? details.wholeAddress["address"]
+                    : ""
+                }
+              />
+            </div>
+            <div class="col-sm-3">
+              <label>Covid Complaint Check</label>
+              <div class="input-group">
+                <label>Is it a Covid Complaint</label>
+                <input
+                  type="checkbox"
+                  name="covidCheck"
+                  class="form-control"
+                  formControlName="covidCheck"
+                  onChange={handleFormChange}
+                />
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <label>Service Complaint Check</label>
+              <div class="input-group">
+                <label>As a Service Complaint or not</label>
+                <input
+                  type="checkbox"
+                  name="asAServiceCheck"
+                  class="form-control"
+                  formControlName="asAServiceCheck"
+                  onChange={handleFormChange}
+                />
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <label>Assign To Internal Legal Executive</label>
+              <input
+                type="text"
+                class="form-control"
+                value={
+                  details.assigned_internal_legal_executive
+                    ? details.assigned_internal_legal_executive
+                    : "--"
+                }
+                disabled
+              />
+            </div>
+          </div>
+          <div className="row mt-4">
+            <div className="col-sm-8">
+              <label>complaintStatement</label>
+              <textarea
+                className="form-control"
+                name="complaint_statement"
+                rows={5}
+                value={details.complaint_statement}
+                onChange={handleFormChange}
+              />
+            </div>
+          </div>
+          <h4 className="my-4">
+            Customer Care Executive Created Email Section
+          </h4>
+          <div className="row">
+            <div className="col-sm-3">
+              <label>Email ID</label>
+              <input
+                class="form-control"
+                type="text"
+                name="executive_created_email"
+                value={details.executive_created_email}
+                onChange={handleFormChange}
+              />
+            </div>
+            <div className="col-sm-3">
+              <label>Password</label>
+              <input
+                class="form-control"
+                type="password"
+                name="password"
+                value={details.password}
+                onChange={handleFormChange}
+              />
+            </div>
+            <div class="col-sm-3">
+              <label>Approved Claim Amount</label>
+              <div class="input-group">
+                <input
+                  class="form-control"
+                  type="text"
+                  name="actualRefundAmount"
+                  value={details.actualRefundAmount}
+                  onChange={handleFormChange}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </CardBody>
+    </Card>
+  );
 }
