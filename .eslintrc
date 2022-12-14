@@ -59,7 +59,7 @@
       {
         "singleQuote": true,
         "parser": "flow"
-      }
+      } 
     ]
   },
   "globals": {
