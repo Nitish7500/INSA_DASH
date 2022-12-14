@@ -173,7 +173,7 @@ const DataListView = ({
 
   const amtInWord = useMemo(
     (num = addClaimAmtOpen.claimAmount) => {
-      if ((num = num.toString()).length > 9) return "overflow";
+      if ((num = num?.toString())?.length > 9) return "overflow";
       let n = ("000000000" + num)
         .substr(-9)
         .match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
