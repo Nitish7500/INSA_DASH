@@ -11,9 +11,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import GlideComponent from 'components/carousel/GlideComponent';
 import { SimpleCarousel } from '../carousel/simple-carousel';
 import { items } from 'data/carouselItems';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { apisURLs } from 'services/apisURLs.services';
+import { getLeadDoc } from 'services/complaints.services';
 
 
-export default function DocumentForm ({ heading, complaintId }) {
+export default function DocumentForm ({ heading, complaintId, details }) {
+
+    const [leadData, setleadData] = useState({})
+
+    useEffect(  () => {
+        getLeadDoc(details.leadId?._id).then(res => {
+            setleadData(res.data)
+        })
+    },[1])
 
     return (
         <Card>
@@ -47,7 +59,12 @@ export default function DocumentForm ({ heading, complaintId }) {
                                 </div>
                             </div>
                         </div>
-                        <Row>
+                        <div>
+                            {leadData[0]?.doc?.map(res =>  {
+                                return <h3>{res}</h3>
+                            })}
+                        </div>
+                        {/* <Row>
                             <Colxx xxs="12" className="pl-0 pr-0 mb-5">
                                 <GlideComponent
                                     settings={{
@@ -62,16 +79,11 @@ export default function DocumentForm ({ heading, complaintId }) {
                                     hideNav: true,
                                     }}
                                 >
-                                    {items.map((item) => {
-                                    return (
-                                        <div key={item.id}>
-                                            <SimpleCarousel {...item} />
-                                        </div>
-                                    );
-                                    })}
+
+
                                 </GlideComponent>
                             </Colxx>
-                        </Row>
+                        </Row> */}
 
                     </Colxx>
                 </Row>

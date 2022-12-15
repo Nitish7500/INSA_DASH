@@ -124,6 +124,10 @@ const getCurrentInvoiceCount = async (headers) => {
     return await request('POST', apisURLs.getCurrentInvoiceCount, headers)
 }
 
+const getLeadDoc = async (id) => {
+    return await request("GET",apisURLs.getLeadDoc + id)
+}
+
 const getComplaints = async function fetchData(selectedPageSize, currentPage, search, statusLabel) {
     axios
     .get(`${apiUrl}?pageIndex=${currentPage}&pageSize=${selectedPageSize}&keyword=${search}${statusFilter}`,
@@ -175,5 +179,6 @@ export {
     fetchDraftMail,
     fetchCompIds,
     fetchHtmlPage,
-    fetchAllUserPolicy
+    fetchAllUserPolicy,
+    getLeadDoc
 }

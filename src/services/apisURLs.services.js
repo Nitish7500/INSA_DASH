@@ -38,7 +38,9 @@ export const apisURLs = {
     getDraftMail : baseURLs.regular + "draftMailAuto/getDraftMail/",
     getCompIds : baseURLs.regular + "insurance/compIds",
     getHtmlPage : baseURLs.regular + "insurance/getHtmlPage",
-    getAllUserPolicy : baseURLs.regular + "insurance/getAllUserPolicy"
+    getAllUserPolicy : baseURLs.regular + "insurance/getAllUserPolicy",
+    sentMailToUser:baseURLs.regular + "draftMailAuto/sendEmailToCustomerComplaint",
+    getLeadDoc:baseURLs.regular + "lead/"   
 }
 
 
