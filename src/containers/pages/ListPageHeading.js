@@ -42,7 +42,8 @@ const ListPageHeading = ({
   pageSizes,
   toggleModal,
   heading,
-  filter
+  filter,
+ handleSearch
 }) => {
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
@@ -146,7 +147,7 @@ const ListPageHeading = ({
                     name="keyword"
                     id="search"
                     placeholder={messages['menu.search']}
-                    onKeyPress={(e) => onSearchKey(e)}
+                    onChange={handleSearch}
                     className={'py-2'}
                   />
                 </div>

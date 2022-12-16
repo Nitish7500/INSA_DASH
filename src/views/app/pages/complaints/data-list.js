@@ -88,6 +88,12 @@ const DataListPages = ({ match }) => {
   const endIndex = currentPage * selectedPageSize;
 
   const filter = statusLabel;
+  const handleSearch = (e) =>{
+    console.log(e.target.value)
+    if (e.target.value) {
+      setSearch(e.target.value)
+    }
+  }
 
   return !isLoaded ? (
     <div className="loading" />
@@ -95,6 +101,7 @@ const DataListPages = ({ match }) => {
     <>
       <ListPageHeading
         heading="All Complaints"
+        handleSearch={handleSearch}
         displayMode={displayMode}
         changeDisplayMode={setDisplayMode}
         changePageSize={setSelectedPageSize}
