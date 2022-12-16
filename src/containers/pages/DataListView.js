@@ -370,7 +370,7 @@ const DataListView = ({
                 <Collapse isOpen={collapse}>
                   <div className="p-2 record-options">
                     <div className="options-flex">
-                      <NavLink
+                      {/* <NavLink
                         to={`complaint-details?complaintId=${complaint?._id}`}
                         className="table-option"
                       >
@@ -408,9 +408,9 @@ const DataListView = ({
                           />
                           <span>Payment Link not Send</span>
                         </div>
-                      </NavLink>
+                      </NavLink> */}
                       <NavLink
-                        to={`complaint-details?complaintId=${complaint?._id}`}
+                        to={`edit-complaint`}
                         className="table-option"
                       >
                         <div className="flex-cc">

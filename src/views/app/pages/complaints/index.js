@@ -2,6 +2,7 @@ import Communication from 'containers/pages/Communication';
 import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import ComplaintDetails from '../../../../containers/complaints/complaint-details';
+import EditComplaint from './EditComplaint';
 
 const DataList = React.lazy(() =>
   import(/* webpackChunkName: "product-data-list" */ './data-list')
@@ -25,6 +26,10 @@ const PagesProduct = ({ match }) => (
       <Route
         path={`${match.url}/complaint-details`}
         render={(props) => <ComplaintDetails {...props} />}
+      />
+      <Route 
+        path={`${match.url}/edit-complaint`}
+        render={(props) => <EditComplaint {...props} />}
       />
       <Route 
         path={`${match.url}/complaint/communication`}
