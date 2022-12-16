@@ -1,5 +1,6 @@
 import { faFileUpload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { NotificationManager } from 'components/common/react-notifications';
 import React from 'react';
 import { useState } from 'react';
 import {
@@ -25,7 +26,15 @@ export default function AddComplaint({isOpen, onClose, leadId, userId, details }
             form.set("user", e.target.files[0])
             uploadComCSV(form).then(res => {
                 if (res.Status === 200) {
-                    // setuploadUserCSV(true)
+                    setuploadUserCSV(true)
+                }
+            })
+        }else if(name === "complaint"){
+            const form = new FormData()
+            form.set("complaint", e.target.files[0])
+            uploadComCSV(form).then(res => {
+                if (res.Status === 200) {
+                    setuploadUserCSV(true)
                 }
             })
         }
@@ -35,6 +44,26 @@ export default function AddComplaint({isOpen, onClose, leadId, userId, details }
         if(uploadUserCSV){
             addComUser({complaint:details, type:type}).then(res => {
                 console.log(res)
+                if (res.status === 200) {
+                    NotificationManager.success(
+                        "File Uploaded !",
+                        res.msg,
+                        3000,
+                        null,
+                        null,
+                        "filled"
+                    )
+                }else{
+                    NotificationManager.error(
+                        "Something went wrong !",
+                        res.msg,
+                        3000,
+                        null,
+                        null,
+                        "filled"
+                    )
+                }
+
             })
         }
     }
@@ -74,7 +103,7 @@ export default function AddComplaint({isOpen, onClose, leadId, userId, details }
                     <div className="flex-sb">
                         <FormGroup className='my-3'>
                             <Label for="companyresponse">Complaint CSV File :</Label>
-                            <Input id="companyresponse" name="companyResponseDoc" type="file" onChange={handleChange} />
+                            <Input id="companyresponse" name="complaint" type="file" onChange={handleChange} />
                         </FormGroup>
                         <Button color='secondary' onClick={() => {handleUploadUserFile("Complaint")}}>
                             <FontAwesomeIcon icon={faFileUpload} />
@@ -100,6 +129,9 @@ export default function AddComplaint({isOpen, onClose, leadId, userId, details }
                             </tr>
                         </tbody>
                     </Table>
+                </div>
+                <div className='d-flex justify-content-center'>
+                    <button className='btn btn-danger rounded' onClick={onClose}>CLOSE</button>
                 </div>
             </ModalBody>
         </Modal>
