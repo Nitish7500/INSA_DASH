@@ -13,7 +13,7 @@ function* getAssignUsers(action) {
       "https://agentapi.stage.insurancesamadhan.com/assignUser"
     );
 
-    yield put({ type: "LEAD_ASSIGN_USER_SUCCESS", data: data.data });
+    yield put({ type: "LEAD_ASSIGN_USER_SUCCESS", data: data.data, message:data.message });
   } catch (error) {
     yield put({
       type: "LEAD_ASSIGN_USER_FAILED",
@@ -29,7 +29,7 @@ function* getAssignExperts(action) {
       "https://agentapi.stage.insurancesamadhan.com/assignExpert"
     );
 
-    yield put({ type: "LEAD_ASSIGN_EXPERT_SUCCESS", data: data.data });
+    yield put({ type: "LEAD_ASSIGN_EXPERT_SUCCESS", data: data.data, message:data.message });
   } catch (error) {
     yield put({
       type: "LEAD_ASSIGN_EXPERT_FAILED",
@@ -45,7 +45,7 @@ function* getInsuranceCompany(action) {
       "https://api.stage.insurancesamadhan.com/insurance_company"
     );
 
-    yield put({ type: "LEAD_INSURANCE_COMPANY_SUCCESS", data: data.data });
+    yield put({ type: "LEAD_INSURANCE_COMPANY_SUCCESS", data: data.data, message:data.message });
   } catch (error) {
     yield put({
       type: "LEAD_INSURANCE_COMPANY_FAILED",
@@ -71,7 +71,7 @@ function* getLeadDataByStatus(action) {
       }`
     );
 
-    yield put({ type: "LEAD_DATA_WITH_STATUS_SUCCESS", data: data.data });
+    yield put({ type: "LEAD_DATA_WITH_STATUS_SUCCESS", data: data.data, message:"All Data List !!" });
   } catch (error) {
     yield put({
       type: "LEAD_DATA_WITH_STATUS_FAILED",
@@ -87,7 +87,7 @@ function* getLeadUsers(action) {
       "https://agentapi.stage.insurancesamadhan.com/users"
     );
 
-    yield put({ type: "LEAD_USERS_SUCCESS", data: data });
+    yield put({ type: "LEAD_USERS_SUCCESS", data: data, message:data.message });
   } catch (error) {
     yield put({
       type: "LEAD_USERS_FAILED",
@@ -104,7 +104,7 @@ function* getLeadDataByEmailPhone(action) {
       { ...action.state }
     );
 
-    yield put({ type: "SEARCH_BY_MAIL_AND_PHONE_SUCCESS", data: data });
+    yield put({ type: "SEARCH_BY_MAIL_AND_PHONE_SUCCESS", data: data, message:data.message });
   } catch (error) {
     yield put({
       type: "SEARCH_BY_MAIL_AND_PHONE_FAILED",
@@ -122,7 +122,7 @@ function* downloadLeadReport(action) {
       `https://api.stage.insurancesamadhan.com/analytics/csv/lead?fromDate=${from}&tillDate=${to}`
     );
 
-    yield put({ type: "LEAD_DOWNLOAD_REPORT_SUCCESS", data: data });
+    yield put({ type: "LEAD_DOWNLOAD_REPORT_SUCCESS", data: data, message:data.message });
   } catch (error) {
     console.log(error);
     yield put({
@@ -140,7 +140,7 @@ function* getMisselingUser(action) {
       { ...action.state }
     );
 
-    yield put({ type: "LEAD_GET_MISSELLING_SUCCESS", data: data });
+    yield put({ type: "LEAD_GET_MISSELLING_SUCCESS", data: data, message:data.message });
   } catch (error) {
     yield put({
       type: "LEAD_GET_MISSELLING_FAILED",
@@ -157,7 +157,7 @@ function* saveAssignToUser(action) {
       { ...action.state }
     );
 
-    yield put({ type: "LEAD_ASSIGN_USER_SAVE_SUCCESS" });
+    yield put({ type: "LEAD_ASSIGN_USER_SAVE_SUCCESS" , message:data.message});
   } catch (error) {
     yield put({
       type: "LEAD_ASSIGN_USER_SAVE_FAILED",
@@ -174,7 +174,7 @@ function* saveAssignToExpert(action) {
       { ...action.state }
     );
 
-    yield put({ type: "LEAD_ASSIGN_EXPERT_SAVE_SUCCESS" });
+    yield put({ type: "LEAD_ASSIGN_EXPERT_SAVE_SUCCESS", message:data.message });
   } catch (error) {
     console.log(error);
     yield put({
@@ -193,7 +193,7 @@ function* acceptLead(action) {
       { ...action.state }
     );
 
-    yield put({ type: "LEAD_ACCEPT_LEAD_SUCCESS" });
+    yield put({ type: "LEAD_ACCEPT_LEAD_SUCCESS" , message:data.message});
   } catch (error) {
     console.log(error);
     yield put({
@@ -213,7 +213,7 @@ function* rejectLead(action) {
       { ...action.state }
     );
 
-    yield put({ type: "LEAD_REJECT_LEAD_SUCCESS" });
+    yield put({ type: "LEAD_REJECT_LEAD_SUCCESS", message:data.message });
   } catch (error) {
     console.log(error);
     yield put({
@@ -257,6 +257,7 @@ function* getLeadDataById(action) {
     yield put({
       type: "LEAD_FETCH_BY_ID_SUCCESS",
       data: data.data[0],
+      message:data.message
     });
   } catch (error) {
     console.log(error);
@@ -307,7 +308,7 @@ function* getLeadFiltrationData(action) {
       { ...action.state }
     );
 
-    yield put({ type: "LEAD_FILTRATION_DATA_SUCCESS", data: data.data });
+    yield put({ type: "LEAD_FILTRATION_DATA_SUCCESS", data: data.data, message:data.message });
   } catch (error) {
     console.log(error);
     yield put({
@@ -326,7 +327,7 @@ function* getCallLogsCustomer(action) {
       `account/calllog?start_time=${startTime}&end_time=${endTime}&customer_number=${customer_number}`
     );
 
-    yield put({ type: "CALL_LOGS_FOR_CUSTOMER_SUCCESS", data: data.data });
+    yield put({ type: "CALL_LOGS_FOR_CUSTOMER_SUCCESS", data: data.data, message:data.message });
   } catch (error) {
     console.log(error);
     yield put({
@@ -344,7 +345,7 @@ function* sendMessageToUser(action) {
       { ...action.state }
     );
 
-    yield put({ type: "LEAD_SEND_MESSAGE_TO_USER_SUCCESS", data: data.data });
+    yield put({ type: "LEAD_SEND_MESSAGE_TO_USER_SUCCESS", data: data.data, message:data.message });
   } catch (error) {
     console.log(error);
     yield put({
@@ -362,7 +363,7 @@ function* cancelLead(action) {
       { ...action.state.data }
     );
 
-    yield put({ type: "LEAD_CANCEL_LEAD_SUCCESS", data: data.data });
+    yield put({ type: "LEAD_CANCEL_LEAD_SUCCESS", data: data.data, message:data.message });
   } catch (error) {
     console.log(error);
     yield put({
@@ -379,7 +380,7 @@ function* getPolicyType(action) {
       `https://api.stage.insurancesamadhan.com/policy_type`
     );
 
-    yield put({ type: "LEAD_GET_POLICY_TYPE_SUCCESS", data: data.data });
+    yield put({ type: "LEAD_GET_POLICY_TYPE_SUCCESS", data: data.data, message:data.message });
   } catch (error) {
     console.log(error);
     yield put({
@@ -399,6 +400,7 @@ function* getComplaintType(action) {
     yield put({
       type: "LEAD_GET_POLICY_TYPE_COMPLAINT_TYPE_SUCCESS",
       data: data.data,
+      message:data.message
     });
   } catch (error) {
     console.log(error);
@@ -417,7 +419,7 @@ function* updateLead(action) {
       `https://api.stage.insurancesamadhan.com/lead/${action.state?._id}`,
       { ...action.state }
     );
-    yield put({ type: "Lead_UPDATE_LEAD_SUCCESS", data: data.data });
+    yield put({ type: "Lead_UPDATE_LEAD_SUCCESS", data: data.data, message:data.message });
   } catch (error) {
     console.log(error);
     yield put({
@@ -428,7 +430,6 @@ function* updateLead(action) {
 }
 
 function* addFollowUp(action) {
-  console.log("---------------------", action);
 
   try {
     let followUpObj = action.state;
@@ -457,7 +458,7 @@ function* addFollowUp(action) {
           status: followUpObj.status,
         }
       );
-      yield put({ type: "Lead_UPDATE_LEAD_SUCCESS", data: data.data });
+      yield put({ type: "Lead_UPDATE_LEAD_SUCCESS", data: data.data, message:data.message });
     }
   } catch (error) {
     console.log(error);

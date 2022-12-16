@@ -85,7 +85,7 @@ export default (state = initialState, action) => {
       return { ...state };
 
     case LEAD_ASSIGN_USER_SUCCESS:
-      return { ...state, assigUser: action.data };
+      return { ...state, assigUser: action.data, message:action.message ? action.message :"Assign to user Successfully !" };
 
     case LEAD_ASSIGN_USER_FAILED:
       return { ...state, message: action.message };
@@ -94,7 +94,7 @@ export default (state = initialState, action) => {
       return { ...state };
 
     case LEAD_ASSIGN_EXPERT_SUCCESS:
-      return { ...state, assignExpert: action.data };
+      return { ...state, assignExpert: action.data, message:action.message ? action.message :"Assign to Expert Successfully !" };
 
     case LEAD_ASSIGN_EXPERT_FAILED:
       return { ...state, message: action.message };
@@ -103,7 +103,7 @@ export default (state = initialState, action) => {
       return { ...state };
 
     case LEAD_INSURANCE_COMPANY_SUCCESS:
-      return { ...state, insuranceCompany: action.data };
+      return { ...state, insuranceCompany: action.data, message:action.message ? action.message :"Successfully Done !" };
 
     case LEAD_INSURANCE_COMPANY_FAILED:
       return { ...state, message: action.message };
@@ -112,7 +112,7 @@ export default (state = initialState, action) => {
       return { ...state };
 
     case LEAD_DATA_WITH_STATUS_SUCCESS:
-      return { ...state, leadDataByStatus: action.data };
+      return { ...state, leadDataByStatus: action.data, message:action.message ? action.message :"Successfully Done !" };
 
     case LEAD_DATA_WITH_STATUS_FAILED:
       return { ...state, message: action.message };
@@ -121,7 +121,7 @@ export default (state = initialState, action) => {
       return { ...state };
 
     case LEAD_USERS_SUCCESS:
-      return { ...state, leadUsers: action.data };
+      return { ...state, leadUsers: action.data, message:action.message ? action.message :"Successfully Done !" };
 
     case LEAD_USERS_FAILED:
       return { ...state, message: action.message };
@@ -136,6 +136,7 @@ export default (state = initialState, action) => {
           list: action.data?.data?.pageOfItems,
           totalRecords: action.data?.data?.pager,
         },
+        message:action.message ? action.message :"Successfully Done !"
       };
 
     case SEARCH_BY_MAIL_AND_PHONE_FAILED:
@@ -145,7 +146,7 @@ export default (state = initialState, action) => {
       return { ...state };
 
     case LEAD_DOWNLOAD_REPORT_SUCCESS:
-      return { ...state, leadReportData: action.data };
+      return { ...state, leadReportData: action.data, message:action.message ? action.message :"Successfully Done !" };
 
     case LEAD_DOWNLOAD_REPORT_FAILED:
       return { ...state, message: action.message };
@@ -154,7 +155,7 @@ export default (state = initialState, action) => {
       return { ...state };
 
     case LEAD_GET_MISSELLING_SUCCESS:
-      return { ...state, missellingSelected: action.data };
+      return { ...state, missellingSelected: action.data, message:action.message ? action.message :"Successfully Done !" };
 
     case LEAD_GET_MISSELLING_FAILED:
       return { ...state, message: action.message };
@@ -208,7 +209,7 @@ export default (state = initialState, action) => {
       return { ...state };
 
     case LEAD_FETCH_BY_ID_SUCCESS:
-      return { ...state, fetchedLead: action.data };
+      return { ...state, fetchedLead: action.data, message:action.message ? action.message :"Successfully Done !" };
 
     case LEAD_FETCH_BY_ID_FAILED:
       return { ...state, message: action.message };
@@ -217,7 +218,7 @@ export default (state = initialState, action) => {
       return { ...state };
 
     case LEAD_FILTRATION_DATA_SUCCESS:
-      return { ...state, filtrationData: action.data };
+      return { ...state, filtrationData: action.data, message:action.message ? action.message :"Successfully Done !" };
 
     case LEAD_FILTRATION_DATA_FAILED:
       return { ...state, message: action.message };
@@ -226,7 +227,7 @@ export default (state = initialState, action) => {
       return { ...state };
 
     case CALL_LOGS_FOR_CUSTOMER_SUCCESS:
-      return { ...state, callLogsCustomer: action.data };
+      return { ...state, callLogsCustomer: action.data, message:action.message ? action.message :"Successfully Done !" };
 
     case CALL_LOGS_FOR_CUSTOMER_FAILED:
       return { ...state, message: action.message };
@@ -235,7 +236,7 @@ export default (state = initialState, action) => {
       return { ...state };
 
     case LEAD_CANCEL_LEAD_SUCCESS:
-      return { ...state };
+      return { ...state, message:action.message ? action.message :"Successfully Done !" };
 
     case LEAD_CANCEL_LEAD_FAILED:
       return { ...state, message: action.message };
@@ -244,7 +245,7 @@ export default (state = initialState, action) => {
       return { ...state };
 
     case LEAD_GET_POLICY_TYPE_SUCCESS:
-      return { ...state, policyType: action.data };
+      return { ...state, policyType: action.data, message:action.message ? action.message :"Successfully Done !" };
 
     case LEAD_GET_POLICY_TYPE_FAILED:
       return { ...state, message: action.message };
@@ -253,7 +254,7 @@ export default (state = initialState, action) => {
       return { ...state };
 
     case LEAD_GET_POLICY_TYPE_COMPLAINT_TYPE_SUCCESS:
-      return { ...state, complaintType: action.data };
+      return { ...state, complaintType: action.data, message:action.message ? action.message :"Successfully Done !" };
 
     case LEAD_GET_POLICY_TYPE_COMPLAINT_TYPE_FAILED:
       return { ...state, message: action.message };

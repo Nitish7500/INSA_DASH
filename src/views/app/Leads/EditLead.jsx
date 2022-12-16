@@ -219,7 +219,7 @@ function EditLead({ lead, seteditPage, getData }) {
                 state: { ...lead, ...formData },
               });
               seteditPage(false);
-              getData();
+              getData("PENDING", 0,50);
             }}
           >
             {" "}

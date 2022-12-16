@@ -148,15 +148,14 @@ function LeadSection() {
   const dispatch = useDispatch();
   const history = useHistory();
   const state = useSelector((state) => state.leadReducer);
-  console.log(state, callLogCustomer);
 
   const getData = ({ status = "PENDING", pageIndex = 0, pageSize = 50 }) => {
-    console.log(
-      "======================================",
-      status,
-      pageIndex,
-      pageSize
-    );
+    // console.log(
+    //   "======================================",
+    //   status,
+    //   pageIndex,
+    //   pageSize
+    // );
     dispatch({
       type: "LEAD_DATA_WITH_STATUS",
       state: {
@@ -183,7 +182,7 @@ function LeadSection() {
         "filled"
       )
     }
-  },[state.message])
+  },[state.message, state.leadDataByStatus])
 
   useEffect(() => {
     dispatch({ type: "LEAD_ASSIGN_USER" });
