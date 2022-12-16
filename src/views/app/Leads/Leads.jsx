@@ -44,6 +44,8 @@ import Select from "react-select";
 import { currentUser } from "constants/defaultValues";
 import EditLead from "./EditLead";
 import ReactPaginate from "react-paginate";
+import AssignToUser from "./Modal/AssignToUser";
+import { NotificationManager } from "components/common/react-notifications";
 
 // import
 
@@ -169,6 +171,19 @@ function LeadSection() {
   useEffect(() => {
     getData({ pageIndex: currentPage });
   }, [currentPage]);
+
+  useEffect(() => {
+    if (state.message) {
+      NotificationManager.success(
+        state.message,
+        "SuccessFul !",
+        3000,
+        null,
+        null,
+        "filled"
+      )
+    }
+  },[state.message])
 
   useEffect(() => {
     dispatch({ type: "LEAD_ASSIGN_USER" });
@@ -727,8 +742,8 @@ function LeadSection() {
                       <td className="font-weight-bold" id="leadTableCellOne">
                         {i + 1 + currentPage * itemsPerPage}
                       </td>
-                      <td id="leadTableRowCellTwo">
-                        <div>
+                      <td id="leadTableRowCellTwo"> 
+                        <div style={{width:"260px"}} className="pl-2">
                           <button
                             className="btn btn-inherit m-0 p-0 mr-2"
                             id="leadCallCustomer"
@@ -1123,7 +1138,6 @@ function LeadSection() {
                               />
                             </div>
                           </button>
-                          <br />
                           <button
                             id="leadUD"
                             className="btn btn-inherit m-0 p-0 mr-2"
