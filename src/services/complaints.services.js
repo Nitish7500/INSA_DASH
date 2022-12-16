@@ -35,8 +35,8 @@ const getFirstDraftData = async (data) => {
     return await request('POST', apisURLs.firstDraftData, data);
 }
 
-const getUserBasedData = async () => {
-    return await request('GET', apisURLs.userBasedData);
+const getUserBasedData = async (data) => {
+    return await request('POST', apisURLs.userBasedData, data);
 }
 
 const downloadComplaintsReport = async() => {
@@ -124,6 +124,94 @@ const getCurrentInvoiceCount = async (headers) => {
     return await request('POST', apisURLs.getCurrentInvoiceCount, headers)
 }
 
+const getLeadDoc = async (id) => {
+    return await request("GET",apisURLs.getLeadDoc + id)
+}
+
+const generateZip = async (data) => {
+    return await request("POST", apisURLs.generateZip,data)
+}
+
+const downloadZip = async (id) => {
+    return await request("GET", apisURLs.downloadZip + id)
+}
+
+const getNonResFlow = async (id) => {
+    return await request("GET", apisURLs.nonResponsiveFlow + `?id=${id}`)
+}
+
+const updateNonResflow = async (data) => {
+    return await request("POST", apisURLs.updateNonResFlow, data)
+}
+
+const inactiveFlowFunc = async (data) => {
+    return await request("POST", apisURLs.inactiveFlow,data)
+}
+
+const uploadComCSV = async (data) => {
+    return await request("POST",apisURLs.uploadComCSV,data)
+}
+
+const addComUser = async (data) => {
+    return await request("POST", apisURLs.addComUser,data)
+}
+
+const reqDataFunc = async (data) => {
+    return await request("POST", apisURLs.reqData, data)
+}
+
+const getReqUserData = async (id) => {
+    return await request("GET", apisURLs.getCancelData + id)
+}
+
+const cancelReqData = async (ids) => {
+    return await request("POST", apisURLs.cancelReqData,ids)
+}
+
+const assignToOmbPostFunc = async (data) => {
+    return  await request("POST", apisURLs.assignOmbudsmanPOST, data)
+}
+
+const getTemplateFunc = async (id, data) => {
+    return await request("POST",apisURLs.getTemplate + id, data)
+}
+
+const updateTemplate = async (data) => {
+    return await request("POST", apisURLs.updateTemplate, data)
+}
+
+const sendTemplateFunc = async (data) => {
+    return await  request("POST", apisURLs.sendTemplate, data)
+}
+
+const getMultiMailTemplate = async (id, data) => {
+    return await request("POST", apisURLs.getTemplateMul + id, data)
+}
+
+const updateTemplateMulFunc = async (data) => {
+    return await request("POST", apisURLs.updateMulTemplate, data)
+}
+
+const sendTemplateMulFunc = async (data) => {
+    return await request("POST", apisURLs.sendTemplateMul, data)
+}
+
+const getTempMail = async (data) => {
+    return await request("POST", apisURLs.getTempMail, data)
+}
+
+const generateMulMail = async (data) => {
+    return await request("POST", apisURLs.generateMulMailRem, data)
+}
+
+const getTrackDataFunc = async (data) => {
+    return await  request("POST", apisURLs.trackData, data)
+}
+
+const selectedDoc = async (data) => {
+    return await  request("POST", apisURLs.selectedDoc, data)
+}
+
 const getComplaints = async function fetchData(selectedPageSize, currentPage, search, statusLabel) {
     axios
     .get(`${apiUrl}?pageIndex=${currentPage}&pageSize=${selectedPageSize}&keyword=${search}${statusFilter}`,
@@ -175,5 +263,27 @@ export {
     fetchDraftMail,
     fetchCompIds,
     fetchHtmlPage,
-    fetchAllUserPolicy
+    fetchAllUserPolicy,
+    getLeadDoc,
+    generateZip,
+    downloadZip,
+    getNonResFlow,
+    updateNonResflow,
+    inactiveFlowFunc,
+    uploadComCSV,
+    addComUser,
+    reqDataFunc,
+    getReqUserData,
+    cancelReqData,
+    assignToOmbPostFunc,
+    getTemplateFunc,
+    updateTemplate,
+    sendTemplateFunc,
+    sendTemplateMulFunc,
+    getMultiMailTemplate,
+    updateTemplateMulFunc,
+    getTempMail,
+    generateMulMail,
+    getTrackDataFunc,
+    selectedDoc,
 }

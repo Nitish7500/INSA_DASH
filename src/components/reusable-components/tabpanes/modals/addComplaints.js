@@ -1,6 +1,7 @@
 import { faFileUpload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
+import { useState } from 'react';
 import {
   Button,
   FormGroup,
@@ -11,8 +12,32 @@ import {
   Table,
 } from 'reactstrap';
 import { apisURLs } from 'services/apisURLs.services';
+import { addComUser, uploadComCSV } from 'services/complaints.services';
 
-export default function AddComplaint({isOpen, onClose, leadId, userId }) {
+export default function AddComplaint({isOpen, onClose, leadId, userId, details }) {
+    let [uploadUserCSV, setuploadUserCSV] = useState(false)
+
+    const handleChange = (e) => {
+        console.log(e.target.name)
+        let name = e.target.name
+        if(name === "userCSV"){
+            const form = new FormData()
+            form.set("user", e.target.files[0])
+            uploadComCSV(form).then(res => {
+                if (res.Status === 200) {
+                    // setuploadUserCSV(true)
+                }
+            })
+        }
+    }
+
+    const handleUploadUserFile = (type) => {
+        if(uploadUserCSV){
+            addComUser({complaint:details, type:type}).then(res => {
+                console.log(res)
+            })
+        }
+    }
         
     return (
         <Modal isOpen={isOpen} toggle={onClose}>
@@ -38,9 +63,9 @@ export default function AddComplaint({isOpen, onClose, leadId, userId }) {
                     <div className="flex-sb">
                         <FormGroup className='my-3'>
                             <Label for="companyresponse">User CSV File :</Label>
-                            <Input id="companyresponse" name="companyResponseDoc" type="file" />
+                            <Input id="companyresponse" type="file" name="userCSV" onChange={handleChange} />
                         </FormGroup>
-                        <Button color='secondary'>
+                        <Button color='secondary' onClick={() => {handleUploadUserFile("User")}}>
                             <FontAwesomeIcon icon={faFileUpload} />
                         </Button>
                     </div>
@@ -49,9 +74,9 @@ export default function AddComplaint({isOpen, onClose, leadId, userId }) {
                     <div className="flex-sb">
                         <FormGroup className='my-3'>
                             <Label for="companyresponse">Complaint CSV File :</Label>
-                            <Input id="companyresponse" name="companyResponseDoc" type="file" />
+                            <Input id="companyresponse" name="companyResponseDoc" type="file" onChange={handleChange} />
                         </FormGroup>
-                        <Button color='secondary'>
+                        <Button color='secondary' onClick={() => {handleUploadUserFile("Complaint")}}>
                             <FontAwesomeIcon icon={faFileUpload} />
                         </Button>
                     </div>

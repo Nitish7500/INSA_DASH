@@ -5,7 +5,7 @@ import { FormikCheckbox, FormikCustomCheckboxGroup, FormikCustomRadioGroup, Form
 import { Field, Formik } from 'formik'
 import * as Yup from 'yup';
 import React, { useEffect, useRef, useState } from 'react'
-import { Alert, Badge, Button, Card, CardBody, CardHeader, CustomInput, Form, FormGroup, Input, Label, Modal, ModalBody, Row } from 'reactstrap'
+import { Alert, Badge, Button, Card, CardBody, CardHeader, CustomInput, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, Row } from 'reactstrap'
 import { faCalendarDays, faDownload, faDownLong } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
@@ -21,6 +21,8 @@ export default function GetEmailData ({ heading, details, complaintId  }) {
     const [documentUploadModal, setDocumentUploadModal] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
     const [emails, setEmails] = useState([]);
+    const [sendMailOpen, setsendMailOpen] = useState(false)
+    const [sentMailForm, setsentMailForm] = useState({})
     const editorRef = useRef(null);
 
     const { policyNumber } = details;
@@ -53,6 +55,20 @@ export default function GetEmailData ({ heading, details, complaintId  }) {
         
         // console.log(emails);
 
+        const sendMailToCus = (email, caseIds) => {
+            setsendMailOpen(true)
+            console.log(caseIds,email)
+            setsentMailForm(email)
+        }
+
+        const sentMailHandler = async () => {
+            const {email, emailType, emaildata, _id : incompleteDraftId, policy_number, subject} = sentMailForm
+            await axios.post(apisURLs.sentMailToUser, {email,emailType, emaildata, incompleteDraftId, policy_number, subject,leadId:details._id}).then(res=>{
+                console.log(res)
+                setsendMailOpen(false)
+            })
+            console.log({email,emailType, emaildata, incompleteDraftId, policyNumber, subject,leadId:details._id})
+        }
     return (
         // <Card>
             <CardBody>
@@ -90,7 +106,7 @@ export default function GetEmailData ({ heading, details, complaintId  }) {
                                     </Colxx>
                                 </Row> */}
 
-                                {emails.map((email) => {
+                                {emails.length ? emails.map((email) => {
                                     return (
                                     // Single Email Card
                                     <Card key={email._id} className="mb-5">
@@ -109,7 +125,10 @@ export default function GetEmailData ({ heading, details, complaintId  }) {
                                             {/* Field */}
                                             <div className="flex-sb mb-3">
                                                 <div className="mailtype">
+                                                    <div>
+                                                    <span className='mr-2'>Email Type -</span>
                                                     <Badge color='primary'>{email.emailType}</Badge>
+                                                    </div>
                                                 </div>
                                                 <p className="date">
                                                     <span className='mr-2'>Sent Date - </span>
@@ -118,6 +137,15 @@ export default function GetEmailData ({ heading, details, complaintId  }) {
                                                         <span className='pl-2'>{email.created_date}</span>
                                                     </Badge>
                                                 </p>
+                                            </div>
+                                            <div className='flex-sb mb-3'>
+                                                <div className='mailtype'>
+
+                                                <span className='mr-2'>Subject -</span>
+                                                <Badge>
+                                                    <span>{email.subject}</span>
+                                                </Badge>
+                                                </div>
                                             </div>
                                             {/* Field */}
                                             <div className="mb-3">
@@ -160,19 +188,38 @@ export default function GetEmailData ({ heading, details, complaintId  }) {
                                                 </div>
                                                 <Button color='primary' onClick={(e) => {
                                                     e.preventDefault();
+                                                    sendMailToCus(email, email.caseUniqueId)
                                                 }}>Send Email To Customer</Button>
                                             </div>
                                             {/* Field */}
                                         </CardBody>
                                     </Card>
                                     )
-                                })}
+                                }):<div className='d-flex justify-content-center'><h4>No Data</h4></div>}
 
                             </Colxx>
                         </Row>
                     </Form>
                 )}
                 </Formik>
+                <Modal isOpen={sendMailOpen} toggle={() => {setsendMailOpen(!sendMailOpen)}}>
+                    <ModalHeader>
+                        <h4 className='m-0 p-0'>Send Email To Customer</h4>
+                    </ModalHeader>
+                    <ModalBody>
+                        <div className=''>
+                        <h4 className=''>Send Email To Customer ?</h4>
+                        <div>
+                            <label className='font-weight-bold mt-3'>Company Email</label>
+                            <input className='form-control mt-1' type="email" placeholder='Enter Email Id' onChange={e => {setsentMailForm({...sentMailForm, email:e.target.value})}} />
+                        </div>
+                        </div>
+                        <div className='d-flex mt-4'>
+                            <button className='btn btn-primary rounded mr-3 px-4' onClick={sentMailHandler}>Yes</button>
+                            <button className='btn btn-warning rounded px-4' onClick={() =>setsendMailOpen(false)}>No</button>
+                        </div>
+                    </ModalBody>
+                </Modal>
             </CardBody>
         // </Card>
     )

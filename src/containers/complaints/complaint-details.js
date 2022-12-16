@@ -36,6 +36,8 @@ const ComplaintDetails = ({ match }) => {
   const escalationPointsRef = useRef(null);
   const earlierMailsRef = useRef(null);
   const hearing_pointsRef = useRef(null);
+  const legalCommentSectionRef = useRef(null);
+  const legalPointsByExpertRef = useRef(null);
 
   // console.log(complaintId);
 
@@ -46,7 +48,6 @@ const ComplaintDetails = ({ match }) => {
         const { data } = await getComplaintDetailsById(complaintId);
         setItems(data);
         setformData(data);
-        console.log("--------------------------------------------");
       } catch (error) {
         console.log("ComplaintDetails", error);
       }
@@ -58,14 +59,51 @@ const ComplaintDetails = ({ match }) => {
   const handleFormChange = (e) => {
     console.log(e.target.type);
     if (e.target.type === "checkbox") {
-      setItems({ ...items, [e.target.name]: e.target.checked });
+      if (e.target.name === "sendNoticeReminderOrNot") {
+        setItems({
+          ...items,
+          legalSection: {
+            ...items.legalSection,
+            [e.target.name]: e.target.checked,
+          },
+        });
+      } else {
+        setItems({ ...items, [e.target.name]: e.target.checked });
+      }
     } else if (e.target.name === "alternatePhone") {
       setItems({
         ...items,
         userId: { ...items.userId, [e.target.name]: e.target.value },
       });
     } else if (e.target.name === "consumerCourtDate") {
-      setItems({ ...items, legalSection: {} });
+    } else if (
+      [
+        "sendNoticeReminderOrNot",
+        "caseNumber",
+        "caseTitle",
+        "LawyerFirmName",
+        "caseFileNumber",
+        "LawyerFirmNumber",
+        "consumerCourtLocation",
+        "LawyerFirmAddress",
+        "callCust1",
+        "approxFees",
+        "callCust2",
+        "legal_res_notice_date",
+        "C_court_filing_date",
+        "legal_notice",
+        "legal_notice_date",
+        "legal_notice_courier_number",
+      ].includes(e.target.name) ||
+      e.target.name === "consumerCourtDate"
+    ) {
+      setItems({
+        ...items,
+        legalSection: {
+          ...items.legalSection,
+          [e.target.name]: e.target.value,
+        },
+      });
     } else if (e.target.name === "courierNumberDocArr") {
       setItems({
         ...items,
@@ -76,13 +114,20 @@ const ComplaintDetails = ({ match }) => {
     }
   };
 
+  const handleLegalSection = (e) => {};
+
   const handleSubmit = () => {
     console.log("dfssdsdddd");
     console.log({
       ...items,
       escalationPoints: escalationPointsRef.current?.getContent(),
       earlierMails: earlierMailsRef.current?.getContent(),
-      hearing_points:hearing_pointsRef.current?.getContent(),
+      hearing_points: hearing_pointsRef.current?.getContent(),
+      legalSection: {
+        ...items.legalSection,
+        legalCommentSection: legalCommentSectionRef.current?.getContent(),
+        legalPointsByExpert:legalPointsByExpertRef.current?.getContent()
+      },
     });
   };
 
@@ -281,7 +326,7 @@ const ComplaintDetails = ({ match }) => {
 
             <TabPane tabId="ombudsman">
               <OmbudsmanForm
-              hearing_pointsRef={hearing_pointsRef}
+                hearing_pointsRef={hearing_pointsRef}
                 handleFormChange={handleFormChange}
                 heading="Ombudsman Section"
                 details={items}
@@ -304,6 +349,8 @@ const ComplaintDetails = ({ match }) => {
                 heading="Legal Section"
                 details={items}
                 complaintId={complaintId}
+                legalPointsByExpertRef={legalPointsByExpertRef}
+                legalCommentSectionRef={legalCommentSectionRef}
               />
             </TabPane>
 

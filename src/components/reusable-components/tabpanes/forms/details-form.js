@@ -247,7 +247,6 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
       console.log("All Companies / IGMS ", error);
     }
   };
-  console.log(details);
 
   const omdRemindMailFunc = async () => {
     try {
@@ -687,7 +686,6 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 // onBlur={handleBlur}
               >
                 {policyTypes.map((policyType) => {
-                  console.log(policyType);
                   return (
                     <option value={policyType._id}>{policyType.name}</option>
                   );
@@ -697,7 +695,6 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
           </div>
           <div className="row mt-4">
             <div className="col-sm-3">
-              {console.log("--------------", complaintType)}
               <label>Select Complaint Type</label>
               <select
                 name="complaintType"
@@ -736,7 +733,6 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 onChange={handleFormChange}
                 //   onBlur={handleBlur}
               >
-                {console.log(policyTypes)}
                 {policyTypes?.map((key) => (
                   <option value={key._id}>{key.name}</option>
                 ))}
