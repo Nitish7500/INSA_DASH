@@ -488,7 +488,7 @@ export default function MailingSectionForm({
                 placeholder="Requirement Date..."
               />
             </div>
-            <div className="col-sm-8">
+            <div className="col-sm-12">
               <label>Escalation Mail Points</label>
               <Editor
                 id="Editor01"
@@ -528,7 +528,7 @@ export default function MailingSectionForm({
                 }}
               />
             </div>
-            <div className="col-sm-8">
+            <div className="col-sm-12">
               <label>Escalation Mail Points</label>
               <Editor
                 id="Editor02"

@@ -26,7 +26,8 @@ const ComplaintDetails = ({ match }) => {
   const [activeTab, setActiveTab] = useState("details");
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
-
+  const [comCurNumArr, setcomCurNumArr] = useState([])
+  const [comCurDateArr, setcomCurDateArr] = useState([])
   const { complaintId } = useQuery(["complaintId"]);
   const [formData, setformData] = useState({
     name: "",
@@ -114,10 +115,8 @@ const ComplaintDetails = ({ match }) => {
     }
   };
 
-  const handleLegalSection = (e) => {};
 
   const handleSubmit = () => {
-    console.log("dfssdsdddd");
     console.log({
       ...items,
       escalationPoints: escalationPointsRef.current?.getContent(),
@@ -125,11 +124,14 @@ const ComplaintDetails = ({ match }) => {
       hearing_points: hearing_pointsRef.current?.getContent(),
       legalSection: {
         ...items.legalSection,
+        consumerCourtDate:comCurDateArr,
         legalCommentSection: legalCommentSectionRef.current?.getContent(),
         legalPointsByExpert: legalPointsByExpertRef.current?.getContent(),
       },
+      courierNumberDocArr:comCurNumArr
     });
   };
+
 
   // const { messages } = intl;
   return !isLoaded ? (
@@ -343,6 +345,8 @@ const ComplaintDetails = ({ match }) => {
                 heading="Ombudsman Section"
                 details={items}
                 complaintId={complaintId}
+                setcomCurNumArr = {setcomCurNumArr}
+                setcomCurDateArr = {setcomCurDateArr}
               />
             </TabPane>
 

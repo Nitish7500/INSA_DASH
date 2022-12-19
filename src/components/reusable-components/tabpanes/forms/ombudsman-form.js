@@ -33,6 +33,7 @@ import {
 import { Editor } from "@tinymce/tinymce-react";
 import { date } from "yup/lib/locale";
 import { tinyMceApiKey } from "constants/defaultValues";
+import { useEffect } from "react";
 
 export default function OmbudsmanForm({
   heading,
@@ -40,20 +41,14 @@ export default function OmbudsmanForm({
   complaintId,
   handleFormChange,
   hearing_pointsRef,
+  setcomCurNumArr,
+  setcomCurDateArr,
 }) {
   const [documentUploadModal, setDocumentUploadModal] = useState(false);
   const [comCouCount, setcomCouCount] = useState([1]);
-
-  // const onSubmit = (values, { setSubmitting }) => {
-  //     const payload = {
-  //       ...values,
-  //       reactSelect: values.reactSelect.map((t) => t.value),
-  //     };
-  //     setTimeout(() => {
-  //       console.log(JSON.stringify(payload, null, 2));
-  //       setSubmitting(false);
-  //     }, 1000);
-  // };
+  const [comCurNumForm, setcomCurNumForm] = useState({});
+  const [comCurDate, setcomCurDate] = useState([1]);
+  const [comCurDateForm, setcomCurDateForm] = useState({});
 
   const editorRef = useRef(null);
   const log = (e) => {
@@ -62,6 +57,24 @@ export default function OmbudsmanForm({
       console.log({ hearing_points: editorRef.current.getContent() });
     }
   };
+
+  useEffect(() => {
+    let temp = Object.values(comCurNumForm)?.filter((x) => {
+      return x;
+    });
+    temp = temp.slice(0, comCouCount.length);
+    console.log(temp);
+    setcomCurNumArr(temp);
+  }, [comCurNumForm, comCouCount]);
+
+  useEffect(() => {
+    let temp = Object.values(comCurDateForm)?.filter((x) => {
+      return x;
+    });
+    temp = temp.slice(0, comCurDate.length);
+    console.log(temp);
+    setcomCurDateArr(temp);
+  }, [comCurDate]);
 
   const {
     ombudsman_c_date,
@@ -98,121 +111,173 @@ export default function OmbudsmanForm({
         <h2 className="mb-4">{heading}</h2>
         <div className="container">
           <div className="row">
-            <div className="col-sm-3">
-              <label>Ombudsman Complaint Date</label>
-              <input
-                id="OmbFrmComDate"
-                type="date"
-                class="form-control"
-                value={details.ombudsman_c_date}
-                name="ombudsman_c_date"
-                placeholder="Ombudsman Complaint Date..."
-                disabled
-              />
-            </div>
-            <div class="col-sm-3">
-              <label>Complaint Courier Recent Date</label>
-              <div class="input-group">
-                <input
-                  id="OmbFrmComCurRecDate"
-                  type="date"
-                  class="form-control"
-                  value={details.ombudsman_doc_date}
-                  name="ombudsman_doc_date"
-                  onChange={handleFormChange}
-                  placeholder="Ombudsman Doucment Send Date..."
-                />
-              </div>
-            </div>
-            <div className="col-sm-3">
-              <label>Complaint Courier Date</label>
-              <input
-                id="OmbFrmCompCurDt"
-                className="form-control"
-                type={"date"}
-                name="consumerCourtDate"
-                value={details.legalSection?.consumerCourtDate}
-                onChange={handleFormChange}
-              />
-            </div>
-            <div className="col-sm-3">
-              <label>Complaint Courier Recent Number</label>
-              <input
-                id="OmbFrmComCurRecNo"
-                type="text"
-                class="form-control"
-                value={details.courier_number_doc}
-                name="courier_number_doc"
-                onChange={handleFormChange}
-              />
-            </div>
-          </div>
-          <div className="row mt-4">
-            <div class="col-sm-3">
-              <label>Complaint Form Pushed Date</label>
-              <div class="input-group">
-                <input
-                  id="OmbFrmComFormPushedDt"
-                  type="date"
-                  class="form-control"
-                  value={details.complainFormSendDate}
-                  name="complainFormSendDate"
-                  onChange={handleFormChange}
-                  placeholder="Complaint Form Send Date..."
-                />
-              </div>
-            </div>
-            <div class="col-sm-3">
-              <label>Complaint Courier Numbers</label>
-              <button
-                id="OmbFrmComCurNoBtn"
-                type="button"
-                class="btn btn-secondary btn-sm m-2"
-                onClick={() => {
-                  setcomCouCount([...comCouCount, +comCouCount + 1]);
-                }}
-              >
-                Add
-              </button>
-              <button
-                id="OmbFrmComCurBtnDel"
-                type="button"
-                class="btn btn-danger btn-sm m-2"
-                onClick={() => {
-                  setcomCouCount(
-                    comCouCount.length > 1
-                      ? comCouCount?.slice(0, comCouCount.length - 1)
-                      : [1]
-                  );
-                }}
-              >
-                Del
-              </button>
-              {comCouCount?.map((res, i) => {
-                return (
+            <div className="col-sm-8">
+              <div className="row">
+                <div className="col-sm-4">
+                  <label>Ombudsman Complaint Date</label>
                   <input
-                    id={`OmbFrmComCurNoBtn${i}`}
-                    className="form-control"
-                    name="courierNumberDocArr"
-                    onBlur={handleFormChange}
+                    id="OmbFrmComDate"
+                    type="date"
+                    class="form-control"
+                    value={details.ombudsman_c_date}
+                    name="ombudsman_c_date"
+                    placeholder="Ombudsman Complaint Date..."
+                    disabled
                   />
-                );
-              })}
+                </div>
+                <div class="col-sm-4">
+                  <label>Complaint Courier Recent Date</label>
+                  <div class="input-group">
+                    <input
+                      id="OmbFrmComCurRecDate"
+                      type="date"
+                      class="form-control"
+                      value={details.ombudsman_doc_date}
+                      name="ombudsman_doc_date"
+                      onChange={handleFormChange}
+                      placeholder="Ombudsman Doucment Send Date..."
+                    />
+                  </div>
+                </div>
+                <div className="col-sm-4">
+                  <label>Complaint Courier Recent Number</label>
+                  <input
+                    id="OmbFrmComCurRecNo"
+                    type="text"
+                    class="form-control"
+                    value={details.courier_number_doc}
+                    name="courier_number_doc"
+                    onChange={handleFormChange}
+                  />
+                </div>
+              </div>
+              <div className="row mt-4 pt-5">
+                <div class="col-sm-4">
+                  <label>Complaint Form Pushed Date</label>
+                  <div class="input-group">
+                    <input
+                      id="OmbFrmComFormPushedDt"
+                      type="date"
+                      class="form-control"
+                      value={details.complainFormSendDate}
+                      name="complainFormSendDate"
+                      onChange={handleFormChange}
+                      placeholder="Complaint Form Send Date..."
+                    />
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <label>Complaint Courier Numbers</label>
+                  <br />
+                  {comCouCount?.map((res, i) => {
+                    return (
+                      <input
+                        id={`OmbFrmComCurNoBtn${i}`}
+                        className="form-control"
+                        name={`courierNumberDocArr${i}`}
+                        value={comCurNumForm[`courierNumberDocArr${i}`]}
+                        onChange={(e) => {
+                          setcomCurNumForm({
+                            ...comCurNumForm,
+                            [e.target.name]: e.target.value,
+                          });
+                        }}
+                        // onBlur={handleComCurNum}
+                      />
+                    );
+                  })}
+                  <button
+                    id="OmbFrmComCurNoBtn"
+                    type="button"
+                    class="btn btn-secondary btn-sm m-2  py-0 px-1"
+                    onClick={() => {
+                      setcomCouCount([...comCouCount, +comCouCount + 1]);
+                    }}
+                  >
+                    Add
+                  </button>
+                  <button
+                    id="OmbFrmComCurBtnDel"
+                    type="button"
+                    class="btn btn-danger btn-sm m-2 py-0 px-1"
+                    onClick={() => {
+                      setcomCouCount(
+                        comCouCount.length > 1
+                          ? comCouCount?.slice(0, comCouCount.length - 1)
+                          : [1]
+                      );
+                    }}
+                  >
+                    Del
+                  </button>
+                </div>
+                <div class="col-sm-4">
+                  <label>Ombudsman Complaint Number</label>
+                  <div class="input-group">
+                    <input
+                      id="OmbFrmOmbComNo"
+                      type="text"
+                      class="form-control"
+                      value={details.oc_number}
+                      name="oc_number"
+                      formControlName="oc_number"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="col-sm-3">
-              <label>Ombudsman Complaint Number</label>
-              <div class="input-group">
-                <input
-                  id="OmbFrmOmbComNo"
-                  type="text"
-                  class="form-control"
-                  value={details.oc_number}
-                  name="oc_number"
-                  formControlName="oc_number"
-                />
+            <div className="col-sm-4">
+              <div className="row">
+                <div className="col-sm-12">
+                  <label className="mr-4">
+                    Complaint Courier Date / Ombudsman Requirement sent date
+                  </label>
+                  {comCurDate?.map((res, i) => {
+                    return (
+                      <input
+                        id="OmbFrmCompCurDt"
+                        className="form-control"
+                        type={"date"}
+                        name={`consumerCourtDate${i}`}
+                        value={comCurDateForm[`consumerCourtDate${i}`]}
+                        onChange={(e) => {
+                          setcomCurDateForm({
+                            ...comCurDateForm,
+                            [e.target.name]: e.target.value,
+                          });
+                        }}
+                      />
+                    );
+                  })}
+                  <button
+                    id="OmbFrmComCurDateBtn"
+                    type="button"
+                    class="btn btn-secondary btn-sm m-2 py-0 px-1"
+                    onClick={() => {
+                      setcomCurDate([...comCurDate, +comCurDate + 1]);
+                    }}
+                  >
+                    Add
+                  </button>
+                  <button
+                    id="OmbFrmComCurDateBtnDel"
+                    type="button"
+                    class="btn btn-danger btn-sm m-2 py-0 px-1"
+                    onClick={() => {
+                      setcomCurDate(
+                        comCurDate.length > 1
+                          ? comCurDate?.slice(0, comCurDate.length - 1)
+                          : [1]
+                      );
+                    }}
+                  >
+                    Del
+                  </button>
+                </div>
               </div>
             </div>
           </div>
+
           <hr />
           <h4>Form 6A Data</h4>
           <hr />
@@ -305,6 +370,86 @@ export default function OmbudsmanForm({
                   <option value={item.value}>{item.label}</option>
                 ))}
               </select>
+            </div>
+          </div>
+          <div className="row mt-5">
+            <div className="col-sm-3">
+              <label>Ombudsman Requirement Sent Recent Date</label>
+              <input
+                id="ombReqSentRecDate"
+                type="date"
+                class="form-control"
+                value={details.ombudsmanRequirementSentDate}
+                onChange={handleFormChange}
+                name="ombudsmanRequirementSentDate"
+              />
+            </div>
+            {/* <div className="col-sm-3">
+              <label className="mr-4">Ombudsman Requirement sent date</label>
+              <button
+                id="OmbFrmComCurDateBtn"
+                type="button"
+                class="btn btn-secondary btn-sm m-2 py-0 px-1"
+                onClick={() => {
+                  setcomCurDate([...comCurDate, +comCurDate + 1]);
+                }}
+              >
+                Add
+              </button>
+              <button
+                id="OmbFrmComCurDateBtnDel"
+                type="button"
+                class="btn btn-danger btn-sm m-2 py-0 px-1"
+                onClick={() => {
+                  setcomCurDate(
+                    comCurDate.length > 1
+                      ? comCurDate?.slice(0, comCurDate.length - 1)
+                      : [1]
+                  );
+                }}
+              >
+                Del
+              </button>
+              {comCurDate?.map((res, i) => {
+                return (
+                  <input
+                    id="OmbFrmCompCurDt"
+                    className="form-control"
+                    type={"date"}
+                    name={`consumerCourtDate${i}`}
+                    value={comCurDateForm[`consumerCourtDate${i}`]}
+                    onChange={(e) => {
+                      setcomCurDateForm({
+                        ...comCurDateForm,
+                        [e.target.name]: e.target.value,
+                      });
+                    }}
+                  />
+                );
+              })}
+            </div> */}
+            <div className="col-sm-3">
+              <label>Ombudsman Courier Number</label>
+              <input
+                id="ombudsmanCourierNumber"
+                type="text"
+                class="form-control"
+                value={details.ombudsmanCourierNumber}
+                name="ombudsmanCourierNumber"
+                onChange={handleFormChange}
+              />
+            </div>
+            <div className="col-sm-3">
+              <label>Ombudsman Requirement Pushed Date</label>
+              <input
+                id="requirementPushDate"
+                type="date"
+                class="form-control"
+                value={details.requirementPushDate}
+                name="requirementPushDate"
+                onChange={handleFormChange}
+                placeholder="Ombudsman Requirement Pushed Date..."
+              />
             </div>
           </div>
           <h4 className="mt-4">Ombudsman hearing date and time</h4>
@@ -541,28 +686,30 @@ export default function OmbudsmanForm({
             </div>
           </div>
           <div className="row mt-4">
-            <Editor
-              id="Editor"
-              apiKey={tinyMceApiKey}
-              onInit={(evt, editor) => (hearing_pointsRef.current = editor)}
-              initialValue={details.hearing_points}
-              init={{
-                height: 500,
-                menubar: false,
-                plugins: [
-                  "advlist autolink lists link image charmap print preview anchor",
-                  "searchreplace visualblocks code fullscreen",
-                  "insertdatetime media table paste code help wordcount",
-                ],
-                toolbar:
-                  "undo redo | formatselect | " +
-                  "bold italic backcolor | alignleft aligncenter " +
-                  "alignright alignjustify | bullist numlist outdent indent | " +
-                  "removeformat | help",
-                content_style:
-                  "body { font-family:Work Sans,Helvetica,Arial,sans-serif; font-size:14px }",
-              }}
-            />
+            <div className="col-sm-12">
+              <Editor
+                id="Editor"
+                apiKey={tinyMceApiKey}
+                onInit={(evt, editor) => (hearing_pointsRef.current = editor)}
+                initialValue={details.hearing_points}
+                init={{
+                  height: 500,
+                  menubar: false,
+                  plugins: [
+                    "advlist autolink lists link image charmap print preview anchor",
+                    "searchreplace visualblocks code fullscreen",
+                    "insertdatetime media table paste code help wordcount",
+                  ],
+                  toolbar:
+                    "undo redo | formatselect | " +
+                    "bold italic backcolor | alignleft aligncenter " +
+                    "alignright alignjustify | bullist numlist outdent indent | " +
+                    "removeformat | help",
+                  content_style:
+                    "body { font-family:Work Sans,Helvetica,Arial,sans-serif; font-size:14px }",
+                }}
+              />
+            </div>
           </div>
         </div>
       </CardBody>
