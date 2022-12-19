@@ -78,6 +78,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                       <IntlMessages id="user.email" />
                     </Label>
                     <Field
+                      id="adminEmail"
                       className="form-control"
                       name="email"
                       validate={validateEmail}
@@ -93,6 +94,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                       <IntlMessages id="user.password" />
                     </Label>
                     <Field
+                      id="adminPassword"
                       className="form-control"
                       type="password"
                       name="password"
@@ -109,6 +111,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                       <IntlMessages id="user.forgot-password-question" />
                     </NavLink> */}
                     <Button
+                      id='adminLoginBtn'
                       color="primary"
                       className={`btn-shadow btn-multiple-state ${
                         loading ? 'show-spinner' : ''

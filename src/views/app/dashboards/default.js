@@ -164,13 +164,24 @@ const DefaultDashboard = ({ intl, match }) => {
     stateEmptyFunc();
   };
 
+  const handleNavClick = (e) => {
+    const temp = document.querySelectorAll(".letter-spacing");
+    for (let i = 0; i < temp.length; i++) {
+      temp[i].style.backgroundColor = "white";
+      temp[i].style.color = "black";
+    }
+    e.target.style.backgroundColor = "#145388";
+    e.target.style.color = "white";
+  };
+
   return (
     <>
       <h1>
         Welcome <span className="text-warning">{user.data?.userType}</span> !
       </h1>
       <p>Work in Progress...</p>
-      <div className="container m-2">
+      <div className="bg-light shadow pt-3" style={{borderRadius:"5px"}}>
+      <div className="container m-2 mb-4 ">
         <div className="row align-items-start">
           <div className="col-sm">
             <label className="d-block">Select Executive:-</label>
@@ -199,7 +210,7 @@ const DefaultDashboard = ({ intl, match }) => {
             <label className="d-block">Daily/Monthly/Yearly</label>
             <select
               className="form-control border-0"
-              id="ex1"
+              id="ex2"
               name="dateWise"
               onChange={handleDateWiseChange}
             >
@@ -214,7 +225,7 @@ const DefaultDashboard = ({ intl, match }) => {
             <label className="d-block">Start Date</label>
             <input
               className="form-control input-lg pt-2 border-0"
-              id="ex1"
+              id="ex3"
               type={"date"}
               value={dateObj.startDate}
               name="startDate"
@@ -225,7 +236,7 @@ const DefaultDashboard = ({ intl, match }) => {
             <label className="d-block">End Date</label>
             <input
               className="form-control border-0"
-              id="ex1"
+              id="ex4"
               type={"date"}
               name="endDate"
               value={dateObj.endDate}
@@ -236,7 +247,7 @@ const DefaultDashboard = ({ intl, match }) => {
             <label className="d-block">Ombudsman Location</label>
             <select
               className="form-control border-0"
-              id="ex1"
+              id="ex5"
               name="omdLocation"
               value={ombObj.omdLocation}
               onChange={(e) => {
@@ -259,7 +270,7 @@ const DefaultDashboard = ({ intl, match }) => {
             <label className="d-block">Ombudsman Status</label>
             <select
               className="form-control border-0"
-              id="ex1"
+              id="ex6"
               name="selectedStatus"
               value={ombObj.selectedStatus}
               onChange={(e) => {
@@ -277,57 +288,131 @@ const DefaultDashboard = ({ intl, match }) => {
           </div>
         </div>
       </div>
-      <hr />
-
+      {/* <hr /> */}
+      <div className="d-flex justify-content-between w-100 bg-white px-5 my-5">
+        <div className="text-dark px-3 py-2">
+          <span
+            className="h6 px-3 letter-spacing py-2 font-weight-bold"
+            onClick={(e) => {
+              handleNavClick(e);
+              leadCollapse("leadSection");
+            }}
+          >
+            LEAD
+          </span>
+        </div>
+        <div className="text-dark px-3 py-2">
+          <span
+            className="h6 px-3 letter-spacing font-weight-bold py-2"
+            onClick={(e) => {
+              handleNavClick(e);
+              leadCollapse("registration");
+            }}
+          >
+            REGISTRATION
+          </span>
+        </div>
+        <div className="text-dark px-3 py-2">
+          <span
+            className="h6 px-3 letter-spacing font-weight-bold py-2"
+            onClick={(e) => {
+              handleNavClick(e);
+              leadCollapse("resolution");
+            }}
+          >
+            RESOLUTION
+          </span>
+        </div>
+        <div className="text-dark px-3 py-2">
+          <span
+            className="h6 px-3 letter-spacing font-weight-bold py-2"
+            onClick={(e) => {
+              handleNavClick(e);
+              leadCollapse("legal");
+            }}
+          >
+            LEGAL
+          </span>
+        </div>
+        <div className="text-dark px-3 py-2">
+          <span
+            className="h6 px-3 letter-spacing font-weight-bold py-2"
+            onClick={(e) => {
+              handleNavClick(e);
+              leadCollapse("ombudsman");
+            }}
+          >
+            OMBUDSMAN
+          </span>
+        </div>
+        <div className="text-dark px-3 py-2">
+          <span
+            className="h6 px-3 letter-spacing font-weight-bold py-2"
+            onClick={(e) => {
+              handleNavClick(e);
+              leadCollapse("mailing");
+            }}
+          >
+            MAILING
+          </span>
+        </div>
+      </div>
+      </div>
       <div>
-        <button
+        {/* <button
+        id="leadSecBtn"
           className="btn btn-primary rounded mr-3"
           color="primary"
           onClick={() => leadCollapse("leadSection")}
           style={{ marginBottom: "1rem" }}
         >
           LEAD
-        </button>
-        <button
+        </button> */}
+        {/* <button
+          id="regSecBtn"
           className="btn btn-primary rounded mr-3"
           color="primary"
           onClick={() => leadCollapse("registration")}
           style={{ marginBottom: "1rem" }}
         >
           Registration
-        </button>
-        <button
+        </button> */}
+        {/* <button
+          id="resolutionSecBtn"
           className="btn btn-primary rounded mr-3"
           color="primary"
           onClick={() => leadCollapse("resolution")}
           style={{ marginBottom: "1rem" }}
         >
           Resolution
-        </button>
-        <button
+        </button> */}
+        {/* <button
+          id="legalSecBtn"
           className="btn btn-primary rounded mr-3"
           color="primary"
           onClick={() => leadCollapse("legal")}
           style={{ marginBottom: "1rem" }}
         >
           LEGAL
-        </button>
-        <button
+        </button> */}
+        {/* <button
+          id="ombudsmanSecBtn"
           className="btn btn-primary rounded mr-3"
           color="primary"
           onClick={() => leadCollapse("ombudsman")}
           style={{ marginBottom: "1rem" }}
         >
           OMBUDSMAN
-        </button>
-        <button
+        </button> */}
+        {/* <button
+          id="mailingSecBtn"
           className="btn btn-primary rounded mr-3"
           color="primary"
           onClick={() => leadCollapse("mailing")}
           style={{ marginBottom: "1rem" }}
         >
           MAILING
-        </button>
+        </button> */}
 
         {/* ------------------------------------------------> All Lead Section Begin */}
 
@@ -340,6 +425,7 @@ const DefaultDashboard = ({ intl, match }) => {
               <ul className="d-flex list-unstyled flex-xl-row flex-md-row flex-sm-column">
                 <li key={"1"} className="mr-3">
                   <button
+                    id="allLeadSecBtn"
                     className="m-0 btn btn-primary rounded"
                     color="primary"
                     onClick={() => {
@@ -359,6 +445,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 </li>
                 <li className="mr-3">
                   <button
+                    id="todayLeadBtn"
                     className="m-0 btn btn-primary rounded"
                     color="primary"
                     onClick={() => {
@@ -378,6 +465,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 </li>
                 <li className="mr-3">
                   <button
+                    id="monthlyLeadBtn"
                     className="m-0 btn btn-primary rounded"
                     color="primary"
                     onClick={() => {
@@ -397,6 +485,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 </li>
                 <li className="mr-3">
                   <button
+                    id="leadExpBtn"
                     className="m-0 btn btn-primary rounded"
                     color="primary"
                     onClick={() => {
@@ -412,6 +501,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 </li>
                 <li className="mr-3">
                   <button
+                    id="leadBucCount"
                     className="m-0 btn btn-primary rounded"
                     color="primary"
                     onClick={() => {
@@ -446,6 +536,7 @@ const DefaultDashboard = ({ intl, match }) => {
                       All Lead Buckets
                     </h2>
                     <button
+                      id="allLeadBucketRefBtn"
                       className="btn btn-warning py-1"
                       onClick={() => {
                         dispatch({
@@ -551,6 +642,7 @@ const DefaultDashboard = ({ intl, match }) => {
                       Today's Lead Buckets
                     </h2>
                     <button
+                      id="todaysLeadBucRefBtn"
                       className="btn btn-warning py-1"
                       onClick={() => {
                         dispatch({
@@ -656,6 +748,7 @@ const DefaultDashboard = ({ intl, match }) => {
                       Leads Marketing Channel Dashboard(Monthly)
                     </h2>
                     <button
+                      id="monthlyLeadBucRefBtn"
                       className="btn btn-warning py-1"
                       onClick={() => {
                         dispatch({
@@ -761,6 +854,7 @@ const DefaultDashboard = ({ intl, match }) => {
                       Leads Experts Dashboard
                     </h2>
                     <button
+                      id="leadExpBucRefBtn"
                       className="btn btn-warning py-1"
                       onClick={() => {
                         dispatch({
@@ -807,6 +901,7 @@ const DefaultDashboard = ({ intl, match }) => {
                       Buckets Count
                     </h2>
                     <button
+                      id="leadBucCountRefBtn"
                       className="btn btn-warning py-1"
                       onClick={() => {
                         dispatch({
