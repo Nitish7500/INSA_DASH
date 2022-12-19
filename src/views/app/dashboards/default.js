@@ -329,7 +329,7 @@ const DefaultDashboard = ({ intl, match }) => {
             onClick={(e) => {
               handleNavClick(e);
               leadCollapse("legal");
-            }}
+            }} 
           >
             LEGAL
           </span>
