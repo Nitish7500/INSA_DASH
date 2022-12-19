@@ -212,6 +212,10 @@ const selectedDoc = async (data) => {
     return await  request("POST", apisURLs.selectedDoc, data)
 }
 
+const updateComplaint = async (id, data) => {
+    return await request("POST", apisURLs.updateComplaint + id , data)
+}
+
 const getComplaints = async function fetchData(selectedPageSize, currentPage, search, statusLabel) {
     axios
     .get(`${apiUrl}?pageIndex=${currentPage}&pageSize=${selectedPageSize}&keyword=${search}${statusFilter}`,
@@ -286,4 +290,5 @@ export {
     generateMulMail,
     getTrackDataFunc,
     selectedDoc,
+    updateComplaint,
 }

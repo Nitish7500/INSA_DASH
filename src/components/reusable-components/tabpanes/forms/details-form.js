@@ -58,6 +58,7 @@ import {
   userAdmin,
 } from "services/complaints.services";
 import { useSelector } from "react-redux";
+import moment from "moment";
 const options = [
   { value: "", label: "Select an Option" },
   { value: "Something", label: "Something" },
@@ -570,12 +571,13 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
           <div className="row mt-4">
             <div className="col-sm-3">
               <label>DOB</label>
+              {console.log(moment.unix(details.dob).format("YYYY-MM-DD"),moment(details.dob).format("YYYY-MM-DD"))}
               <input
                 id="compDetailsDob"
                 className="form-control"
                 name="dob"
                 type={"date"}
-                value={details.dob}
+                value={moment(details.dob).format("YYYY-MM-DD") === "Invalid date" ? moment.unix(details.dob).format("YYYY-MM-DD") : moment(details.dob).format("YYYY-MM-DD")}
                 onChange={handleFormChange}
               />
             </div>

@@ -2829,7 +2829,6 @@ function LeadSection() {
                 >
                   Close
                 </button>
-                {console.log(currentUser)}
                 <button
                   className="btn btn-primary"
                   onClick={() => {

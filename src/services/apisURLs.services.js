@@ -61,6 +61,7 @@ export const apisURLs = {
     generateMulMailRem : baseURLs.regular + "omdRemindMailMultiple/getMailTemplate",
     trackData : baseURLs.regular + "omdRemindMailMultiple/getTrackData",
     selectedDoc : baseURLs.regular + "insurance/selectedDocuments",
+    updateComplaint : baseURLs.regular + "insurance/addMore/"
 }
 
 

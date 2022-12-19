@@ -14,13 +14,14 @@ import SavedEmail from "components/reusable-components/tabpanes/forms/save-email
 import GetEmailData from "components/reusable-components/tabpanes/forms/get-email";
 import DocumentForm from "components/reusable-components/tabpanes/forms/document-form";
 import NonResponsive from "components/reusable-components/tabpanes/forms/non-responsive";
-import { getComplaintDetailsById } from "services/complaints.services";
+import { getComplaintDetailsById, updateComplaint } from "services/complaints.services";
 import { useQuery } from "hooks/useQuery";
 import OtherActions from "components/reusable-components/tabpanes/forms/other-actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { adminRoot } from "constants/defaultValues";
 import { useRef } from "react";
+import { NotificationManager } from "components/common/react-notifications";
 
 const ComplaintDetails = ({ match }) => {
   const [activeTab, setActiveTab] = useState("details");
@@ -117,6 +118,34 @@ const ComplaintDetails = ({ match }) => {
 
 
   const handleSubmit = () => {
+
+    updateComplaint(items._id, {
+      ...items,
+      escalationPoints: escalationPointsRef.current?.getContent(),
+      earlierMails: earlierMailsRef.current?.getContent(),
+      hearing_points: hearing_pointsRef.current?.getContent(),
+      legalSection: {
+        ...items.legalSection,
+        consumerCourtDate:comCurDateArr,
+        legalCommentSection: legalCommentSectionRef.current?.getContent(),
+        legalPointsByExpert: legalPointsByExpertRef.current?.getContent(),
+      },
+      courierNumberDocArr:comCurNumArr
+    }).then(res => {
+      console.log(res)
+      if (res.success) {
+        NotificationManager.success(
+          res.message,
+          "Complaint Updated Successfully !",
+          3000,
+          null,
+          null,
+          "filled"
+        )
+        window.history.back()
+      }
+    })
+
     console.log({
       ...items,
       escalationPoints: escalationPointsRef.current?.getContent(),
