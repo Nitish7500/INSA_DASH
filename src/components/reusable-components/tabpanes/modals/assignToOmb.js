@@ -70,6 +70,7 @@ function AssignToOmb({ isOpen, onClose, details }) {
               <div className="col-sm-12">
                 <label>Assign to Ombudsman</label>
                 <select
+                id="selectOmb"
                   className="form-control border-bold"
                   onChange={(e) => setUser(e.target.value)}
                 >
@@ -82,6 +83,7 @@ function AssignToOmb({ isOpen, onClose, details }) {
             </div>
             <div className="d-flex justify-content-center mt-4">
               <button
+              id="btnOmbSave"
                 className="btn btn-primary rounded px-5 py-2"
                 onClick={handleSave}
               >

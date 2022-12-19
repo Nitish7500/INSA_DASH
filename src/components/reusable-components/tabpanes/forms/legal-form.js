@@ -43,7 +43,7 @@ export default function LegalForm({
   complaintId,
   handleFormChange,
   legalCommentSectionRef,
-  legalPointsByExpertRef
+  legalPointsByExpertRef,
 }) {
   const [documentUploadModal, setDocumentUploadModal] = useState(false);
   const [courtHearingDCount, setcourtHearingDCount] = useState([]);
@@ -134,6 +134,7 @@ export default function LegalForm({
                 <div className="col-sm-4">
                   <label>Legal Notice Date</label>
                   <input
+                    id="legalNoticDt"
                     type={"date"}
                     name="legal_notice_date"
                     className="form-control"
@@ -144,6 +145,7 @@ export default function LegalForm({
                 <div className="col-sm-4">
                   <label>Legal Notice response received and date</label>
                   <input
+                    id="legalRecDate"
                     type="date"
                     class="form-control"
                     value={details.legalSection.legal_res_notice_date}
@@ -155,6 +157,7 @@ export default function LegalForm({
                 <div className="col-sm-4">
                   <label>Call to the customer(Date 2)</label>
                   <input
+                    id="legalCallDt2"
                     type="date"
                     class="form-control"
                     value={details.legalSection.callCust2}
@@ -166,123 +169,132 @@ export default function LegalForm({
               </div>
               <div className="row mt-4">
                 <div className="col-sm-4">
-                    <label>Approx Fees</label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        value={details.legalSection.approxFees}
-                        name="approxFees"
-                        onChange={handleFormChange}
-                    />
+                  <label>Approx Fees</label>
+                  <input
+                    id="legalApproxFee"
+                    type="text"
+                    class="form-control"
+                    value={details.legalSection.approxFees}
+                    name="approxFees"
+                    onChange={handleFormChange}
+                  />
                 </div>
                 <div className="col-sm-4">
-                <label>Call to the customer(Date 1)</label>
-                    <input
-                        type="date"
-                        class="form-control"
-                        value={details.legalSection.callCust1}
-                        name="callCust1"
-                        onChange={handleFormChange}
-                    />
+                  <label>Call to the customer(Date 1)</label>
+                  <input
+                    id="legalCallDt1"
+                    type="date"
+                    class="form-control"
+                    value={details.legalSection.callCust1}
+                    name="callCust1"
+                    onChange={handleFormChange}
+                  />
                 </div>
                 <div className="col-sm-4">
-                <label>Lawyer/ Law Firm Address</label>
-                <input
+                  <label>Lawyer/ Law Firm Address</label>
+                  <input
+                    id="legalLawer"
                     type="text"
                     class="form-control"
                     value={details.legalSection.LawyerFirmAddress}
                     name="LawyerFirmAddress"
                     onChange={handleFormChange}
                     placeholder="LawyerFirmAddress"
-                />
+                  />
                 </div>
               </div>
               <div className="row mt-4">
                 <div className="col-sm-4">
-                <label className="">
-                          Consumer Court Location
-                        </label>
-                        <select
-                          name="consumerCourtLocation"
-                          className="form-control"
-                          value={details.legalSection.consumerCourtLocation}
-                          onChange={handleFormChange}
-                        >
-                          {consumerCourtLocations.map((item) => (
-                            <option value={item.value}>{item.label}</option>
-                          ))}
-                        </select>
+                  <label className="">Consumer Court Location</label>
+                  <select
+                    id="legalCusLoc"
+                    name="consumerCourtLocation"
+                    className="form-control"
+                    value={details.legalSection.consumerCourtLocation}
+                    onChange={handleFormChange}
+                  >
+                    {consumerCourtLocations.map((item) => (
+                      <option value={item.value}>{item.label}</option>
+                    ))}
+                  </select>
                 </div>
                 <div className="col-sm-4">
-        <label>Lawyer/ Law Firm Number</label>
-          <input
-            type="text"
-            class="form-control"
-            value={details.legalSection.LawyerFirmNumber}
-            name="LawyerFirmNumber"
-            onChange={handleFormChange}
-          />
+                  <label>Lawyer/ Law Firm Number</label>
+                  <input
+                    id="legalLawerFNo"
+                    type="text"
+                    class="form-control"
+                    value={details.legalSection.LawyerFirmNumber}
+                    name="LawyerFirmNumber"
+                    onChange={handleFormChange}
+                  />
                 </div>
                 <div className="col-sm-4">
-                <label>Case File Number</label>
-          <input
-            type="text"
-            class="form-control"
-            value={details.legalSection.caseFileNumber}
-            name="caseFileNumber"
-            onChange={handleFormChange}
-          />
+                  <label>Case File Number</label>
+                  <input
+                    id="legalCaseFNo"
+                    type="text"
+                    class="form-control"
+                    value={details.legalSection.caseFileNumber}
+                    name="caseFileNumber"
+                    onChange={handleFormChange}
+                  />
                 </div>
               </div>
-              <div className="row mt-4"> 
+              <div className="row mt-4">
                 <div className="col-sm-4">
-                <label>Lawyer/ Law Firm Name</label>
-                <input
+                  <label>Lawyer/ Law Firm Name</label>
+                  <input
+                    id="legalFName"
                     type="text"
                     class="form-control"
                     value={details.legalSection.LawyerFirmName}
                     name="LawyerFirmName"
                     onChange={handleFormChange}
-                />
+                  />
                 </div>
-              <div className="col-sm-4">
-              <label>Case Title</label>
-                <input
+                <div className="col-sm-4">
+                  <label>Case Title</label>
+                  <input
+                    id="legalCaseTitle"
                     type="text"
                     class="form-control"
                     value={details.legalSection.caseTitle}
                     name="caseTitle"
                     onChange={handleFormChange}
-                />
-              </div>
-              <div className="col-sm-4">
-              <label>Case Number</label>
-          <input
-            type="text"
-            class="form-control"
-            value={details.legalSection.caseNumber}
-            name="caseNumber"
-            onChange={handleFormChange}
-          />
-              </div>
-              </div>
-            <div className="row mt-4">
+                  />
+                </div>
                 <div className="col-sm-4">
-                <label>Notice Reminder</label>
-                <input
+                  <label>Case Number</label>
+                  <input
+                    id="legalCaseNo"
+                    type="text"
+                    class="form-control"
+                    value={details.legalSection.caseNumber}
+                    name="caseNumber"
+                    onChange={handleFormChange}
+                  />
+                </div>
+              </div>
+              <div className="row mt-4">
+                <div className="col-sm-4">
+                  <label>Notice Reminder</label>
+                  <input
+                    id="legalNoticNo"
                     type="checkbox"
                     name="sendNoticeReminderOrNot"
                     class="form-control"
                     onChange={handleFormChange}
                     checked={details.legalSection.sendNoticeReminderOrNot}
-                />
+                  />
                 </div>
-            </div>
+              </div>
             </div>
             <div className="col-sm-3">
               <label>
                 Consumer Court Hearing Date{" "}
                 <button
+                  id="legalHearingDt"
                   className="btn btn-warning sm p-0 px-1"
                   onClick={() => {
                     setcourtHearingDCount([...courtHearingDCount, 1]);
@@ -291,6 +303,7 @@ export default function LegalForm({
                   Add
                 </button>
                 <button
+                  id="legalDltBtn"
                   className="btn btn-warning sm p-0 px-1"
                   onClick={() => {
                     courtHearingDCount.length > 0 &&
@@ -308,6 +321,7 @@ export default function LegalForm({
               {courtHearingDCount?.map((res) => {
                 return (
                   <input
+                    id="legalCusCourtDt"
                     type="date"
                     className="form-control"
                     name="consumerCourtDate"
@@ -318,58 +332,62 @@ export default function LegalForm({
             </div>
           </div>
           <div className="row mt-4">
-              <div className="col-sm-12">
+            <div className="col-sm-12">
               <label className="d-block">
-                          Legal Important Points (Comment Section)
-                        </label>
-                        <Editor
-                          apiKey={tinyMceApiKey}
-                          onInit={(evt, editor) => (legalCommentSectionRef.current = editor)}
-                          initialValue={details.legalSection?.legalCommentSection}
-                          init={{
-                            height: 500,
-                            menubar: false,
-                            plugins: [
-                              "advlist autolink lists link image charmap print preview anchor",
-                              "searchreplace visualblocks code fullscreen",
-                              "insertdatetime media table paste code help wordcount",
-                            ],
-                            toolbar:
-                              "undo redo | formatselect | " +
-                              "bold italic backcolor | alignleft aligncenter " +
-                              "alignright alignjustify | bullist numlist outdent indent | " +
-                              "removeformat | help",
-                            content_style:
-                              "body { font-family:Work Sans,Helvetica,Arial,sans-serif; font-size:14px }",
-                          }}
-                        />
-              </div>
-              <div className="col-sm-12">
-              <label className="d-block">
-                          Legal Points By Experts
-                        </label>
-                        <Editor
-                          apiKey={tinyMceApiKey}
-                          onInit={(evt, editor) => (legalPointsByExpertRef.current = editor)}
-                          initialValue={details.legalSection?.legalPointsByExpert}
-                          init={{
-                            height: 500,
-                            menubar: false,
-                            plugins: [
-                              "advlist autolink lists link image charmap print preview anchor",
-                              "searchreplace visualblocks code fullscreen",
-                              "insertdatetime media table paste code help wordcount",
-                            ],
-                            toolbar:
-                              "undo redo | formatselect | " +
-                              "bold italic backcolor | alignleft aligncenter " +
-                              "alignright alignjustify | bullist numlist outdent indent | " +
-                              "removeformat | help",
-                            content_style:
-                              "body { font-family:Work Sans,Helvetica,Arial,sans-serif; font-size:14px }",
-                          }}
-                        />
-              </div>
+                Legal Important Points (Comment Section)
+              </label>
+              <Editor
+                id="legalEditor"
+                apiKey={tinyMceApiKey}
+                onInit={(evt, editor) =>
+                  (legalCommentSectionRef.current = editor)
+                }
+                initialValue={details.legalSection?.legalCommentSection}
+                init={{
+                  height: 500,
+                  menubar: false,
+                  plugins: [
+                    "advlist autolink lists link image charmap print preview anchor",
+                    "searchreplace visualblocks code fullscreen",
+                    "insertdatetime media table paste code help wordcount",
+                  ],
+                  toolbar:
+                    "undo redo | formatselect | " +
+                    "bold italic backcolor | alignleft aligncenter " +
+                    "alignright alignjustify | bullist numlist outdent indent | " +
+                    "removeformat | help",
+                  content_style:
+                    "body { font-family:Work Sans,Helvetica,Arial,sans-serif; font-size:14px }",
+                }}
+              />
+            </div>
+            <div className="col-sm-12">
+              <label className="d-block">Legal Points By Experts</label>
+              <Editor
+                id="legalMail2"
+                apiKey={tinyMceApiKey}
+                onInit={(evt, editor) =>
+                  (legalPointsByExpertRef.current = editor)
+                }
+                initialValue={details.legalSection?.legalPointsByExpert}
+                init={{
+                  height: 500,
+                  menubar: false,
+                  plugins: [
+                    "advlist autolink lists link image charmap print preview anchor",
+                    "searchreplace visualblocks code fullscreen",
+                    "insertdatetime media table paste code help wordcount",
+                  ],
+                  toolbar:
+                    "undo redo | formatselect | " +
+                    "bold italic backcolor | alignleft aligncenter " +
+                    "alignright alignjustify | bullist numlist outdent indent | " +
+                    "removeformat | help",
+                  content_style:
+                    "body { font-family:Work Sans,Helvetica,Arial,sans-serif; font-size:14px }",
+                }}
+              />
+            </div>
           </div>
         </div>
       </CardBody>

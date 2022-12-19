@@ -64,7 +64,7 @@ export default function SetStatus({isOpen, onClose, insuranceId}) {
                 </div>
             </div>
             <ModalBody>
-                <select name="resolutionType" className="form-control" onChange={(e)=>setSelectedStatus(e.target.value)}>
+                <select id='selectStatusBck' name="resolutionType" className="form-control" onChange={(e)=>setSelectedStatus(e.target.value)}>
                     {getStatusBuckets.map((item) => {
                         let index = item[1];
                         return (index.map((option) => {
@@ -75,7 +75,7 @@ export default function SetStatus({isOpen, onClose, insuranceId}) {
                     })}
                 </select>
                 <div className="text-center mt-4 mb-3">
-                    <Button color='success' className='text-center' onClick={updateStatus}>
+                    <Button id='updateStatusBtn' color='success' className='text-center' onClick={updateStatus}>
                         <FontAwesomeIcon icon={faCheck} />
                         <span className='text-center mt-2 ml-3'>Update Status</span>
                     </Button>

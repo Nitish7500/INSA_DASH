@@ -103,6 +103,7 @@ export default function NonResponsive({ heading, details }) {
             <div className="col-sm-6">
               <label className="">Called Data</label>
               <input
+              id="nonResCalledDt"
                 name="calledDate"
                 type={"date"}
                 className="form-control border-bold"
@@ -115,6 +116,7 @@ export default function NonResponsive({ heading, details }) {
             <div className="col-sm-6">
               <label>No Response Section</label>
               <select
+              id="nonResNoResSec"
                 name="commentAdded"
                 className="form-control border-bold"
                 value={formData.commentAdded}
@@ -131,6 +133,7 @@ export default function NonResponsive({ heading, details }) {
           </div>
           <div className="d-flex justify-content-start">
             <button
+              id="nonResSubBtn"
               className="btn btn-primary my-3 rounded"
               onClick={handleUpdateData}
             >

@@ -85,13 +85,13 @@ function RequestFromCustomer({isOpen, onClose, details}) {
                     <div className='row'>
                         <div className='col-sm-12'>
                             <label>User Details Handler</label>
-                            <Select isMulti options={userBasedData} name="idArray" onChange={(e) => handleChange(e, "idArray")}></Select>
+                            <Select id='selectUser1' isMulti options={userBasedData} name="idArray" onChange={(e) => handleChange(e, "idArray")}></Select>
                         </div>
                     </div>
                     <div className='row mt-4'>
                         <div className='col-sm-12'>
                             <label>Select Field</label>
-                            <Select isMulti options={fields} name="fields" onChange={(e) =>handleChange(e,"fields")}></Select>
+                            <Select id='selectUserField1' isMulti options={fields} name="fields" onChange={(e) =>handleChange(e,"fields")}></Select>
                         </div>
                     </div>
                 </div>
@@ -106,13 +106,13 @@ function RequestFromCustomer({isOpen, onClose, details}) {
                     })}
                 </select> */}
                 <div className="text-center mt-4 mb-3">
-                    <Button color='danger' className='text-center' onClick={onClose}>
+                    <Button id='closeBtn' color='danger' className='text-center' onClick={onClose}>
                         <FontAwesomeIcon icon={faClose} />
                         <span className='text-center mt-2 ml-3'>Close</span>
                     </Button>
                     <Button color='success' className='text-center ml-4' onClick={handleSave}>
                         <FontAwesomeIcon icon={faCheck} />
-                        <span className='text-center mt-2 ml-3'>Save</span>
+                        <span id='saveBtn' className='text-center mt-2 ml-3'>Save</span>
                     </Button>
                 </div>
             </ModalBody>

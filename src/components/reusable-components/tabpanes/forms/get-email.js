@@ -67,7 +67,7 @@ export default function GetEmailData ({ heading, details, complaintId  }) {
                 console.log(res)
                 setsendMailOpen(false)
             })
-            console.log({email,emailType, emaildata, incompleteDraftId, policyNumber, subject,leadId:details._id})
+            // console.log({email,emailType, emaildata, incompleteDraftId, policyNumber, subject,leadId:details._id})
         }
     return (
         // <Card>
@@ -113,7 +113,7 @@ export default function GetEmailData ({ heading, details, complaintId  }) {
                                         <CardBody>
                                             {/* Field */}
                                             <div className="flex mb-1">
-                                                <h3>{email.subject}</h3>
+                                                <h3 id='headEmlSub'>{email.subject}</h3>
                                             </div>
                                             {/* Field */}
                                             <div className="flex mb-3 ccfield">
@@ -127,12 +127,12 @@ export default function GetEmailData ({ heading, details, complaintId  }) {
                                                 <div className="mailtype">
                                                     <div>
                                                     <span className='mr-2'>Email Type -</span>
-                                                    <Badge color='primary'>{email.emailType}</Badge>
+                                                    <Badge id='emailType' color='primary'>{email.emailType}</Badge>
                                                     </div>
                                                 </div>
                                                 <p className="date">
                                                     <span className='mr-2'>Sent Date - </span>
-                                                    <Badge>
+                                                    <Badge id='crtEmail'>
                                                         <FontAwesomeIcon icon={faCalendarDays} /> 
                                                         <span className='pl-2'>{email.created_date}</span>
                                                     </Badge>
@@ -142,7 +142,7 @@ export default function GetEmailData ({ heading, details, complaintId  }) {
                                                 <div className='mailtype'>
 
                                                 <span className='mr-2'>Subject -</span>
-                                                <Badge>
+                                                <Badge id='subMail'>
                                                     <span>{email.subject}</span>
                                                 </Badge>
                                                 </div>
@@ -150,6 +150,7 @@ export default function GetEmailData ({ heading, details, complaintId  }) {
                                             {/* Field */}
                                             <div className="mb-3">
                                             <Editor
+                                            id='emailGet'
                                                 apiKey={tinyMceApiKey}
                                                 onInit={(evt, editor) => editorRef.current = editor}
                                                 initialValue = {email.emaildata}
@@ -173,20 +174,20 @@ export default function GetEmailData ({ heading, details, complaintId  }) {
                                             <div className="flex mt-4 mb-4">
                                                 <h6 className='mr-2 mb-0'>Update Draft : </h6>
                                                 <div className="mailtype">
-                                                    <Badge className='ml-2' color='success'>{email.drafted_by}</Badge>
+                                                    <Badge id='emailDrfBy' className='ml-2' color='success'>{email.drafted_by}</Badge>
                                                 </div>
                                             </div>
                                             {/* Field */}
                                             <div className="flex-sb">
                                                 <div className="flex-sb">
-                                                    <Button color='danger' onClick={(e) => {
+                                                    <Button id='btnDltMail' color='danger' onClick={(e) => {
                                                         e.preventDefault();
                                                     }}>Delete Mail from All Complaints</Button>
                                                     <Button color='warning' className='ml-4' onClick={(e) => {
                                                         e.preventDefault();
                                                     }}>Delete Mail from Single Complaint</Button>
                                                 </div>
-                                                <Button color='primary' onClick={(e) => {
+                                                <Button id='btnSndMail' color='primary' onClick={(e) => {
                                                     e.preventDefault();
                                                     sendMailToCus(email, email.caseUniqueId)
                                                 }}>Send Email To Customer</Button>
@@ -211,12 +212,12 @@ export default function GetEmailData ({ heading, details, complaintId  }) {
                         <h4 className=''>Send Email To Customer ?</h4>
                         <div>
                             <label className='font-weight-bold mt-3'>Company Email</label>
-                            <input className='form-control mt-1' type="email" placeholder='Enter Email Id' onChange={e => {setsentMailForm({...sentMailForm, email:e.target.value})}} />
+                            <input id='comEmailInp' className='form-control mt-1' type="email" placeholder='Enter Email Id' onChange={e => {setsentMailForm({...sentMailForm, email:e.target.value})}} />
                         </div>
                         </div>
                         <div className='d-flex mt-4'>
-                            <button className='btn btn-primary rounded mr-3 px-4' onClick={sentMailHandler}>Yes</button>
-                            <button className='btn btn-warning rounded px-4' onClick={() =>setsendMailOpen(false)}>No</button>
+                            <button id='btnYes' className='btn btn-primary rounded mr-3 px-4' onClick={sentMailHandler}>Yes</button>
+                            <button id='btnNo' className='btn btn-warning rounded px-4' onClick={() =>setsendMailOpen(false)}>No</button>
                         </div>
                     </ModalBody>
                 </Modal>

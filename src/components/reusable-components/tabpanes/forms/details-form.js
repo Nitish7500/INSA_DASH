@@ -457,6 +457,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-3">
               <label>Name</label>
               <input
+                id="compDetailsName"
                 className="form-control"
                 name="name"
                 value={details.name}
@@ -466,6 +467,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-3">
               <label>Email</label>
               <input
+                id="compDetailsEmail"
                 disabled
                 className="form-control"
                 name="email"
@@ -477,6 +479,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
               <label>Phone</label>
               <input
                 disabled
+                id="compDetailsPhone"
                 className="form-control"
                 name="phone"
                 value={details.phone}
@@ -487,6 +490,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
               <label> Alternate Contact Number</label>
               <input
                 disabled
+                id="compDetailsAltNo"
                 className="form-control"
                 name="alternatePhone"
                 type={"number"}
@@ -500,6 +504,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
               <label> Income Level*(per month)</label>
               <input
                 disabled
+                id="compDetailsIncLel"
                 className="form-control"
                 name="incomeLevel"
                 type={"number"}
@@ -510,6 +515,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-3">
               <label>PinCode</label>
               <input
+                id="compDetailsPincode"
                 className="form-control"
                 name="pinCode"
                 value={details.pinCode}
@@ -522,6 +528,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 <div className="d-flex">
                   <label>Male</label>
                   <input
+                    id="compDetailsgenderM"
                     className="form-control ml-3"
                     name="gender"
                     type={"radio"}
@@ -533,6 +540,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 <div className="d-flex ml-4">
                   <label>Female</label>
                   <input
+                    id="compDetailsGenderF"
                     className="form-control ml-3"
                     name="gender"
                     type={"radio"}
@@ -546,6 +554,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-3">
               <label>Education*</label>
               <select
+                id="compDetailsEdu"
                 name="education"
                 className="form-control"
                 value={details.education}
@@ -562,6 +571,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-3">
               <label>DOB</label>
               <input
+                id="compDetailsDob"
                 className="form-control"
                 name="dob"
                 type={"date"}
@@ -572,6 +582,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-3">
               <label>Pan Card Number</label>
               <input
+                id="compDetailsPan"
                 className="form-control"
                 name="panNumber"
                 type={"text"}
@@ -582,6 +593,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-3">
               <label>Select State</label>
               <select
+                id="compDetailsState"
                 name="stateN"
                 className="form-control"
                 value={details.stateN}
@@ -600,6 +612,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-3">
               <label>Select District</label>
               <select
+                id="compDetailsDst"
                 name="district"
                 className="form-control"
                 value={details.districtName}
@@ -617,6 +630,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-3">
               <label>Occupation</label>
               <select
+                id="compDetailsOcu"
                 name="occupation"
                 className="form-control"
                 value={details.occupation}
@@ -630,11 +644,16 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             </div>
             <div className="col-sm-3">
               <label>Nominee Name</label>
-              <input name="nominee" value={details.nominee} />
+              <input
+                id="compDetailsNominee"
+                name="nominee"
+                value={details.nominee}
+              />
             </div>
             <div className="col-sm-3">
               <label>Deceased Name</label>
               <input
+                id="compDetailsDeceased"
                 name="deceasedPerson"
                 className="form-control"
                 value={details.deceasedPerson}
@@ -644,6 +663,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-3">
               <label> Policy Number</label>
               <input
+                id="compDetailsPolicy"
                 name="policyNumber"
                 className="form-control"
                 value={details.policyNumber}
@@ -655,6 +675,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-3">
               <label>Claim Amount</label>
               <input
+                id="compDetailsClaim"
                 className="form-control"
                 type={"number"}
                 name="claimAmount"
@@ -665,6 +686,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-6">
               <label>Address</label>
               <input
+                id="compDetailsAdd"
                 disabled
                 className="form-control"
                 type={"text"}
@@ -676,6 +698,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-3">
               <label>Insurance Type</label>
               <select
+                id="compDetailsIncType"
                 name="insuranceCompany"
                 className="form-control"
                 value={details.insuranceCompany?._id}
@@ -697,6 +720,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-3">
               <label>Select Complaint Type</label>
               <select
+                id="compDetailsComType"
                 name="complaintType"
                 className="form-control"
                 value={details.complaintType}
@@ -711,6 +735,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-3">
               <label>Select Company Name</label>
               <select
+                id="compDetailsComName"
                 name="insuranceCompanyId"
                 className="form-control"
                 value={details.insuranceCompanyId?._id}
@@ -727,6 +752,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-3">
               <label>Policy Type</label>
               <select
+                id="compDetailsPolType"
                 name="policyTypeId"
                 className="form-control"
                 value={details.policyTypeId?._id}
@@ -741,6 +767,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-3">
               <label>Rejection Type</label>
               <select
+                id="compDetailsRejType"
                 name="claimRejectionType"
                 className="form-control"
                 value={details.claimRejectionType}
@@ -757,6 +784,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-3">
               <label>Relationship</label>
               <select
+                id="compDetailsRel"
                 name="familyRelation"
                 className="form-control"
                 value={details.familyRelation}
@@ -771,6 +799,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-3">
               <label>Movement of Case</label>
               <select
+                id="compDetailsMovCase"
                 name="movementOfCase"
                 className="form-control"
                 value={details.movementOfCase}
@@ -786,6 +815,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
               <label>Assign To</label>
               <div class="input-group">
                 <input
+                  id="compDetailsAssignTo"
                   type="text"
                   name="userName"
                   class="form-control"
@@ -798,6 +828,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
               <label>Assign To Expert</label>
               <div class="input-group">
                 <input
+                  id="compDetailsAssignExp"
                   type="text"
                   name="userName"
                   class="form-control"
@@ -812,6 +843,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
               <label>Assign To Company/IGMS</label>
               <div class="input-group">
                 <input
+                  id="compDetailsCom/IGMS"
                   type="text"
                   name="userName"
                   class="form-control"
@@ -828,6 +860,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
               <label>Assign To Ombudsman</label>
               <div class="input-group">
                 <input
+                  id="compDetailsOmb"
                   type="text"
                   name="userName"
                   class="form-control"
@@ -842,6 +875,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
               <label>Assign To Legal Executive</label>
               <div class="input-group">
                 <input
+                  id="compDetailsAssignLeg"
                   type="text"
                   name="userName"
                   class="form-control"
@@ -858,6 +892,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
               <label>Assign To Legal Sub Executive</label>
               <div class="input-group">
                 <input
+                  id="compDetailsAssignSub"
                   type="text"
                   name="userName"
                   class="form-control"
@@ -874,6 +909,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
               <label>Lead Number</label>
               <div class="input-group">
                 <input
+                  id="compDetailsLeadNo"
                   type="text"
                   name="userId"
                   class="form-control"
@@ -886,6 +922,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
               <label>Status</label>
               <div class="input-group">
                 <input
+                  id="compDetailsStatus"
                   type="text"
                   name="currentStatus"
                   class="form-control"
@@ -899,6 +936,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-3">
               <label>Door No./ Bldg/Name / Floor</label>
               <input
+                id="compDetailsDoorNo"
                 className="form-control"
                 name="DoorNo/Bldg/Name/Floor"
                 value={
@@ -911,6 +949,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-3">
               <label>Street / Area</label>
               <input
+                id="compDetailsStreet"
                 className="form-control"
                 name="DoorNo/Bldg/Name/Floor"
                 value={
@@ -923,6 +962,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-3">
               <label>City / Town / Panchayath / Village</label>
               <input
+                id="compDetailsCity"
                 className="form-control"
                 name="DoorNo/Bldg/Name/Floor"
                 value={
@@ -935,6 +975,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-3">
               <label>Taluk / Tehsil</label>
               <input
+                id="compDetailsTaluk"
                 className="form-control"
                 name="DoorNo/Bldg/Name/Floor"
                 value={
@@ -949,6 +990,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-3">
               <label>Generated address</label>
               <input
+                id="compDetailsGenerated"
                 className="form-control"
                 name="DoorNo/Bldg/Name/Floor"
                 value={
@@ -963,6 +1005,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
               <div class="input-group">
                 <label>Is it a Covid Complaint</label>
                 <input
+                  id="compDetailsCovid"
                   type="checkbox"
                   name="covidCheck"
                   class="form-control"
@@ -976,6 +1019,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
               <div class="input-group">
                 <label>As a Service Complaint or not</label>
                 <input
+                  id="compDetailsSer"
                   type="checkbox"
                   name="asAServiceCheck"
                   class="form-control"
@@ -987,6 +1031,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div class="col-sm-3">
               <label>Assign To Internal Legal Executive</label>
               <input
+                id="compDetailsIntLeg"
                 type="text"
                 class="form-control"
                 value={
@@ -1002,6 +1047,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-8">
               <label>complaintStatement</label>
               <textarea
+                id="compDetailsComSta"
                 className="form-control"
                 name="complaint_statement"
                 rows={5}
@@ -1017,6 +1063,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-3">
               <label>Email ID</label>
               <input
+                id="compDetailsEmail2"
                 class="form-control"
                 type="text"
                 name="executive_created_email"
@@ -1027,6 +1074,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             <div className="col-sm-3">
               <label>Password</label>
               <input
+                id="compDetailsPass"
                 class="form-control"
                 type="password"
                 name="password"
@@ -1038,6 +1086,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
               <label>Approved Claim Amount</label>
               <div class="input-group">
                 <input
+                  id="compDetailsApvAmt"
                   class="form-control"
                   type="text"
                   name="actualRefundAmount"

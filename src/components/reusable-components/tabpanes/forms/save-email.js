@@ -174,6 +174,7 @@ export default function SavedEmail({ heading, details }) {
             <div className="col-sm-10">
               <label>Select Multiple Complaints</label>
               <Select
+                id="SaveMulCom"
                 isMulti
                 options={firstDtaftData}
                 onChange={(e) => handleChange(e, "uniqueIds")}
@@ -184,6 +185,7 @@ export default function SavedEmail({ heading, details }) {
             <div className="col-sm-10">
               <label>Select Multiple Documents</label>
               <Select
+                id="saveMulDoc"
                 isMulti
                 options={leadDocs}
                 onChange={(e) => {
@@ -196,6 +198,7 @@ export default function SavedEmail({ heading, details }) {
             <div className="col-sm-10">
               <label>Draft Mail Done By</label>
               <Select
+                id="saveDraftDnBy"
                 options={allInsa}
                 onChange={(e) => handleChange(e, "drafted_by")}
               ></Select>
@@ -205,6 +208,7 @@ export default function SavedEmail({ heading, details }) {
             <div className="col-sm-10">
               <label>Movement Of Case</label>
               <Select
+                id="saveMovCase"
                 options={movementCasesData}
                 onChange={(e) => {
                   setformData({ ...formData, movementOfCase: e.value });
@@ -229,6 +233,7 @@ export default function SavedEmail({ heading, details }) {
             <div className="col-sm-10">
               <label>Email To</label>
               <input
+                id="saveEmailTo"
                 className="form-control border-bold"
                 type={"email"}
                 name="email_to"
@@ -240,6 +245,7 @@ export default function SavedEmail({ heading, details }) {
             <div className="col-sm-10">
               <label>Email CC</label>
               <input
+                id="saveEmailCC"
                 name="email_cc"
                 className="form-control border-bold"
                 type={"email"}
@@ -251,6 +257,7 @@ export default function SavedEmail({ heading, details }) {
             <div className="col-sm-10">
               <label>Email type</label>
               <Select
+                id="saveEmailType"
                 options={emailTypeData}
                 onChange={(e) => {
                   setformData({ ...formData, emailType: e.value });
@@ -262,6 +269,7 @@ export default function SavedEmail({ heading, details }) {
             <div className="col-sm-10">
               <label>Subject</label>
               <input
+                id="saveSub"
                 name="subject"
                 className="form-control border-bold"
                 value={formData.subject}
@@ -273,6 +281,7 @@ export default function SavedEmail({ heading, details }) {
             <div className="col-sm-10">
               <label>Email Message</label>
               <Editor
+                id="saveEmailMsg"
                 apiKey={tinyMceApiKey}
                 onInit={(evt, editor) => (editorRef.current = editor)}
                 initialValue={formData.emaildata}
@@ -297,7 +306,11 @@ export default function SavedEmail({ heading, details }) {
           </div>
         </div>
         <div className="d-flex justify-content-center">
-          <button onClick={handleSubmit} className="btn btn-primary">
+          <button
+            id="saveEmailBtn"
+            onClick={handleSubmit}
+            className="btn btn-primary"
+          >
             Submit
           </button>
         </div>

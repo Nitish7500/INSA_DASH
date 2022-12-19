@@ -94,7 +94,7 @@ export default function AddComplaint({isOpen, onClose, leadId, userId, details }
                             <Label for="companyresponse">User CSV File :</Label>
                             <Input id="companyresponse" type="file" name="userCSV" onChange={handleChange} />
                         </FormGroup>
-                        <Button color='secondary' onClick={() => {handleUploadUserFile("User")}}>
+                        <Button id='btn1Upload' color='secondary' onClick={() => {handleUploadUserFile("User")}}>
                             <FontAwesomeIcon icon={faFileUpload} />
                         </Button>
                     </div>
@@ -105,7 +105,7 @@ export default function AddComplaint({isOpen, onClose, leadId, userId, details }
                             <Label for="companyresponse">Complaint CSV File :</Label>
                             <Input id="companyresponse" name="complaint" type="file" onChange={handleChange} />
                         </FormGroup>
-                        <Button color='secondary' onClick={() => {handleUploadUserFile("Complaint")}}>
+                        <Button id='btn2Upload' color='secondary' onClick={() => {handleUploadUserFile("Complaint")}}>
                             <FontAwesomeIcon icon={faFileUpload} />
                         </Button>
                     </div>
@@ -131,7 +131,7 @@ export default function AddComplaint({isOpen, onClose, leadId, userId, details }
                     </Table>
                 </div>
                 <div className='d-flex justify-content-center'>
-                    <button className='btn btn-danger rounded' onClick={onClose}>CLOSE</button>
+                    <button id='btn1Close' className='btn btn-danger rounded' onClick={onClose}>CLOSE</button>
                 </div>
             </ModalBody>
         </Modal>

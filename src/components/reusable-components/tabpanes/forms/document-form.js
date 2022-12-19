@@ -63,13 +63,13 @@ export default function DocumentForm ({ heading, complaintId, details }) {
                             <h3>Documents Uploaded by User</h3>
                             <div className="actions flex">
                                 <div className="flex-cc mr-3">
-                                    <Button color='warning' className='text-center' onClick={handleZipGenerate}>
+                                    <Button id='generateZip' color='warning' className='text-center' onClick={handleZipGenerate}>
                                         <FontAwesomeIcon icon={faFileZipper} />
                                         <span className='text-center mt-2 ml-3'>Generate Zip</span>
                                     </Button>
                                 </div>
                                 <div className="flex-cc">
-                                    <a href={zipUrl ? `${baseURLs.regular}zipDocuments/${zipUrl?.slice(0,zipUrl.length-4)}/${zipUrl}` : "#"}><Button color='success' className='text-center'>
+                                    <a id="zipLink" href={zipUrl ? `${baseURLs.regular}zipDocuments/${zipUrl?.slice(0,zipUrl.length-4)}/${zipUrl}` : "#"}><Button id='downZip' color='success' className='text-center'>
                                         <FontAwesomeIcon icon={faDownload} />
                                         <span className='text-center mt-2 ml-3'>Download generated Zip</span>
                                     </Button></a>
@@ -77,8 +77,8 @@ export default function DocumentForm ({ heading, complaintId, details }) {
                             </div>
                         </div>
                         <div>
-                            {leadData[0]?.doc?.map(res =>  {
-                                return <div className='d-flex mt-2'><span className='h6'>{res} :- </span><a target={"_blank"} href={`${awsUrl}upload/lead_docs/${ leadData[0]?._id }/${ res }`}><h3 className='text-primary'>{" Link"}</h3></a></div>
+                            {leadData[0]?.doc?.map((res,i) =>  {
+                                return <div className='d-flex mt-2'><span className='h6'>{res} :- </span><a id={`leadData${i}`} target={"_blank"} href={`${awsUrl}upload/lead_docs/${ leadData[0]?._id }/${ res }`}><h3 className='text-primary'>{" Link"}</h3></a></div>
                             })}
                         </div>
                         {/* <Row>

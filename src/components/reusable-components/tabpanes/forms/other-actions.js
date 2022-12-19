@@ -71,8 +71,8 @@ export default function OtherActions({ heading, complaintId }) {
     open: false,
     mailingTemplateSelect: "",
   });
-  const [selectedDocArr, setselectedDocArr] = useState([])
-  const [ReminderTrack, setReminderTrack] = useState(false)
+  const [selectedDocArr, setselectedDocArr] = useState([]);
+  const [ReminderTrack, setReminderTrack] = useState(false);
   const [userBasedData, setuserBasedData] = useState([]);
   const [getMailTemplateForm, setgetMailTemplateForm] = useState({});
   const [openMailTemplateModal, setopenMailTemplateModal] = useState(false);
@@ -296,32 +296,30 @@ export default function OtherActions({ heading, complaintId }) {
   };
 
   const selectedDocFunc = () => {
-    selectedDoc({id:items._id}).then(res => {
-        console.log(res)
-        if (res.success) {
-            setselectedDocArr(res.data?.data)
-            NotificationManager.success(
-                "All Uploaded Docs !",
-                res.message,
-                3000,
-                null,
-                null,
-                "filled"
-            )
-        }else{
-            NotificationManager.error(
-                "Something went wrong !",
-                res.msg,
-                3000,
-                null,
-                null,
-                "filled"
-            )
-        }
-
-    })
-  }
-  
+    selectedDoc({ id: items._id }).then((res) => {
+      console.log(res);
+      if (res.success) {
+        setselectedDocArr(res.data?.data);
+        NotificationManager.success(
+          "All Uploaded Docs !",
+          res.message,
+          3000,
+          null,
+          null,
+          "filled"
+        );
+      } else {
+        NotificationManager.error(
+          "Something went wrong !",
+          res.msg,
+          3000,
+          null,
+          null,
+          "filled"
+        );
+      }
+    });
+  };
 
   return (
     <Card>
@@ -343,6 +341,7 @@ export default function OtherActions({ heading, complaintId }) {
               <div className="actions flex my-4">
                 <div className="flex-cc">
                   <Button
+                    id="btnAddComp"
                     color="primary"
                     size="md"
                     className="top-right-button mr-3"
@@ -356,6 +355,7 @@ export default function OtherActions({ heading, complaintId }) {
                 </div>
                 <div className="flex-cc mr-3">
                   <Button
+                    id="btnSetStsM"
                     color="warning"
                     className="text-center"
                     onClick={() => setIsSetStatusModal(!isSetStatusModal)}
@@ -366,6 +366,7 @@ export default function OtherActions({ heading, complaintId }) {
                 </div>
                 <div className="flex-cc">
                   <Button
+                    id="btnReqCus"
                     color="success"
                     className="text-center"
                     onClick={() => setreqFromCustomer(true)}
@@ -378,6 +379,7 @@ export default function OtherActions({ heading, complaintId }) {
                 </div>
                 <div className="flex-cc ml-3">
                   <Button
+                    id="btnCncReqMod"
                     color="danger"
                     className="text-center"
                     onClick={() => setIsCancelReqModal(!isCancelReqModal)}
@@ -395,6 +397,7 @@ export default function OtherActions({ heading, complaintId }) {
               <div className="actions flex my-3">
                 <div className="flex-cc mr-3">
                   <Button
+                    id="btnAssComMod"
                     color="primary"
                     className="text-center"
                     onClick={() => setAssignCompanyModal(!assignCompanyModal)}
@@ -407,6 +410,7 @@ export default function OtherActions({ heading, complaintId }) {
                 </div>
                 <div className="flex-cc">
                   <Button
+                    id="btnAssToOmb"
                     color="success"
                     className="text-center"
                     onClick={() => {
@@ -426,6 +430,7 @@ export default function OtherActions({ heading, complaintId }) {
               <div className="actions flex my-3 row">
                 <div className="flex-cc mr-3 col-12 col-md-6">
                   <select
+                    id="othAcRemMail"
                     name="frequency"
                     className="form-control"
                     onChange={handleSMReminderMail}
@@ -436,7 +441,14 @@ export default function OtherActions({ heading, complaintId }) {
                   </select>
                 </div>
                 <div className="flex-cc mr-3">
-                  <Button color="warning" className="text-center" onClick={() => {setReminderTrack(true)}}>
+                  <Button
+                    id="btnREmTrc"
+                    color="warning"
+                    className="text-center"
+                    onClick={() => {
+                      setReminderTrack(true);
+                    }}
+                  >
                     <FontAwesomeIcon icon={faUser} />
                     <span className="text-center mt-2 ml-3">
                       Reminder Tracks
@@ -452,6 +464,7 @@ export default function OtherActions({ heading, complaintId }) {
                   <div className="col-sm-6">
                     <label>Select Template:-</label>
                     <select
+                      id="othActRemMailF"
                       class="form-control"
                       name="mailingTemplateSelect"
                       value={reminderMailForm.mailingTemplateSelect}
@@ -467,6 +480,7 @@ export default function OtherActions({ heading, complaintId }) {
                   <div className="col-sm-6">
                     <label className="d-block">Mailing Reminder</label>
                     <button
+                      id="othActBtnUpdate"
                       className="btn btn-primary px-5"
                       onClick={() => {
                         openRemMailModal("mailingReminder", "Mailing Reminder");
@@ -478,6 +492,7 @@ export default function OtherActions({ heading, complaintId }) {
                   <div className="col-sm-6">
                     <label className="d-block">Form 6A Reminder Mail</label>
                     <button
+                      id="othActUpSndBtn"
                       className="btn btn-primary"
                       onClick={() => {
                         openRemMailModal("form6A", "Form 6A Reminder Mail");
@@ -501,6 +516,7 @@ export default function OtherActions({ heading, complaintId }) {
                       Hearing date Reminder Mail
                     </label>
                     <button
+                      id="othActHeaDateUpSnd"
                       className="btn btn-primary"
                       onClick={() => {
                         openRemMailModal(
@@ -525,6 +541,7 @@ export default function OtherActions({ heading, complaintId }) {
                       Reward date and type Reminder mail:-
                     </label>
                     <button
+                      id="othActRewBtn"
                       className="btn btn-primary"
                       onClick={() => {
                         openRemMailModal(
@@ -551,6 +568,7 @@ export default function OtherActions({ heading, complaintId }) {
                       Award Acceptance Reminder mail:-
                     </label>
                     <button
+                      id="othActAwdAccRemBtn"
                       className="btn btn-primary"
                       onClick={() => {
                         openRemMailModal(
@@ -575,6 +593,7 @@ export default function OtherActions({ heading, complaintId }) {
                       Award Non Compliance Reminder mail:-
                     </label>
                     <button
+                      id="othActAwdNonComREm"
                       className="btn btn-primary"
                       onClick={() => {
                         openRemMailModal(
@@ -601,6 +620,7 @@ export default function OtherActions({ heading, complaintId }) {
                       Non-Responsive Reminder mail:-
                     </label>
                     <button
+                      id="othActNonResRemM"
                       className="btn btn-primary"
                       onClick={() => {
                         openRemMailModal(
@@ -625,6 +645,7 @@ export default function OtherActions({ heading, complaintId }) {
                       Out of Reach Reminder mail:-
                     </label>
                     <button
+                      id="othActRemMailMod"
                       className="btn btn-primary"
                       onClick={() => {
                         openRemMailModal(
@@ -658,6 +679,7 @@ export default function OtherActions({ heading, complaintId }) {
                       Multiple Mailing Reminder:-
                     </label>
                     <button
+                      id="othActMulMailRem"
                       className="btn btn-primary"
                       onClick={handlemulMailRemClick}
                     >
@@ -669,6 +691,7 @@ export default function OtherActions({ heading, complaintId }) {
                       Form 6a Multiple Reminder mail:-
                     </label>
                     <button
+                      id="othAct6AMulBtn"
                       className="btn btn-primary"
                       onClick={() => {
                         openRemMailModal(
@@ -695,6 +718,7 @@ export default function OtherActions({ heading, complaintId }) {
                       Hearing Date Multiple Reminder mail:-
                     </label>
                     <button
+                      id="othActHeaDt"
                       className="btn btn-primary"
                       onClick={() => {
                         openRemMailModal(
@@ -719,6 +743,7 @@ export default function OtherActions({ heading, complaintId }) {
                       Reward date and type Multiple Reminder mail:-{" "}
                     </label>
                     <button
+                      id="othActReqDt"
                       className="btn btn-primary"
                       onClick={() => {
                         openRemMailModal(
@@ -746,6 +771,7 @@ export default function OtherActions({ heading, complaintId }) {
                       Non Responsive Multiple Reminder mail:-
                     </label>
                     <button
+                      id="othActNonRemMul"
                       className="btn btn-primary"
                       onClick={() => {
                         openRemMailModal(
@@ -770,6 +796,7 @@ export default function OtherActions({ heading, complaintId }) {
                       Out Of Reach Multiple Reminder mail:-
                     </label>
                     <button
+                      id="othActBtnOutMul"
                       className="btn btn-primary"
                       onClick={() => {
                         openRemMailModal(
@@ -798,8 +825,12 @@ export default function OtherActions({ heading, complaintId }) {
                 Upload
               </h3>
               <Button
+                id="othActUploadBtn"
                 color="warning"
-                onClick={() => {setDocumentUploadModal(true); selectedDocFunc()}}
+                onClick={() => {
+                  setDocumentUploadModal(true);
+                  selectedDocFunc();
+                }}
               >
                 Upload Documents
               </Button>
@@ -820,16 +851,26 @@ export default function OtherActions({ heading, complaintId }) {
                   </div>
                   <ModalBody>
                     <div className="container">
-                        <div className="row">
-                            <div className="col-sm-10">
-                                {
-                                    selectedDocArr.length ? 
-                                    selectedDocArr?.map((res,i) => {
-                                        return <h4>{i}. <a href={`https://staging-insa.s3.ap-south-1.amazonaws.com/upload/lead_docs/${items._id}/${res}`} target="_blank" ></a></h4>
-                                    }) : <h4>No Uploaded Doc</h4>
-                                }
-                            </div>
+                      <div className="row">
+                        <div className="col-sm-10">
+                          {selectedDocArr.length ? (
+                            selectedDocArr?.map((res, i) => {
+                              return (
+                                <h4>
+                                  {i}.{" "}
+                                  <a
+                                    id={`othActDoc${i}`}
+                                    href={`https://staging-insa.s3.ap-south-1.amazonaws.com/upload/lead_docs/${items._id}/${res}`}
+                                    target="_blank"
+                                  ></a>
+                                </h4>
+                              );
+                            })
+                          ) : (
+                            <h4>No Uploaded Doc</h4>
+                          )}
                         </div>
+                      </div>
                     </div>
                   </ModalBody>
                   {/* <ModalBody>
@@ -935,11 +976,13 @@ export default function OtherActions({ heading, complaintId }) {
         details={items}
       />
 
-        <ReminderTrackCom 
-            isOpen={ReminderTrack}
-            onClose = {() => {setReminderTrack(false)}}
-            details = {items}
-        />
+      <ReminderTrackCom
+        isOpen={ReminderTrack}
+        onClose={() => {
+          setReminderTrack(false);
+        }}
+        details={items}
+      />
 
       <Modal
         isOpen={mulMailRemOpen.open}
@@ -954,6 +997,7 @@ export default function OtherActions({ heading, complaintId }) {
               <div className="col-sm-12">
                 <label>Select Multiple Policies</label>
                 <Select
+                  id="othActMulPol"
                   isMulti
                   options={userBasedData}
                   onChange={(e) => {
@@ -967,6 +1011,7 @@ export default function OtherActions({ heading, complaintId }) {
               <div className="col-sm-12 mt-4">
                 <label>Select Template </label>
                 <select
+                  id="othActTemp"
                   class="form-control border-bold"
                   name="mailingTemplateSelect"
                   value={mulMailRemOpen.mailingTemplateSelect}
@@ -985,6 +1030,7 @@ export default function OtherActions({ heading, complaintId }) {
             </div>
             <div className="d-flex mt-4 justify-content-center">
               <button
+                id="othActGenrBtn"
                 className="btn btn-primary rounded px-4"
                 onClick={generateMailRemFunc}
               >

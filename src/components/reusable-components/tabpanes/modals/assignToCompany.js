@@ -87,7 +87,7 @@ export default function AssignCompany({isOpen, onClose}) {
             </div>
             <ModalBody>
                 <label>Assign To</label>
-                <select name="resolutionType" className="form-control" onChange={(e)=>setSelectedUser(e.target.value)}>
+                <select id='dropdown1' name="resolutionType" className="form-control" onChange={(e)=>setSelectedUser(e.target.value)}>
                     {allUsers?.map((users) => {
                         return (
                             <option value={users?._id}>{users ? users.name : ''}</option>
@@ -95,7 +95,7 @@ export default function AssignCompany({isOpen, onClose}) {
                     })}
                 </select>
                 <div className="text-center mt-4 mb-3">
-                    <Button color='success' className='text-center' 
+                    <Button id='btn1Assign' color='success' className='text-center' 
                     onClick={assignUser}
                     >
                         <span className='text-center mt-2'>Assign</span>

@@ -43,26 +43,26 @@ export default function IGMSForm ({ heading, details, complaintId, handleFormCha
                     <div className='row'>
                         <div className='col-sm-3'>
                             <label>IGMS Token Number</label>
-                            <input className='form-control' type={"text"} name="IGMS_Token" value={details.IGMS_Token} onChange={handleFormChange} />
+                            <input id='igmsToken' className='form-control' type={"text"} name="IGMS_Token" value={details.IGMS_Token} onChange={handleFormChange} />
                         </div>
                         <div className='col-sm-3'>
                             <label>IGMS Date</label>
                             {console.log(details.IGMS_date)}
-                            <input className='form-control' type={"date"} name="IGMS_date" value={details.IGMS_date ? moment(details.IGMS_date).format("YYYY-MM-DD") : ""} onChange={handleFormChange} />
+                            <input id='igmsData' className='form-control' type={"date"} name="IGMS_date" value={details.IGMS_date ? moment(details.IGMS_date).format("YYYY-MM-DD") : ""} onChange={handleFormChange} />
                         </div>
                         <div className='col-sm-3'>
                             <label>IGMS Escalation Date</label>
-                            <input className='form-control' type={"date"} name="escalation_date" value={details.escalation_date ? moment(details.escalation_date).format("YYYY-MM-DD") : ""} onChange={handleFormChange} />
+                            <input id='igmsEsc' className='form-control' type={"date"} name="escalation_date" value={details.escalation_date ? moment(details.escalation_date).format("YYYY-MM-DD") : ""} onChange={handleFormChange} />
                         </div>
                         <div className='col-sm-3'>
                             <label>IGMS Login DOB</label>
-                            <input className='form-control' type={"date"} name="IGMSLoginDOB"  value={details.IGMSLoginDOB ? moment(details.IGMSLoginDOB).format("YYYY-MM-DD") : ""} onChange={handleFormChange} />
+                            <input id='igmsLoginDob' className='form-control' type={"date"} name="IGMSLoginDOB"  value={details.IGMSLoginDOB ? moment(details.IGMSLoginDOB).format("YYYY-MM-DD") : ""} onChange={handleFormChange} />
                         </div>
                     </div>
                     <div className='row mt-4'>
                         <div className='col-sm-3'>
                             <label>IGMS Done By</label>
-                            <select className='form-control' name="IGMS_Done"  value={details.IGMS_Done} onChange={handleFormChange} >
+                            <select id='igmsDoneBy' className='form-control' name="IGMS_Done"  value={details.IGMS_Done} onChange={handleFormChange} >
                                 
                                 <option value="PAN-No">Pan No.</option>
                                 <option value="Mobile-No">Mobile No.</option>
@@ -76,6 +76,7 @@ export default function IGMSForm ({ heading, details, complaintId, handleFormCha
                         <div className='col-sm-3'>
                             <label>First Response date from IGMS</label>
                             <input
+                            id='igmsFstResDate'
                           type="date"
                           class="form-control"
                           value={details.response_date_igms ? moment(details.response_date_igms).format("YYYY-MM-DD") : ""}
@@ -87,6 +88,7 @@ export default function IGMSForm ({ heading, details, complaintId, handleFormCha
                       <label>Second Response date from IGMS</label>
                       <div class="input-group">
                         <input
+                        id='igmsSecDate'
                           type="date"
                           class="form-control"
                           value={details.response_date_igms1 ? moment(details.response_date_igms1).format("YYYY-MM-DD") : ""}
@@ -99,6 +101,7 @@ export default function IGMSForm ({ heading, details, complaintId, handleFormCha
                       <label>IGMS Escalation Date</label>
                       <div class="input-group">
                         <input
+                        id='igmsEscDate'
                           type="date"
                           class="form-control"
                           value={details.escalation_date ? moment(details.escalation_date).format("YYYY-MM-DD") : ""}
@@ -114,6 +117,7 @@ export default function IGMSForm ({ heading, details, complaintId, handleFormCha
                       <label>Response Received</label>
                       <div class=" ml-3 mt-1">
                         <input
+                        id='igmsResRec'
                           type="checkbox"
                           class="form-control"
                           value={details.igmsResponseReceived}
@@ -127,6 +131,7 @@ export default function IGMSForm ({ heading, details, complaintId, handleFormCha
                       <label>Requirement Received</label>
                       <div class="ml-3 mt-1">
                         <input
+                        id='igmsReqRec'
                           type="checkbox"
                           class="form-control"
                           value={details.igmsRequirementReceived}
@@ -143,6 +148,7 @@ export default function IGMSForm ({ heading, details, complaintId, handleFormCha
                       <div class="input-group">
                         <textarea
                         rows={5}
+                        id="igmsContent"
                           type="textarea"
                           class="form-control"
                           value={details.igms_content}
@@ -159,6 +165,7 @@ export default function IGMSForm ({ heading, details, complaintId, handleFormCha
                       <div class="input-group">
                         <textarea
                         rows={5}
+                        id="igmsResData"
                           type="textarea"
                           class="form-control"
                           value={details.response_data_igms}
@@ -175,6 +182,7 @@ export default function IGMSForm ({ heading, details, complaintId, handleFormCha
                       <div class="input-group">
                         <textarea
                         rows={5}
+                        id="igmSecRes"
                           type="textarea"
                           class="form-control"
                           value={details.response_data2_igms}

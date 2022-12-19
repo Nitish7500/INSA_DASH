@@ -101,6 +101,7 @@ export default function OmbudsmanForm({
             <div className="col-sm-3">
               <label>Ombudsman Complaint Date</label>
               <input
+                id="OmbFrmComDate"
                 type="date"
                 class="form-control"
                 value={details.ombudsman_c_date}
@@ -113,6 +114,7 @@ export default function OmbudsmanForm({
               <label>Complaint Courier Recent Date</label>
               <div class="input-group">
                 <input
+                  id="OmbFrmComCurRecDate"
                   type="date"
                   class="form-control"
                   value={details.ombudsman_doc_date}
@@ -125,6 +127,7 @@ export default function OmbudsmanForm({
             <div className="col-sm-3">
               <label>Complaint Courier Date</label>
               <input
+                id="OmbFrmCompCurDt"
                 className="form-control"
                 type={"date"}
                 name="consumerCourtDate"
@@ -135,6 +138,7 @@ export default function OmbudsmanForm({
             <div className="col-sm-3">
               <label>Complaint Courier Recent Number</label>
               <input
+                id="OmbFrmComCurRecNo"
                 type="text"
                 class="form-control"
                 value={details.courier_number_doc}
@@ -148,6 +152,7 @@ export default function OmbudsmanForm({
               <label>Complaint Form Pushed Date</label>
               <div class="input-group">
                 <input
+                  id="OmbFrmComFormPushedDt"
                   type="date"
                   class="form-control"
                   value={details.complainFormSendDate}
@@ -160,6 +165,7 @@ export default function OmbudsmanForm({
             <div class="col-sm-3">
               <label>Complaint Courier Numbers</label>
               <button
+                id="OmbFrmComCurNoBtn"
                 type="button"
                 class="btn btn-secondary btn-sm m-2"
                 onClick={() => {
@@ -169,6 +175,7 @@ export default function OmbudsmanForm({
                 Add
               </button>
               <button
+                id="OmbFrmComCurBtnDel"
                 type="button"
                 class="btn btn-danger btn-sm m-2"
                 onClick={() => {
@@ -181,9 +188,10 @@ export default function OmbudsmanForm({
               >
                 Del
               </button>
-              {comCouCount?.map((res) => {
+              {comCouCount?.map((res, i) => {
                 return (
                   <input
+                    id={`OmbFrmComCurNoBtn${i}`}
                     className="form-control"
                     name="courierNumberDocArr"
                     onBlur={handleFormChange}
@@ -195,6 +203,7 @@ export default function OmbudsmanForm({
               <label>Ombudsman Complaint Number</label>
               <div class="input-group">
                 <input
+                  id="OmbFrmOmbComNo"
                   type="text"
                   class="form-control"
                   value={details.oc_number}
@@ -211,6 +220,7 @@ export default function OmbudsmanForm({
             <div className="col-sm-3">
               <label>Form 6A Pushed Date</label>
               <input
+                id="OmbFrm6APushedDt"
                 type="date"
                 class="form-control"
                 value={details.form6APushedDate}
@@ -222,6 +232,7 @@ export default function OmbudsmanForm({
             <div className="col-sm-3">
               <label>Form 6A Received Date</label>
               <input
+                id="OmbFrm6ARecDt"
                 type="date"
                 class="form-control"
                 value={details.VIAFormUploadedDate}
@@ -233,6 +244,7 @@ export default function OmbudsmanForm({
             <div className="col-sm-3">
               <label>Form 6A submission date</label>
               <input
+                id="OmbFrm6ASubbDt"
                 type="date"
                 class="form-control"
                 value={details.ombudsman_submit_date}
@@ -244,6 +256,7 @@ export default function OmbudsmanForm({
             <div className="col-sm-3">
               <label>Form 6A Courier Date</label>
               <input
+                id="OmbFrm6ACurDate"
                 type="date"
                 class="form-control"
                 value={details.courier_date}
@@ -258,6 +271,7 @@ export default function OmbudsmanForm({
             <div className="col-sm-3">
               <label>Form 6A Courier Number</label>
               <input
+                id="OmbFrm6ACurNo"
                 type="text"
                 class="form-control"
                 value={details.courier_number}
@@ -269,6 +283,7 @@ export default function OmbudsmanForm({
               <label>Form 6A through mail</label>
               <div class="ml-3 mt-1">
                 <input
+                  id="OmbFrm6AThrMail"
                   type="checkbox"
                   name="form6AMail"
                   class="form-control"
@@ -280,6 +295,7 @@ export default function OmbudsmanForm({
             <div class="col-sm-3">
               <label>Ombudsman Location</label>
               <select
+                id="OmbFrmObmLoc"
                 type="text"
                 class="form-control"
                 formControlName="stateName"
@@ -298,6 +314,7 @@ export default function OmbudsmanForm({
               <label>Date 1st</label>
               <div class="input-group">
                 <input
+                  id="OmbFrmDatefst"
                   type="datetime-local"
                   class="form-control"
                   value={details.omb_first_date}
@@ -310,6 +327,7 @@ export default function OmbudsmanForm({
               <label>Date 2nd</label>
               <div class="input-group">
                 <input
+                  id="OmbFrmDateSec"
                   type="datetime-local"
                   class="form-control"
                   value={details.omb_sec_date}
@@ -321,6 +339,7 @@ export default function OmbudsmanForm({
             <div className="col-sm-3">
               <label>Call between Expert and Customer Date</label>
               <input
+                id="OmbFromExpCusDt"
                 type="date"
                 class="form-control"
                 value={details.expert_customer_date}
@@ -331,6 +350,7 @@ export default function OmbudsmanForm({
             <div className="col-sm-3">
               <label>Hearing Comment</label>
               <select
+                id="OmbFromHeaComm"
                 class="form-control"
                 value={details.hearingComment}
                 name="hearingComment"
@@ -359,6 +379,7 @@ export default function OmbudsmanForm({
             <div className="col-sm-3">
               <label>Called Customer or Not to Check Reward Status</label>
               <select
+                id="OmbFromCheckSts"
                 class="form-control"
                 value={details.check_status}
                 name="check_status"
@@ -372,6 +393,7 @@ export default function OmbudsmanForm({
               <label>Ombudsman Reward Date</label>
               <div class="input-group">
                 <input
+                  id="OmbFromOmbRewDt"
                   type="date"
                   class="form-control"
                   value={details.omd_reward_date}
@@ -384,6 +406,7 @@ export default function OmbudsmanForm({
               <label>Ombudsman Award Non Compliance Sent Date</label>
               <div class="input-group">
                 <input
+                  id="OmbFromOmbNonComDt"
                   type="text"
                   class="form-control"
                   value={details.omdNonComplianceDate}
@@ -397,6 +420,7 @@ export default function OmbudsmanForm({
             <div className="col-sm-3">
               <label>Resolution Type</label>
               <select
+                id="OmbFromRewType"
                 name="rewardType"
                 className="form-control"
                 value={details.rewardType}
@@ -410,51 +434,64 @@ export default function OmbudsmanForm({
           </div>
           {details.rewardType ? (
             <div className="row mt-4">
-              { details.rewardType === "RefundAccepted" || details.rewardType === "SinglePayAccepted" || details.rewardType === "SinglePayAdditionalPayment" || details.rewardType === "ClaimPayable" || details.rewardType === "ClaimPayableInterest" || details.rewardType === "SinglePaySomeRefund"?<div className="col-sm-3">
-                <label>
-                  {details.rewardType === "RefundAccepted" ? "Refund" : null}
-                  {details.rewardType === "SinglePayAccepted"
-                    ? "Single Pay"
-                    : null}
-                  {details.rewardType === "SinglePayAdditionalPayment"
-                    ? "Single Pay"
-                    : null}
-                  {details.rewardType === "SinglePaySomeRefund"
-                    ? "Single Pay"
-                    : null}
-                  {details.rewardType === "ClaimPayable" ? "Claim" : null}
-                  {details.rewardType === "ClaimPayableInterest"
-                    ? "Claim"
-                    : null}
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  value={details.refundSingleClaim}
-                  name="refundSingleClaim"
-                  onChange={handleFormChange}
-                />
-              </div> : null}
-              {details.rewardType === "SinglePayAdditionalPayment" || details.rewardType === "SinglePaySomeRefund" || details.rewardType === "ClaimPayableInterest" ? <div className="col-sm-3">
-                <label>
-                  {details.rewardType === "SinglePayAdditionalPayment"
-                    ? "Additional Payment"
-                    : null}
-                  {details.rewardType === "SinglePaySomeRefund"
-                    ? "Refund"
-                    : null}
-                  {details.rewardType === "ClaimPayableInterest"
-                    ? "Interest"
-                    : null}
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  value={details.paymentRefundInt}
-                  name="paymentRefundInt"
-                  onChange={handleFormChange}
-                />
-              </div> : null }
+              {details.rewardType === "RefundAccepted" ||
+              details.rewardType === "SinglePayAccepted" ||
+              details.rewardType === "SinglePayAdditionalPayment" ||
+              details.rewardType === "ClaimPayable" ||
+              details.rewardType === "ClaimPayableInterest" ||
+              details.rewardType === "SinglePaySomeRefund" ? (
+                <div className="col-sm-3">
+                  <label>
+                    {details.rewardType === "RefundAccepted" ? "Refund" : null}
+                    {details.rewardType === "SinglePayAccepted"
+                      ? "Single Pay"
+                      : null}
+                    {details.rewardType === "SinglePayAdditionalPayment"
+                      ? "Single Pay"
+                      : null}
+                    {details.rewardType === "SinglePaySomeRefund"
+                      ? "Single Pay"
+                      : null}
+                    {details.rewardType === "ClaimPayable" ? "Claim" : null}
+                    {details.rewardType === "ClaimPayableInterest"
+                      ? "Claim"
+                      : null}
+                  </label>
+                  <input
+                    id="OmbFromRefundSingClm"
+                    type="text"
+                    class="form-control"
+                    value={details.refundSingleClaim}
+                    name="refundSingleClaim"
+                    onChange={handleFormChange}
+                  />
+                </div>
+              ) : null}
+              {details.rewardType === "SinglePayAdditionalPayment" ||
+              details.rewardType === "SinglePaySomeRefund" ||
+              details.rewardType === "ClaimPayableInterest" ? (
+                <div className="col-sm-3">
+                  <label>
+                    {details.rewardType === "SinglePayAdditionalPayment"
+                      ? "Additional Payment"
+                      : null}
+                    {details.rewardType === "SinglePaySomeRefund"
+                      ? "Refund"
+                      : null}
+                    {details.rewardType === "ClaimPayableInterest"
+                      ? "Interest"
+                      : null}
+                  </label>
+                  <input
+                    id="OmbFromPayRefInt"
+                    type="text"
+                    class="form-control"
+                    value={details.paymentRefundInt}
+                    name="paymentRefundInt"
+                    onChange={handleFormChange}
+                  />
+                </div>
+              ) : null}
             </div>
           ) : (
             ""
@@ -463,6 +500,7 @@ export default function OmbudsmanForm({
             <div className="col-sm-3">
               <label>Ombudsman Pending Reason</label>
               <select
+                id="OmbFromPendReason"
                 class="form-control"
                 name="ombudsmanPendingReason"
                 onChange={handleFormChange}
@@ -480,6 +518,7 @@ export default function OmbudsmanForm({
               <label>Claim</label>
               <input
                 type="text"
+                id="OmbFromRefSinClm"
                 class="form-control"
                 value={details.refundSingleClaim}
                 name="refundSingleClaim"
@@ -491,6 +530,7 @@ export default function OmbudsmanForm({
             <div class="col-sm-12">
               <label>Ombudsman Pending Reason Listing</label>
               <textarea
+                id="OmbFromOmbPenReaLis"
                 rows="5"
                 type="text"
                 name="ombudsmanPendingReasonListing"
@@ -501,7 +541,6 @@ export default function OmbudsmanForm({
             </div>
           </div>
           <div className="row mt-4">
-            {/*  */}
             <Editor
               id="Editor"
               apiKey={tinyMceApiKey}

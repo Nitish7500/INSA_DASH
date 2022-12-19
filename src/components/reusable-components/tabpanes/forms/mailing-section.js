@@ -45,8 +45,8 @@ import { formatDate } from "helpers/CommonHelper";
 import moment from "moment";
 
 export default function MailingSectionForm({
-    earlierMailsRef,
-    escalationPointsRef,
+  earlierMailsRef,
+  escalationPointsRef,
   heading,
   details,
   complaintId,
@@ -121,7 +121,6 @@ export default function MailingSectionForm({
   const secondReminderSentDate =
     secondReminderSentDate != undefined ? new Date(reminderSentDate) : null;
 
-
   return (
     <Card>
       <CardBody>
@@ -132,6 +131,7 @@ export default function MailingSectionForm({
             <div className="col-sm-3">
               <label>Customer ID is Register</label>
               <select
+                id="mailingCusReg"
                 class="form-control"
                 value={details.service_id}
                 name="service_id"
@@ -147,6 +147,7 @@ export default function MailingSectionForm({
               <label>Complaint Number</label>
               <div class="input-group">
                 <input
+                  id="mailingComNo"
                   type="text"
                   class="form-control"
                   value={details.complaint_number}
@@ -159,6 +160,7 @@ export default function MailingSectionForm({
               <label>Choose Date Type -</label>
               <div class="input-group">
                 <select
+                  id="mailingdtType"
                   class="form-control"
                   value={details.selectDate}
                   name="selectDate"
@@ -192,6 +194,7 @@ export default function MailingSectionForm({
               <label>First Response Date from Company</label>
               <div class="input-group">
                 <input
+                  id="mailingResDtCom"
                   type="date"
                   class="form-control"
                   value="caseone.response_date_company"
@@ -206,6 +209,7 @@ export default function MailingSectionForm({
             <div className="col-sm-3">
               <label>Escalation Date Sent to Company</label>
               <input
+                id="mailingREsEscDt"
                 type="date"
                 class="form-control"
                 value={details.complaint_escalation_date}
@@ -217,6 +221,7 @@ export default function MailingSectionForm({
             <div className="col-sm-3">
               <label>Requirement Raised Date</label>
               <input
+                id="mailingReqDate"
                 type="date"
                 class="form-control"
                 value={details.requirementRaisedDate}
@@ -228,6 +233,7 @@ export default function MailingSectionForm({
             <div className="col-sm-3">
               <label>Requirement Reverted Date</label>
               <input
+                id="mailingReqRevDate"
                 type="date"
                 class="form-control"
                 value={details.requirementRevertedDate}
@@ -239,6 +245,7 @@ export default function MailingSectionForm({
             <div className="col-sm-3">
               <label>First Reminder Sent Date</label>
               <input
+                id="mailingReqSentDt"
                 type="date"
                 class="form-control"
                 value={details.requirementSentDate}
@@ -252,6 +259,7 @@ export default function MailingSectionForm({
             <div className="col-sm-3">
               <label>Second Response Date from Company</label>
               <input
+                id="mailingRemSentDate"
                 type="date"
                 class="form-control"
                 value={details?.reminderSentDate}
@@ -263,6 +271,7 @@ export default function MailingSectionForm({
             <div className="col-sm-3">
               <label>Draft Mail Sent by customer or Not</label>
               <select
+                id="mailingDetailDraftSend"
                 class="form-control"
                 value={details.is_draft_mail_send}
                 onChange={handleFormChange}
@@ -276,6 +285,7 @@ export default function MailingSectionForm({
               <label>Draft shared with the customer</label>
               <div class="input-group">
                 <input
+                  id="mailingdraftShareBool"
                   type="checkbox"
                   name="draftSharedBool"
                   class="form-control"
@@ -287,6 +297,7 @@ export default function MailingSectionForm({
             <div className="col-sm-3">
               <label>Draft shared with the customer Date</label>
               <input
+                id="mailingdftSharedDt"
                 type="date"
                 class="form-control"
                 value={details?.draftSharedDate}
@@ -301,6 +312,7 @@ export default function MailingSectionForm({
             <div className="col-sm-3">
               <label>Requirement Mail Sent By Company</label>
               <select
+                id="mailingisReq"
                 class="form-control"
                 value={details.isRequirement}
                 name="isRequirement"
@@ -314,6 +326,7 @@ export default function MailingSectionForm({
             <div className="col-sm-3">
               <label>Requirement Mail Revert Sent By Customer</label>
               <select
+                id="mailingisReqRecv"
                 class="form-control"
                 value={details.isRequirementReverted}
                 name="isRequirementReverted"
@@ -331,6 +344,7 @@ export default function MailingSectionForm({
             <div className="col-sm-3">
               <label>First Response from Company</label>
               <select
+                id="mailingResComp"
                 class="form-control"
                 value={details.response_company}
                 name="response_company"
@@ -344,6 +358,7 @@ export default function MailingSectionForm({
             <div className="col-sm3">
               <label>Reminder Mail Sent to Company</label>
               <select
+                id="mailingremFst"
                 class="form-control"
                 value={details.reminder_first}
                 name="reminder_first"
@@ -357,6 +372,7 @@ export default function MailingSectionForm({
             <div className="col-sm-3">
               <label>Complaint delay reason</label>
               <select
+                id="mailingComDelReason"
                 class="form-control"
                 value={details.complaintDelayReason}
                 name="complaintDelayReason"
@@ -389,6 +405,7 @@ export default function MailingSectionForm({
             <div className="col-sm-3">
               <label>First Escalation Sent or Not</label>
               <select
+                id="mailingEscFst"
                 class="form-control"
                 value={details.escalation_first}
                 name="escalation_first"
@@ -403,6 +420,7 @@ export default function MailingSectionForm({
             <div className="col-sm-3">
               <label>Escalation shared with the customer</label>
               <input
+                id="mailingEscShrB"
                 type="checkbox"
                 name="escalationSharedBool"
                 class="form-control"
@@ -414,6 +432,7 @@ export default function MailingSectionForm({
             <div className="col-sm-3">
               <label>Requirement Mail Revert Sent By Customer</label>
               <select
+                id="mailingisReqRev"
                 class="form-control"
                 value={details.isRequirementReverted}
                 name="isRequirementReverted"
@@ -431,6 +450,7 @@ export default function MailingSectionForm({
             <div className="col-sm-3">
               <label>Second Response from Company</label>
               <select
+                id="mailingResComp2"
                 class="form-control"
                 value={details.response_company2}
                 name="response_company2"
@@ -445,6 +465,7 @@ export default function MailingSectionForm({
             <div className="col-sm-3">
               <label>Reminder Mail Sent to Company</label>
               <select
+                id="mailingRemSec"
                 class="form-control"
                 value={details.reminder_second}
                 name="reminder_second"
@@ -458,6 +479,7 @@ export default function MailingSectionForm({
             <div className="col-sm-3">
               <label>Reminder Sent Date</label>
               <input
+                id="mailingRemSndDt"
                 type="date"
                 class="form-control"
                 value={details.reminderSentDate}

@@ -101,9 +101,9 @@ export default function CancelRequest({isOpen, onClose, userId }) {
             </div>
             <ModalBody>
                 <label>Request sent to Customer</label>
-                <Select isMulti options={userData} onChange={(e) => {setForm(e)}}></Select>
+                <Select id='selectCusReq' isMulti options={userData} onChange={(e) => {setForm(e)}}></Select>
                 <div className="text-center mt-4 mb-3">
-                    <Button color='danger' className='text-center'
+                    <Button id='selectCusReqBtn' color='danger' className='text-center'
                     //  onClick={updateStatus}
                     >
                         <span className='text-center' onClick={handleCancelReq}>Cancel Request</span>
