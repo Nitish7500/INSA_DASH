@@ -7,19 +7,18 @@ import { useDispatch } from "react-redux";
 import {
   faPencil,
   faPhone,
-  faFileZipper,
   faFile,
   faHistory,
 } from "@fortawesome/free-solid-svg-icons";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { useState } from "react";
+import QueryComm from "./Modal/QueryComm";
+import ChatHistory from "./Modal/ChatHistory";
 
 const BotTranscript = ({ intl, match }) => {
   const [open, setOpen] = useState(false);
   const [openHistory, setopenHistory] = useState(false);
   const [historyArr, sethistoryArr] = useState([]);
   const [botTranscriptId, setbotTranscriptId] = useState("");
-  const [comment, setComment] = useState("");
 
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -43,19 +42,6 @@ const BotTranscript = ({ intl, match }) => {
 
   const historyToggle = () => {
     setopenHistory(false);
-  };
-
-  const sumbitCommentHandler = () => {
-    if (comment && botTranscriptId) {
-      dispatch({
-        type: "BOT_TRANSCRIPT_ADD_COMMENT",
-        state: { botTranscriptId: botTranscriptId, comment: comment },
-      });
-      dispatch({
-        type: "BOT_TRANSCRIPT_COMMUNICATION",
-        state: { botTranscriptId: botTranscriptId },
-      });
-    }
   };
 
   return (
@@ -99,11 +85,12 @@ const BotTranscript = ({ intl, match }) => {
             </thead>
             <tbody>
               {state.botTranscript ? (
-                state.botTranscript?.botTranscriptData?.map((res) => {
+                state.botTranscript?.botTranscriptData?.map((res, i) => {
                   return (
-                    <tr>
+                    <tr key={i}>
                       <td>
                         <button
+                          id={`Btbtn${i}`}
                           className="btn btn-success"
                           onClick={() => {
                             dispatch({
@@ -129,6 +116,7 @@ const BotTranscript = ({ intl, match }) => {
                       <td>{res.agentNumber}</td>
                       <td>
                         <a
+                          id={`BTLnk${i}`}
                           href="#myModal"
                           role="button"
                           class="btn"
@@ -148,6 +136,7 @@ const BotTranscript = ({ intl, match }) => {
                       </td>
                       <td>
                         <a
+                          id={`BTLnk2${i}`}
                           href={`${res.botTranscript?.transcriptUrl}`}
                           target="_blank"
                         >
@@ -159,7 +148,7 @@ const BotTranscript = ({ intl, match }) => {
                         </a>
                       </td>
                       <td>
-                        <a href="#">
+                        <a id={`BTLnk3${i}`} href="#">
                           <FontAwesomeIcon
                             color="#9c27b0"
                             fontSize={"1.2rem"}
@@ -181,123 +170,16 @@ const BotTranscript = ({ intl, match }) => {
           </table>
         </div>
       </div>
-      <Modal isOpen={open} toggle={toggle} size="lg">
-        <ModalHeader toggle={toggle}>Query Communications</ModalHeader>
-        {/* <hr className="my-0 w-90"></hr> */}
-        <ModalBody>
-          <h5>Enter New Communication</h5>
-          <hr className="my-0 mb-2" />
-          <div className="form-group">
-            <textarea
-              autofocus
-              className="form-control"
-              id="exampleFormControlTextarea1"
-              rows={4}
-              value={comment}
-              onChange={(e) => {
-                setComment(e.target.value);
-              }}
-            />
-          </div>
-
-          <button
-            className="btn btn-success px-5"
-            onClick={sumbitCommentHandler}
-          >
-            ADD
-          </button>
-          <hr />
-          <div className="container">
-            <div className="row">
-              <div className="col-sm-6">
-                <span className="h5">Communication List</span>
-              </div>
-              <div className="col-sm-6">
-                <span className="h5">Communication Done</span>
-              </div>
-            </div>
-            <hr />
-            {state.botTranscript?.botTranscriptCommuniaction ? (
-              state.botTranscript?.botTranscriptCommuniaction?.communicationData?.map(
-                (res) => {
-                  return (
-                    <div className="row">
-                      <div className="col-sm-6">
-                        <span className="h5">{res.comment}</span>
-                        <hr />
-                      </div>
-                      <div className="col-sm-6">
-                        <span className="h5">{res.date}</span>
-                        <hr />
-                      </div>
-                    </div>
-                  );
-                }
-              )
-            ) : (
-              <div className="row">
-                <span className="h4">No Data</span>
-              </div>
-            )}
-          </div>
-        </ModalBody>
-      </Modal>
-      <Modal isOpen={openHistory} toggle={historyToggle} size="lg">
-        <ModalHeader toggle={historyToggle}>
-          {" "}
-          <sapn className="h5"> Chat Transcript</sapn>
-        </ModalHeader>
-        <ModalBody>
-          <div className="container">
-            <div className="row">
-              <div className="col-sm-3">
-                <span className="display-5 font-weight-bold">Ticket ID</span>
-              </div>
-              <div className="col-sm-3">
-                <span className="display-5 font-weight-bold">Chat Source</span>
-              </div>
-              <div className="col-sm-3">
-                <span className="display-5 font-weight-bold">
-                  Last Message Date
-                </span>
-              </div>
-              <div className="col-sm-3">
-                <span className="display-5 font-weight-bold">Chat History</span>
-              </div>
-            </div>
-            <hr />
-            {historyArr.length
-              ? historyArr.map((res) => {
-                  return (
-                    <>
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <span className="display-5">{res.ticket}</span>
-                        </div>
-                        <div className="col-sm-3">
-                          <span className="display-5">{res.src}</span>
-                        </div>
-                        <div className="col-sm-3">
-                          <span className="display-5">{res.latestMsgDate}</span>
-                        </div>
-                        <div className="col-sm-3">
-                          <a href={`${res?.transcriptUrl}`} target="_blank">
-                            <FontAwesomeIcon
-                              color="#9c27b0"
-                              fontSize={"1.2rem"}
-                              icon={faFile}
-                            />
-                          </a>
-                        </div>
-                      </div>
-                      <hr />
-                    </>
-                  );
-                })
-              : "No History Data"}
-          </div>
-        </ModalBody>
-      </Modal>
+      <QueryComm
+        isOpen={open}
+        onClose={toggle}
+        botTranscriptId={botTranscriptId}
+      />
+      <ChatHistory
+        isOpen={openHistory}
+        onClose={historyToggle}
+        data={historyArr}
+      />
     </div>
   );
 };

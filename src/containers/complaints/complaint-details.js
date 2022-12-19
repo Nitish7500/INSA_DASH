@@ -126,7 +126,7 @@ const ComplaintDetails = ({ match }) => {
       legalSection: {
         ...items.legalSection,
         legalCommentSection: legalCommentSectionRef.current?.getContent(),
-        legalPointsByExpert:legalPointsByExpertRef.current?.getContent()
+        legalPointsByExpert: legalPointsByExpertRef.current?.getContent(),
       },
     });
   };
@@ -139,6 +139,7 @@ const ComplaintDetails = ({ match }) => {
       <Row>
         <Colxx xxs="12" className="my-3">
           <NavLink
+            id="navLink1"
             location={{}}
             to={`${adminRoot}/pages/product/data-list`}
             className="mr-3"
@@ -152,6 +153,7 @@ const ComplaintDetails = ({ match }) => {
           <Nav tabs className="separator-tabs ml-0 mt-3 mb-5">
             <NavItem>
               <NavLink
+                id="navLink2"
                 location={{}}
                 to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
@@ -165,6 +167,7 @@ const ComplaintDetails = ({ match }) => {
             </NavItem>
             <NavItem>
               <NavLink
+                id="navLink3"
                 location={{}}
                 to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
@@ -178,6 +181,7 @@ const ComplaintDetails = ({ match }) => {
             </NavItem>
             <NavItem>
               <NavLink
+                id="navLink4"
                 location={{}}
                 to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
@@ -191,6 +195,7 @@ const ComplaintDetails = ({ match }) => {
             </NavItem>
             <NavItem>
               <NavLink
+                id="navLink5"
                 location={{}}
                 to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
@@ -204,6 +209,7 @@ const ComplaintDetails = ({ match }) => {
             </NavItem>
             <NavItem>
               <NavLink
+                id="navLink6"
                 location={{}}
                 to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
@@ -217,6 +223,7 @@ const ComplaintDetails = ({ match }) => {
             </NavItem>
             <NavItem>
               <NavLink
+                id="navLink7"
                 location={{}}
                 to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
@@ -230,6 +237,7 @@ const ComplaintDetails = ({ match }) => {
             </NavItem>
             <NavItem>
               <NavLink
+                id="navLink8"
                 location={{}}
                 to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
@@ -243,6 +251,7 @@ const ComplaintDetails = ({ match }) => {
             </NavItem>
             <NavItem>
               <NavLink
+                id="navLink9"
                 location={{}}
                 to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
@@ -256,6 +265,7 @@ const ComplaintDetails = ({ match }) => {
             </NavItem>
             <NavItem>
               <NavLink
+                id="navLink10"
                 location={{}}
                 to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
@@ -269,6 +279,7 @@ const ComplaintDetails = ({ match }) => {
             </NavItem>
             <NavItem>
               <NavLink
+                id="navLink11"
                 location={{}}
                 to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
@@ -282,6 +293,7 @@ const ComplaintDetails = ({ match }) => {
             </NavItem>
             <NavItem>
               <NavLink
+                id="navLink12"
                 location={{}}
                 to={`complaint-details?complaintId=${complaintId}`}
                 className={classnames({
@@ -401,7 +413,7 @@ const ComplaintDetails = ({ match }) => {
           </TabContent>
         </Colxx>
         <div className="ml-auto mr-auto">
-          <button className="btn btn-primary" onClick={handleSubmit}>
+          <button id="comBtn" className="btn btn-primary" onClick={handleSubmit}>
             Submit
           </button>
         </div>
