@@ -18,7 +18,7 @@ function* getBotTranscriptData(action) {
         ...action.state,
       }
     );
-    yield put({ type: "GET_TRANSCRIPT_DATA_SUCCESS", data: data.data });
+    yield put({ type: "GET_TRANSCRIPT_DATA_SUCCESS", data: data.data, loading:false, message:data.msg });
   } catch (error) {
     yield put({
       type: "GET_TRANSCRIPT_DATA_FAILED",
@@ -39,6 +39,7 @@ function* getBotTranscriptComm(action) {
     yield put({
       type: "BOT_TRANSCRIPT_COMMUNICATION_SUCCESS",
       data: data.data,
+      message:data.msg
     });
   } catch (error) {
     yield put({
@@ -57,7 +58,7 @@ function* getComments(action) {
         ...action.state,
       }
     );
-    yield put({ type: "BOT_TRANSCRIPT_ADD_COMMENT_SUCCESS", data: data.data });
+    yield put({ type: "BOT_TRANSCRIPT_ADD_COMMENT_SUCCESS", data: data.data, message:data.msg });
   } catch (error) {
     yield put({
       type: "BOT_TRANSCRIPT_ADD_COMMENT_FAILED",
@@ -75,11 +76,11 @@ function* makeCall(action){
             ...action.state, k_number:KNOWLARITY_CONFIGS.superReceptionistNumber,
           }
         );
-        yield put({ type: "BOT_TRANSCRIPT_MAKE_CALL_SUCCESS", data: data.data });
+        yield put({ type: "BOT_TRANSCRIPT_MAKE_CALL_SUCCESS", data: data.data, message:data.msg });
       } catch (error) {
         yield put({
           type: "BOT_TRANSCRIPT_MAKE_CALL_FAILED",
-          message: "Failed to get data !",
+          message: error.message,
         });
       }
 }

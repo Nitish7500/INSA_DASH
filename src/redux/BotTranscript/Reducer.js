@@ -6,6 +6,7 @@ import {
   BOT_TRANSCRIPT_COMMUNICATION_FAILED,
   BOT_TRANSCRIPT_COMMUNICATION_SUCCESS,
   BOT_TRANSCRIPT_MAKE_CALL,
+  BOT_TRANSCRIPT_MAKE_CALL_FAILED,
   BOT_TRANSCRIPT_MAKE_CALL_SUCCESS,
   GET_TRANSCRIPT_DATA,
   GET_TRANSCRIPT_DATA_FAILED,
@@ -17,36 +18,41 @@ const initialState = {
   botTranscriptCommuniaction: {},
   botTranscriptComment: [],
   message: "",
+  loading:false,
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case GET_TRANSCRIPT_DATA:
-      return { ...state };
+      return { ...state, loading:true, message:"" };
 
     case GET_TRANSCRIPT_DATA_SUCCESS:
-      return { ...state, botTranscriptData: action.data };
+      return { ...state, botTranscriptData: action.data, message:action.message,loading:false };
 
     case GET_TRANSCRIPT_DATA_FAILED:
       return { ...state, message: action.message };
 
     case BOT_TRANSCRIPT_MAKE_CALL:
-      return { ...state };
+      return { ...state, loading:true };
 
     case BOT_TRANSCRIPT_MAKE_CALL_SUCCESS:
-      return { ...state };
+      return { ...state, message:action.message, loading:false };
+
+      
+    case BOT_TRANSCRIPT_MAKE_CALL_FAILED:
+      return { ...state, message:action.message };
 
     case BOT_TRANSCRIPT_COMMUNICATION:
-      return { ...state };
+      return { ...state, loading:true };
 
     case BOT_TRANSCRIPT_COMMUNICATION_SUCCESS:
-      return { ...state, botTranscriptCommuniaction: action.data };
+      return { ...state, botTranscriptCommuniaction: action.data, message:action.message, loading:false };
 
     case BOT_TRANSCRIPT_COMMUNICATION_FAILED:
       return { ...state, message: action.message };
 
     case BOT_TRANSCRIPT_ADD_COMMENT:
-      return { ...state };
+      return { ...state, message:action.message };
 
     case BOT_TRANSCRIPT_ADD_COMMENT_SUCCESS:
       return { ...state, botTranscriptComment: action.data };

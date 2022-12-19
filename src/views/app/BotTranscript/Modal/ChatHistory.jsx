@@ -1,9 +1,24 @@
 import { faFile } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { NotificationManager } from "components/common/react-notifications";
 import React from "react";
+import { useEffect } from "react";
 import { Modal, ModalBody, ModalHeader } from "reactstrap";
 
-function ChatHistory({isOpen, onClose, data}) {
+function ChatHistory({ isOpen, onClose, data }) {
+  useEffect(() => {
+    if (isOpen) {
+      NotificationManager.success(
+        "Chat History !",
+        "SuccessFul !",
+        3000,
+        null,
+        null,
+        "filled"
+      );
+    }
+  }, [isOpen]);
+
   return (
     <div>
       <Modal isOpen={isOpen} toggle={onClose} size="lg">
@@ -63,6 +78,9 @@ function ChatHistory({isOpen, onClose, data}) {
                   );
                 })
               : "No History Data"}
+              <div className="d-flex justify-content-center">
+                    <button className="btn btn-danger rounded"onClick={onClose}>Close</button>
+              </div>
           </div>
         </ModalBody>
       </Modal>

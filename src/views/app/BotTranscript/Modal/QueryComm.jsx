@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Modal, ModalBody, ModalHeader } from "reactstrap";
 import {useSelector, useDispatch} from "react-redux"
+import { NotificationManager } from "components/common/react-notifications";
 
 function QueryComm({isOpen, onClose, botTranscriptId}) {
     const [comment, setComment] = useState("");
@@ -18,6 +19,15 @@ function QueryComm({isOpen, onClose, botTranscriptId}) {
             state: { botTranscriptId: botTranscriptId },
           });
           setComment("")
+        }else{
+            NotificationManager.error(
+                "Please Enter The comment !",
+                "Failed to Add !",
+                3000,
+                null,
+                null,
+                "filled"
+              )
         }
       };
 
@@ -31,6 +41,7 @@ function QueryComm({isOpen, onClose, botTranscriptId}) {
           <hr className="my-0 mb-2" />
           <div className="form-group">
             <textarea
+            placeholder="Enter Comment"
               autofocus
               className="form-control"
               id="exampleFormControlTextarea1"

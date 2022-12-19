@@ -13,6 +13,7 @@ import {
 import { useState } from "react";
 import QueryComm from "./Modal/QueryComm";
 import ChatHistory from "./Modal/ChatHistory";
+import { NotificationManager } from "components/common/react-notifications";
 
 const BotTranscript = ({ intl, match }) => {
   const [open, setOpen] = useState(false);
@@ -22,19 +23,31 @@ const BotTranscript = ({ intl, match }) => {
 
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
-  console.log({ state });
   useEffect(() => {
     dispatch({ type: "GET_TRANSCRIPT_DATA" });
   }, [1]);
 
   const addCommentHandler = (id) => {
-    console.log(id);
+    // console.log(id);
     setbotTranscriptId(id);
     dispatch({
       type: "BOT_TRANSCRIPT_COMMUNICATION",
       state: { botTranscriptId: id },
     });
   };
+
+  useEffect(() => {
+    if (state.botTranscript?.message) {
+      NotificationManager.success(
+        state.botTranscript.message,
+        "SuccessFul !",
+        3000,
+        null,
+        null,
+        "filled"
+      )
+    }
+  },[state.botTranscript?.message])
 
   const toggle = () => {
     setOpen(!open);
