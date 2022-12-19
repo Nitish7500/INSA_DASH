@@ -170,7 +170,7 @@ const DefaultDashboard = ({ intl, match }) => {
       temp[i].style.backgroundColor = "white";
       temp[i].style.color = "black";
     }
-    e.target.style.backgroundColor = "#145388";
+    e.target.style.backgroundColor = "#fd7e14";
     e.target.style.color = "white";
   };
 
@@ -290,9 +290,9 @@ const DefaultDashboard = ({ intl, match }) => {
       </div>
       {/* <hr /> */}
       <div className="d-flex justify-content-between w-100 bg-white px-5 my-5">
-        <div className="text-dark px-3 py-2">
+        <div className="text-dark px-3 py-3">
           <span
-            className="h6 px-3 letter-spacing py-2 font-weight-bold"
+            className="h6 px-3 letter-spacing rounded py-2 font-weight-bold"
             onClick={(e) => {
               handleNavClick(e);
               leadCollapse("leadSection");
@@ -301,9 +301,9 @@ const DefaultDashboard = ({ intl, match }) => {
             LEAD
           </span>
         </div>
-        <div className="text-dark px-3 py-2">
+        <div className="text-dark px-3 py-3">
           <span
-            className="h6 px-3 letter-spacing font-weight-bold py-2"
+            className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
             onClick={(e) => {
               handleNavClick(e);
               leadCollapse("registration");
@@ -312,9 +312,9 @@ const DefaultDashboard = ({ intl, match }) => {
             REGISTRATION
           </span>
         </div>
-        <div className="text-dark px-3 py-2">
+        <div className="text-dark px-3 py-3">
           <span
-            className="h6 px-3 letter-spacing font-weight-bold py-2"
+            className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
             onClick={(e) => {
               handleNavClick(e);
               leadCollapse("resolution");
@@ -323,9 +323,9 @@ const DefaultDashboard = ({ intl, match }) => {
             RESOLUTION
           </span>
         </div>
-        <div className="text-dark px-3 py-2">
+        <div className="text-dark px-3 py-3">
           <span
-            className="h6 px-3 letter-spacing font-weight-bold py-2"
+            className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
             onClick={(e) => {
               handleNavClick(e);
               leadCollapse("legal");
@@ -334,9 +334,9 @@ const DefaultDashboard = ({ intl, match }) => {
             LEGAL
           </span>
         </div>
-        <div className="text-dark px-3 py-2">
+        <div className="text-dark px-3 py-3">
           <span
-            className="h6 px-3 letter-spacing font-weight-bold py-2"
+            className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
             onClick={(e) => {
               handleNavClick(e);
               leadCollapse("ombudsman");
@@ -345,9 +345,9 @@ const DefaultDashboard = ({ intl, match }) => {
             OMBUDSMAN
           </span>
         </div>
-        <div className="text-dark px-3 py-2">
+        <div className="text-dark px-3 py-3">
           <span
-            className="h6 px-3 letter-spacing font-weight-bold py-2"
+            className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
             onClick={(e) => {
               handleNavClick(e);
               leadCollapse("mailing");
