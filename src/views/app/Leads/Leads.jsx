@@ -546,7 +546,7 @@ function LeadSection() {
         style={{ borderRadius: "5px" }}
         id="leadSearcDiv"
       >
-        <div className="d-flex mt-5 container">
+        <div className="d-flex mt-5 container mx-0 px-3 ">
           <div className="mb-3 w-40">
             <label
               className="form-label font-weight-bold h6 d-block"
@@ -586,7 +586,7 @@ function LeadSection() {
           </div>
           <div className=" d-block h-20 mt-auto mb-auto ml-auto mr-auto">
             <button
-              className="btn btn-success mr-3 rounded"
+              className="btn btn-warning mr-3 rounded"
               id="leadInputClear"
               onClick={() => {
                 setStatus({ status: "PENDING" });
@@ -595,7 +595,7 @@ function LeadSection() {
               Clear
             </button>
             <button
-              className="btn btn-warning"
+              className="btn btn-primary rounded"
               id="leadSearchBtn"
               onClick={() => {
                 dispatch({
@@ -608,9 +608,9 @@ function LeadSection() {
             </button>
           </div>
         </div>
-        <div className="container">
+        <div className="container mx-0 px-3 mt-3">
           <label
-            className="h6 d-block font-weight-bold"
+            className="h6 d-block font-weight-bold "
             for="leadSearchByMailInput"
           >
             Search By Email And Phone And Lead Id
@@ -625,7 +625,7 @@ function LeadSection() {
             }}
           />
           <button
-            className="btn btn-success rounded ml-3 mr-5"
+            className="btn btn-primary rounded ml-3 mr-5"
             id="leadSearchBymailBtn"
             onClick={() => {
               dispatch({
@@ -638,7 +638,7 @@ function LeadSection() {
           </button>
           <div className="d-inline ml-5" id="leadRefreshDownloadSection">
             <button
-              className="btn btn-success rounded mr-5"
+              className="btn btn-primary rounded mr-5"
               id="leadRefresh"
               onClick={() => {
                 dispatch({

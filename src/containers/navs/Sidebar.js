@@ -382,7 +382,7 @@ class Sidebar extends Component {
                           >
                             <i className={item.icon} />{' '}
                             {/* <IntlMessages id={item.label} /> */}
-                            <span>{item.label}</span>
+                            <span className='font-weight-bold'>{item.label}</span>
                           </a>
                         ) : (
                           <NavLink
@@ -392,7 +392,7 @@ class Sidebar extends Component {
                           >
                             <i className={item.icon} />{' '}
                             {/* <IntlMessages id={item.label} /> */}
-                            <span>{item.label}</span>
+                            <span className='font-weight-bold'>{item.label}</span>
                           </NavLink>
                         )}
                       </NavItem>

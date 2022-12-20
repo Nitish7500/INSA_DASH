@@ -101,7 +101,7 @@ function Customer() {
           }}
         >
           <span className="h5">User List</span>
-          <span className="h6">List of available users</span>
+          <span className="h6 d-block mt-1">List of available users</span>
         </div>
       </div>
 
@@ -109,10 +109,10 @@ function Customer() {
         className="bg-white shadow p-3 mb-5 bg-white"
         style={{ borderRadius: "5px" }}
       >
-        <div className="container mt-4">
-          <div className="container">
+        <div className="mx-3 mt-4">
+          <div className="container m-0 p-0 mb-3">
             <div className="row">
-              <div className="col-lg-4">
+              <div className="col-lg-4 px-0">
                 <div className="form-control border-0">
                   <input
                     className="form-control border"

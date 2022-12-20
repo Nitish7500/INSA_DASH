@@ -629,31 +629,38 @@ const data = [
   },
   {
     id:"botTranscript",
-    icon:"",
+    icon:"iconsminds-speach-bubble-dialog",
     label:"Bot Transcript",
     to:`${adminRoot}/botTranscript`,
     roles:[ UserRole.Admin, UserRole.Executive]
   },
   {
     id:"leads",
-    icon:"",
+    icon:" iconsminds-three-arrow-fork    ",
     label:"Leads",
     to:`${adminRoot}/leads`,
     roles:[UserRole.Admin, UserRole.Executive]
   },
   {
     id:"customer",
-    icon:"",
+    icon:"iconsminds-mens",
     label:"Customer",
     to:`${adminRoot}/customer`,
     roles:[UserRole.Admin, UserRole.Executive]
   },
   {
     id:"users",
-    icon:"",
+    icon:"iconsminds-business-man",
     label:"Users",
     to:`${adminRoot}/users`,
     roles:[UserRole.Admin, UserRole.Executive]
+  },
+  {
+    id:"Report",
+    icon:"iconsminds-receipt-4    ",
+    label:"Reports",
+    to:`${adminRoot}/report/user-report`,
+    roles:[UserRole.Admin]
   },
   // {
   //   id: 'applications',
