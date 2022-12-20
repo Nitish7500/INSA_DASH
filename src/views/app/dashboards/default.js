@@ -289,7 +289,7 @@ const DefaultDashboard = ({ intl, match }) => {
           </div>
         {/* </div> */}
         {/* <hr /> */}
-        <div className="d-flex justify-content-between w-100 bg-white px-5 my-5">
+        <div className="d-flex justify-content-between  flex-wrap bg-white px-5 my-5">
           <div className="text-dark px-3 py-3">
             <span
               className="h6 px-3 letter-spacing rounded py-2 font-weight-bold"
