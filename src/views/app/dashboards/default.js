@@ -180,183 +180,183 @@ const DefaultDashboard = ({ intl, match }) => {
         Welcome <span className="text-warning">{user.data?.userType}</span> !
       </h1>
       <p>Work in Progress...</p>
-      <div className="bg-light shadow pt-3" style={{borderRadius:"5px"}}>
-      <div className="container m-2 mb-4 ">
-        <div className="row align-items-start">
-          <div className="col-sm">
-            <label className="d-block">Select Executive:-</label>
-            <select
-              className="form-control border-0"
-              id="ex1"
-              name="user_id"
-              onChange={(e) => {
-                stateEmptyFunc();
-                setFilterObj({
-                  ...filterObj,
-                  [e.target.name]:
-                    e.target.value === "--All--" ? null : e.target.value,
-                });
+      <div className="bg-light shadow pt-3" style={{ borderRadius: "5px" }}>
+        {/* <div className="container m-2 mb-4"> */}
+          <div className="row align-items-start mr-auto ml-auto">
+            <div className="col-sm">
+              <label className="d-block font-weight-bold">Select Executive:-</label>
+              <select
+                className="form-control border-0"
+                id="ex1"
+                name="user_id"
+                onChange={(e) => {
+                  stateEmptyFunc();
+                  setFilterObj({
+                    ...filterObj,
+                    [e.target.name]:
+                      e.target.value === "--All--" ? null : e.target.value,
+                  });
+                }}
+              >
+                <option selected>--All--</option>
+                {data.activeUsers?.length
+                  ? data.activeUsers?.map((res) => {
+                      return <option value={res.user_id}>{res.name}</option>;
+                    })
+                  : null}
+              </select>
+            </div>
+            <div className="col-sm">
+              <label className="d-block font-weight-bold">Daily/Monthly/Yearly</label>
+              <select
+                className="form-control border-0"
+                id="ex2"
+                name="dateWise"
+                onChange={handleDateWiseChange}
+              >
+                <option value={"Daily"}>Daily</option>
+                <option value={"Monthly"} selected>
+                  Monthly
+                </option>
+                <option value={"Yearly"}>Yearly</option>
+              </select>
+            </div>
+            <div className="col-md">
+              <label className="d-block font-weight-bold">Start Date</label>
+              <input
+                className="form-control input-lg pt-2 border-0"
+                id="ex3"
+                type={"date"}
+                value={dateObj.startDate}
+                name="startDate"
+                onChange={handleDate}
+              />
+            </div>
+            <div className="col-md">
+              <label className="d-block font-weight-bold">End Date</label>
+              <input
+                className="form-control border-0"
+                id="ex4"
+                type={"date"}
+                name="endDate"
+                value={dateObj.endDate}
+                onChange={handleDate}
+              />
+            </div>
+            <div className="col-md-6 col-lg-6 col-xl">
+              <label className="d-block font-weight-bold">Ombudsman Location</label>
+              <select
+                className="form-control border-0"
+                id="ex5"
+                name="omdLocation"
+                value={ombObj.omdLocation}
+                onChange={(e) => {
+                  stateEmptyFunc();
+                  setOmbObj({ ...ombObj, [e.target.name]: e.target.value });
+                }}
+              >
+                <option selected disabled>
+                  Select Location
+                </option>
+                <option value={"All"}>--All--</option>
+                {data.states?.length
+                  ? data.states?.map((x) => {
+                      return <option value={x.name}>{x.name}</option>;
+                    })
+                  : null}
+              </select>
+            </div>
+            <div className="col-md-6 col-lg-6 col-xl">
+              <label className="d-block font-weight-bold">Ombudsman Status</label>
+              <select
+                className="form-control border-0"
+                id="ex6"
+                name="selectedStatus"
+                value={ombObj.selectedStatus}
+                onChange={(e) => {
+                  stateEmptyFunc();
+                  setOmbObj({ ...ombObj, [e.target.name]: e.target.value });
+                }}
+              >
+                <option selected disabled>
+                  Select Status
+                </option>
+                {ombudsmanStatusList?.map((res) => {
+                  return <option value={res}>{res}</option>;
+                })}
+              </select>
+            </div>
+          </div>
+        {/* </div> */}
+        {/* <hr /> */}
+        <div className="d-flex justify-content-between w-100 bg-white px-5 my-5">
+          <div className="text-dark px-3 py-3">
+            <span
+              className="h6 px-3 letter-spacing rounded py-2 font-weight-bold"
+              onClick={(e) => {
+                handleNavClick(e);
+                leadCollapse("leadSection");
               }}
             >
-              <option selected>--All--</option>
-              {data.activeUsers?.length
-                ? data.activeUsers?.map((res) => {
-                    return <option value={res.user_id}>{res.name}</option>;
-                  })
-                : null}
-            </select>
+              LEAD
+            </span>
           </div>
-          <div className="col-sm">
-            <label className="d-block">Daily/Monthly/Yearly</label>
-            <select
-              className="form-control border-0"
-              id="ex2"
-              name="dateWise"
-              onChange={handleDateWiseChange}
-            >
-              <option value={"Daily"}>Daily</option>
-              <option value={"Monthly"} selected>
-                Monthly
-              </option>
-              <option value={"Yearly"}>Yearly</option>
-            </select>
-          </div>
-          <div className="col-md">
-            <label className="d-block">Start Date</label>
-            <input
-              className="form-control input-lg pt-2 border-0"
-              id="ex3"
-              type={"date"}
-              value={dateObj.startDate}
-              name="startDate"
-              onChange={handleDate}
-            />
-          </div>
-          <div className="col-md">
-            <label className="d-block">End Date</label>
-            <input
-              className="form-control border-0"
-              id="ex4"
-              type={"date"}
-              name="endDate"
-              value={dateObj.endDate}
-              onChange={handleDate}
-            />
-          </div>
-          <div className="col-md-6 col-lg-6 col-xl">
-            <label className="d-block">Ombudsman Location</label>
-            <select
-              className="form-control border-0"
-              id="ex5"
-              name="omdLocation"
-              value={ombObj.omdLocation}
-              onChange={(e) => {
-                stateEmptyFunc();
-                setOmbObj({ ...ombObj, [e.target.name]: e.target.value });
+          <div className="text-dark px-3 py-3">
+            <span
+              className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
+              onClick={(e) => {
+                handleNavClick(e);
+                leadCollapse("registration");
               }}
             >
-              <option selected disabled>
-                Select Location
-              </option>
-              <option value={"All"}>--All--</option>
-              {data.states?.length
-                ? data.states?.map((x) => {
-                    return <option value={x.name}>{x.name}</option>;
-                  })
-                : null}
-            </select>
+              REGISTRATION
+            </span>
           </div>
-          <div className="col-md-6 col-lg-6 col-xl">
-            <label className="d-block">Ombudsman Status</label>
-            <select
-              className="form-control border-0"
-              id="ex6"
-              name="selectedStatus"
-              value={ombObj.selectedStatus}
-              onChange={(e) => {
-                stateEmptyFunc();
-                setOmbObj({ ...ombObj, [e.target.name]: e.target.value });
+          <div className="text-dark px-3 py-3">
+            <span
+              className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
+              onClick={(e) => {
+                handleNavClick(e);
+                leadCollapse("resolution");
               }}
             >
-              <option selected disabled>
-                Select Status
-              </option>
-              {ombudsmanStatusList?.map((res) => {
-                return <option value={res}>{res}</option>;
-              })}
-            </select>
+              RESOLUTION
+            </span>
+          </div>
+          <div className="text-dark px-3 py-3">
+            <span
+              className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
+              onClick={(e) => {
+                handleNavClick(e);
+                leadCollapse("legal");
+              }}
+            >
+              LEGAL
+            </span>
+          </div>
+          <div className="text-dark px-3 py-3">
+            <span
+              className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
+              onClick={(e) => {
+                handleNavClick(e);
+                leadCollapse("ombudsman");
+              }}
+            >
+              OMBUDSMAN
+            </span>
+          </div>
+          <div className="text-dark px-3 py-3">
+            <span
+              className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
+              onClick={(e) => {
+                handleNavClick(e);
+                leadCollapse("mailing");
+              }}
+            >
+              MAILING
+            </span>
           </div>
         </div>
-      </div>
-      {/* <hr /> */}
-      <div className="d-flex justify-content-between w-100 bg-white px-5 my-5">
-        <div className="text-dark px-3 py-3">
-          <span
-            className="h6 px-3 letter-spacing rounded py-2 font-weight-bold"
-            onClick={(e) => {
-              handleNavClick(e);
-              leadCollapse("leadSection");
-            }}
-          >
-            LEAD
-          </span>
-        </div>
-        <div className="text-dark px-3 py-3">
-          <span
-            className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
-            onClick={(e) => {
-              handleNavClick(e);
-              leadCollapse("registration");
-            }}
-          >
-            REGISTRATION
-          </span>
-        </div>
-        <div className="text-dark px-3 py-3">
-          <span
-            className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
-            onClick={(e) => {
-              handleNavClick(e);
-              leadCollapse("resolution");
-            }}
-          >
-            RESOLUTION
-          </span>
-        </div>
-        <div className="text-dark px-3 py-3">
-          <span
-            className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
-            onClick={(e) => {
-              handleNavClick(e);
-              leadCollapse("legal");
-            }} 
-          >
-            LEGAL
-          </span>
-        </div>
-        <div className="text-dark px-3 py-3">
-          <span
-            className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
-            onClick={(e) => {
-              handleNavClick(e);
-              leadCollapse("ombudsman");
-            }}
-          >
-            OMBUDSMAN
-          </span>
-        </div>
-        <div className="text-dark px-3 py-3">
-          <span
-            className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
-            onClick={(e) => {
-              handleNavClick(e);
-              leadCollapse("mailing");
-            }}
-          >
-            MAILING
-          </span>
-        </div>
-      </div>
       </div>
       <div>
         {/* <button
@@ -527,10 +527,7 @@ const DefaultDashboard = ({ intl, match }) => {
           <Card className="" style={{ backgroundColor: "inherit" }}>
             <CardBody>
               <div>
-                <div
-                  className="mx-auto text-light mb-2"
-                  style={{ width: "75%" }}
-                >
+                <div className="mx-auto text-light mb-2">
                   <div className="p-2 bg-primary mb-3 p-2 d-flex flex-wrap justify-content-between">
                     <h2 className="p-0 m-0 font-weight-light pl-2 py-1">
                       All Lead Buckets
@@ -633,10 +630,7 @@ const DefaultDashboard = ({ intl, match }) => {
           <Card className="" style={{ backgroundColor: "inherit" }}>
             <CardBody>
               <div>
-                <div
-                  className="mx-auto text-light mb-2"
-                  style={{ width: "75%" }}
-                >
+                <div className="mx-auto text-light mb-2">
                   <div className="p-2 bg-primary mb-3 p-2 d-flex justify-content-between">
                     <h2 className="p-0 m-0 font-weight-light pl-2 py-1">
                       Today's Lead Buckets
@@ -739,10 +733,7 @@ const DefaultDashboard = ({ intl, match }) => {
           <Card className="" style={{ backgroundColor: "inherit" }}>
             <CardBody>
               <div>
-                <div
-                  className="mx-auto text-light mb-2"
-                  style={{ width: "75%" }}
-                >
+                <div className="mx-auto text-light mb-2">
                   <div className="p-2 bg-primary mb-3 p-2 d-flex justify-content-between">
                     <h2 className="p-0 m-0 font-weight-light pl-2 py-1">
                       Leads Marketing Channel Dashboard(Monthly)
@@ -845,10 +836,7 @@ const DefaultDashboard = ({ intl, match }) => {
           <Card className="" style={{ backgroundColor: "inherit" }}>
             <CardBody>
               <div>
-                <div
-                  className="mx-auto text-light mb-2"
-                  style={{ width: "75%" }}
-                >
+                <div className="mx-auto text-light mb-2">
                   <div className="p-2 bg-primary mb-3 p-2 d-flex justify-content-between">
                     <h2 className="p-0 m-0 font-weight-light pl-2 py-1">
                       Leads Experts Dashboard
@@ -892,10 +880,7 @@ const DefaultDashboard = ({ intl, match }) => {
           <Card className="" style={{ backgroundColor: "inherit" }}>
             <CardBody>
               <div>
-                <div
-                  className="mx-auto text-light mb-2"
-                  style={{ width: "75%" }}
-                >
+                <div className="mx-auto text-light mb-2">
                   <div className="p-2 bg-primary mb-3 p-2 d-flex justify-content-between">
                     <h2 className="p-0 m-0 font-weight-light pl-2 py-1">
                       Buckets Count

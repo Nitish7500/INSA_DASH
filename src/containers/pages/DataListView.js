@@ -350,11 +350,12 @@ const DataListView = ({
                     onClick={() => setStatusHistoryDetails(complaint)}
                   >
                     <Badge
+                    className="py-1"
                       color={complaint.statusColor}
                       pill
                       onClick={onSelectedStatus}
                     >
-                      {status}
+                      <span className="text-capitalize">{status[0]}</span><span className="text-lowercase">{status?.slice(1,)}</span>
                     </Badge>
                   </div>
                   <p className="mb-0 cardCell--350px cardCell">

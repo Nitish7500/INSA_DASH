@@ -58,25 +58,25 @@ const ListPageListing = ({
           <Row className='table-header'>
             <p className="mr-2 ml-1 cardCell--50px"></p>
             <p className="cardCell cardCell--250px th-column">
-              <span className="column-name">Policy Number</span>
+              <span className="column-name font-weight-bold">Policy Number</span>
               <div className="column-actions">
                 {/* <Button className='tbl-sorticon' onClick={() => changeOrderBy(policyNumber)}><FontAwesomeIcon icon={faSort} /></Button> */}
               </div>
             </p>
             <p className="cardCell th-column">
-              <span className="column-name">Name</span>
+              <span className="column-name font-weight-bold">Name</span>
               <div className="column-actions">
                 {/* <Button className='tbl-sorticon' onClick={() => changeOrderBy(userId.name)}><FontAwesomeIcon icon={faSort} /></Button> */}
               </div>
             </p>
-            <p className="cardCell cardCell--250px th-column">Email ID</p>
-            <p className="cardCell cardCell--150px th-column">Phone Number</p>
-            <p className="cardCell th-column">Status</p>
-            <p className="cardCell cardCell--350px th-column">Insurance Company</p>
-            <p className="cardCell th-column cardCell--200px">Complaint Type</p>
-            <p className="cardCell th-column">Policy Type</p>
-            <p className="cardCell th-column cardCell--150px">Stopped Cases</p>
-            <p className="cardCell th-column cardCell--150px">TAT Breach Days</p>
+            <p className="cardCell font-weight-bold cardCell--250px th-column">Email ID</p>
+            <p className="cardCell font-weight-bold cardCell--150px th-column">Phone Number</p>
+            <p className="cardCell font-weight-bold th-column">Status</p>
+            <p className="cardCell font-weight-bold cardCell--350px th-column">Insurance Company</p>
+            <p className="cardCell font-weight-bold th-column cardCell--200px">Complaint Type</p>
+            <p className="cardCell font-weight-bold th-column">Policy Type</p>
+            <p className="cardCell font-weight-bold th-column cardCell--150px">Stopped Cases</p>
+            <p className="cardCell font-weight-bold th-column cardCell--150px">TAT Breach Days</p>
           </Row>
 
           {((items.length == 0) 

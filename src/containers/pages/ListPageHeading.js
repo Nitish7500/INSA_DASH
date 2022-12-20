@@ -147,7 +147,7 @@ const ListPageHeading = ({
                     name="keyword"
                     id="search"
                     placeholder={messages['menu.search']}
-                    onChange={handleSearch}
+                    onInput={handleSearch}
                     className={'py-2'}
                   />
                 </div>
