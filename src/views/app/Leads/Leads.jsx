@@ -47,6 +47,7 @@ import EditLead from "./EditLead";
 import ReactPaginate from "react-paginate";
 import AssignToUser from "./Modal/AssignToUser";
 import { NotificationManager } from "components/common/react-notifications";
+import AssignToExpert from "./Modal/AssignToExpert";
 
 // import
 
@@ -74,6 +75,8 @@ function LeadSection() {
     assignTo: "",
     id: "",
   });
+
+  const [currentLeadDetail, setcurrentLeadDetail] = useState({});
 
   const [openAcceptLead, setopenAcceptLead] = useState(false);
   const [singleLeadData, setsingleLeadData] = useState({});
@@ -181,9 +184,9 @@ function LeadSection() {
         null,
         null,
         "filled"
-      )
+      );
     }
-  },[state.message, state.leadDataByStatus])
+  }, [state.message, state.leadDataByStatus]);
 
   useEffect(() => {
     dispatch({ type: "LEAD_ASSIGN_USER" });
@@ -241,17 +244,17 @@ function LeadSection() {
     setcurrentPage(event.selected);
   };
 
-  const [openOptions, setopenOptions] = useState([])
+  const [openOptions, setopenOptions] = useState([]);
 
   const handleShowOption = (item) => {
     if (openOptions.includes(item)) {
-      let temp = openOptions.filter(res => res !== item )
-      console.log(temp)
-      setopenOptions(temp)
-    }else{
-      setopenOptions([...openOptions,item])
+      let temp = openOptions.filter((res) => res !== item);
+      console.log(temp);
+      setopenOptions(temp);
+    } else {
+      setopenOptions([...openOptions, item]);
     }
-  }
+  };
 
   return editPage ? (
     <EditLead lead={currLead} seteditPage={seteditPage} getData={getData} />
@@ -569,7 +572,7 @@ function LeadSection() {
             <input
               onChange={handleSearch}
               name="keyword"
-              className="w-80 py-2 border border-dark"
+              className="w-80 py-2 border border-dark pl-3"
               type={"text"}
               id="searchKeyword"
               placeholder="Search Keyword"
@@ -628,7 +631,7 @@ function LeadSection() {
             Search By Email And Phone And Lead Id
           </label>
           <input
-            className="w-40 py-1"
+            className="w-40 py-1 pl-2 border-bold"
             id="leadSearchByMailInput"
             type={"text"}
             placeholder="Search By Email And Phone And Lead Id"
@@ -726,144 +729,166 @@ function LeadSection() {
             ) : null}
           </div>
         ) : null}
-
       </div>
 
       <div className="overflow-auto d-flex w-auto flex-column">
         <div className="d-flex ">
-
-        <div className="d-flex bg-primary px-3 py-3 w-auto">
-
-          <div className="" style={{width:"100px"}}>
-
-            <span className="font-weight-bold">S.No</span>
-          </div>
-          <div className="" style={{width:"150px"}}>
-
-            <span className="font-weight-bold">Action</span>
-          </div>
-          <div className="" style={{width:"200px"}}>
-
-            <span className="font-weight-bold">Lead Id</span>
-          </div>
-          <div className="" style={{width:"150px"}}>
-
-            <span className="font-weight-bold">OTP Varified</span>
-          </div>
-          <div className="" style={{width:"250px"}}>
-
-            <span className="font-weight-bold">Name</span>
-          </div>
-          <div className="" style={{width:"250px"}}>
-
-            <span className="font-weight-bold">Email Id</span>
-          </div>
-          <div className="" style={{width:"250px"}}>
-
-            <span className="font-weight-bold">Mobile</span>
-          </div>
-          <div className="" style={{width:"250px"}}>
-
-            <span className="font-weight-bold">Policy Type</span>
-          </div>
-          <div className="" style={{width:"250px"}}>
-
-<span className="font-weight-bold">Complaint Type</span>
-</div>
-          <div className="" style={{width:"250px"}}>
-
-            <span className="font-weight-bold">Assign To</span>
-          </div>
-          <div className="" style={{width:"250px"}}>
-
-            <span className="font-weight-bold">Expert To</span>
-          </div>
-          <div className="" style={{width:"250px"}}>
-
-            <span className="font-weight-bold">SRC | MED | CPN</span>
-          </div>
-          <div className="" style={{width:"250px"}}>
-
-            <span className="font-weight-bold">Lead Time</span>
+          <div className="d-flex bg-primary px-3 py-3 w-auto">
+            <div className="" style={{ width: "100px" }}>
+              <span className="font-weight-bold">S.No</span>
+            </div>
+            <div className="" style={{ width: "150px" }}>
+              <span className="font-weight-bold">Action</span>
+            </div>
+            <div className="" style={{ width: "200px" }}>
+              <span className="font-weight-bold">Lead Id</span>
+            </div>
+            <div className="" style={{ width: "150px" }}>
+              <span className="font-weight-bold">OTP Varified</span>
+            </div>
+            <div className="" style={{ width: "250px" }}>
+              <span className="font-weight-bold">Name</span>
+            </div>
+            <div className="" style={{ width: "250px" }}>
+              <span className="font-weight-bold">Email Id</span>
+            </div>
+            <div className="" style={{ width: "250px" }}>
+              <span className="font-weight-bold">Mobile</span>
+            </div>
+            <div className="" style={{ width: "250px" }}>
+              <span className="font-weight-bold">Policy Type</span>
+            </div>
+            <div className="" style={{ width: "250px" }}>
+              <span className="font-weight-bold">Complaint Type</span>
+            </div>
+            <div className="" style={{ width: "250px" }}>
+              <span className="font-weight-bold">Assign To</span>
+            </div>
+            <div className="" style={{ width: "250px" }}>
+              <span className="font-weight-bold">Expert To</span>
+            </div>
+            <div className="" style={{ width: "250px" }}>
+              <span className="font-weight-bold">SRC | MED | CPN</span>
+            </div>
+            <div className="" style={{ width: "250px" }}>
+              <span className="font-weight-bold">Lead Time</span>
+            </div>
           </div>
         </div>
-        </div>
-        
-        {state.leadDataByStatus?.list ? 
-                state.leadDataByStatus?.list?.map((res, i) => { return <>
-        {/* {
+
+        {state.leadDataByStatus?.list
+          ? state.leadDataByStatus?.list?.map((res, i) => {
+              return (
+                <>
+                  {/* {
           [1,2,3,4].map((res,i) => {
             return <> */}
-          <div className="d-flex">
-        <div className="d-flex bg-white shadow px-3 py-3 w-auto mt-2">
-          <div className="" style={{width:"100px"}}>
-            <span className="cardCell font-weight-bold th-column mx-0" style={{width:"100px"}}>{i + 1 + currentPage * itemsPerPage}</span>
-            </div>
-          <div className="" style={{width:"150px"}}>
-            <span className="cardCell font-weight-bold th-column m-0" style={{cursor:"pointer"}} onClick={() =>handleShowOption(`option${i}`)}>Action</span>
-            </div>
-            <div className="" style={{width:"200px"}}>
-            <span className="cardCell font-weight-bold th-column m-0">{res.leadId}</span>
-            </div>
+                  <div className="d-flex">
+                    <div className="d-flex bg-warning shadow px-3 py-3 w-auto mt-2">
+                      <div className="" style={{ width: "100px" }}>
+                        <span
+                          className="cardCell font-weight-bold th-column mx-0"
+                          style={{ width: "100px" }}
+                        >
+                          {i + 1 + currentPage * itemsPerPage}
+                        </span>
+                      </div>
+                      <div
+                        className=""
+                        style={{ width: "150px", marginTop: "-5px" }}
+                      >
+                        <span
+                          className="cardCell font-weight-bold th-column m-0"
+                          style={{ cursor: "pointer" }}
+                          onClick={() => handleShowOption(`option${i}`)}
+                        >
+                          <div
+                            class={
+                              openOptions.includes(`option${i}`)
+                                ? "dropup btn-group m-0 p-0"
+                                : ""
+                            }
+                          >
+                            <Button
+                              style={{ height: "20px" }}
+                              color="primary"
+                              className="m-0 p-0 dropdown-toggle-split dropdown-toggle btn table-expand"
+                            ></Button>
+                          </div>
+                        </span>
+                      </div>
+                      <div className="" style={{ width: "200px" }}>
+                        <span className="cardCell font-weight-bold th-column m-0">
+                          {res.leadId}
+                        </span>
+                      </div>
 
-          <div className="" style={{width:"150px"}}>
+                      <div className="" style={{ width: "150px" }}>
+                        <span className="cardCell m-0 font-weight-bold  th-column">
+                          {res.isPhoneVerified ? "YES" : "NO"}
+                        </span>
+                      </div>
 
-            <span className="cardCell m-0 font-weight-bold  th-column">
-                        {res.isPhoneVerified ? "YES" : "NO"}</span>
-          </div>
-          
-          <div className="" style={{width:"250px"}}>
+                      <div className="" style={{ width: "250px" }}>
+                        <p className="cardCell font-weight-bold th-column m-0">
+                          {res.name}
+                        </p>
+                      </div>
 
-            <p className="cardCell font-weight-bold th-column m-0">{res.name}</p>
-          </div>
-          
-          <div className="" style={{width:"250px"}}>
+                      <div className="" style={{ width: "250px" }}>
+                        <p className="cardCell font-weight-bold th-column m-0">
+                          {res.email}
+                        </p>
+                      </div>
 
-            <p className="cardCell font-weight-bold th-column m-0">{res.email}</p>
-          </div>
-          
-          <div className="" style={{width:"250px"}}>
+                      <div className="" style={{ width: "250px" }}>
+                        <p className="cardCell font-weight-bold th-column m-0">
+                          {res.phone}
+                        </p>
+                      </div>
 
-            <p className="cardCell font-weight-bold th-column m-0">{res.phone}</p>
-          </div>
-          
-          <div className="" style={{width:"250px"}}>
+                      <div className="" style={{ width: "250px" }}>
+                        <p className="cardCell font-weight-bold th-column m-0">
+                          {res.policyTypeId?.name}
+                        </p>
+                      </div>
 
-            <p className="cardCell font-weight-bold th-column m-0">{res.policyTypeId?.name}</p>
-          </div>
-          
-          <div className="" style={{width:"250px"}}>
+                      <div className="" style={{ width: "250px" }}>
+                        <p className="cardCell font-weight-bold th-column m-0">
+                          {res.complaintTypeId?.name}
+                        </p>
+                      </div>
 
-            <p className="cardCell font-weight-bold th-column m-0">{res.complaintTypeId?.name}</p>
-          </div>
-          
-          <div className="" style={{width:"250px"}}>
+                      <div className="" style={{ width: "250px" }}>
+                        <p className="cardCell font-weight-bold th-column m-0">
+                          {res.assign_to}
+                        </p>
+                      </div>
 
-            <p className="cardCell font-weight-bold th-column m-0">{res.assign_to}</p>
-          </div>
-          
-          <div className="" style={{width:"250px"}}>
+                      <div className="" style={{ width: "250px" }}>
+                        <p className="cardCell font-weight-bold th-column m-0">
+                          {res.assign_to_expert ? res.assign_to_expert : "--"}
+                        </p>
+                      </div>
+                      <div className="" style={{ width: "250px" }}>
+                        <p className="cardCell font-weight-bold th-column m-0">
+                          {res.src} || {res.med} || {res.cpn}
+                        </p>
+                      </div>
 
-            <p className="cardCell font-weight-bold th-column m-0">{res.assign_to_expert ? res.assign_to_expert : "--"}</p>
-          </div>
-          <div className="" style={{width:"250px"}}>
-
-            <p className="cardCell font-weight-bold th-column m-0">{res.src} || {res.med} || {res.cpn}</p>
-          </div>
-          
-          <div className="" style={{width:"250px"}}>
-
-            <p className="cardCell font-weight-bold th-column m-0">{moment
-                          .unix(res.createdAt)
-                          .format("DD MM YYYY : HH MM SS")}</p>
-          </div>
-        </div>
-        </div>
-          <div>
-
-          <Collapse isOpen={openOptions.includes(`option${i}`)}> 
-          <div className=" bg-light px-4 ">
-          <div className="pl-2 d-flex justify-content-between">
+                      <div className="" style={{ width: "250px" }}>
+                        <p className="cardCell font-weight-bold th-column m-0">
+                          {moment
+                            .unix(res.createdAt)
+                            .format("DD MM YYYY : HH MM SS")}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <Collapse isOpen={openOptions.includes(`option${i}`)}>
+                      <div className=" bg-light px-4 ">
+                        <div className="pl-2 d-flex justify-content-between">
                           <button
                             className="btn btn-inherit m-0 p-0 mr-2"
                             id="leadCallCustomer"
@@ -949,11 +974,7 @@ function LeadSection() {
                             id="leadAE"
                             onClick={() => {
                               setopenExpertAssign(true);
-                              setassignToExpert({
-                                ...assignToExpert,
-                                assignTo: res.expert_to,
-                                id: res._id,
-                              });
+                              setcurrentLeadDetail(res);
                             }}
                           >
                             <div className="position-relative py-3">
@@ -1536,37 +1557,37 @@ function LeadSection() {
                             </div>
                           </button>{" "}
                         </div>
-        </div>
-          </Collapse>
-          </div>
-            </>
-          }) : ""
-        }
+                      </div>
+                    </Collapse>
+                  </div>
+                </>
+              );
+            })
+          : ""}
       </div>
-      
+
       <div className="d-flex justify-content-center mt-4">
-            <ReactPaginate
-              breakLabel="..."
-              nextLabel="next >"
-              onPageChange={handlePageClick}
-              pageClassName="page-item"
-              pageLinkClassName="page-link"
-              previousClassName="page-item"
-              previousLinkClassName="page-link"
-              nextClassName="page-item"
-              nextLinkClassName="page-link"
-              breakClassName="page-item"
-              breakLinkClassName="page-link"
-              containerClassName="pagination"
-              activeClassName="active"
-              pageRangeDisplayed={5}
-              pageCount={pageCount}
-              previousLabel="< previous"
-              renderOnZeroPageCount={null}
-            />
-          </div>
-      
-      
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel="next >"
+          onPageChange={handlePageClick}
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          previousClassName="page-item"
+          previousLinkClassName="page-link"
+          nextClassName="page-item"
+          nextLinkClassName="page-link"
+          breakClassName="page-item"
+          breakLinkClassName="page-link"
+          containerClassName="pagination"
+          activeClassName="active"
+          pageRangeDisplayed={5}
+          pageCount={pageCount}
+          previousLabel="< previous"
+          renderOnZeroPageCount={null}
+        />
+      </div>
+
       {/* --------------------------> Modal */}
 
       {/* -------------------------------------> Assign to user */}
@@ -1639,77 +1660,13 @@ function LeadSection() {
         </ModalBody>
       </Modal>
       {/*-------------------------------------> Assign To Exprt */}
-      <Modal
-        id="leadAssignToExpertModal"
+      <AssignToExpert
         isOpen={openExpertAssign}
-        toggle={() => {
+        onClose={() => {
           setopenExpertAssign(false);
         }}
-        size=""
-      >
-        <ModalHeader
-          className="py-3 text-primary"
-          toggle={() => {
-            setopenExpertAssign(false);
-          }}
-        >
-          Lead Assign to Expert
-        </ModalHeader>
-        <ModalBody>
-          <span className="h6">Policy Number</span>
-          <div className="container">
-            <div className="row">
-              <select
-                id="assignExpertModal"
-                value={assignToExpert.assignTo}
-                className="w-80 mt-3 py-2"
-                onChange={(e) =>
-                  setassignToExpert({
-                    ...assignToExpert,
-                    assignTo: e.target.value,
-                  })
-                }
-              >
-                <option disabled>Select User</option>
-                {state.assigUser?.map((res) => {
-                  return <option value={res.user_id}>{res.name}</option>;
-                })}
-              </select>
-            </div>
-            <div className="mt-3 d-flex justify-content-center">
-              <button
-                id="closeAssignExpertModal"
-                className="btn btn-danger rounded mr-2"
-                onClick={() => setopenExpertAssign(false)}
-              >
-                Close
-              </button>
-              <button
-                id="saveAssignExpertBtn"
-                className="btn btn-primary rounded ml-2"
-                onClick={() => {
-                  setopenExpertAssign(false);
-                  dispatch({
-                    type: "LEAD_ASSIGN_EXPERT_SAVE",
-                    state: assignToExpert,
-                  });
-                  dispatch({
-                    type: "LEAD_DATA_WITH_STATUS",
-                    state: {
-                      status: "PENDING",
-                      pageIndex: 0,
-                      pageSize: 50,
-                      keyword: "",
-                    },
-                  });
-                }}
-              >
-                Save
-              </button>
-            </div>
-          </div>
-        </ModalBody>
-      </Modal>
+        details={currentLeadDetail}
+      />
 
       {/* ---------------> Confirm Accept Lead */}
       <Modal
