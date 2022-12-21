@@ -75,7 +75,7 @@ function AssignToExpert({ isOpen, onClose, details }) {
               <button
                 id="closeAssignExpertModal"
                 className="btn btn-danger rounded mr-2"
-                onClick={() => setopenExpertAssign(false)}
+                onClick={onClose}
               >
                 Close
               </button>
