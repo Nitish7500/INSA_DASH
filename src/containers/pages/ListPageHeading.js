@@ -74,7 +74,7 @@ const ListPageHeading = ({
   const downloadCustReport = async () => {
     try {
       const {message, success} = await downloadCustomerReport();
-      setItems(message, success);
+      setItems(message, success); 
       console.log('items', items)
       if (success === true) {
         NotificationManager.success(
