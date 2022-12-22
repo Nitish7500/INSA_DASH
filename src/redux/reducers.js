@@ -8,6 +8,7 @@ import leadReducer from "./Lead/Reducer";
 import customer from "./Customer/Reducer";
 import user from "./Users/Reducer"
 import complaint from "./Complaint/Reducer";
+import report from "./Report/Reducer"
 
 const reducers = combineReducers({
   menu,
@@ -18,7 +19,8 @@ const reducers = combineReducers({
   leadReducer,
   customer,
   user,
-  complaint
+  complaint,
+  report,
 });
 
 export default reducers;
