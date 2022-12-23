@@ -104,7 +104,7 @@ function Communication() {
         <div>
           <table className="table">
             <thead>
-              <tr>
+              <tr key={"heading"}>
                 <th>Communication Date</th>
                 <th>Communication By</th>
                 <th>Description</th>

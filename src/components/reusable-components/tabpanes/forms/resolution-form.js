@@ -146,7 +146,7 @@ export default function ResolutionForm({
                 onChange={handleFormChange}
                 value={details.requirementReceived}
               >
-                <option key={"Select"} value="" selected>
+                <option key={"Select"} value="">
                   Select Type
                 </option>
                 <option key={"yes"} value="Yes">Yes</option>

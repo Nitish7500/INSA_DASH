@@ -116,7 +116,7 @@ function ReminderTrackCom({ isOpen, onClose, details }) {
           <div className="table mt-5 w-90 ml-auto mr-auto">
             <table className="table table-bordered table-responsive-sm">
               <thead>
-                <tr className="bg-dark text-white">
+                <tr className="bg-dark text-white" key={"firstKey"}>
                   <th>Updated By</th>
                   <th>Reminder Sent Date</th>
                 </tr>
@@ -133,7 +133,7 @@ function ReminderTrackCom({ isOpen, onClose, details }) {
                     })
                   : ""}
                 {!data.length && (
-                  <tr className="text-center">
+                  <tr key={"noData"} className="text-center">
                     <td colSpan={2}>
                       <h4>No Data</h4>
                     </td>

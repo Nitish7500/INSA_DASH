@@ -480,7 +480,7 @@ function Users() {
                   value={gender}
                   name="gender"
                 >
-                  <option key={"1"} value={""} selected disabled>
+                  <option key={"1"} value={""}>
                     {" "}
                     Select Gender
                   </option>
@@ -525,7 +525,7 @@ function Users() {
                   value={group}
                   name="group"
                 >
-                  <option key={"select"} value={""} selected>
+                  <option key={"select"} value={""}>
                     {" "}
                     Select User Type
                   </option>
@@ -552,7 +552,7 @@ function Users() {
                   value={status}
                   name="status"
                 >
-                  <option key={"user"} value={""} selected disabled>
+                  <option key={"user"} value={""}>
                     {" "}
                     Select User Status
                   </option>
@@ -579,7 +579,7 @@ function Users() {
                   value={expert}
                   name="expert"
                 >
-                  <option key={"expert"} value={""} selected>
+                  <option key={"expert"} value={""}>
                     {" "}
                     Select Exprt Type
                   </option>
@@ -606,7 +606,7 @@ function Users() {
                   value={expert_policy_type}
                   name="expert_policy_type"
                 >
-                  <option key={"insurance"} value={""} selected disabled>
+                  <option key={"insurance"} value={""}>
                     {" "}
                     Select Insurance Type
                   </option>
@@ -639,7 +639,7 @@ function Users() {
                   value={expertType}
                   name="expertType"
                 >
-                  <option key={"Option"} value="" selected disabled>
+                  <option key={"Option"} value="">
                     Select Option
                   </option>
                   <option key={"CB"} value="Contract Based">
@@ -768,7 +768,7 @@ function Users() {
                   value={legalExpert}
                   name="legalExpert"
                 >
-                  <option key={"Legal"} value={""} selected>
+                  <option key={"Legal"} value={""}>
                     {" "}
                     Select Legal Expert
                   </option>
@@ -795,7 +795,7 @@ function Users() {
                   value={legalExecutive?.toString()}
                   name="legalExecutive"
                 >
-                  <option key={"legalExe"} value={""} selected>
+                  <option key={"legalExe"} value={""}>
                     {" "}
                     Select Legal Executive
                   </option>
@@ -845,7 +845,7 @@ function Users() {
                     value={legalSubExecutive?.toString()}
                     name="legalSubExecutive"
                   >
-                    <option key={"sib-exe"} value={""} selected>
+                    <option key={"sib-exe"} value={""}>
                       {" "}
                       Select Legal Sub-Executive
                     </option>
@@ -903,7 +903,7 @@ function Users() {
                   value={userOperations}
                   name="userOperations"
                 >
-                  <option key={"userType"} value={""} selected>
+                  <option key={"userType"} value={""}>
                     {" "}
                     Select User Type
                   </option>
@@ -945,6 +945,9 @@ function Users() {
                       Lead
                     </label>
                     <input
+                      onChange={() => {
+                        null;
+                      }}
                       onClick={handleChange}
                       type={"checkbox"}
                       className="form-control border"
@@ -962,6 +965,9 @@ function Users() {
                       Agent Type
                     </label>
                     <input
+                      onChange={() => {
+                        null;
+                      }}
                       onClick={handleChange}
                       type={"checkbox"}
                       className="form-control border"
@@ -979,6 +985,9 @@ function Users() {
                       Policy Cases
                     </label>
                     <input
+                      onChange={() => {
+                        null;
+                      }}
                       onClick={handleChange}
                       type={"checkbox"}
                       className="form-control border"
@@ -996,6 +1005,9 @@ function Users() {
                       Filter Cases
                     </label>
                     <input
+                      onChange={() => {
+                        null;
+                      }}
                       onClick={handleChange}
                       type={"checkbox"}
                       className="form-control border"
@@ -1013,6 +1025,9 @@ function Users() {
                       Partner Cases
                     </label>
                     <input
+                      onChange={() => {
+                        null;
+                      }}
                       onClick={handleChange}
                       type={"checkbox"}
                       className="form-control border"
@@ -1030,6 +1045,9 @@ function Users() {
                       Third Party
                     </label>
                     <input
+                      onChange={() => {
+                        null;
+                      }}
                       onClick={handleChange}
                       type={"checkbox"}
                       className="form-control border"
@@ -1058,6 +1076,9 @@ function Users() {
                       Complaint
                     </label>
                     <input
+                      onChange={() => {
+                        null;
+                      }}
                       onClick={handleChange}
                       type={"checkbox"}
                       className="form-control border"
@@ -1075,6 +1096,9 @@ function Users() {
                       Agent Cases
                     </label>
                     <input
+                      onChange={() => {
+                        null;
+                      }}
                       onClick={handleChange}
                       type={"checkbox"}
                       className="form-control border"
@@ -1092,6 +1116,9 @@ function Users() {
                       Partner Cases{" "}
                     </label>
                     <input
+                      onChange={() => {
+                        null;
+                      }}
                       onClick={handleChange}
                       type={"checkbox"}
                       className="form-control border"

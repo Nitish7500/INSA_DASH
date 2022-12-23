@@ -113,17 +113,17 @@ export default function AddComplaint({isOpen, onClose, leadId, userId, details }
                 <div className="text-center mt-4 mb-3">
                     <Table bordered striped>
                         <thead>
-                            <tr>
+                            <tr key={"firstKey"}>
                                 <th>Username</th>
                                 <th>ID</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr key={"secondKey"}>
                                 <th scope="row">1</th>
                                 <td>{leadId}</td>
                             </tr>
-                            <tr>
+                            <tr key={"thirdKey"}>
                                 <th scope="row">1</th>
                                 <td>{userId}</td>
                             </tr>

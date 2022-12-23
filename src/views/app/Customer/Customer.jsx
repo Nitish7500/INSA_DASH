@@ -143,7 +143,7 @@ function Customer() {
                       });
                     }}
                   >
-                    <option key={"select"} value={""} selected disabled>
+                    <option key={"select"} value={""}>
                       Select Sort Order
                     </option>
                     <option key={"ascFirst"} value={"firstName:ASC"}>ASC First Name</option>

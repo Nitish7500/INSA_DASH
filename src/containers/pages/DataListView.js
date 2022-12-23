@@ -656,7 +656,7 @@ const DataListView = ({
                     onChange={handlePayFeeChange}
                     value={payFeeObj.pay_via}
                   >
-                    <option key={"select"} value={""} disabled>
+                    <option key={"select"} value={""}>
                       Select Method
                     </option>
                     <option key={"cash"} value={"Cash"}>Cash</option>
@@ -810,7 +810,7 @@ const DataListView = ({
                     value={finalPayObj.final_payment_status}
                     onChange={finalPayFunc}
                   >
-                    <option key={"select"} value={""} disabled>
+                    <option key={"select"} value={""} >
                       Select Final Payment Status
                     </option>
                     <option key={"paid"} value={"PAID"}>PAID</option>
@@ -927,7 +927,7 @@ const DataListView = ({
           <div>
             <table className="table table-bordered mt-3">
               <thead>
-                <tr>
+                <tr key={"heading"}>
                   <th>Status</th>
                   <th>Date</th>
                 </tr>
@@ -1025,7 +1025,7 @@ const DataListView = ({
               <div className="table-responsive mt-3 ">
                 <table className="table table-bordered">
                   <thead>
-                    <tr className="bg-dark text-light">
+                    <tr key={"heading"} className="bg-dark text-light">
                       <th>S.No</th>
                       <th>Call Type </th>
                       <th>Call Start Time</th>
@@ -1272,7 +1272,7 @@ const DataListView = ({
                   {updateInfo.sudo_user ? (
                     <table className="table table-responsive">
                       <thead>
-                        <tr>
+                        <tr key={"heading"}>
                           <th>Policy Number</th>
                           <th>Status</th>
                           <th>Company Name</th>
