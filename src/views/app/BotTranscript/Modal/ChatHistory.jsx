@@ -24,7 +24,7 @@ function ChatHistory({ isOpen, onClose, data }) {
       <Modal isOpen={isOpen} toggle={onClose} size="lg">
         <ModalHeader toggle={onClose}>
           {" "}
-          <sapn className="h5"> Chat Transcript</sapn>
+          <span className="h5"> Chat Transcript</span>
         </ModalHeader>
         <ModalBody>
           <div className="container">
@@ -48,7 +48,7 @@ function ChatHistory({ isOpen, onClose, data }) {
             {data.length
               ? data.map((res, i) => {
                   return (
-                    <>
+                    <div key={i+100}>
                       <div className="row">
                         <div className="col-sm-3">
                           <span className="display-5">{res.ticket}</span>
@@ -74,7 +74,7 @@ function ChatHistory({ isOpen, onClose, data }) {
                         </div>
                       </div>
                       <hr />
-                    </>
+                    </div>
                   );
                 })
               : "No History Data"}

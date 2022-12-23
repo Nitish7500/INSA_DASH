@@ -256,7 +256,7 @@ const TopNav = ({
                 <img alt="Profile" src="/assets/img/profiles/user.png" />
               </span>
             </DropdownToggle>
-            <DropdownMenu className="mt-3" left>
+            <DropdownMenu className="mt-3" left="true">
               <DropdownItem>{loggedInUser ? loggedInUser.email : ""}</DropdownItem>
               <DropdownItem>Account</DropdownItem>
               <DropdownItem divider />

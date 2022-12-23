@@ -59,15 +59,15 @@ const ListPageListing = ({
             <p className="mr-2 ml-1 cardCell--50px"></p>
             <p className="cardCell cardCell--250px th-column">
               <span className="column-name font-weight-bold">Policy Number</span>
-              <div className="column-actions">
+              {/* <div className="column-actions"> */}
                 {/* <Button className='tbl-sorticon' onClick={() => changeOrderBy(policyNumber)}><FontAwesomeIcon icon={faSort} /></Button> */}
-              </div>
+              {/* </div> */}
             </p>
             <p className="cardCell th-column">
               <span className="column-name font-weight-bold">Name</span>
-              <div className="column-actions">
+              {/* <div className="column-actions"> */}
                 {/* <Button className='tbl-sorticon' onClick={() => changeOrderBy(userId.name)}><FontAwesomeIcon icon={faSort} /></Button> */}
-              </div>
+              {/* </div> */}
             </p>
             <p className="cardCell font-weight-bold cardCell--250px th-column">Email ID</p>
             <p className="cardCell font-weight-bold cardCell--150px th-column">Phone Number</p>

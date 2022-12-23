@@ -90,10 +90,7 @@ export default function MailingSectionForm({
     draftSharedDate,
     reminderSentDate,
   } = details;
-  console.log(
-    "===============================>",
-    moment(complaint_escalation_date).toISOString()
-  );
+
   const complaintDate =
     complaint_date != undefined ? formatDate(complaint_date) : null;
   const firstResponseDateFromCompany =
@@ -125,7 +122,6 @@ export default function MailingSectionForm({
     <Card>
       <CardBody>
         <h2 className="mb-4">{heading}</h2>
-        {console.log(details)}
         <div className="container mb-5 pb-5">
           <div className="row">
             <div className="col-sm-3">
@@ -135,7 +131,6 @@ export default function MailingSectionForm({
                 className="form-control"
                 value={details.service_id}
                 name="service_id"
-                formControlName="service_id"
                 onChange={handleFormChange}
               >
                 <option key={"select"} value={""}> Select</option>
@@ -164,7 +159,6 @@ export default function MailingSectionForm({
                   className="form-control"
                   value={details.selectDate}
                   name="selectDate"
-                  formControlName="sample"
                 >
                   <option key={"SelectType"} value={""}>Select Type</option>
                   <option key={"ComDate"} value="compDate">Complaint Date</option>
@@ -197,7 +191,7 @@ export default function MailingSectionForm({
                   id="mailingResDtCom"
                   type="date"
                   className="form-control"
-                  value="caseone.response_date_company"
+                  value={details.response_date_company}
                   name="response_date_company"
                   onChange={handleFormChange}
                   placeholder="Response Date..."
@@ -290,7 +284,7 @@ export default function MailingSectionForm({
                   name="draftSharedBool"
                   className="form-control"
                   onChange={handleFormChange}
-                  value={details?.draftSharedBool}
+                  checked={details?.draftSharedBool}
                 />
               </div>
             </div>
@@ -424,8 +418,7 @@ export default function MailingSectionForm({
                 type="checkbox"
                 name="escalationSharedBool"
                 className="form-control"
-                formControlName="escalationSharedBool"
-                value={details.escalationSharedBool}
+                checked={details.escalationSharedBool}
                 onChange={handleFormChange}
               />
             </div>

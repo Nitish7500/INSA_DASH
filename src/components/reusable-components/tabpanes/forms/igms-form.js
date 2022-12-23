@@ -1,12 +1,8 @@
 //igms section nested form
 
-import { Colxx } from 'components/common/CustomBootstrap'
-import { FormikCheckbox, FormikCustomCheckboxGroup, FormikCustomRadioGroup, FormikDatePicker } from 'containers/form-validations/FormikFields'
-import { Field, Formik } from 'formik'
 import * as Yup from 'yup';
 import React, { useState } from 'react'
 import { Button, Card, CardBody, CustomInput, Form, FormGroup, Input, Label, Modal, ModalBody, Row } from 'reactstrap'
-import { formatDate } from 'helpers/CommonHelper';
 import moment from 'moment';
 
 export default function IGMSForm ({ heading, details, complaintId, handleFormChange }) {
@@ -47,7 +43,6 @@ export default function IGMSForm ({ heading, details, complaintId, handleFormCha
                         </div>
                         <div className='col-sm-3'>
                             <label>IGMS Date</label>
-                            {console.log(details.IGMS_date)}
                             <input id='igmsData' className='form-control' type={"date"} name="IGMS_date" value={details.IGMS_date ? moment(details.IGMS_date).format("YYYY-MM-DD") : ""} onChange={handleFormChange} />
                         </div>
                         <div className='col-sm-3'>

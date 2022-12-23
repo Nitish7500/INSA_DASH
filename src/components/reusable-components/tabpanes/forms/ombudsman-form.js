@@ -63,7 +63,6 @@ export default function OmbudsmanForm({
       return x;
     });
     temp = temp.slice(0, comCouCount.length);
-    console.log(temp);
     setcomCurNumArr(temp);
   }, [comCurNumForm, comCouCount]);
 
@@ -72,7 +71,6 @@ export default function OmbudsmanForm({
       return x;
     });
     temp = temp.slice(0, comCurDate.length);
-    console.log(temp);
     setcomCurDateArr(temp);
   }, [comCurDate]);
 
@@ -172,6 +170,7 @@ export default function OmbudsmanForm({
                   {comCouCount?.map((res, i) => {
                     return (
                       <input
+                      key={i+199}
                         id={`OmbFrmComCurNoBtn${i}`}
                         className="form-control"
                         name={`courierNumberDocArr${i}`}
@@ -220,7 +219,6 @@ export default function OmbudsmanForm({
                       className="form-control"
                       value={details.oc_number}
                       name="oc_number"
-                      formControlName="oc_number"
                     />
                   </div>
                 </div>
@@ -235,6 +233,7 @@ export default function OmbudsmanForm({
                   {comCurDate?.map((res, i) => {
                     return (
                       <input
+                      key={i+1000}
                         id="OmbFrmCompCurDt"
                         className="form-control"
                         type={"date"}
@@ -327,7 +326,6 @@ export default function OmbudsmanForm({
                 value={details.courier_date}
                 name="courier_date"
                 onChange={handleFormChange}
-                formControlName="courier_date"
                 disabled
               />
             </div>
@@ -363,7 +361,6 @@ export default function OmbudsmanForm({
                 id="OmbFrmObmLoc"
                 type="text"
                 className="form-control"
-                formControlName="stateName"
                 value={details.stateName}
               >
                 {ombudsmanLocation.map((item) => (

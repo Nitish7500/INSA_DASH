@@ -23,7 +23,6 @@ function EditLead({ lead, seteditPage, getData }) {
 
   const dispatch = useDispatch();
   const state = useSelector((state) => state.leadReducer);
-  console.log(state, lead);
 
   useEffect(() => {
     dispatch({

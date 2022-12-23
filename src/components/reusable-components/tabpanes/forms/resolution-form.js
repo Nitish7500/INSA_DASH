@@ -292,7 +292,6 @@ export default function ResolutionForm({
             </div>
             <div className="col-sm-3">
               <label>Resolution Proof Download</label> <br />
-              <a>
                 <a
                   id="resolutionDwn"
                   href={`${awsUrl}upload/IGMS_Award_document/${details.userId?._id}}`}
@@ -302,7 +301,6 @@ export default function ResolutionForm({
                 >
                   <FontAwesomeIcon icon={faDownload} />
                 </a>
-              </a>
             </div>
           </div>
         </div>

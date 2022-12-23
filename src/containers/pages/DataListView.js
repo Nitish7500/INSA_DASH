@@ -100,14 +100,14 @@ const DataListView = ({
     if (name === "finalUserDetail") {
       let temp = e?.map((x) => x.value);
       setfinalPayObj({ ...finalPayObj, finalPaymentList: temp });
-      console.log(e);
+      // console.log(e);
     } else {
       setfinalPayObj({ ...finalPayObj, [e.target.name]: e.target.value });
     }
   };
 
   const handleSavePayment = () => {
-    console.log(payFeeObj);
+    // console.log(payFeeObj);
     dispatch({ type: "COMPLAINT_FEE_OPERATION", state: { ...payFeeObj } });
   };
 
@@ -123,7 +123,7 @@ const DataListView = ({
       alert("Please Select User !");
       return;
     }
-    console.log({ ...finalPayObj });
+    // console.log({ ...finalPayObj });
     dispatch({ type: "COMPLAINT_FINAL_PAYMENT", state: { ...finalPayObj } });
   };
 
@@ -1062,7 +1062,6 @@ const DataListView = ({
               <span className="h6">{complaint._id}</span>
             </div>
             <div className="mt-3">
-              {console.log(state.leadData[0])}
               <span className="font-weight-bold h6">
                 DOCUMENT UPLOAD BY USER :{" "}
               </span>

@@ -60,7 +60,7 @@ const DefaultDashboard = ({ intl, match }) => {
 
   const data = useSelector((state) => state.bucket);
   const dispatch = useDispatch();
-  console.log(data);
+  // console.log(data);
   const leadCollapse = (e) => {
     if (e == collapse) {
       setCollapse("");
@@ -269,7 +269,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 setOmbObj({ ...ombObj, [e.target.name]: e.target.value });
               }}
             >
-              <option key={"select"} selected value={""}>
+              <option key={"select"} value={""}>
                 Select Location
               </option>
               <option key={"all"} value={"All"}>
@@ -1048,7 +1048,7 @@ const DefaultDashboard = ({ intl, match }) => {
                       return <DashboardCard name={res[0]} value={res[1]} />;
                     })
                   ) : (
-                    <h2 style={{ margin: "auto" }}>No Data</h2>
+                    <tr key={"noData000"} className="text-center" style={{ margin: "auto" }}>No Data</tr>
                   )}
                 </div>
               </div>
@@ -1332,7 +1332,7 @@ const DefaultDashboard = ({ intl, match }) => {
                       </div>
                     </>
                   ) : (
-                    <h2 style={{ margin: "auto" }}>No Data</h2>
+                    <h4 key={"noData999"} style={{ margin: "auto" }} className="text-center">No Data</h4>
                   )}
                 </div>
               </div>
@@ -1391,7 +1391,7 @@ const DefaultDashboard = ({ intl, match }) => {
                           );
                         })
                       ) : (
-                        <tr key={"noData"}>No Data</tr>
+                        <tr className="text-center" key={"noData"}>No Data</tr>
                       )}
                     </tbody>
                   </table>
@@ -3144,7 +3144,7 @@ const DefaultDashboard = ({ intl, match }) => {
                           );
                         })
                       ) : (
-                        <tr className="text-center">No Data</tr>
+                        <tr key={"noData88"} className="text-center">No Data</tr>
                       )}
                     </tbody>
                   </table>

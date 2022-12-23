@@ -106,10 +106,8 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
   let leadId = lead ? lead._id : "";
   let userId = user ? user._id : "";
 
-  // console.log(details);
 
   let date = new Date(parseInt(user?.dob?.substr(6)));
-  // console.log(date);
 
   //getting all states (ombudsman state locations and districts)
   useEffect(() => {
@@ -121,7 +119,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
         setdistricts(dis.district);
         setStates(data);
       } catch (error) {
-        console.log("States", error);
+        // console.log("States", error);
       }
       setIsLoaded(true);
     };
@@ -133,7 +131,6 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
         const { data } = await getPolicyTypes();
         setPolicyTypes(data);
       } catch (error) {
-        console.log("Policy Types ", error);
       }
       setIsLoaded(true);
     };
@@ -289,7 +286,6 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
 
   const getLeadData = async () => {
     try {
-      console.log(details.leadId);
       const { data } = await fetchLead(details.leadId?._id);
       // setInsuranceCompanies(data);
       // console.log(insuranceCompanies);
@@ -571,7 +567,6 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
           <div className="row mt-4">
             <div className="col-sm-3">
               <label>DOB</label>
-              {console.log(moment.unix(details.dob).format("YYYY-MM-DD"),moment(details.dob).format("YYYY-MM-DD"))}
               <input
                 id="compDetailsDob"
                 className="form-control"
@@ -650,6 +645,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 id="compDetailsNominee"
                 name="nominee"
                 value={details.nominee}
+                onChange={handleFormChange}
               />
             </div>
             <div className="col-sm-3">
@@ -821,6 +817,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                   type="text"
                   name="userName"
                   className="form-control"
+                  onChange={handleFormChange}
                   value={details.assign_to ? details.assign_to : "-"}
                   disabled
                 />
@@ -834,6 +831,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                   type="text"
                   name="userName"
                   className="form-control"
+                  onChange={handleFormChange}
                   value="{{ caseone.assign_to_expert ? caseone.assign_to_expert : '--' }}"
                   disabled
                 />
@@ -849,6 +847,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                   type="text"
                   name="userName"
                   className="form-control"
+                  onChange={handleFormChange}
                   value={
                     details.assignToCompanyIGMS
                       ? details.assignToCompanyIGMS
@@ -866,6 +865,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                   type="text"
                   name="userName"
                   className="form-control"
+                  onChange={handleFormChange}
                   value={
                     details.assignToOmbudsman ? details.assignToOmbudsman : "--"
                   }
@@ -881,6 +881,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                   type="text"
                   name="userName"
                   className="form-control"
+                  onChange={handleFormChange}
                   value={
                     details.assignedLegalExecutive
                       ? details.assignedLegalExecutive
@@ -898,6 +899,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                   type="text"
                   name="userName"
                   className="form-control"
+                  onChange={handleFormChange}
                   value={
                     details.assignedLegalSubExecutive
                       ? details.assignedLegalSubExecutive
@@ -915,6 +917,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                   type="text"
                   name="userId"
                   className="form-control"
+                  onChange={handleFormChange}
                   value={details.leadId ? details.leadId.leadId : "--"}
                   disabled
                 />
@@ -928,6 +931,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                   type="text"
                   name="currentStatus"
                   className="form-control"
+                  onChange={handleFormChange}
                   value={details.status ? details.status : "--"}
                   disabled
                 />
@@ -941,6 +945,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 id="compDetailsDoorNo"
                 className="form-control"
                 name="DoorNo/Bldg/Name/Floor"
+                onChange={handleFormChange}
                 value={
                   details.wholeAddress["DoorNo/Bldg/Name/Floor"]
                     ? details.wholeAddress["DoorNo/Bldg/Name/Floor"]
@@ -954,6 +959,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 id="compDetailsStreet"
                 className="form-control"
                 name="DoorNo/Bldg/Name/Floor"
+                onChange={handleFormChange}
                 value={
                   details.wholeAddress["Street/Area"]
                     ? details.wholeAddress["Street/Area"]
@@ -967,6 +973,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 id="compDetailsCity"
                 className="form-control"
                 name="DoorNo/Bldg/Name/Floor"
+                onChange={handleFormChange}
                 value={
                   details.wholeAddress["City/Town/Panchayath/Village"]
                     ? details.wholeAddress["City/Town/Panchayath/Village"]
@@ -980,6 +987,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 id="compDetailsTaluk"
                 className="form-control"
                 name="DoorNo/Bldg/Name/Floor"
+                onChange={handleFormChange}
                 value={
                   details.wholeAddress["Taluk/Tehsil"]
                     ? details.wholeAddress["Taluk/Tehsil"]
@@ -995,6 +1003,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 id="compDetailsGenerated"
                 className="form-control"
                 name="DoorNo/Bldg/Name/Floor"
+                onChange={handleFormChange}
                 value={
                   details.wholeAddress["address"]
                     ? details.wholeAddress["address"]
@@ -1011,7 +1020,6 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                   type="checkbox"
                   name="covidCheck"
                   className="form-control"
-                  formControlName="covidCheck"
                   onChange={handleFormChange}
                 />
               </div>
@@ -1025,7 +1033,6 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                   type="checkbox"
                   name="asAServiceCheck"
                   className="form-control"
-                  formControlName="asAServiceCheck"
                   onChange={handleFormChange}
                 />
               </div>
@@ -1036,6 +1043,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 id="compDetailsIntLeg"
                 type="text"
                 className="form-control"
+                onChange={handleFormChange}
                 value={
                   details.assigned_internal_legal_executive
                     ? details.assigned_internal_legal_executive
