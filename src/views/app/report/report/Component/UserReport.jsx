@@ -18,7 +18,7 @@ import RegisteredLead from "./registeredLead";
 import MonthlyResB2c from "./monthlyResB2c";
 import OmbRejectCases from "./ombRejectCases";
 import TatReport from "./tatReport";
-import BotREport from "./botREport";
+import BotREport from "./botReport";
 
 function UserReport() {
   const [sections, setsections] = useState([]);

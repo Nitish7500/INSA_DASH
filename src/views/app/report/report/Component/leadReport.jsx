@@ -85,7 +85,6 @@ function LeadReport({ handleSection, sections, state }) {
       document.getElementById("executiveLeadDownload")?.click();
       setleadCountForm({ ...leadCountForm, downloadLeadRep: false });
     }
-    console.log("Clicked");
   }, [state.leadRepData]);
 
   return (
@@ -250,28 +249,60 @@ function LeadReport({ handleSection, sections, state }) {
                     name="leadStatus"
                     onChange={handleCountChange}
                   >
-                    <option value={""}>Select Status</option>
-                    <option value="PENDING">PENDING</option>
-                    <option value="ACCEPTED">ACCEPTED</option>
-                    <option value="REJECTED">REJECTED</option>
-                    <option value="REPEATED">REPEATED</option>
-                    <option value="OPEN">OPEN</option>
-                    <option value="WRONG">WRONG NUMBER</option>
-                    <option value="QUERY">ONLY QUERY</option>
-                    <option value="NOINSURANCE">NO INSURANCE QUERY</option>
-                    <option value="NONCONTACTABLE">NON CONTACTABLE</option>
-                    <option value="DOCUMENT_PENDING">DOCUMENT PENDING</option>
-                    <option value="FOLLOWUP">FOLLOW UP</option>
-                    <option value="REGISTERED">REGISTERED LEAD</option>
-                    <option value="EXPERT">EXPERT LEAD</option>
-                    <option value="THIRD_PARTY_ACCEPTED">
+                    <option key={"null"} value={""}>
+                      Select Status
+                    </option>
+                    <option key={"2"} value="PENDING">
+                      PENDING
+                    </option>
+                    <option key={"3"} value="ACCEPTED">
+                      ACCEPTED
+                    </option>
+                    <option key={"4"} value="REJECTED">
+                      REJECTED
+                    </option>
+                    <option key={"5"} value="REPEATED">
+                      REPEATED
+                    </option>
+                    <option key={"6"} value="OPEN">
+                      OPEN
+                    </option>
+                    <option key={"7"} value="WRONG">
+                      WRONG NUMBER
+                    </option>
+                    <option key={"8"} value="QUERY">
+                      ONLY QUERY
+                    </option>
+                    <option key={"9"} value="NOINSURANCE">
+                      NO INSURANCE QUERY
+                    </option>
+                    <option key={"10"} value="NONCONTACTABLE">
+                      NON CONTACTABLE
+                    </option>
+                    <option key={"11"} value="DOCUMENT_PENDING">
+                      DOCUMENT PENDING
+                    </option>
+                    <option key={"12"} value="FOLLOWUP">
+                      FOLLOW UP
+                    </option>
+                    <option key={"13"} value="REGISTERED">
+                      REGISTERED LEAD
+                    </option>
+                    <option key={"14"} value="EXPERT">
+                      EXPERT LEAD
+                    </option>
+                    <option key={"15"} value="THIRD_PARTY_ACCEPTED">
                       THIRD PARTY ACCEPTED LEAD
                     </option>
-                    <option value="CUSTOMER_NOT_RESPONDING">
+                    <option key={"16"} value="CUSTOMER_NOT_RESPONDING">
                       CUSTOMER NOT RESPONDING LEAD
                     </option>
-                    <option value="AUTOFOLLOWUP">AUTO FOLLOWUP LEAD</option>
-                    <option value="ALL">ALL LEAD</option>
+                    <option key={"17"} value="AUTOFOLLOWUP">
+                      AUTO FOLLOWUP LEAD
+                    </option>
+                    <option key={"18"} value="ALL">
+                      ALL LEAD
+                    </option>
                   </select>
                 </div>
                 <div className="col-sm-3">
@@ -282,10 +313,16 @@ function LeadReport({ handleSection, sections, state }) {
                     name="leadUser_id"
                     onChange={handleCountChange}
                   >
-                    <option value={""}>Select User</option>
+                    <option key={"user"} value={""}>
+                      Select User
+                    </option>
                     {state.allUsers?.length &&
                       state.allUsers?.map((res) => {
-                        return <option value={res.user_id}>{res.name}</option>;
+                        return (
+                          <option key={res.user_id} value={res.user_id}>
+                            {res.name}
+                          </option>
+                        );
                       })}
                   </select>
                 </div>

@@ -140,21 +140,31 @@ function AgentCasesMon({ sections, handleSection, state }) {
                   id="agentCaseStatus"
                   onChange={handleChnage}
                 >
-                  <option value={""}>Select Status</option>
-                  <option value="IGMS">IGMS</option>
-                  <option value="ComplaintDate">Complaint Date</option>
-                  <option value="ombudsmanCreated">
+                  <option key={"ss"} value={""}>
+                    Select Status
+                  </option>
+                  <option key={"igms"} value="IGMS">
+                    IGMS
+                  </option>
+                  <option key={"comDate"} value="ComplaintDate">
+                    Complaint Date
+                  </option>
+                  <option key={"ombCrea"} value="ombudsmanCreated">
                     Ombudsman Created Date
                   </option>
-                  <option value="VIAFormSubmitted">
+                  <option key={"viSub"} value="VIAFormSubmitted">
                     Form VI Submitted Date
                   </option>
                   <option value="ombudsmanHearing">
                     Ombudsman Hearing Date
                   </option>
-                  <option value="escalationDate">Escalation Date</option>
-                  <option value="legalNotice">Legal Notice Date</option>
-                  <option value="Ombudsman Pending">
+                  <option key={"escData"} value="escalationDate">
+                    Escalation Date
+                  </option>
+                  <option key={"legalDt"} value="legalNotice">
+                    Legal Notice Date
+                  </option>
+                  <option key={"ombPen"} value="Ombudsman Pending">
                     Ombudsman Pending Date
                   </option>
                 </select>
@@ -167,10 +177,16 @@ function AgentCasesMon({ sections, handleSection, state }) {
                   id="userIdExe"
                   onChange={handleChnage}
                 >
-                  <option value={""}>Select User</option>
+                  <option key={"null"} value={""}>
+                    Select User
+                  </option>
                   {state.allUsers?.length &&
                     state.allUsers?.map((res) => {
-                      return <option value={res.user_id}>{res.name}</option>;
+                      return (
+                        <option key={res.user_id} value={res.user_id}>
+                          {res.name}
+                        </option>
+                      );
                     })}
                 </select>
               </div>

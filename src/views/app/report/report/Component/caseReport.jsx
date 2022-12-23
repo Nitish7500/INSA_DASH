@@ -206,16 +206,16 @@ function CaseReport({ state, sections, handleSection }) {
                 <table className="table table-responsive-sm">
                   <thead>
                     <tr key={Math.random()}>
-                      <th scope="col">Agent</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Email</th>
-                      <th scope="col">Policy number</th>
-                      <th scope="col">Company Name</th>
-                      <th scope="col">Policy Type</th>
-                      <th scope="col">Mobile</th>
-                      <th scope="col">Current Status</th>
-                      <th scope="col">Assign To</th>
-                      <th scop="col">Action</th>
+                      <th>Agent</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Policy number</th>
+                      <th>Company Name</th>
+                      <th>Policy Type</th>
+                      <th>Mobile</th>
+                      <th>Current Status</th>
+                      <th>Assign To</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -234,7 +234,10 @@ function CaseReport({ state, sections, handleSection }) {
                           <td>{res.caseStatus}</td>
                           <td>{res.assign_to}</td>
                           <td>
-                            <FontAwesomeIcon icon={faEye} id={"caseRepView" + i} />
+                            <FontAwesomeIcon
+                              icon={faEye}
+                              id={"caseRepView" + i}
+                            />
                           </td>
                         </tr>
                       );

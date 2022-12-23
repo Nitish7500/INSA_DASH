@@ -116,13 +116,13 @@ function TatReport({ sections, handleSection, state }) {
                     value={tatStatus1}
                     onChange={handleChange}
                   >
-                    <option value={""}>Select Status</option>
+                    <option key={"null"} value={""}>Select Status</option>
                     {state.status?.map((res) => {
-                      return <option>{res.name}</option>;
+                      return <option key={res.name}>{res.name}</option>;
                     })}
-                    <option value="complaint">B2C</option>
-                    <option value="agent">Agent</option>
-                    <option value="partner">Partner</option>
+                    <option key={"1"} value="complaint">B2C</option>
+                    <option key={"2"} value="agent">Agent</option>
+                    <option key={"3"} value="partner">Partner</option>
                   </select>
                 </div>
                 <div className="col-sm-3">
@@ -134,13 +134,13 @@ function TatReport({ sections, handleSection, state }) {
                     onChange={handleChange}
                     value={tatStatus2}
                   >
-                    <option value={""}>Select Status</option>
+                    <option key={"status2"} value={""}>Select Status</option>
                     {state.status?.map((res) => {
-                      return <option>{res.name}</option>;
+                      return <option key={res.name}>{res.name}</option>;
                     })}
-                    <option value="complaint">B2C</option>
-                    <option value="agent">Agent</option>
-                    <option value="partner">Partner</option>
+                    <option key={"11"} value="complaint">B2C</option>
+                    <option key={"12"} value="agent">Agent</option>
+                    <option key={"14"} value="partner">Partner</option>
                   </select>
                 </div>
                 <div className="col-sm-3 mt-auto">

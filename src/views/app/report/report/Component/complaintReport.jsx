@@ -84,6 +84,7 @@ function ComplaintReport({ sections, handleSection, state }) {
         <h4
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("ComRep")}
+          id="comRepDrpDown"
         >
           Complaint Report Section
         </h4>
@@ -95,6 +96,7 @@ function ComplaintReport({ sections, handleSection, state }) {
               <div className="col-sm-3">
                 <label>Start Date</label>
                 <input
+                  id="comRepStDt"
                   className="form-control border-bold"
                   name="complaintStart"
                   type={"date"}
@@ -105,6 +107,7 @@ function ComplaintReport({ sections, handleSection, state }) {
               <div className="col-sm-3">
                 <label>End Date</label>
                 <input
+                  id="comRepEndDt"
                   className="form-control border-bold"
                   name="complaintEnd"
                   type={"date"}
@@ -115,6 +118,7 @@ function ComplaintReport({ sections, handleSection, state }) {
               <div className="col-sm-3">
                 <label>Select Policy Type</label>
                 <select
+                  id="comRepPolicyTy"
                   className="form-control border-bold"
                   name="policyType"
                   onChange={handleChange}
@@ -126,10 +130,16 @@ function ComplaintReport({ sections, handleSection, state }) {
                   //     });
                   //   }}
                 >
-                  <option value={""}>Select Policy Type</option>
+                  <option key={"policyType"} value={""}>
+                    Select Policy Type
+                  </option>
                   {state.policyTypes.length &&
                     state.policyTypes?.map((res) => {
-                      return <option value={res._id}>{res.name}</option>;
+                      return (
+                        <option key={res._id} value={res._id}>
+                          {res.name}
+                        </option>
+                      );
                     })}
                 </select>
               </div>
@@ -139,11 +149,18 @@ function ComplaintReport({ sections, handleSection, state }) {
                   className="form-control border-bold"
                   name="company"
                   onChange={handleChange}
+                  id="comRepSlcCom"
                 >
-                  <option value={""}>Select Company</option>
+                  <option key={"com"} value={""}>
+                    Select Company
+                  </option>
                   {state.insuranceCom.length &&
                     state.insuranceCom?.map((res) => {
-                      return <option value={res._id}>{res.name}</option>;
+                      return (
+                        <option key={res._id} value={res._id}>
+                          {res.name}
+                        </option>
+                      );
                     })}
                 </select>
               </div>
@@ -152,34 +169,49 @@ function ComplaintReport({ sections, handleSection, state }) {
               <div className="col-sm-3">
                 <label>Select Complaint Type</label>
                 <select
+                  id="comRepComType"
                   className="form-control border-bold"
                   name="complaintType"
                   onChange={handleChange}
                 >
-                  <option value={""}>Select Complaint Type</option>
+                  <option key={"ComType"} value={""}>
+                    Select Complaint Type
+                  </option>
                   {state.comTypes.length &&
                     state.comTypes?.map((res) => {
-                      return <option value={res._id}>{res.name}</option>;
+                      return (
+                        <option key={res._id} value={res._id}>
+                          {res.name}
+                        </option>
+                      );
                     })}
                 </select>
               </div>
               <div className="col-sm-3">
                 <label>Select Status</label>
                 <select
+                  id="comRepSelectStatus"
                   className="form-control border-bold"
                   name="selectStatus"
                   onChange={handleChange}
                 >
-                  <option value={""}>Select Status</option>
+                  <option key={"st"} value={""}>
+                    Select Status
+                  </option>
                   {state.status.length &&
                     state.status?.map((res) => {
-                      return <option value={res._id}>{res.name}</option>;
+                      return (
+                        <option key={res._id} value={res._id}>
+                          {res.name}
+                        </option>
+                      );
                     })}
                 </select>
               </div>
               <div className="col-sm-2 mt-auto">
                 <div className="d-flex">
                   <button
+                    id="comRepDwnBtn"
                     className="btn btn-primary mr-2"
                     onClick={handleDownload}
                   >
