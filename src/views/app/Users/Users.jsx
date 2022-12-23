@@ -307,6 +307,7 @@ function Users() {
             </div>
             <div>
               <button
+                id="UseraddBtn"
                 className="btn btn-success mr-3 py-1 mt-2"
                 onClick={() => {
                   setaddUser(true);
@@ -338,7 +339,7 @@ function Users() {
                   <th>Phone</th>
                   <th>Address</th>
                   <th>Status</th>
-                  <th>View</th>
+                  {/* <th>View</th> */}
                   <th>Action</th>
                   <th>Password Change</th>
                 </tr>
@@ -359,7 +360,7 @@ function Users() {
                       <td>{res.mobile}</td>
                       <td>{}</td>
                       <td>{res.status ? "Active" : "Non-Active"}</td>
-                      <td>{"view"}</td>
+                      {/* <td>{"view"}</td> */}
                       <td
                         id={`userAddEdit${i}`}
                         onClick={() => {
@@ -369,6 +370,7 @@ function Users() {
                         }}
                       >
                         <FontAwesomeIcon
+                          id={`userAddEditIcon${i}`}
                           icon={faPencil}
                           size="lg"
                           color="#9c27b0"
@@ -383,6 +385,7 @@ function Users() {
                         id={`userAddEditPass${i}`}
                       >
                         <FontAwesomeIcon
+                          id={`userAddEditPassIcon${i}`}
                           icon={faShield}
                           size="lg"
                           style={{ cursor: "pointer" }}
@@ -410,7 +413,7 @@ function Users() {
             <div className="form-group d-flex flex-wrap">
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className="form-control border-0 font-weight-bold"
                   htmlFor="userFormName"
                 >
@@ -429,7 +432,7 @@ function Users() {
               <hr />
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className="form-control border-0 font-weight-bold"
                   htmlFor="userFormEmail"
                 >
@@ -447,7 +450,7 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormNumber"
                 >
@@ -464,7 +467,7 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormGender"
                 >
@@ -481,13 +484,17 @@ function Users() {
                     {" "}
                     Select Gender
                   </option>
-                  <option key={"male"} value={"Male"}>Male</option>
-                  <option key={"female"} value={"Female"}>Female</option>
+                  <option key={"male"} value={"Male"}>
+                    Male
+                  </option>
+                  <option key={"female"} value={"Female"}>
+                    Female
+                  </option>
                 </select>
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormProfileInfo"
                 >
@@ -505,7 +512,7 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormUserType"
                 >
@@ -522,13 +529,17 @@ function Users() {
                     {" "}
                     Select User Type
                   </option>
-                  <option key={"user"} value={"User"}>User</option>
-                  <option key={"admin"} value={"Admin"}>Admin</option>
+                  <option key={"user"} value={"User"}>
+                    User
+                  </option>
+                  <option key={"admin"} value={"Admin"}>
+                    Admin
+                  </option>
                 </select>
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormUserStatus"
                 >
@@ -545,13 +556,17 @@ function Users() {
                     {" "}
                     Select User Status
                   </option>
-                  <option key={"true"} value={"true"}>True</option>
-                  <option key={"false"} value={"false"}>False</option>
+                  <option key={"true"} value={"true"}>
+                    True
+                  </option>
+                  <option key={"false"} value={"false"}>
+                    False
+                  </option>
                 </select>
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormUserInAnyPolicy"
                 >
@@ -568,13 +583,17 @@ function Users() {
                     {" "}
                     Select Exprt Type
                   </option>
-                  <option key={"true"} value={"true"}>True</option>
-                  <option key={"false"} value={"false"}>False</option>
+                  <option key={"true"} value={"true"}>
+                    True
+                  </option>
+                  <option key={"false"} value={"false"}>
+                    False
+                  </option>
                 </select>
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormUserInAnyPolicy"
                 >
@@ -583,7 +602,7 @@ function Users() {
                 <select
                   onChange={handleChange}
                   id="userFormUserInAnyPolicy"
-                  className="from-controle border w-100 py-2 border-bold" 
+                  className="from-controle border w-100 py-2 border-bold"
                   value={expert_policy_type}
                   name="expert_policy_type"
                 >
@@ -591,15 +610,23 @@ function Users() {
                     {" "}
                     Select Insurance Type
                   </option>
-                  <option key={"GI"} value="General Insurance">General Insurance</option>
-                  <option key={"HI"} value="Health Insurance">Health Insurance</option>
-                  <option key={"LI"} value="Life Insurance">Life Insurance</option>
-                  <option key={"NA"} value="NA">NA</option>
+                  <option key={"GI"} value="General Insurance">
+                    General Insurance
+                  </option>
+                  <option key={"HI"} value="Health Insurance">
+                    Health Insurance
+                  </option>
+                  <option key={"LI"} value="Life Insurance">
+                    Life Insurance
+                  </option>
+                  <option key={"NA"} value="NA">
+                    NA
+                  </option>
                 </select>
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormUserExpertType"
                 >
@@ -615,13 +642,17 @@ function Users() {
                   <option key={"Option"} value="" selected disabled>
                     Select Option
                   </option>
-                  <option key={"CB"} value="Contract Based">Contract Based</option>
-                  <option key={"Per"} value="Permanent">Permanent</option>
+                  <option key={"CB"} value="Contract Based">
+                    Contract Based
+                  </option>
+                  <option key={"Per"} value="Permanent">
+                    Permanent
+                  </option>
                 </select>
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormExpertPer"
                 >
@@ -640,7 +671,7 @@ function Users() {
 
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormBankName"
                 >
@@ -673,7 +704,7 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormBranch"
                 >
@@ -690,7 +721,10 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}} className="form-control border-0" htmlFor="userFormIFSC">
+                  style={{ fontSize: "1rem" }}
+                  className="form-control border-0"
+                  htmlFor="userFormIFSC"
+                >
                   IFSC Code
                 </label>
                 <input
@@ -704,7 +738,7 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormPanNo"
                 >
@@ -721,7 +755,7 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormLegalExpert"
                 >
@@ -738,13 +772,17 @@ function Users() {
                     {" "}
                     Select Legal Expert
                   </option>
-                  <option key={"true"} value={"True"}>True</option>
-                  <option key={"false"} value={"False"}>False</option>
+                  <option key={"true"} value={"True"}>
+                    True
+                  </option>
+                  <option key={"false"} value={"False"}>
+                    False
+                  </option>
                 </select>
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
                   htmlFor="userFormLegalExecutive"
                 >
@@ -761,14 +799,20 @@ function Users() {
                     {" "}
                     Select Legal Executive
                   </option>
-                  <option key={"true"} value={"True"}>True</option>
-                  <option key={"false"} value={"False"}>False</option>
+                  <option key={"true"} value={"True"}>
+                    True
+                  </option>
+                  <option key={"false"} value={"False"}>
+                    False
+                  </option>
                 </select>
               </div>
               {legalExecutive == "True" || legalExecutive == true ? (
                 <div className="form-control border-0">
                   <label
-                  style={{fontSize:"1rem"}} className="font-weight-bold">
+                    style={{ fontSize: "1rem" }}
+                    className="font-weight-bold"
+                  >
                     Select Legal Executive
                   </label>
                   <Select
@@ -788,7 +832,7 @@ function Users() {
               {legalExecutive == "False" || legalExecutive === false ? (
                 <div className="form-control border-0">
                   <label
-                  style={{fontSize:"1rem"}}
+                    style={{ fontSize: "1rem" }}
                     className="form-control border-0 font-weight-bold"
                     htmlFor="userFormLegalSubExecutive"
                   >
@@ -805,8 +849,12 @@ function Users() {
                       {" "}
                       Select Legal Sub-Executive
                     </option>
-                    <option key={"true"} value={"True"}>True</option>
-                    <option key={"fasle"} value={"False"}>False</option>
+                    <option key={"true"} value={"True"}>
+                      True
+                    </option>
+                    <option key={"fasle"} value={"False"}>
+                      False
+                    </option>
                   </select>
                 </div>
               ) : null}
@@ -817,7 +865,9 @@ function Users() {
               (legalSubExecutive === "True" || legalSubExecutive === true) ? (
                 <div className="form-control border-0">
                   <label
-                  style={{fontSize:"1rem"}} className="font-weight-bold">
+                    style={{ fontSize: "1rem" }}
+                    className="font-weight-bold"
+                  >
                     Select Legal Sub-Executive
                   </label>
                   <select
@@ -828,7 +878,11 @@ function Users() {
                     value={legalSubExecutiveLead}
                   >
                     {legalSubExecutiveArr?.map((res) => {
-                      return <option key={res.value} value={res.value}>{res.label}</option>;
+                      return (
+                        <option key={res.value} value={res.value}>
+                          {res.label}
+                        </option>
+                      );
                     })}
                   </select>
                 </div>
@@ -836,7 +890,7 @@ function Users() {
 
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className="form-control border-0 font-weight-bold"
                   htmlFor="userFormUserTypeSelect"
                 >
@@ -853,17 +907,29 @@ function Users() {
                     {" "}
                     Select User Type
                   </option>
-                  <option key={"calling"} value="Calling">Calling</option>
-                  <option key={"mailing"} value="Mailing">Mailing</option>
-                  <option key={"omb"} value="Ombudsman">Ombudsman</option>
-                  <option key={"legal"} value="Legal">Legal</option>
-                  <option key={"TP"} value="ThirdParty">Third Party</option>
-                  <option key={"II"} value="IGMS Intern">IGMS Intern</option>
+                  <option key={"calling"} value="Calling">
+                    Calling
+                  </option>
+                  <option key={"mailing"} value="Mailing">
+                    Mailing
+                  </option>
+                  <option key={"omb"} value="Ombudsman">
+                    Ombudsman
+                  </option>
+                  <option key={"legal"} value="Legal">
+                    Legal
+                  </option>
+                  <option key={"TP"} value="ThirdParty">
+                    Third Party
+                  </option>
+                  <option key={"II"} value="IGMS Intern">
+                    IGMS Intern
+                  </option>
                 </select>
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className="form-control border-0 font-weight-bold"
                   htmlFor="userFormUserTypeSelect"
                 >
@@ -1038,8 +1104,10 @@ function Users() {
               </div>
 
               <div className="form-control border-0">
-                <label className="form-control border-0 font-weight-bold " 
-                  style={{fontSize:"1rem"}} >
+                <label
+                  className="form-control border-0 font-weight-bold "
+                  style={{ fontSize: "1rem" }}
+                >
                   User Handle Bucket Type
                 </label>
                 <div className="form-control border">
@@ -1061,7 +1129,7 @@ function Users() {
               <div className="form-control border-0">
                 <label
                   className="form-control border-0 font-weight-bold display-5"
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   htmlFor="userFormPassword"
                 >
                   Password
@@ -1115,6 +1183,7 @@ function Users() {
             <div className="form-group">
               <div className="form-control border-0">
                 <input
+                  id="cahngePassInp"
                   className="form-control border"
                   disabled
                   value={currentUser?.user_id}
@@ -1122,6 +1191,7 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <input
+                  id="changePassName"
                   className="form-control border"
                   disabled
                   value={currentUser.name}
@@ -1129,6 +1199,7 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <input
+                  id="changePassPass"
                   className="form-control border"
                   onChange={(e) => {
                     setnewPassword(e.target.value);
@@ -1137,6 +1208,7 @@ function Users() {
               </div>
               <div className="d-flex justify-content-center">
                 <button
+                  id="changePassClose"
                   className="btn btn-danger rounded mr-2"
                   onClick={() => {
                     setshowPasswordModal(false);
@@ -1146,6 +1218,7 @@ function Users() {
                 </button>
                 <button
                   className="btn btn-primary rounded"
+                  id="changePassUpdate"
                   onClick={() => {
                     dispatch({
                       type: "USER_UPDATE_PASSWORD",
