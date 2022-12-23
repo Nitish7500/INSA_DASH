@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Collapse } from "reactstrap";
-import {useDispatch} from "react-redux"
+import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { NotificationManager } from "components/common/react-notifications";
 import { CSVLink } from "react-csv";
@@ -9,46 +9,51 @@ import { CSVLink } from "react-csv";
 function ComplaintMonRep({ sections, handleSection, state }) {
   // COMPLAINT_MONTHLY_REPORT
 
-  let dispatch = useDispatch()
-  const [formData, setformData] = useState({})
-  const [download, setdownload] = useState(false)
+  let dispatch = useDispatch();
+  const [formData, setformData] = useState({});
+  const [download, setdownload] = useState(false);
 
   const handleChange = (e) => {
-    setformData({...formData, [e.target.name]:e.target.value})
-  } 
+    setformData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleDownload = () => {
-    if (formData.complaintEnd && formData.complaintStart && formData.caseStatus && formData.userId) {
-        dispatch({type:"COMPLAINT_MONTHLY_REPORT", state:{...formData}})
-        setdownload(true)
-    }else{
-        NotificationManager.error(
-            "Fields cannot be empty !",
-            "Please select Date !",
-            3000,
-            null,
-            null,
-            "filled"
-          );
-        }
-  }
+    if (
+      formData.complaintEnd &&
+      formData.complaintStart &&
+      formData.caseStatus &&
+      formData.userId
+    ) {
+      dispatch({ type: "COMPLAINT_MONTHLY_REPORT", state: { ...formData } });
+      setdownload(true);
+    } else {
+      NotificationManager.error(
+        "Fields cannot be empty !",
+        "Please select Date !",
+        3000,
+        null,
+        null,
+        "filled"
+      );
+    }
+  };
 
   useEffect(() => {
     if (download) {
-        if (state.comMontlyRep.length) {
-            setdownload(false)
-        }else{
-            NotificationManager.error(
-                "Empty List !",
-                "",
-                3000,
-                null,
-                null,
-                "filled"
-              );
-            }
+      if (state.comMontlyRep.length) {
+        setdownload(false);
+      } else {
+        NotificationManager.error(
+          "Empty List !",
+          "",
+          3000,
+          null,
+          null,
+          "filled"
+        );
+      }
     }
-  },[state.comMontlyRep])
+  }, [state.comMontlyRep]);
 
   return (
     <div>
@@ -57,6 +62,7 @@ function ComplaintMonRep({ sections, handleSection, state }) {
           className=""
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("ComMonthlyRep")}
+          id="comMonthlyRepDrpDwn"
         >
           Complaint Monthly Report Section
         </h4>
@@ -71,6 +77,7 @@ function ComplaintMonRep({ sections, handleSection, state }) {
               <div className="col-sm-3">
                 <label>Start Date</label>
                 <input
+                  id="comMonthlyStDt"
                   className="form-control border-bold"
                   name="complaintStart"
                   type={"date"}
@@ -80,16 +87,21 @@ function ComplaintMonRep({ sections, handleSection, state }) {
               <div className="col-sm-3">
                 <label>End Date</label>
                 <input
+                  id="comMonthlyEndDt"
                   className="form-control border-bold"
                   name="complaintEnd"
                   type={"date"}
                   onChange={handleChange}
                 />
               </div>
-              <div class="col-sm-3">
+              <div className="col-sm-3">
                 <label> Select Status</label>
-                <select class="form-control border-bold" name="caseStatus"
-                  onChange={handleChange}>
+                <select
+                  className="form-control border-bold"
+                  name="caseStatus"
+                  id="comMonthlyStatus"
+                  onChange={handleChange}
+                >
                   <option value="PENDING">PENDING</option>
                   <option value="ACCEPTED">ACCEPTED</option>
                   <option value="REJECTED">REJECTED</option>
@@ -115,8 +127,12 @@ function ComplaintMonRep({ sections, handleSection, state }) {
               </div>
               <div className="col-sm-3">
                 <label>Select Executive</label>
-                <select className="form-control border-bold" name="userId"
-                  onChange={handleChange}>
+                <select
+                  className="form-control border-bold"
+                  name="userId"
+                  id="comMonthlyDrpUser"
+                  onChange={handleChange}
+                >
                   <option value={""}>Select User</option>
                   {state.allUsers?.length &&
                     state.allUsers?.map((res) => {
@@ -126,14 +142,20 @@ function ComplaintMonRep({ sections, handleSection, state }) {
               </div>
             </div>
             <div className="d-flex mt-3">
-              <button className="btn btn-primary" onClick={handleDownload}>Download</button>
-                {state.comMontlyRep && (
-                  <CSVLink
-                    id="comMonthlyRep"
-                    filename="complaintReport"
-                    data={state.comMontlyRep}
-                  ></CSVLink>
-                )}
+              <button
+                className="btn btn-primary"
+                onClick={handleDownload}
+                id="comMonthlyDwnBtn"
+              >
+                Download
+              </button>
+              {state.comMontlyRep && (
+                <CSVLink
+                  id="comMonthlyRep"
+                  filename="complaintReport"
+                  data={state.comMontlyRep}
+                ></CSVLink>
+              )}
             </div>
           </div>
         </Collapse>

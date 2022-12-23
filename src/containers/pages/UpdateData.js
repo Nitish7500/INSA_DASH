@@ -452,18 +452,18 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <label className="font-weight-bold">
                           Company Response Document
                         </label>
-                        <div class="input-group">
-                          <div class="custom-file">
+                        <div className="input-group">
+                          <div className="custom-file">
                             <input
                               type="file"
                               onChange={handleDocUploadSec}
-                              class="custom-file-input"
+                              className="custom-file-input"
                               id="inputGroupFile01"
                               name="CompanyResponse"
                               aria-describedby="inputGroupFileAddon01"
                             />
                             <label
-                              class="custom-file-label"
+                              className="custom-file-label"
                               for="inputGroupFile01"
                             >
                               Choose file
@@ -475,18 +475,18 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <label className="font-weight-bold">
                           IGMS Documents
                         </label>
-                        <div class="input-group">
-                          <div class="custom-file">
+                        <div className="input-group">
+                          <div className="custom-file">
                             <input
                               type="file"
                               onChange={handleDocUploadSec}
-                              class="custom-file-input"
+                              className="custom-file-input"
                               id="inputGroupFile02"
                               name="IGMSdoc"
                               aria-describedby="inputGroupFileAddon01"
                             />
                             <label
-                              class="custom-file-label"
+                              className="custom-file-label"
                               for="inputGroupFile02"
                             >
                               Choose file
@@ -498,18 +498,18 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <label className="font-weight-bold">
                           Award Rejected Documents:
                         </label>
-                        <div class="input-group">
-                          <div class="custom-file">
+                        <div className="input-group">
+                          <div className="custom-file">
                             <input
                               type="file"
                               onChange={handleDocUploadSec}
-                              class="custom-file-input"
+                              className="custom-file-input"
                               id="inputGroupFile03"
                               name="IGMSdoc"
                               aria-describedby="inputGroupFileAddon01"
                             />
                             <label
-                              class="custom-file-label"
+                              className="custom-file-label"
                               for="inputGroupFile03"
                             >
                               Choose file
@@ -521,18 +521,18 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <label className="font-weight-bold">
                           Ombudsman Requirement Documents
                         </label>
-                        <div class="input-group">
-                          <div class="custom-file">
+                        <div className="input-group">
+                          <div className="custom-file">
                             <input
                               type="file"
                               onChange={handleDocUploadSec}
-                              class="custom-file-input"
+                              className="custom-file-input"
                               id="inputGroupFile04"
                               name="IGMSdoc"
                               aria-describedby="inputGroupFileAddon01"
                             />
                             <label
-                              class="custom-file-label"
+                              className="custom-file-label"
                               for="inputGroupFile04"
                             >
                               Choose file
@@ -544,18 +544,18 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <label className="font-weight-bold">
                           Complaint form Courier Receipt:
                         </label>
-                        <div class="input-group">
-                          <div class="custom-file">
+                        <div className="input-group">
+                          <div className="custom-file">
                             <input
                               type="file"
                               onChange={handleDocUploadSec}
-                              class="custom-file-input"
+                              className="custom-file-input"
                               id="inputGroupFile05"
                               name="IGMSdoc"
                               aria-describedby="inputGroupFileAddon01"
                             />
                             <label
-                              class="custom-file-label"
+                              className="custom-file-label"
                               for="inputGroupFile05"
                             >
                               Choose file
@@ -567,18 +567,18 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <label className="font-weight-bold">
                           Form 6A Courier Receipt:
                         </label>
-                        <div class="input-group">
-                          <div class="custom-file">
+                        <div className="input-group">
+                          <div className="custom-file">
                             <input
                               type="file"
                               onChange={handleDocUploadSec}
-                              class="custom-file-input"
+                              className="custom-file-input"
                               id="inputGroupFile06"
                               name="IGMSdoc"
                               aria-describedby="inputGroupFileAddon01"
                             />
                             <label
-                              class="custom-file-label"
+                              className="custom-file-label"
                               for="inputGroupFile06"
                             >
                               Choose file
@@ -590,18 +590,18 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <label className="font-weight-bold">
                           Ombudsman Requiremnt Document:
                         </label>
-                        <div class="input-group">
-                          <div class="custom-file">
+                        <div className="input-group">
+                          <div className="custom-file">
                             <input
                               type="file"
                               onChange={handleDocUploadSec}
-                              class="custom-file-input"
+                              className="custom-file-input"
                               id="inputGroupFile07"
                               name="IGMSdoc"
                               aria-describedby="inputGroupFileAddon01"
                             />
                             <label
-                              class="custom-file-label"
+                              className="custom-file-label"
                               for="inputGroupFile07"
                             >
                               Choose file
@@ -613,18 +613,18 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <label className="font-weight-bold">
                           Form 6A Document:
                         </label>
-                        <div class="input-group">
-                          <div class="custom-file">
+                        <div className="input-group">
+                          <div className="custom-file">
                             <input
                               type="file"
                               onChange={handleDocUploadSec}
-                              class="custom-file-input"
+                              className="custom-file-input"
                               id="inputGroupFile08"
                               name="IGMSdoc"
                               aria-describedby="inputGroupFileAddon01"
                             />
                             <label
-                              class="custom-file-label"
+                              className="custom-file-label"
                               for="inputGroupFile08"
                             >
                               Choose file

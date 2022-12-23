@@ -94,6 +94,7 @@ function LeadReport({ handleSection, sections, state }) {
         <h4
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("LeadRep")}
+          id="leadSecDrpDwn"
         >
           Lead Section
         </h4>
@@ -108,6 +109,7 @@ function LeadReport({ handleSection, sections, state }) {
               <div className="col-sm-3">
                 <label>Start Date</label>
                 <input
+                  id="leadRepStaDt"
                   className="form-control border-bold"
                   type={"date"}
                   name="startdate"
@@ -117,6 +119,7 @@ function LeadReport({ handleSection, sections, state }) {
               <div className="col-sm-3">
                 <label>End Date</label>
                 <input
+                  id="leadRepEndDt"
                   className="form-control border-bold"
                   type={"date"}
                   name="enddate"
@@ -126,6 +129,7 @@ function LeadReport({ handleSection, sections, state }) {
               <div className="col-sm-3">
                 <label>Select User Name</label>
                 <select
+                  id="leadRepUserSelect"
                   className="form-control border-bold"
                   onChange={handleCountChange}
                   name="assign_id"
@@ -144,13 +148,18 @@ function LeadReport({ handleSection, sections, state }) {
                 </select>
               </div>
               <div className="col-sm-1 mt-auto">
-                <button className="btn btn-primary px-2" onClick={handleCount}>
+                <button
+                  className="btn btn-primary px-2"
+                  onClick={handleCount}
+                  id="leadRepSearch"
+                >
                   Search
                 </button>
               </div>
               <div className="col-sm-2">
                 <label>Lead Count Result</label>
                 <input
+                  id="leadRepLeadCount"
                   className="form-control border-bold"
                   disabled
                   value={state.leadRepCount}
@@ -163,6 +172,7 @@ function LeadReport({ handleSection, sections, state }) {
                 <div className="col-sm-3">
                   <label>Select User Name</label>
                   <select
+                    id="leadRepSlcUserDrpDwn"
                     className="form-control border-bold"
                     onChange={handleCountChange}
                     name="user_id"
@@ -182,6 +192,7 @@ function LeadReport({ handleSection, sections, state }) {
                 </div>
                 <div className="col-sm-3 mt-4">
                   <button
+                    id="leadRepSearchFollow"
                     className="btn btn-primary"
                     onClick={handleTodayLeadCount}
                   >
@@ -191,6 +202,7 @@ function LeadReport({ handleSection, sections, state }) {
                 <div className="col-sm-3">
                   <label>Follow Lead Count</label>
                   <input
+                    id="leadRepFollowCntInp"
                     value={state.todayLeadCount?.follow_count}
                     className="form-control border-bold"
                     disabled
@@ -199,6 +211,7 @@ function LeadReport({ handleSection, sections, state }) {
                 <div className="col-sm-3">
                   <label>Communication Count</label>
                   <input
+                    id="leadRepCommCount"
                     className="form-control border-bold"
                     value={state.todayLeadCount?.communication_count}
                     disabled
@@ -212,6 +225,7 @@ function LeadReport({ handleSection, sections, state }) {
                 <div className="col-sm-3">
                   <label>Start Date</label>
                   <input
+                    id="leadRepScStDt"
                     className="form-control border-bold"
                     name="leadStart"
                     type={"date"}
@@ -221,16 +235,18 @@ function LeadReport({ handleSection, sections, state }) {
                 <div className="col-sm-3">
                   <label>End Date</label>
                   <input
+                    id="leadRepScEndDt"
                     className="form-control border-bold"
                     name="leadEnd"
                     type={"date"}
                     onChange={handleCountChange}
                   />
                 </div>
-                <div class="col-sm-3">
+                <div className="col-sm-3">
                   <label> Select Status</label>
                   <select
-                    class="form-control border-bold"
+                    id="leadRepScStatus"
+                    className="form-control border-bold"
                     name="leadStatus"
                     onChange={handleCountChange}
                   >
@@ -261,6 +277,7 @@ function LeadReport({ handleSection, sections, state }) {
                 <div className="col-sm-3">
                   <label>Select Executive</label>
                   <select
+                    id="leadRepScSelectExe"
                     className="form-control border-bold"
                     name="leadUser_id"
                     onChange={handleCountChange}
@@ -274,7 +291,11 @@ function LeadReport({ handleSection, sections, state }) {
                 </div>
               </div>
               <div className="d-flex mt-3">
-                <button className="btn btn-primary" onClick={handleLeadRep}>
+                <button
+                  className="btn btn-primary"
+                  onClick={handleLeadRep}
+                  id="leadRepScDwnBnt"
+                >
                   Download
                 </button>
               </div>

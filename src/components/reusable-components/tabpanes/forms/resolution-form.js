@@ -141,7 +141,7 @@ export default function ResolutionForm({
               <label>Resoloution</label>
               <select
                 id="resolutionSelect"
-                class="form-control"
+                className="form-control"
                 name="requirementReceived"
                 onChange={handleFormChange}
                 value={details.requirementReceived}
@@ -180,7 +180,7 @@ export default function ResolutionForm({
               <label>Resolution Type</label>
               <select
                 id="resolutionResType"
-                class="form-control"
+                className="form-control"
                 name="rewardType"
                 onChange={handleFormChange}
                 value={details.rewardType}
@@ -232,7 +232,7 @@ export default function ResolutionForm({
                     <input
                       id="resolutionRefundClaim"
                       type="text"
-                      class="form-control"
+                      className="form-control"
                       value={details.refundSingleClaim}
                       name="refundSingleClaim"
                       onChange={handleFormChange}
@@ -257,7 +257,7 @@ export default function ResolutionForm({
                     <input
                       id="resolutionPayRefAmt"
                       type="text"
-                      class="form-control"
+                      className="form-control"
                       value={details.paymentRefundInt}
                       name="paymentRefundInt"
                       onChange={handleFormChange}

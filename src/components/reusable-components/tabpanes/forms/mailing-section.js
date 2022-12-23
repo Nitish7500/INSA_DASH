@@ -132,7 +132,7 @@ export default function MailingSectionForm({
               <label>Customer ID is Register</label>
               <select
                 id="mailingCusReg"
-                class="form-control"
+                className="form-control"
                 value={details.service_id}
                 name="service_id"
                 formControlName="service_id"
@@ -145,23 +145,23 @@ export default function MailingSectionForm({
             </div>
             <div className="col-sm-3">
               <label>Complaint Number</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="mailingComNo"
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   value={details.complaint_number}
                   name="complaint_number"
                   onChange={handleFormChange}
                 />
               </div>
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Choose Date Type -</label>
-              <div class="input-group">
+              <div className="input-group">
                 <select
                   id="mailingdtType"
-                  class="form-control"
+                  className="form-control"
                   value={details.selectDate}
                   name="selectDate"
                   formControlName="sample"
@@ -192,11 +192,11 @@ export default function MailingSectionForm({
             </div>
             <div className="col-sm-3">
               <label>First Response Date from Company</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="mailingResDtCom"
                   type="date"
-                  class="form-control"
+                  className="form-control"
                   value="caseone.response_date_company"
                   name="response_date_company"
                   onChange={handleFormChange}
@@ -211,7 +211,7 @@ export default function MailingSectionForm({
               <input
                 id="mailingREsEscDt"
                 type="date"
-                class="form-control"
+                className="form-control"
                 value={details.complaint_escalation_date}
                 name="complaint_escalation_date"
                 onChange={handleFormChange}
@@ -223,7 +223,7 @@ export default function MailingSectionForm({
               <input
                 id="mailingReqDate"
                 type="date"
-                class="form-control"
+                className="form-control"
                 value={details.requirementRaisedDate}
                 name="requirementRaisedDate"
                 onChange={handleFormChange}
@@ -235,7 +235,7 @@ export default function MailingSectionForm({
               <input
                 id="mailingReqRevDate"
                 type="date"
-                class="form-control"
+                className="form-control"
                 value={details.requirementRevertedDate}
                 name="requirementRevertedDate"
                 onChange={handleFormChange}
@@ -247,7 +247,7 @@ export default function MailingSectionForm({
               <input
                 id="mailingReqSentDt"
                 type="date"
-                class="form-control"
+                className="form-control"
                 value={details.requirementSentDate}
                 name="requirementSentDate"
                 onChange={handleFormChange}
@@ -261,7 +261,7 @@ export default function MailingSectionForm({
               <input
                 id="mailingRemSentDate"
                 type="date"
-                class="form-control"
+                className="form-control"
                 value={details?.reminderSentDate}
                 name="reminderSentDate"
                 onChange={handleFormChange}
@@ -272,7 +272,7 @@ export default function MailingSectionForm({
               <label>Draft Mail Sent by customer or Not</label>
               <select
                 id="mailingDetailDraftSend"
-                class="form-control"
+                className="form-control"
                 value={details.is_draft_mail_send}
                 onChange={handleFormChange}
                 name="is_draft_mail_send"
@@ -283,12 +283,12 @@ export default function MailingSectionForm({
             </div>
             <div className="col-sm-3">
               <label>Draft shared with the customer</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="mailingdraftShareBool"
                   type="checkbox"
                   name="draftSharedBool"
-                  class="form-control"
+                  className="form-control"
                   onChange={handleFormChange}
                   value={details?.draftSharedBool}
                 />
@@ -299,7 +299,7 @@ export default function MailingSectionForm({
               <input
                 id="mailingdftSharedDt"
                 type="date"
-                class="form-control"
+                className="form-control"
                 value={details?.draftSharedDate}
                 name="draftSharedDate"
                 //   onChange={handleFormChange}
@@ -313,7 +313,7 @@ export default function MailingSectionForm({
               <label>Requirement Mail Sent By Company</label>
               <select
                 id="mailingisReq"
-                class="form-control"
+                className="form-control"
                 value={details.isRequirement}
                 name="isRequirement"
                 onChange={handleFormChange}
@@ -327,7 +327,7 @@ export default function MailingSectionForm({
               <label>Requirement Mail Revert Sent By Customer</label>
               <select
                 id="mailingisReqRecv"
-                class="form-control"
+                className="form-control"
                 value={details.isRequirementReverted}
                 name="isRequirementReverted"
                 onChange={handleFormChange}
@@ -345,7 +345,7 @@ export default function MailingSectionForm({
               <label>First Response from Company</label>
               <select
                 id="mailingResComp"
-                class="form-control"
+                className="form-control"
                 value={details.response_company}
                 name="response_company"
                 onChange={handleFormChange}
@@ -359,7 +359,7 @@ export default function MailingSectionForm({
               <label>Reminder Mail Sent to Company</label>
               <select
                 id="mailingremFst"
-                class="form-control"
+                className="form-control"
                 value={details.reminder_first}
                 name="reminder_first"
                 onChange={handleFormChange}
@@ -373,7 +373,7 @@ export default function MailingSectionForm({
               <label>Complaint delay reason</label>
               <select
                 id="mailingComDelReason"
-                class="form-control"
+                className="form-control"
                 value={details.complaintDelayReason}
                 name="complaintDelayReason"
                 onChange={handleFormChange}
@@ -406,7 +406,7 @@ export default function MailingSectionForm({
               <label>First Escalation Sent or Not</label>
               <select
                 id="mailingEscFst"
-                class="form-control"
+                className="form-control"
                 value={details.escalation_first}
                 name="escalation_first"
                 onChange={handleFormChange}
@@ -423,7 +423,7 @@ export default function MailingSectionForm({
                 id="mailingEscShrB"
                 type="checkbox"
                 name="escalationSharedBool"
-                class="form-control"
+                className="form-control"
                 formControlName="escalationSharedBool"
                 value={details.escalationSharedBool}
                 onChange={handleFormChange}
@@ -433,7 +433,7 @@ export default function MailingSectionForm({
               <label>Requirement Mail Revert Sent By Customer</label>
               <select
                 id="mailingisReqRev"
-                class="form-control"
+                className="form-control"
                 value={details.isRequirementReverted}
                 name="isRequirementReverted"
                 onChange={handleFormChange}
@@ -451,7 +451,7 @@ export default function MailingSectionForm({
               <label>Second Response from Company</label>
               <select
                 id="mailingResComp2"
-                class="form-control"
+                className="form-control"
                 value={details.response_company2}
                 name="response_company2"
                 onChange={handleFormChange}
@@ -466,7 +466,7 @@ export default function MailingSectionForm({
               <label>Reminder Mail Sent to Company</label>
               <select
                 id="mailingRemSec"
-                class="form-control"
+                className="form-control"
                 value={details.reminder_second}
                 name="reminder_second"
                 onChange={handleFormChange}
@@ -481,7 +481,7 @@ export default function MailingSectionForm({
               <input
                 id="mailingRemSndDt"
                 type="date"
-                class="form-control"
+                className="form-control"
                 value={details.reminderSentDate}
                 name="reminderSentDate"
                 onChange={handleFormChange}

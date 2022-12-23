@@ -324,7 +324,7 @@ const DataListView = ({
             <div className="tableRow">
               <div className="record-data">
                 <div className="card-body tableRow-card align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                  <div class={collapse == true ? "dropup btn-group" : ""}>
+                  <div className={collapse == true ? "dropup btn-group" : ""}>
                     <Button
                       color="primary"
                       onClick={() => setCollapse(!collapse)}

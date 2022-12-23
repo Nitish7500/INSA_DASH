@@ -60,6 +60,7 @@ function BotREport({ state, sections, handleSection }) {
         <h4
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("whatsRep")}
+          id="WhatsBotFollowRep"
         >
           WhatsApp Bot Follow Up Report
         </h4>
@@ -71,6 +72,7 @@ function BotREport({ state, sections, handleSection }) {
               <div className="col-sm-3">
                 <label>Start Date</label>
                 <input
+                  id="bolFollowStaDt"
                   className="form-control border-bold"
                   name="botFollowUpStartDate"
                   type={"date"}
@@ -82,6 +84,7 @@ function BotREport({ state, sections, handleSection }) {
               <div className="col-sm-3">
                 <label>End Date</label>
                 <input
+                  id="botFollwEndDt"
                   className="form-control border-bold"
                   name="botFollowUpEndDate"
                   type={"date"}
@@ -91,7 +94,11 @@ function BotREport({ state, sections, handleSection }) {
                 />
               </div>
               <div className="col-sm-3 mt-auto">
-                <button className="btn btn-primary" onClick={handleSumit}>
+                <button
+                  className="btn btn-primary"
+                  onClick={handleSumit}
+                  id="botFollowRepDwnBtn"
+                >
                   Download
                 </button>
                 <CSVLink

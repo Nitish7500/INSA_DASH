@@ -66,7 +66,7 @@ function ReminderTrackCom({ isOpen, onClose, details }) {
                 <label>Select Reminder Type</label>
                 <select
                   id="remTrackSelect"
-                  class="form-control border-bold"
+                  className="form-control border-bold"
                   name="reminderType"
                   value={reminderType}
                   onChange={(e) => {
@@ -85,7 +85,7 @@ function ReminderTrackCom({ isOpen, onClose, details }) {
                 <label>Select Reminder</label>
                 <select
                   id="remTrackSelect2"
-                  class="form-control border-bold"
+                  className="form-control border-bold"
                   name="reminder"
                   value={reminder}
                   onChange={(e) => {

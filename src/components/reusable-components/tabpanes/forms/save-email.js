@@ -215,7 +215,7 @@ export default function SavedEmail({ heading, details }) {
                 }}
               ></Select>
               {/* <select
-                        class="form-control form-control-sm"
+                        className="form-control form-control-sm"
                         name="movementOfCase"
                             // ="movementOfCase"
                       >

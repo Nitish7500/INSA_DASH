@@ -40,7 +40,10 @@ function AgentCasesMon({ sections, handleSection, state }) {
   const handleDownloadContract = () => {
     const { fromDate, toDate } = formData;
     if (fromDate && toDate) {
-      dispatch({ type: "AGENT_CASES_CONTRACT_MONTHLY_REPORT", state: {fromDate,toDate} });
+      dispatch({
+        type: "AGENT_CASES_CONTRACT_MONTHLY_REPORT",
+        state: { fromDate, toDate },
+      });
       setdownloadCon(true);
     } else {
       NotificationManager.error(
@@ -97,6 +100,7 @@ function AgentCasesMon({ sections, handleSection, state }) {
           className=""
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("AgentMonRep")}
+          id="agentMonthlyReport"
         >
           Agent Cases Monthly Report Section
         </h4>
@@ -115,6 +119,7 @@ function AgentCasesMon({ sections, handleSection, state }) {
                   name="agentStart"
                   type={"date"}
                   onChange={handleChnage}
+                  id="agentStartDt"
                 />
               </div>
               <div className="col-sm-3">
@@ -124,13 +129,15 @@ function AgentCasesMon({ sections, handleSection, state }) {
                   name="agentEnd"
                   type={"date"}
                   onChange={handleChnage}
+                  id="agentEndDt"
                 />
               </div>
-              <div class="col-sm-3">
+              <div className="col-sm-3">
                 <label> Select Status</label>
                 <select
-                  class="form-control border-bold"
+                  className="form-control border-bold"
                   name="agentCaseStatus"
+                  id="agentCaseStatus"
                   onChange={handleChnage}
                 >
                   <option value={""}>Select Status</option>
@@ -157,6 +164,7 @@ function AgentCasesMon({ sections, handleSection, state }) {
                 <select
                   className="form-control border-bold"
                   name="userId"
+                  id="userIdExe"
                   onChange={handleChnage}
                 >
                   <option value={""}>Select User</option>
@@ -168,7 +176,11 @@ function AgentCasesMon({ sections, handleSection, state }) {
               </div>
             </div>
             <div className="d-flex mt-3">
-              <button className="btn btn-primary" onClick={handleDownload}>
+              <button
+                className="btn btn-primary"
+                onClick={handleDownload}
+                id="agentCaseDwn"
+              >
                 Download
               </button>
               <CSVLink
@@ -184,6 +196,7 @@ function AgentCasesMon({ sections, handleSection, state }) {
               <div className="col-sm-3">
                 <label>Start Date</label>
                 <input
+                  id="agentFromDt"
                   className="form-control border-bold"
                   name="fromDate"
                   type={"date"}
@@ -193,6 +206,7 @@ function AgentCasesMon({ sections, handleSection, state }) {
               <div className="col-sm-3">
                 <label>End Date</label>
                 <input
+                  id="agentToDt"
                   className="form-control border-bold"
                   name="toDate"
                   type={"date"}
@@ -201,6 +215,7 @@ function AgentCasesMon({ sections, handleSection, state }) {
               </div>
               <div className="col-sm-3 mt-auto">
                 <button
+                  id="agentFTDwn"
                   className="btn btn-primary"
                   onClick={handleDownloadContract}
                 >

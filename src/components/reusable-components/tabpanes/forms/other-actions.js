@@ -465,7 +465,7 @@ export default function OtherActions({ heading, complaintId }) {
                     <label>Select Template:-</label>
                     <select
                       id="othActRemMailF"
-                      class="form-control"
+                      className="form-control"
                       name="mailingTemplateSelect"
                       value={reminderMailForm.mailingTemplateSelect}
                       onChange={handleSMReminderMail}
@@ -1012,7 +1012,7 @@ export default function OtherActions({ heading, complaintId }) {
                 <label>Select Template </label>
                 <select
                   id="othActTemp"
-                  class="form-control border-bold"
+                  className="form-control border-bold"
                   name="mailingTemplateSelect"
                   value={mulMailRemOpen.mailingTemplateSelect}
                   onChange={(e) => {

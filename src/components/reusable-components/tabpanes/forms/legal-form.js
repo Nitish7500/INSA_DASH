@@ -98,7 +98,7 @@ export default function LegalForm({
                 <div className="col-sm-4">
                   <label>Legal Notice</label>
                   <select
-                    class="form-control"
+                    className="form-control"
                     value={details.legalSection.legal_notice}
                     name="legal_notice"
                     onChange={handleFormChange}
@@ -112,7 +112,7 @@ export default function LegalForm({
                   <label>Courier Number of the Legal Notice</label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     value={details.legalSection?.legal_notice_courier_number}
                     name="legal_notice_courier_number"
                     onChange={handleFormChange}
@@ -122,7 +122,7 @@ export default function LegalForm({
                   <label>Consumer courts subsequent filing dates</label>
                   <input
                     type="date"
-                    class="form-control"
+                    className="form-control"
                     value={details.legalSection.C_court_filing_date}
                     name="C_court_filing_date"
                     onChange={handleFormChange}
@@ -147,7 +147,7 @@ export default function LegalForm({
                   <input
                     id="legalRecDate"
                     type="date"
-                    class="form-control"
+                    className="form-control"
                     value={details.legalSection.legal_res_notice_date}
                     name="legal_res_notice_date"
                     onChange={handleFormChange}
@@ -159,7 +159,7 @@ export default function LegalForm({
                   <input
                     id="legalCallDt2"
                     type="date"
-                    class="form-control"
+                    className="form-control"
                     value={details.legalSection.callCust2}
                     name="callCust2"
                     onChange={handleFormChange}
@@ -173,7 +173,7 @@ export default function LegalForm({
                   <input
                     id="legalApproxFee"
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     value={details.legalSection.approxFees}
                     name="approxFees"
                     onChange={handleFormChange}
@@ -184,7 +184,7 @@ export default function LegalForm({
                   <input
                     id="legalCallDt1"
                     type="date"
-                    class="form-control"
+                    className="form-control"
                     value={details.legalSection.callCust1}
                     name="callCust1"
                     onChange={handleFormChange}
@@ -195,7 +195,7 @@ export default function LegalForm({
                   <input
                     id="legalLawer"
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     value={details.legalSection.LawyerFirmAddress}
                     name="LawyerFirmAddress"
                     onChange={handleFormChange}
@@ -223,7 +223,7 @@ export default function LegalForm({
                   <input
                     id="legalLawerFNo"
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     value={details.legalSection.LawyerFirmNumber}
                     name="LawyerFirmNumber"
                     onChange={handleFormChange}
@@ -234,7 +234,7 @@ export default function LegalForm({
                   <input
                     id="legalCaseFNo"
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     value={details.legalSection.caseFileNumber}
                     name="caseFileNumber"
                     onChange={handleFormChange}
@@ -247,7 +247,7 @@ export default function LegalForm({
                   <input
                     id="legalFName"
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     value={details.legalSection.LawyerFirmName}
                     name="LawyerFirmName"
                     onChange={handleFormChange}
@@ -258,7 +258,7 @@ export default function LegalForm({
                   <input
                     id="legalCaseTitle"
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     value={details.legalSection.caseTitle}
                     name="caseTitle"
                     onChange={handleFormChange}
@@ -269,7 +269,7 @@ export default function LegalForm({
                   <input
                     id="legalCaseNo"
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     value={details.legalSection.caseNumber}
                     name="caseNumber"
                     onChange={handleFormChange}
@@ -283,7 +283,7 @@ export default function LegalForm({
                     id="legalNoticNo"
                     type="checkbox"
                     name="sendNoticeReminderOrNot"
-                    class="form-control"
+                    className="form-control"
                     onChange={handleFormChange}
                     checked={details.legalSection.sendNoticeReminderOrNot}
                   />

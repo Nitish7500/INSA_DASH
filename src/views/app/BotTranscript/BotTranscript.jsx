@@ -132,7 +132,7 @@ const BotTranscript = ({ intl, match }) => {
                           id={`BTLnk${i}`}
                           href="#myModal"
                           role="button"
-                          class="btn"
+                          className="btn"
                           data-toggle="modal"
                         >
                           <FontAwesomeIcon

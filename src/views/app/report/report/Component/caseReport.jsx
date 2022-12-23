@@ -1,55 +1,63 @@
 import React from "react";
 import { Collapse } from "reactstrap";
-import {useSelector, useDispatch} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { NotificationManager } from "components/common/react-notifications";
 
-function CaseReport({state, sections, handleSection}) {
+function CaseReport({ state, sections, handleSection }) {
+  let dispatch = useDispatch();
 
-    let dispatch = useDispatch()
+  const [caseForm, setcaseForm] = useState({});
+  const [caseCount, setcaseCount] = useState({});
+  const [caseData, setcaseData] = useState([]);
 
-    const [caseForm, setcaseForm] = useState({})
-    const [caseCount, setcaseCount] = useState({})
-    const [caseData, setcaseData] = useState([])
+  const handleChange = (e) => {
+    setcaseForm({ ...caseForm, [e.target.name]: e.target.value });
+  };
 
-    const handleChange = (e) => {
-        setcaseForm({...caseForm, [e.target.name]:e.target.value})
+  const handleCaseRepSubmit = () => {
+    // handle Submit
+    console.log(caseForm);
+    dispatch({ type: "REPORT_CASE_REPORT_DATA", state: { ...caseForm } });
+  };
+
+  const handleStatusChange = (e) => {
+    dispatch({
+      type: "REPORT_CASE_REPORT_STATUS_DATA",
+      state: { caseStatus: e.target.value },
+    });
+  };
+
+  const handleAgentChange = (e) => {
+    dispatch({
+      type: "REPORT_CASE_REPORT_AGENT_DATA",
+      state: { user_id: e.target.value },
+    });
+  };
+
+  const handleCountChange = (e) => {
+    setcaseCount({ ...caseCount, [e.target.name]: e.target.value });
+  };
+
+  const handleCaseCount = () => {
+    if (caseCount.startdate && caseCount.enddate && caseCount.assign_id) {
+      dispatch({
+        type: "REPORT_CASE_REPORT_COUNT_DATA",
+        state: { ...caseCount },
+      });
+    } else {
+      NotificationManager.error(
+        "Fields cannot be empty",
+        "Please select date and User",
+        3000,
+        null,
+        null,
+        "filled"
+      );
     }
-
-    const handleCaseRepSubmit = () => {
-        // handle Submit
-        console.log(caseForm)
-        dispatch({type:"REPORT_CASE_REPORT_DATA", state:{...caseForm}})
-    }
-
-    const handleStatusChange = (e) => {
-        dispatch({type:"REPORT_CASE_REPORT_STATUS_DATA", state:{caseStatus:e.target.value}})
-    }
-
-    const handleAgentChange = (e) => {
-        dispatch({type:"REPORT_CASE_REPORT_AGENT_DATA",state:{user_id:e.target.value}})
-    }
-
-    const handleCountChange = (e) => {
-        setcaseCount({...caseCount, [e.target.name]:e.target.value})
-    }
-
-    const handleCaseCount = () => {
-        if(caseCount.startdate && caseCount.enddate && caseCount.assign_id){
-            dispatch({type:"REPORT_CASE_REPORT_COUNT_DATA",state:{...caseCount}})
-        }else{
-            NotificationManager.error(
-                "Fields cannot be empty",
-                "Please select date and User",
-                3000,
-                null,
-                null,
-                "filled"
-            )
-        }
-    }
+  };
 
   return (
     <div>
@@ -57,6 +65,7 @@ function CaseReport({state, sections, handleSection}) {
         <h4
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("CaseRep")}
+          id="caseReportSecOpen"
         >
           Case Report Section
         </h4>
@@ -72,6 +81,7 @@ function CaseReport({state, sections, handleSection}) {
                   type={"date"}
                   name="startDate"
                   onChange={handleChange}
+                  id="caseRepStaDt"
                 />
               </div>
               <div className="col-sm-3">
@@ -81,11 +91,17 @@ function CaseReport({state, sections, handleSection}) {
                   type={"date"}
                   name="endDate"
                   onChange={handleChange}
+                  id="caseRepEndDt"
                 />
               </div>
               <div className="col-sm-3">
                 <label>Select Status</label>
-                <select className="form-control border-bold" name="caseStatus" onChange={handleStatusChange}>
+                <select
+                  className="form-control border-bold"
+                  name="caseStatus"
+                  onChange={handleStatusChange}
+                  id="caseStatusDrpDwn"
+                >
                   <option key={1} value={""}>
                     Select Status
                   </option>
@@ -102,6 +118,7 @@ function CaseReport({state, sections, handleSection}) {
               <div className="col-sm-3">
                 <label>Search Agent</label>
                 <input
+                  id="caseRepSelAgn"
                   className="form-control border-bold"
                   type={"text"}
                   name="user_id"
@@ -110,7 +127,13 @@ function CaseReport({state, sections, handleSection}) {
               </div>
             </div>
             <div className="d-flex mt-3">
-              <button className="btn rounded btn-primary" onClick={handleCaseRepSubmit}>Search</button>
+              <button
+                className="btn rounded btn-primary"
+                onClick={handleCaseRepSubmit}
+                id="caseRepSearchBtn"
+              >
+                Search
+              </button>
             </div>
           </div>
           <div className="container mt-3">
@@ -121,6 +144,7 @@ function CaseReport({state, sections, handleSection}) {
               <div className="col-sm-3">
                 <label>Start Date</label>
                 <input
+                  id="caseRepStaSecDt"
                   className="form-control border-bold"
                   type={"date"}
                   name="startdate"
@@ -130,6 +154,7 @@ function CaseReport({state, sections, handleSection}) {
               <div className="col-sm-3">
                 <label>End Date</label>
                 <input
+                  id="caseRepSecEndDt"
                   className="form-control border-bold"
                   type={"date"}
                   name="enddate"
@@ -138,8 +163,12 @@ function CaseReport({state, sections, handleSection}) {
               </div>
               <div className="col-sm-3">
                 <label>Select User Name</label>
-                <select className="form-control border-bold"
-                  onChange={handleCountChange} name="assign_id">
+                <select
+                  id="caseRepDrpDwnUser"
+                  className="form-control border-bold"
+                  onChange={handleCountChange}
+                  name="assign_id"
+                >
                   <option key={1} value={""}>
                     Select User
                   </option>
@@ -155,17 +184,28 @@ function CaseReport({state, sections, handleSection}) {
               </div>
               <div className="col-sm-3">
                 <label>Case Count Result</label>
-                <input value={state.caseRepCount} className="form-control border-bold" disabled />
+                <input
+                  id="caseCountResult"
+                  value={state.caseRepCount}
+                  className="form-control border-bold"
+                  disabled
+                />
               </div>
             </div>
             <div className="d-flex mt-3">
-              <button className="btn btn-primary rounded" onClick={handleCaseCount}>Case Count</button>
+              <button
+                id="caseCountBtn"
+                className="btn btn-primary rounded"
+                onClick={handleCaseCount}
+              >
+                Case Count
+              </button>
             </div>
             <div className="row mt-4">
               <div className="col-sm-12 table-responsive">
                 <table className="table table-responsive-sm">
                   <thead>
-                    <tr key={1}>
+                    <tr key={Math.random()}>
                       <th scope="col">Agent</th>
                       <th scope="col">Name</th>
                       <th scope="col">Email</th>
@@ -179,23 +219,26 @@ function CaseReport({state, sections, handleSection}) {
                     </tr>
                   </thead>
                   <tbody>
-                    {
-                        state.caseRep?.map((res,i) => {
-                            return <tr key={i}>
-                            <td>{ res.agentInfo ? res.agentInfo.agentName : '--' }</td>
-                            <td>{ res.name }</td>
-                            <td>{ res.email }</td>
-                            <td>{ res.policy_number }</td>
-                            <td>{ res.inc_comp_name }</td>
-                            <td>{ res.policy_type }</td>
-                            <td>{ res.mobile }</td>
-                            <td>{ res.caseStatus }</td>
-                            <td>{ res.assign_to }</td>
-                            <td><FontAwesomeIcon icon={faEye} /></td>
-                            </tr>
-                        })
-                    }
-                    <tr key={2}></tr>
+                    {state.caseRep?.map((res, i) => {
+                      return (
+                        <tr key={i}>
+                          <td>
+                            {res.agentInfo ? res.agentInfo.agentName : "--"}
+                          </td>
+                          <td>{res.name}</td>
+                          <td>{res.email}</td>
+                          <td>{res.policy_number}</td>
+                          <td>{res.inc_comp_name}</td>
+                          <td>{res.policy_type}</td>
+                          <td>{res.mobile}</td>
+                          <td>{res.caseStatus}</td>
+                          <td>{res.assign_to}</td>
+                          <td>
+                            <FontAwesomeIcon icon={faEye} id={"caseRepView" + i} />
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>

@@ -28,7 +28,7 @@ function UserReport() {
   let state = useSelector((state) => {
     return state.report;
   });
-  console.log(state);
+  // console.log(state);
 
   useEffect(() => {
     dispatch({

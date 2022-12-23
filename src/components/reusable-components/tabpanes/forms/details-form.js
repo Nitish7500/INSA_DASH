@@ -813,27 +813,27 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 ))}
               </select>
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Assign To</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="compDetailsAssignTo"
                   type="text"
                   name="userName"
-                  class="form-control"
+                  className="form-control"
                   value={details.assign_to ? details.assign_to : "-"}
                   disabled
                 />
               </div>
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Assign To Expert</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="compDetailsAssignExp"
                   type="text"
                   name="userName"
-                  class="form-control"
+                  className="form-control"
                   value="{{ caseone.assign_to_expert ? caseone.assign_to_expert : '--' }}"
                   disabled
                 />
@@ -841,14 +841,14 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             </div>
           </div>
           <div className="row mt-4">
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Assign To Company/IGMS</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="compDetailsCom/IGMS"
                   type="text"
                   name="userName"
-                  class="form-control"
+                  className="form-control"
                   value={
                     details.assignToCompanyIGMS
                       ? details.assignToCompanyIGMS
@@ -858,14 +858,14 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 />
               </div>
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Assign To Ombudsman</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="compDetailsOmb"
                   type="text"
                   name="userName"
-                  class="form-control"
+                  className="form-control"
                   value={
                     details.assignToOmbudsman ? details.assignToOmbudsman : "--"
                   }
@@ -873,14 +873,14 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 />
               </div>
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Assign To Legal Executive</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="compDetailsAssignLeg"
                   type="text"
                   name="userName"
-                  class="form-control"
+                  className="form-control"
                   value={
                     details.assignedLegalExecutive
                       ? details.assignedLegalExecutive
@@ -890,14 +890,14 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 />
               </div>
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Assign To Legal Sub Executive</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="compDetailsAssignSub"
                   type="text"
                   name="userName"
-                  class="form-control"
+                  className="form-control"
                   value={
                     details.assignedLegalSubExecutive
                       ? details.assignedLegalSubExecutive
@@ -907,27 +907,27 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 />
               </div>
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Lead Number</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="compDetailsLeadNo"
                   type="text"
                   name="userId"
-                  class="form-control"
+                  className="form-control"
                   value={details.leadId ? details.leadId.leadId : "--"}
                   disabled
                 />
               </div>
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Status</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="compDetailsStatus"
                   type="text"
                   name="currentStatus"
-                  class="form-control"
+                  className="form-control"
                   value={details.status ? details.status : "--"}
                   disabled
                 />
@@ -1002,40 +1002,40 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 }
               />
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Covid Complaint Check</label>
-              <div class="input-group">
+              <div className="input-group">
                 <label>Is it a Covid Complaint</label>
                 <input
                   id="compDetailsCovid"
                   type="checkbox"
                   name="covidCheck"
-                  class="form-control"
+                  className="form-control"
                   formControlName="covidCheck"
                   onChange={handleFormChange}
                 />
               </div>
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Service Complaint Check</label>
-              <div class="input-group">
+              <div className="input-group">
                 <label>As a Service Complaint or not</label>
                 <input
                   id="compDetailsSer"
                   type="checkbox"
                   name="asAServiceCheck"
-                  class="form-control"
+                  className="form-control"
                   formControlName="asAServiceCheck"
                   onChange={handleFormChange}
                 />
               </div>
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Assign To Internal Legal Executive</label>
               <input
                 id="compDetailsIntLeg"
                 type="text"
-                class="form-control"
+                className="form-control"
                 value={
                   details.assigned_internal_legal_executive
                     ? details.assigned_internal_legal_executive
@@ -1066,7 +1066,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
               <label>Email ID</label>
               <input
                 id="compDetailsEmail2"
-                class="form-control"
+                className="form-control"
                 type="text"
                 name="executive_created_email"
                 value={details.executive_created_email}
@@ -1077,19 +1077,19 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
               <label>Password</label>
               <input
                 id="compDetailsPass"
-                class="form-control"
+                className="form-control"
                 type="password"
                 name="password"
                 value={details.password}
                 onChange={handleFormChange}
               />
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Approved Claim Amount</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="compDetailsApvAmt"
-                  class="form-control"
+                  className="form-control"
                   type="text"
                   name="actualRefundAmount"
                   value={details.actualRefundAmount}

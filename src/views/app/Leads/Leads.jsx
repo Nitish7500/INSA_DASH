@@ -803,7 +803,7 @@ function LeadSection() {
                           onClick={() => handleShowOption(`option${i}`)}
                         >
                           <div
-                            class={
+                            className={
                               openOptions.includes(`option${i}`)
                                 ? "dropup btn-group m-0 p-0"
                                 : ""
@@ -2938,7 +2938,7 @@ function LeadSection() {
           <sapn className="alert-primary">Documents Upload</sapn>
         </ModalHeader>
         <ModalBody>
-          <div class="alert alert-dark" role="alert">
+          <div className="alert alert-dark" role="alert">
             This is a dark alert—check it out!
           </div>
         </ModalBody>
