@@ -93,9 +93,9 @@ function RegisteredLead({ state, sections, handleSection }) {
                   onChange={handleChange}
                   value={allRegisteredType}
                 >
-                  <option value={""}>Select Type</option>
-                  <option value="leadCreation">Lead Creation</option>
-                  <option value="leadMovement">Lead Movement</option>
+                  <option key={"select"} value={""}>Select Type</option>
+                  <option key={"leadCreation"} value="leadCreation">Lead Creation</option>
+                  <option key={"leadMovement"} value="leadMovement">Lead Movement</option>
                 </select>
               </div>
               <div className="col-sm-3 mt-auto">

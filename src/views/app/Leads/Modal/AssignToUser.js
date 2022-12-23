@@ -41,9 +41,9 @@ function AssignToUser({isOpen, onClose}) {
                   setassignToUser({ ...assignToUser, assignTo: e.target.value })
                 }
               >
-                <option disabled>Select User</option>
+                <option key={select} value={""}>Select User</option>
                 {state.assigUser?.map((res) => {
-                  return <option value={res.user_id}>{res.name}</option>;
+                  return <option key={res.user_id} value={res.user_id}>{res.name}</option>;
                 })}
               </select>
             </div>

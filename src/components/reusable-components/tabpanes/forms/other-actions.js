@@ -436,7 +436,7 @@ export default function OtherActions({ heading, complaintId }) {
                     onChange={handleSMReminderMail}
                   >
                     {selectReminderType.map((level) => (
-                      <option value={level.value}>{level.label}</option>
+                      <option key={level.value} value={level.value}>{level.label}</option>
                     ))}
                   </select>
                 </div>
@@ -470,9 +470,9 @@ export default function OtherActions({ heading, complaintId }) {
                       value={reminderMailForm.mailingTemplateSelect}
                       onChange={handleSMReminderMail}
                     >
-                      <option value="mailing_reminder">Template-1</option>
-                      <option value="mailing_reminder2">Template-2</option>
-                      <option value="mailing_reminder3">Template-3</option>
+                      <option key={"temp1"} value="mailing_reminder">Template-1</option>
+                      <option key={"temp2"} value="mailing_reminder2">Template-2</option>
+                      <option key={"temp3"} value="mailing_reminder3">Template-3</option>
                     </select>
                   </div>
                 </div>
@@ -1022,9 +1022,9 @@ export default function OtherActions({ heading, complaintId }) {
                     });
                   }}
                 >
-                  <option value="mailing_reminder">Template-1</option>
-                  <option value="mailing_reminder2">Template-2</option>
-                  <option value="mailing_reminder3">Template-3</option>
+                  <option key={"temp1"} value="mailing_reminder">Template-1</option>
+                  <option key={"temp2"} value="mailing_reminder2">Template-2</option>
+                  <option key={"temp3"} value="mailing_reminder3">Template-3</option>
                 </select>
               </div>
             </div>

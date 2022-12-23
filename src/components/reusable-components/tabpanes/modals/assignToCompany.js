@@ -90,7 +90,7 @@ export default function AssignCompany({isOpen, onClose}) {
                 <select id='dropdown1' name="resolutionType" className="form-control" onChange={(e)=>setSelectedUser(e.target.value)}>
                     {allUsers?.map((users) => {
                         return (
-                            <option value={users?._id}>{users ? users.name : ''}</option>
+                            <option key={users._id} value={users?._id}>{users ? users.name : ''}</option>
                         )
                     })}
                 </select>

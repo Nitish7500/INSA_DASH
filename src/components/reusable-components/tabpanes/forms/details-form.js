@@ -563,7 +563,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 // onBlur={handleBlur}
               >
                 {education.map((level) => (
-                  <option value={level.value}>{level.label}</option>
+                  <option key={level.value} value={level.value}>{level.label}</option>
                 ))}
               </select>
             </div>
@@ -602,13 +602,13 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 onChange={handleFormChange}
                 // onBlur={handleBlur}
               >
-                <option value="">Select a state..</option>
+                <option key={"state"} value="">Select a state..</option>
                 {states?.map((res) => {
                   // console.log(res)
-                  return <option value={res.name}>{res.name}</option>;
+                  return <option key={res.name} value={res.name}>{res.name}</option>;
                 })}
-                <option value="Bihar">Bihar</option>
-                <option value="2">2</option>
+                <option key={"bihar"} value="Bihar">Bihar</option>
+                <option key={"2"} value="2">2</option>
               </select>
             </div>
             <div className="col-sm-3">
@@ -621,9 +621,9 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 onChange={handleFormChange}
                 // onBlur={handleBlur}
               >
-                <option value="">Select District</option>
+                <option key={"district"} value="">Select District</option>
                 {districts?.map((res) => {
-                  return <option>{res}</option>;
+                  return <option key={"res"}>{res}</option>;
                 })}
               </select>
             </div>
@@ -640,7 +640,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 // onBlur={handleBlur}
               >
                 {occupation.map((key) => (
-                  <option value={key.value}>{key.label}</option>
+                  <option key={key.value} value={key.value}>{key.label}</option>
                 ))}
               </select>
             </div>
@@ -712,7 +712,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
               >
                 {policyTypes.map((policyType) => {
                   return (
-                    <option value={policyType._id}>{policyType.name}</option>
+                    <option key={policyType._id} value={policyType._id}>{policyType.name}</option>
                   );
                 })}
               </select>
@@ -730,7 +730,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 // onBlur={handleBlur}
               >
                 {complaintTypes.map((type) => (
-                  <option value={type._id}>{type.name}</option>
+                  <option key={type} value={type._id}>{type.name}</option>
                 ))}
               </select>
             </div>
@@ -745,7 +745,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 //   onBlur={handleBlur}
               >
                 {insuranceCompanies.map((insuranceCompany) => (
-                  <option value={insuranceCompany._id}>
+                  <option key={insuranceCompany._id} value={insuranceCompany._id}>
                     {insuranceCompany.name}
                   </option>
                 ))}
@@ -762,7 +762,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 //   onBlur={handleBlur}
               >
                 {policyTypes?.map((key) => (
-                  <option value={key._id}>{key.name}</option>
+                  <option key={key._id} value={key._id}>{key.name}</option>
                 ))}
               </select>
             </div>
@@ -777,7 +777,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 //   onBlur={handleBlur}
               >
                 {claimRejectionTypes.map((type) => (
-                  <option value={type.value}>{type.label}</option>
+                  <option key={type.value} value={type.value}>{type.label}</option>
                 ))}
               </select>
             </div>
@@ -794,7 +794,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 //   onBlur={handleBlur}
               >
                 {realtionships.map((key) => (
-                  <option value={key.value}>{key.label}</option>
+                  <option key={key.value} value={key.value}>{key.label}</option>
                 ))}
               </select>
             </div>
@@ -809,7 +809,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 //   onBlur={handleBlur}
               >
                 {movementOfCase.map((movement) => (
-                  <option value={movement.value}>{movement.label}</option>
+                  <option key={movement.value} value={movement.value}>{movement.label}</option>
                 ))}
               </select>
             </div>

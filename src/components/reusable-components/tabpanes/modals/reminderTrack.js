@@ -76,9 +76,9 @@ function ReminderTrackCom({ isOpen, onClose, details }) {
                     });
                   }}
                 >
-                  <option value={""}>Select</option>
-                  <option value="Single">Single</option>
-                  <option value="Multiple">Multiple</option>
+                  <option key={"select"} value={""}>Select</option>
+                  <option key={"single"} value="Single">Single</option>
+                  <option key={"multiple"} value="Multiple">Multiple</option>
                 </select>
               </div>
               <div className="col-sm-5">
@@ -95,9 +95,9 @@ function ReminderTrackCom({ isOpen, onClose, details }) {
                     });
                   }}
                 >
-                  <option value={""}>Select</option>
-                  <option value="nonResponsive">Non Responsive</option>
-                  <option value="outOfReach">Out Of Reach</option>
+                  <option key={"select"} value={""}>Select</option>
+                  <option key={"nonRes"} value="nonResponsive">Non Responsive</option>
+                  <option key={"outRea"} value="outOfReach">Out Of Reach</option>
                 </select>
               </div>
               <div className="col-sm-2">

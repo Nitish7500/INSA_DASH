@@ -126,7 +126,7 @@ export default function NonResponsive({ heading, details }) {
                 // onBlur={handleBlur}
               >
                 {nonResponsiveCustomerFlow.map((item) => (
-                  <option value={item.value}>{item.label}</option>
+                  <option key={item.value} value={item.value}>{item.label}</option>
                 ))}
               </select>
             </div>

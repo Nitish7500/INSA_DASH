@@ -111,9 +111,9 @@ function OmbExeRep({ sections, handleSection, state }) {
                   value={reportType}
                   onChange={handleChange}
                 >
-                  <option value={""}>Select Report Type</option>
-                  <option value="Ombudsman">Ombudsman</option>
-                  <option value="Ops">Ops Executive</option>
+                  <option key={"select"} value={""}>Select Report Type</option>
+                  <option key={"omb"} value="Ombudsman">Ombudsman</option>
+                  <option key={"opsExe"} value="Ops">Ops Executive</option>
                 </select>
               </div>
               <div className="col-sm-3 mt-auto">

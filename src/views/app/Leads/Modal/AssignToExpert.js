@@ -65,9 +65,9 @@ function AssignToExpert({ isOpen, onClose, details }) {
                   })
                 }
               >
-                <option disabled>Select User</option>
+                <option key={"select"} value={""}>Select User</option>
                 {state.assignExpert?.map((res) => {
-                  return <option value={res.user_id}>{res.name}</option>;
+                  return <option key={res.user_id} value={res.user_id}>{res.name}</option>;
                 })}
               </select>
             </div>

@@ -94,8 +94,8 @@ function UserSec({ sections, handleSection }) {
                   name="status"
                   onChange={handleStatusChange}
                 >
-                  <option value="true">True</option>
-                  <option value="false">false</option>
+                  <option key={"true"} value="true">True</option>
+                  <option key={"false"} value="false">false</option>
                 </select>
               </div>
               <div className="col-sm-3">
@@ -106,9 +106,9 @@ function UserSec({ sections, handleSection }) {
                   name="groupWise"
                   onChange={handleGroupChange}
                 >
-                  <option value="Advisor">Advisor</option>
-                  <option value="User">User</option>
-                  <option value="Admin">Admin</option>
+                  <option key={"advisor"} value="Advisor">Advisor</option>
+                  <option key={"user"} value="User">User</option>
+                  <option key={"admin"} value="Admin">Admin</option>
                 </select>
               </div>
             </div>

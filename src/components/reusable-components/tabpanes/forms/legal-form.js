@@ -103,8 +103,8 @@ export default function LegalForm({
                     name="legal_notice"
                     onChange={handleFormChange}
                   >
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
+                    <option key={"yes"} value="Yes">Yes</option>
+                    <option key={"no"} value="No">No</option>
                   </select>
                 </div>
 
@@ -214,7 +214,7 @@ export default function LegalForm({
                     onChange={handleFormChange}
                   >
                     {consumerCourtLocations.map((item) => (
-                      <option value={item.value}>{item.label}</option>
+                      <option key={item.value} value={item.value}>{item.label}</option>
                     ))}
                   </select>
                 </div>

@@ -91,12 +91,12 @@ function PaymentRep({ state, handleSection, sections }) {
                   className="form-control border-bold"
                   onChange={handleStatusChange}
                 >
-                  <option value={""}>Select Status</option>
-                  <option value="PAID">PAID</option>
-                  <option value="PENDING">PENDING</option>
-                  <option value="INITIATED">INITIATED</option>
-                  <option value="FAILED">FAILED</option>
-                  <option value="WAIVEOFF">WAIVEOFF</option>
+                  <option key={"select"} value={""}>Select Status</option>
+                  <option key={"paid"} value="PAID">PAID</option>
+                  <option key={"pending"} value="PENDING">PENDING</option>
+                  <option key={"initiated"} value="INITIATED">INITIATED</option>
+                  <option key={"failed"} value="FAILED">FAILED</option>
+                  <option key={"waiveoff"} value="WAIVEOFF">WAIVEOFF</option>
                 </select>
               </div>
               <div className="col-sm-3">
@@ -106,12 +106,12 @@ function PaymentRep({ state, handleSection, sections }) {
                   className="form-control border-bold"
                   onChange={handlePayStatusChange}
                 >
-                  <option value={""}>Select Fianl Payment Status</option>
-                  <option value="PAID">PAID</option>
-                  <option value="PENDING">PENDING</option>
-                  <option value="INITIATED">INITIATED</option>
-                  <option value="FAILED">FAILED</option>
-                  <option value="WAIVEOFF">WAIVEOFF</option>
+                  <option key={"select"} value={""}>Select Fianl Payment Status</option>
+                  <option key={"paid"} value="PAID">PAID</option>
+                  <option key={"pending"} value="PENDING">PENDING</option>
+                  <option key={"initiated"} value="INITIATED">INITIATED</option>
+                  <option key={"faild"} value="FAILED">FAILED</option>
+                  <option key={"waiveOff"} value="WAIVEOFF">WAIVEOFF</option>
                 </select>
               </div>
             </div>

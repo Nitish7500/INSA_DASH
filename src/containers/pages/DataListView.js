@@ -656,13 +656,13 @@ const DataListView = ({
                     onChange={handlePayFeeChange}
                     value={payFeeObj.pay_via}
                   >
-                    <option value={""} disabled>
+                    <option key={"select"} value={""} disabled>
                       Select Method
                     </option>
-                    <option value={"Cash"}>Cash</option>
-                    <option value={"Paytm"}>Paytm</option>
-                    <option value={"Phone_Pay"}>Phone Pay</option>
-                    <option value={"Other"}>Other</option>
+                    <option key={"cash"} value={"Cash"}>Cash</option>
+                    <option key={"paytm"} value={"Paytm"}>Paytm</option>
+                    <option key={"phonePay"} value={"Phone_Pay"}>Phone Pay</option>
+                    <option key={"other"} value={"Other"}>Other</option>
                   </select>
                 </div>
                 {/* {console.log(complaint, policyNumber)} */}
@@ -789,17 +789,17 @@ const DataListView = ({
                     value={finalPayObj.final_pay_via}
                     onChange={finalPayFunc}
                   >
-                    <option value={""} disabled>
+                    <option key={"select"} value={""} disabled>
                       Select Method
                     </option>
-                    <option value={"Cash"}>Cash</option>
-                    <option value={"Paytm"}>Paytm</option>
-                    <option value={"Bank_Transfer"}>Bank Transfer</option>
-                    <option value={"NEFT"}>NEFT</option>
-                    <option value={"Cheque"}>Cheque</option>
-                    <option value={"Google_Pay"}>Google Pay</option>
-                    <option value={"Phone_Pay"}>Phone Pay</option>
-                    <option value={"Other"}>Other</option>
+                    <option key={"cash"} value={"Cash"}>Cash</option>
+                    <option key={"paytm"} value={"Paytm"}>Paytm</option>
+                    <option key={"bankTra"} value={"Bank_Transfer"}>Bank Transfer</option>
+                    <option key={"neft"} value={"NEFT"}>NEFT</option>
+                    <option key={"chewue"} value={"Cheque"}>Cheque</option>
+                    <option key={"googlePay"} value={"Google_Pay"}>Google Pay</option>
+                    <option key={"phonePay"} value={"Phone_Pay"}>Phone Pay</option>
+                    <option key={"other"} value={"Other"}>Other</option>
                   </select>
                 </div>
                 <div className="mt-2">
@@ -810,11 +810,11 @@ const DataListView = ({
                     value={finalPayObj.final_payment_status}
                     onChange={finalPayFunc}
                   >
-                    <option value={""} disabled>
+                    <option key={"select"} value={""} disabled>
                       Select Final Payment Status
                     </option>
-                    <option value={"PAID"}>PAID</option>
-                    <option value={"WAIVEOFF"}>WAIVEOFF</option>
+                    <option key={"paid"} value={"PAID"}>PAID</option>
+                    <option key={"waiveoff"} value={"WAIVEOFF"}>WAIVEOFF</option>
                   </select>
                 </div>
                 <div className="mt-2 d-flex justify-content-end">
@@ -1223,9 +1223,9 @@ const DataListView = ({
                   });
                 }}
               >
-                <option value={""}>Select the Section</option>
-                <option value={"status_section"}>Status Section</option>
-                <option value={"ombudsman_section"}>Ombudsman Section</option>
+                <option key={"select"} value={""}>Select the Section</option>
+                <option key={"status"} value={"status_section"}>Status Section</option>
+                <option key={"ombd"} value={"ombudsman_section"}>Ombudsman Section</option>
               </select>
             </div>
             {updateInfo.section === "status_section" ? (
@@ -1244,9 +1244,9 @@ const DataListView = ({
                       });
                     }}
                   >
-                    <option value={""}>Select Sudo User</option>
+                    <option key={"select"} value={""}>Select Sudo User</option>
                     {Object.entries(adminStatusChangePasswords)?.map((res) => {
-                      return <option value={res[0]}>{res[0]}</option>;
+                      return <option key={res[0]} value={res[0]}>{res[0]}</option>;
                     })}
                   </select>
                 </div>
@@ -1299,9 +1299,9 @@ const DataListView = ({
                                     });
                                   }}
                                 >
-                                  <option value={""}>Select Status</option>
+                                  <option key={"select"} value={""}>Select Status</option>
                                   {state.statusBucket?.map((res) => {
-                                    return <option value={res}>{res}</option>;
+                                    return <option key={res} value={res}>{res}</option>;
                                   })}
                                 </select>
                               </td>
@@ -1338,8 +1338,8 @@ const DataListView = ({
                       });
                     }}
                   >
-                    <option value={""}>Select Field</option>
-                    <option className="" value={"actualRefundAmount"}>
+                    <option key={"select"} value={""}>Select Field</option>
+                    <option key={"resAmt"} className="" value={"actualRefundAmount"}>
                       {" "}
                       Resolved Amount
                     </option>

@@ -593,10 +593,10 @@ function LeadSection() {
               value={status.selectedSortOrder ?? ""}
               onChange={handleSearch}
             >
-              <option value={""}>Select Sort Order</option>
-              <option value={"First"}>First</option>
-              <option value={"Second"}>Second</option>
-              <option>First</option>
+              <option key={"select"} value={""}>Select Sort Order</option>
+              <option key={"first"} value={"First"}>First</option>
+              <option key={"sec"} value={"Second"}>Second</option>
+              <option key={"first1"}>First</option>
             </select>
           </div>
           <div className=" d-block h-20 mt-auto mb-auto ml-auto mr-auto">
@@ -1619,9 +1619,9 @@ function LeadSection() {
                   setassignToUser({ ...assignToUser, assignTo: e.target.value })
                 }
               >
-                <option disabled>Select User</option>
+                <option key={"select"} value="">Select User</option>
                 {state.assigUser?.map((res) => {
-                  return <option value={res.user_id}>{res.name}</option>;
+                  return <option key={res.user_id} value={res.user_id}>{res.name}</option>;
                 })}
               </select>
             </div>
@@ -2194,12 +2194,12 @@ function LeadSection() {
                 className="form-control border-0 border"
                 id="policyTypeInput"
               >
-                <option>NA</option>
-                <option>Individual</option>
-                <option>Family Floater</option>
-                <option>Group</option>
-                <option>Bank</option>
-                <option>Card</option>
+                <option key={"na"}>NA</option>
+                <option key={"individual"}>Individual</option>
+                <option key={"family"}>Family Floater</option>
+                <option key={"group"}>Group</option>
+                <option key={"bank"}>Bank</option>
+                <option key={"card"}>Card</option>
               </select>
             </div>
             <div className="form-control border-0">
@@ -2314,9 +2314,9 @@ function LeadSection() {
                 className="form-control border"
                 id="cashlessOrReimbursment"
               >
-                <option>NA</option>
-                <option>Cashless</option>
-                <option>Reimbursment is Applied</option>
+                <option key={"na"}>NA</option>
+                <option key={"cashless"}>Cashless</option>
+                <option key={"reim"}>Reimbursment is Applied</option>
               </select>
             </div>
             <div className="form-control border-0">
@@ -2340,9 +2340,9 @@ function LeadSection() {
                 placeholder="Select"
                 id="newCustomerMoreThanOnePolicy"
               >
-                <option value={""}>Select</option>
-                <option value={"Yes"}>Yes</option>
-                <option value={"No"}>No</option>
+                <option key={"select"} value={""}>Select</option>
+                <option key={"yes"} value={"Yes"}>Yes</option>
+                <option key={"no"} value={"No"}>No</option>
               </select>
             </div>
             <div className="form-control border-0">
@@ -2352,9 +2352,9 @@ function LeadSection() {
                 placeholder="Select"
                 id="newCustomerPolicyPorted"
               >
-                <option value={""}>Select</option>
-                <option value={"Yes"}>Yes</option>
-                <option value={"No"}>No</option>
+                <option key={"select"} value={""}>Select</option>
+                <option key={"yes"} value={"Yes"}>Yes</option>
+                <option key={"no"} value={"No"}>No</option>
               </select>
             </div>
             <div className="form-control border-0">
@@ -2362,9 +2362,9 @@ function LeadSection() {
                 Did You Receive Your Claim Rejection Letter?
               </label>
               <select className="form-control border" id="receiveClainRejLett">
-                <option value={""}>Select</option>
-                <option value={"Yes"}>Yes</option>
-                <option value={"No"}>No</option>
+                <option key={"select"} value={""}>Select</option>
+                <option key={"yes"} value={"Yes"}>Yes</option>
+                <option key={"no"} value={"No"}>No</option>
               </select>
             </div>
             <div className="form-control border-0">
@@ -2378,9 +2378,9 @@ function LeadSection() {
             <div className="form-control border-0">
               <label id="prevClainHistory">Previous Claim History?</label>
               <select className="form-control border" id="prevClainHistory">
-                <option value={""}>Select</option>
-                <option value={"Yes"}>Yes</option>
-                <option value={"No"}>No</option>
+                <option key={"select"} value={""}>Select</option>
+                <option key={"yes"} value={"Yes"}>Yes</option>
+                <option key={"no"} value={"No"}>No</option>
               </select>
             </div>
             <div className="form-control border-0">
@@ -2388,9 +2388,9 @@ function LeadSection() {
                 Have You Approached Insurance Company?
               </label>
               <select className="form-control border" id="approachedIncComp">
-                <option value={""}>Select</option>
-                <option value={"Yes"}>Yes</option>
-                <option value={"No"}>No</option>
+                <option key={"select"} value={""}>Select</option>
+                <option key={"yes"} value={"Yes"}>Yes</option>
+                <option key={"no"} value={"No"}>No</option>
               </select>
             </div>
             <div className="form-control border-0">
@@ -2398,9 +2398,9 @@ function LeadSection() {
                 Have You Approached Insurance Ombudsman?
               </label>
               <select className="form-control border" id="approachedIncOmbuds">
-                <option value={""}>Select</option>
-                <option value={"Yes"}>Yes</option>
-                <option value={"No"}>No</option>
+                <option key={"select"} value={""}>Select</option>
+                <option key={"yes"} value={"Yes"}>Yes</option>
+                <option key={"no"} value={"No"}>No</option>
               </select>
             </div>
             <div className="form-control border-0">
@@ -2464,9 +2464,9 @@ function LeadSection() {
                 Did You Receive Settlement Letter?
               </label>
               <select className="form-control border" id="receivedLetter">
-                <option value={""}>Select</option>
-                <option value={"Yes"}>Yes</option>
-                <option value={"No"}>No</option>
+                <option key={"select"} value={""}>Select</option>
+                <option key={"yes"} value={"Yes"}>Yes</option>
+                <option key={"no"} value={"No"}>No</option>
               </select>
             </div>
             <div className="form-control border-0">
@@ -2722,12 +2722,12 @@ function LeadSection() {
                   })
                 }
               >
-                <option selected disabled value={""}>
+                <option key={"select"} value={""}>
                   Select
                 </option>
-                <option value={"running"}>running</option>
-                <option value={"testing"}>testing</option>
-                <option value={"Other"}>Other</option>
+                <option key={"running"} value={"running"}>running</option>
+                <option key={"testing"} value={"testing"}>testing</option>
+                <option key={"other"} value={"Other"}>Other</option>
               </select>
             </div>
             {followUpObj.com_dis == "Other" ? (
@@ -2834,12 +2834,12 @@ function LeadSection() {
                   });
                 }}
               >
-                <option selected disabled>
+                <option key={"select"}>
                   Select Status
                 </option>
-                <option>Ringing</option>
-                <option>Testing</option>
-                <option>Other</option>
+                <option key={"ringing"}>Ringing</option>
+                <option key={"testing"}>Testing</option>
+                <option key={"other"}>Other</option>
               </select>
               {leadCancelDetail.state?.desc === "Other" ? (
                 <div className="form-control border-0">

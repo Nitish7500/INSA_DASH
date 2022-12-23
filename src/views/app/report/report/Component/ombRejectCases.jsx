@@ -99,10 +99,10 @@ function OmbRejectCases({ state, handleSection, sections }) {
                   name="omdRejectType"
                   onChange={handleChange}
                 >
-                  <option value={""}>Select Type</option>
-                  <option value="complaint">B2C</option>
-                  <option value="agent">Agent</option>
-                  <option value="partner">Partner</option>
+                  <option key={"select"} value={""}>Select Type</option>
+                  <option key={"b2c"} value="complaint">B2C</option>
+                  <option key={"agent"} value="agent">Agent</option>
+                  <option key={"partner"} value="partner">Partner</option>
                 </select>
               </div>
               <div className="col-sm-3 mt-auto">

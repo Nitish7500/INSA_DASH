@@ -71,9 +71,9 @@ const AvailityDefaultValues = () => {
           <AvField name="location.city" label="City" required />
 
           <AvField type="select" name="location.state" label="State" required>
-            <option>Something</option>
-            <option>Something else</option>
-            <option>Florida</option>
+            <option key={"something"}>Something</option>
+            <option key={"someElse"}>Something else</option>
+            <option key={"florida"}>Florida</option>
           </AvField>
 
           <AvField name="location.zip" label="ZIP Code" required />

@@ -198,10 +198,10 @@ const DefaultDashboard = ({ intl, match }) => {
                   });
                 }}
               >
-                <option selected>--All--</option>
+                <option key={"select"} selected>--All--</option>
                 {data.activeUsers?.length
                   ? data.activeUsers?.map((res) => {
-                      return <option value={res.user_id}>{res.name}</option>;
+                      return <option key={res.user_id} value={res.user_id}>{res.name}</option>;
                     })
                   : null}
               </select>
@@ -214,11 +214,11 @@ const DefaultDashboard = ({ intl, match }) => {
                 name="dateWise"
                 onChange={handleDateWiseChange}
               >
-                <option value={"Daily"}>Daily</option>
-                <option value={"Monthly"} selected>
+                <option key={"daily"} value={"Daily"}>Daily</option>
+                <option key={"monthly"} value={"Monthly"} selected>
                   Monthly
                 </option>
-                <option value={"Yearly"}>Yearly</option>
+                <option key={"yearly"} value={"Yearly"}>Yearly</option>
               </select>
             </div>
             <div className="col-md">
@@ -255,13 +255,13 @@ const DefaultDashboard = ({ intl, match }) => {
                   setOmbObj({ ...ombObj, [e.target.name]: e.target.value });
                 }}
               >
-                <option selected disabled>
+                <option key={"select"} selected value={""}>
                   Select Location
                 </option>
-                <option value={"All"}>--All--</option>
+                <option key={"all"} value={"All"}>--All--</option>
                 {data.states?.length
                   ? data.states?.map((x) => {
-                      return <option value={x.name}>{x.name}</option>;
+                      return <option key={x.name} value={x.name}>{x.name}</option>;
                     })
                   : null}
               </select>
@@ -278,11 +278,11 @@ const DefaultDashboard = ({ intl, match }) => {
                   setOmbObj({ ...ombObj, [e.target.name]: e.target.value });
                 }}
               >
-                <option selected disabled>
+                <option key={"select"} value={""}>
                   Select Status
                 </option>
                 {ombudsmanStatusList?.map((res) => {
-                  return <option value={res}>{res}</option>;
+                  return <option key={res?.toString()} value={res}>{res}</option>;
                 })}
               </select>
             </div>

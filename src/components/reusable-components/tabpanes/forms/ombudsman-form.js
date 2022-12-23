@@ -367,7 +367,7 @@ export default function OmbudsmanForm({
                 value={details.stateName}
               >
                 {ombudsmanLocation.map((item) => (
-                  <option value={item.value}>{item.label}</option>
+                  <option key={item.value} value={item.value}>{item.label}</option>
                 ))}
               </select>
             </div>
@@ -501,22 +501,22 @@ export default function OmbudsmanForm({
                 name="hearingComment"
                 onChange={handleFormChange}
               >
-                <option value="">Select Type</option>
-                <option value="RefundAccepted">Refund Accepted</option>
-                <option value="SinglePayAccepted">Single Pay Accepted</option>
-                <option value="SinglePayAdditionalPayment">
+                <option key={"select"} value="">Select Type</option>
+                <option key={"Refund"} value="RefundAccepted">Refund Accepted</option>
+                <option key={"SinglePay"} value="SinglePayAccepted">Single Pay Accepted</option>
+                <option key={"SingPayAdd"} value="SinglePayAdditionalPayment">
                   Single Pay with additional Payment
                 </option>
-                <option value="SinglePaySomeRefund">
+                <option key={"SPR"} value="SinglePaySomeRefund">
                   Single Pay with Some Refund
                 </option>
-                <option value="ClaimPayable">Claim Payable</option>
-                <option value="ClaimPayableInterest">
+                <option key={"claimPay"} value="ClaimPayable">Claim Payable</option>
+                <option key={"claimPayInt"} value="ClaimPayableInterest">
                   Claim Payable with Interest
                 </option>
-                <option value="ClaimRejected">Claim is rejected</option>
-                <option value="RefundRejected">Refund is Rejected</option>
-                <option value="DecisionPending">Decision Pending</option>
+                <option key={"claimRej"} value="ClaimRejected">Claim is rejected</option>
+                <option key={"refuncdRej"} value="RefundRejected">Refund is Rejected</option>
+                <option key={"desPen"} value="DecisionPending">Decision Pending</option>
               </select>
             </div>
           </div>
@@ -530,8 +530,8 @@ export default function OmbudsmanForm({
                 name="check_status"
                 onChange={handleFormChange}
               >
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option key={"yes"} value="Yes">Yes</option>
+                <option key={"no"} value="No">No</option>
               </select>
             </div>
             <div className="col-sm-3">
@@ -572,7 +572,7 @@ export default function OmbudsmanForm({
                 onChange={handleFormChange}
               >
                 {resolutionType.map((item) => (
-                  <option value={item.value}>{item.label}</option>
+                  <option key={item.value} value={item.value}>{item.label}</option>
                 ))}
               </select>
             </div>
@@ -651,12 +651,12 @@ export default function OmbudsmanForm({
                 onChange={handleFormChange}
                 value={details.ombudsmanPendingReason}
               >
-                <option value="">Select Type</option>
-                <option value="mailPendingFromCustomerEnd">
+                <option key={"select"} value="">Select Type</option>
+                <option key={"MPCS"} value="mailPendingFromCustomerEnd">
                   Mail Pending from Customer's Side
                 </option>
-                <option value="escalationPending">Escalation Pending</option>
-                <option value="documentPending">Document Pending</option>
+                <option key={"escPen"} value="escalationPending">Escalation Pending</option>
+                <option key={"docPen"} value="documentPending">Document Pending</option>
               </select>
             </div>
             <div className="col-sm-3">

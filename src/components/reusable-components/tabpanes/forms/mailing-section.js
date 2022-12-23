@@ -138,9 +138,9 @@ export default function MailingSectionForm({
                 formControlName="service_id"
                 onChange={handleFormChange}
               >
-                <option value={""}> Select</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option key={"select"} value={""}> Select</option>
+                <option key={"yes"} value="Yes">Yes</option>
+                <option key={"no"} value="No">No</option>
               </select>
             </div>
             <div className="col-sm-3">
@@ -166,25 +166,25 @@ export default function MailingSectionForm({
                   name="selectDate"
                   formControlName="sample"
                 >
-                  <option value={""}>Select Type</option>
-                  <option value="compDate">Complaint Date</option>
-                  <option value="respDate">
+                  <option key={"SelectType"} value={""}>Select Type</option>
+                  <option key={"ComDate"} value="compDate">Complaint Date</option>
+                  <option key={"FDate"} value="respDate">
                     First Response Date from Company
                   </option>
-                  <option value="secRespDate">
+                  <option key={"SDate"} value="secRespDate">
                     Second Response Date from Company
                   </option>
-                  <option value="compEsclDate">
+                  <option key={"EscDate"} value="compEsclDate">
                     Escalation Date Sent to Company
                   </option>
-                  <option value="reqRaisedDate">Requirement Raised Date</option>
-                  <option value="reqRevertDate">
+                  <option key={"reqRaisedDt"} value="reqRaisedDate">Requirement Raised Date</option>
+                  <option key={"reqREv"} value="reqRevertDate">
                     Requirement Reverted Date
                   </option>
-                  <option value="firstRemSentDate">
+                  <option key={"FRemDate"} value="firstRemSentDate">
                     First Reminder Sent Date
                   </option>
-                  <option value="secRemSentDate">
+                  <option key={"secSentDate"} value="secRemSentDate">
                     Second Reminder Sent Date
                   </option>
                 </select>
@@ -277,8 +277,8 @@ export default function MailingSectionForm({
                 onChange={handleFormChange}
                 name="is_draft_mail_send"
               >
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option key={"yes"} value="Yes">Yes</option>
+                <option key={"no"} value="No">No</option>
               </select>
             </div>
             <div className="col-sm-3">
@@ -318,9 +318,9 @@ export default function MailingSectionForm({
                 name="isRequirement"
                 onChange={handleFormChange}
               >
-                <optio value={""}></optio>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option key={""} value={""}>Select</option>
+                <option key={"yes"} value="Yes">Yes</option>
+                <option key={"no"} value="No">No</option>
               </select>
             </div>
             <div className="col-sm-3">
@@ -332,9 +332,9 @@ export default function MailingSectionForm({
                 name="isRequirementReverted"
                 onChange={handleFormChange}
               >
-                <optio value={""}></optio>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option key={"select"} value={""}>Select</option>
+                <option key={"yes"} value="Yes">Yes</option>
+                <option key={"no"} value="No">No</option>
               </select>
             </div>
           </div>
@@ -351,8 +351,8 @@ export default function MailingSectionForm({
                 onChange={handleFormChange}
                 disabled
               >
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option key={"yes"} value="Yes">Yes</option>
+                <option key={"no"} value="No">No</option>
               </select>
             </div>
             <div className="col-sm3">
@@ -364,9 +364,9 @@ export default function MailingSectionForm({
                 name="reminder_first"
                 onChange={handleFormChange}
               >
-                <option value={""}></option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option key={"select"} value={""}>Select</option>
+                <option key={"yes"} value="Yes">Yes</option>
+                <option key={"no"} value="No">No</option>
               </select>
             </div>
             <div className="col-sm-3">
@@ -378,28 +378,28 @@ export default function MailingSectionForm({
                 name="complaintDelayReason"
                 onChange={handleFormChange}
               >
-                <option value={""}>Select Delay Reason</option>
-                <option value="Customer not responding">
+                <option key={"Select"} value={""}>Select Delay Reason</option>
+                <option key={"cusNRes"} value="Customer not responding">
                   Customer not responding
                 </option>
-                <option value="Customer responding but not doing the mail">
+                <option key={"CusRes"} value="Customer responding but not doing the mail">
                   Customer responding but not doing the mail
                 </option>
-                <option value="Customer is not fulfilling the requirements raised by the company">
+                <option key={"Cus2"} value="Customer is not fulfilling the requirements raised by the company">
                   Customer is not fulfilling the requirements raised by the
                   company
                 </option>
-                <option value="Company/Hospital is not fulfilling the requirements.">
+                <option key={"cus3"} value="Company/Hospital is not fulfilling the requirements.">
                   Company/Hospital is not fulfilling the requirements.
                 </option>
-                <option value="Customer is not fulfilling the requirements raised by the executive">
+                <option key={"cus4"} value="Customer is not fulfilling the requirements raised by the executive">
                   Customer is not fulfilling the requirements raised by the
                   executive
                 </option>
-                <option value="Not getting the approval from expert end">
+                <option key={"noGetting"} value="Not getting the approval from expert end">
                   Not getting the approval from expert end
                 </option>
-                <option value="Others">Others</option>
+                <option key={"others"} value="Others">Others</option>
               </select>
             </div>
             <div className="col-sm-3">
@@ -411,8 +411,8 @@ export default function MailingSectionForm({
                 name="escalation_first"
                 onChange={handleFormChange}
               >
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option key={"yes"} value="Yes">Yes</option>
+                <option key={"no"} value="No">No</option>
               </select>
             </div>
           </div>
@@ -438,9 +438,9 @@ export default function MailingSectionForm({
                 name="isRequirementReverted"
                 onChange={handleFormChange}
               >
-                <option value={""}></option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option key={"Select"} value={""}></option>
+                <option key={"yes"} value="Yes">Yes</option>
+                <option key={"no"} value="No">No</option>
               </select>
             </div>
           </div>
@@ -457,9 +457,9 @@ export default function MailingSectionForm({
                 onChange={handleFormChange}
                 disabled
               >
-                <option value={""}></option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option key={"select"} value={""}>Select</option>
+                <option key={"yes"} value="Yes">Yes</option>
+                <option key={"no"} value="No">No</option>
               </select>
             </div>
             <div className="col-sm-3">
@@ -471,9 +471,9 @@ export default function MailingSectionForm({
                 name="reminder_second"
                 onChange={handleFormChange}
               >
-                <option value={""}></option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option key={"select"} value={""}>Select</option>
+                <option key={"yes"} value="Yes">Yes</option>
+                <option key={"no"} value="No">No</option>
               </select>
             </div>
             <div className="col-sm-3">

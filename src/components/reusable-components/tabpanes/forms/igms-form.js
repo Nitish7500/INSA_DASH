@@ -64,13 +64,13 @@ export default function IGMSForm ({ heading, details, complaintId, handleFormCha
                             <label>IGMS Done By</label>
                             <select id='igmsDoneBy' className='form-control' name="IGMS_Done"  value={details.IGMS_Done} onChange={handleFormChange} >
                                 
-                                <option value="PAN-No">Pan No.</option>
-                                <option value="Mobile-No">Mobile No.</option>
-                                <option value="LandLine-No">Landline No.</option>
-                                <option value="Voter-ID-No">Voter ID card number</option>
-                                <option value="Ration-Card-No">Ration Card No.</option>
-                                <option value="Passport-No">Passport No.</option>
-                                <option value="DOB">Date of Birth</option>
+                                <option key={"panNo"} value="PAN-No">Pan No.</option>
+                                <option key={"moNo"} value="Mobile-No">Mobile No.</option>
+                                <option key={"landLine"} value="LandLine-No">Landline No.</option>
+                                <option key={"voterId"} value="Voter-ID-No">Voter ID card number</option>
+                                <option key={"RationCard"} value="Ration-Card-No">Ration Card No.</option>
+                                <option key={"passportNo"} value="Passport-No">Passport No.</option>
+                                <option key={"DOB"} value="DOB">Date of Birth</option>
                             </select>
                         </div>
                         <div className='col-sm-3'>

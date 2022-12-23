@@ -143,19 +143,19 @@ function Customer() {
                       });
                     }}
                   >
-                    <option value={""} selected disabled>
+                    <option key={"select"} value={""} selected disabled>
                       Select Sort Order
                     </option>
-                    <option value={"firstName:ASC"}>ASC First Name</option>
-                    <option value={"firstName:DESC"}>DESC First Name</option>
-                    <option value={"lastName:ASC"}>ASC Last Name</option>
-                    <option value={"lastName:DESC"}>DESC Last Name</option>
-                    <option value={"email:ASC"}>ASC Email</option>
-                    <option value={"email:DESC"}>DESC Email</option>
-                    <option value={"phone:ASC"}>ASC Phone</option>
-                    <option value={"phone:DESC"}>DESC Phone</option>
-                    <option value={"createdAt:ASC"}>ASC Created At</option>
-                    <option value={"createdAt:DESC"}>DESC Created At</option>
+                    <option key={"ascFirst"} value={"firstName:ASC"}>ASC First Name</option>
+                    <option key={"descFirst"} value={"firstName:DESC"}>DESC First Name</option>
+                    <option key={"ascLast"} value={"lastName:ASC"}>ASC Last Name</option>
+                    <option key={"descLast"} value={"lastName:DESC"}>DESC Last Name</option>
+                    <option key={"ascEmail"} value={"email:ASC"}>ASC Email</option>
+                    <option key={"descEmail"} value={"email:DESC"}>DESC Email</option>
+                    <option key={"ascPhone"} value={"phone:ASC"}>ASC Phone</option>
+                    <option key={"descPhone"} value={"phone:DESC"}>DESC Phone</option>
+                    <option key={"ascCreated"} value={"createdAt:ASC"}>ASC Created At</option>
+                    <option key={"descCreatedAt"} value={"createdAt:DESC"}>DESC Created At</option>
                   </select>
                   {/* <input className="form-control border" id="customer" /> */}
                 </div>
