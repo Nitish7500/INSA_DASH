@@ -876,7 +876,7 @@ export default function OtherActions({ heading, complaintId }) {
                   {/* <ModalBody>
                     <h3 className="text-muted text-thin">Lead ID : </h3>
                     <FormGroup className="my-3">
-                      <Label for="companyresponse">
+                      <Label htmlFor="companyresponse">
                         Company Response Documents :
                       </Label>
                       <Input
@@ -886,11 +886,11 @@ export default function OtherActions({ heading, complaintId }) {
                       />
                     </FormGroup>
                     <FormGroup className="my-3">
-                      <Label for="igms">IGMS Documents :</Label>
+                      <Label htmlFor="igms">IGMS Documents :</Label>
                       <Input id="igms" name="igmsDoc" type="file" />
                     </FormGroup>
                     <FormGroup className="my-3">
-                      <Label for="awardrejected">
+                      <Label htmlFor="awardrejected">
                         Award Rejected Documents :
                       </Label>
                       <Input
@@ -900,13 +900,13 @@ export default function OtherActions({ heading, complaintId }) {
                       />
                     </FormGroup>
                     <FormGroup className="my-3">
-                      <Label for="ombudsman">
+                      <Label htmlFor="ombudsman">
                         Ombudsman Requirement Documents :
                       </Label>
                       <Input id="ombudsman" name="ombudsmanDoc" type="file" />
                     </FormGroup>
                     <FormGroup className="my-3">
-                      <Label for="courier">
+                      <Label htmlFor="courier">
                         Complaint form Courier Receipt :
                       </Label>
                       <Input
@@ -916,7 +916,7 @@ export default function OtherActions({ heading, complaintId }) {
                       />
                     </FormGroup>
                     <FormGroup className="my-3">
-                      <Label for="form6a">Form 6A Courier Receipt :</Label>
+                      <Label htmlFor="form6a">Form 6A Courier Receipt :</Label>
                       <Input
                         id="form6a"
                         name="form6aCourierReceiptDoc"

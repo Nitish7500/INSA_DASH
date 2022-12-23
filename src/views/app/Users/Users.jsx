@@ -415,7 +415,7 @@ function Users() {
                 <label
                   style={{ fontSize: "1rem" }}
                   className="form-control border-0 font-weight-bold"
-                  htmlFor="userFormName"
+                  htmlhtmlFor="userFormName"
                 >
                   Name
                 </label>
@@ -434,7 +434,7 @@ function Users() {
                 <label
                   style={{ fontSize: "1rem" }}
                   className="form-control border-0 font-weight-bold"
-                  htmlFor="userFormEmail"
+                  htmlhtmlFor="userFormEmail"
                 >
                   Email
                 </label>
@@ -452,7 +452,7 @@ function Users() {
                 <label
                   style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormNumber"
+                  htmlhtmlFor="userFormNumber"
                 >
                   Mobile Number
                 </label>
@@ -469,7 +469,7 @@ function Users() {
                 <label
                   style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormGender"
+                  htmlhtmlFor="userFormGender"
                 >
                   Gender
                 </label>
@@ -496,7 +496,7 @@ function Users() {
                 <label
                   style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormProfileInfo"
+                  htmlhtmlFor="userFormProfileInfo"
                 >
                   Profile Information
                 </label>
@@ -514,7 +514,7 @@ function Users() {
                 <label
                   style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormUserType"
+                  htmlhtmlFor="userFormUserType"
                 >
                   User Type
                 </label>
@@ -541,7 +541,7 @@ function Users() {
                 <label
                   style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormUserStatus"
+                  htmlhtmlFor="userFormUserStatus"
                 >
                   User Status
                 </label>
@@ -568,7 +568,7 @@ function Users() {
                 <label
                   style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormUserInAnyPolicy"
+                  htmlhtmlFor="userFormUserInAnyPolicy"
                 >
                   Experts In Any Policy Type
                 </label>
@@ -595,7 +595,7 @@ function Users() {
                 <label
                   style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormUserInAnyPolicy"
+                  htmlhtmlFor="userFormUserInAnyPolicy"
                 >
                   Policy Type
                 </label>
@@ -628,7 +628,7 @@ function Users() {
                 <label
                   style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormUserExpertType"
+                  htmlhtmlFor="userFormUserExpertType"
                 >
                   Expert Type
                 </label>
@@ -654,7 +654,7 @@ function Users() {
                 <label
                   style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormExpertPer"
+                  htmlhtmlFor="userFormExpertPer"
                 >
                   Expert Percentage
                 </label>
@@ -673,7 +673,7 @@ function Users() {
                 <label
                   style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormBankName"
+                  htmlhtmlFor="userFormBankName"
                 >
                   Bank Name
                 </label>
@@ -689,7 +689,7 @@ function Users() {
               <div className="form-control border-0">
                 <label
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormAccountNo"
+                  htmlhtmlFor="userFormAccountNo"
                 >
                   Account Number
                 </label>
@@ -706,7 +706,7 @@ function Users() {
                 <label
                   style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormBranch"
+                  htmlhtmlFor="userFormBranch"
                 >
                   Branch
                 </label>
@@ -723,7 +723,7 @@ function Users() {
                 <label
                   style={{ fontSize: "1rem" }}
                   className="form-control border-0"
-                  htmlFor="userFormIFSC"
+                  htmlhtmlFor="userFormIFSC"
                 >
                   IFSC Code
                 </label>
@@ -740,7 +740,7 @@ function Users() {
                 <label
                   style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormPanNo"
+                  htmlhtmlFor="userFormPanNo"
                 >
                   PAN Number
                 </label>
@@ -757,7 +757,7 @@ function Users() {
                 <label
                   style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormLegalExpert"
+                  htmlhtmlFor="userFormLegalExpert"
                 >
                   Legal Expert
                 </label>
@@ -784,7 +784,7 @@ function Users() {
                 <label
                   style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormLegalExecutive"
+                  htmlhtmlFor="userFormLegalExecutive"
                 >
                   Legal Executive
                 </label>
@@ -834,7 +834,7 @@ function Users() {
                   <label
                     style={{ fontSize: "1rem" }}
                     className="form-control border-0 font-weight-bold"
-                    htmlFor="userFormLegalSubExecutive"
+                    htmlhtmlFor="userFormLegalSubExecutive"
                   >
                     Legal Sub-Executive
                   </label>
@@ -892,7 +892,7 @@ function Users() {
                 <label
                   style={{ fontSize: "1rem" }}
                   className="form-control border-0 font-weight-bold"
-                  htmlFor="userFormUserTypeSelect"
+                  htmlhtmlFor="userFormUserTypeSelect"
                 >
                   User Type
                 </label>
@@ -931,7 +931,7 @@ function Users() {
                 <label
                   style={{ fontSize: "1rem" }}
                   className="form-control border-0 font-weight-bold"
-                  htmlFor="userFormUserTypeSelect"
+                  htmlhtmlFor="userFormUserTypeSelect"
                 >
                   User Handle Case Type
                 </label>
@@ -939,7 +939,7 @@ function Users() {
                   <div className="form-control border-0">
                     <label
                       className="font-weight-bold"
-                      htmlFor="userFormLeadSelect"
+                      htmlhtmlFor="userFormLeadSelect"
                     >
                       {" "}
                       Lead
@@ -959,7 +959,7 @@ function Users() {
                   <div className="form-control border-0">
                     <label
                       className="font-weight-bold"
-                      htmlFor="userFormLeadSelect"
+                      htmlhtmlFor="userFormLeadSelect"
                     >
                       {" "}
                       Agent Type
@@ -979,7 +979,7 @@ function Users() {
                   <div className="form-control border-0">
                     <label
                       className="font-weight-bold"
-                      htmlFor="userFormLeadSelect"
+                      htmlhtmlFor="userFormLeadSelect"
                     >
                       {" "}
                       Policy Cases
@@ -999,7 +999,7 @@ function Users() {
                   <div className="form-control border-0">
                     <label
                       className="font-weight-bold"
-                      htmlFor="userFormLeadSelect"
+                      htmlhtmlFor="userFormLeadSelect"
                     >
                       {" "}
                       Filter Cases
@@ -1019,7 +1019,7 @@ function Users() {
                   <div className="form-control border-0">
                     <label
                       className="font-weight-bold"
-                      htmlFor="userFormLeadSelect"
+                      htmlhtmlFor="userFormLeadSelect"
                     >
                       {" "}
                       Partner Cases
@@ -1039,7 +1039,7 @@ function Users() {
                   <div className="form-control border-0">
                     <label
                       className="font-weight-bold"
-                      htmlFor="userFormLeadSelect"
+                      htmlhtmlFor="userFormLeadSelect"
                     >
                       {" "}
                       Third Party
@@ -1062,7 +1062,7 @@ function Users() {
               <div className="form-control border-0">
                 <label
                   className="form-control border-0 font-weight-bold"
-                  htmlFor="userFormUserTypeSelect"
+                  htmlhtmlFor="userFormUserTypeSelect"
                 >
                   User Handle IGMS Case Type
                 </label>
@@ -1070,7 +1070,7 @@ function Users() {
                   <div className="form-control border-0">
                     <label
                       className="font-weight-bold"
-                      htmlFor="userFormLeadSelect"
+                      htmlhtmlFor="userFormLeadSelect"
                     >
                       {" "}
                       Complaint
@@ -1090,7 +1090,7 @@ function Users() {
                   <div className="form-control border-0">
                     <label
                       className="font-weight-bold"
-                      htmlFor="userFormLeadSelect"
+                      htmlhtmlFor="userFormLeadSelect"
                     >
                       {" "}
                       Agent Cases
@@ -1110,7 +1110,7 @@ function Users() {
                   <div className="form-control border-0">
                     <label
                       className="font-weight-bold"
-                      htmlFor="userFormLeadSelect"
+                      htmlhtmlFor="userFormLeadSelect"
                     >
                       {" "}
                       Partner Cases{" "}
@@ -1157,7 +1157,7 @@ function Users() {
                 <label
                   className="form-control border-0 font-weight-bold display-5"
                   style={{ fontSize: "1rem" }}
-                  htmlFor="userFormPassword"
+                  htmlhtmlFor="userFormPassword"
                 >
                   Password
                 </label>

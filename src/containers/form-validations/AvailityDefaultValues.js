@@ -62,7 +62,7 @@ const AvailityDefaultValues = () => {
           <AvField name="firstname" label="First Name" required />
           <AvField name="lastname" label="Last Name" required />
           <AvGroup>
-            <Label for="street">Street</Label>
+            <Label htmlFor="street">Street</Label>
             <AvInput name="location.street" id="street" required />
             <AvFeedback>This is an error!</AvFeedback>
           </AvGroup>

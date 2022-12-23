@@ -464,7 +464,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             />
                             <label
                               className="custom-file-label"
-                              for="inputGroupFile01"
+                              htmlFor="inputGroupFile01"
                             >
                               Choose file
                             </label>
@@ -487,7 +487,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             />
                             <label
                               className="custom-file-label"
-                              for="inputGroupFile02"
+                              htmlFor="inputGroupFile02"
                             >
                               Choose file
                             </label>
@@ -510,7 +510,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             />
                             <label
                               className="custom-file-label"
-                              for="inputGroupFile03"
+                              htmlFor="inputGroupFile03"
                             >
                               Choose file
                             </label>
@@ -533,7 +533,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             />
                             <label
                               className="custom-file-label"
-                              for="inputGroupFile04"
+                              htmlFor="inputGroupFile04"
                             >
                               Choose file
                             </label>
@@ -556,7 +556,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             />
                             <label
                               className="custom-file-label"
-                              for="inputGroupFile05"
+                              htmlFor="inputGroupFile05"
                             >
                               Choose file
                             </label>
@@ -579,7 +579,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             />
                             <label
                               className="custom-file-label"
-                              for="inputGroupFile06"
+                              htmlFor="inputGroupFile06"
                             >
                               Choose file
                             </label>
@@ -602,7 +602,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             />
                             <label
                               className="custom-file-label"
-                              for="inputGroupFile07"
+                              htmlFor="inputGroupFile07"
                             >
                               Choose file
                             </label>
@@ -625,7 +625,7 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             />
                             <label
                               className="custom-file-label"
-                              for="inputGroupFile08"
+                              htmlFor="inputGroupFile08"
                             >
                               Choose file
                             </label>

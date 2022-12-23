@@ -91,7 +91,7 @@ export default function AddComplaint({isOpen, onClose, leadId, userId, details }
                 <div className="mt-3">
                     <div className="flex-sb">
                         <FormGroup className='my-3'>
-                            <Label for="companyresponse">User CSV File :</Label>
+                            <Label htmlFor="companyresponse">User CSV File :</Label>
                             <Input id="companyresponse" type="file" name="userCSV" onChange={handleChange} />
                         </FormGroup>
                         <Button id='btn1Upload' color='secondary' onClick={() => {handleUploadUserFile("User")}}>
@@ -102,7 +102,7 @@ export default function AddComplaint({isOpen, onClose, leadId, userId, details }
                 <div className="mb-3">
                     <div className="flex-sb">
                         <FormGroup className='my-3'>
-                            <Label for="companyresponse">Complaint CSV File :</Label>
+                            <Label htmlFor="companyresponse">Complaint CSV File :</Label>
                             <Input id="companyresponse" name="complaint" type="file" onChange={handleChange} />
                         </FormGroup>
                         <Button id='btn2Upload' color='secondary' onClick={() => {handleUploadUserFile("Complaint")}}>

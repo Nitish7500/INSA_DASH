@@ -27,7 +27,7 @@ function Customer() {
     keyword: "",
     selectedSortOrder: "",
   });
-  console.log(state);
+  // console.log(state);
 
   const [currentData, setCurrentData] = useState({});
   const [viewPassword, setviewPassword] = useState(false);
@@ -39,7 +39,7 @@ function Customer() {
   const [viewGamil, setviewGamil] = useState(false);
 
   useEffect(() => {
-    console.log(state.viewPassword);
+    // console.log(state.viewPassword);
     setviewPasswordObj({
       pass: state.viewPassword?.pwdStr,
       serviceRate: state.viewPassword?.serviceRate,
@@ -66,7 +66,7 @@ function Customer() {
   }, [currentPage]);
 
   const handleFilter = () => {
-    console.log(filterData);
+    // console.log(filterData);
     dispatch({
       type: "CUSTOMER_FILTER_DATA",
       state: { pageIndex: currentPage, pageSize: pageSize, ...filterData },
@@ -189,7 +189,7 @@ function Customer() {
           <div className="table-responsive">
             <table className="table">
               <thead className="" style={{ fontSize: "16px" }}>
-                <tr>
+                <tr key={"heading"}>
                   <th>ID</th>
                   <th>Name</th>
                   <th>Email</th>
@@ -201,7 +201,7 @@ function Customer() {
               <tbody>
                 {state.userList?.list?.map((res, i) => {
                   return (
-                    <tr>
+                    <tr key={i}>
                       <td>{i + 1 + currentPage * itemsPerPage}</td>
                       <td>{res.name}</td>
                       <td>{res.email}</td>
@@ -249,7 +249,6 @@ function Customer() {
                           className=""
                           style={{ cursor: "pointer" }}
                           onClick={() => {
-                            console.log(currentData);
                             dispatch({
                               type: "CUSTOMER_GMAIL_READ",
                               state: { email: res.email },

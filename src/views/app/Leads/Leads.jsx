@@ -215,9 +215,7 @@ function LeadSection() {
   };
 
   const handleSearch = (e) => {
-    console.log(e.target.name, e.target.value);
     setStatus({ ...status, [e.target.name]: e.target.value });
-    console.log(status);
   };
 
   const createExcel = () => {
@@ -226,7 +224,7 @@ function LeadSection() {
   };
 
   useEffect(() => {
-    console.log(document.getElementById("csvDownloadBTN")?.click());
+    document.getElementById("csvDownloadBTN")?.click();
   }, [state.leadReportData, downloadCound]);
 
   const commHistoryHandler = (currentLead) => {
@@ -249,7 +247,6 @@ function LeadSection() {
   const handleShowOption = (item) => {
     if (openOptions.includes(item)) {
       let temp = openOptions.filter((res) => res !== item);
-      console.log(temp);
       setopenOptions(temp);
     } else {
       setopenOptions([...openOptions, item]);
@@ -565,7 +562,7 @@ function LeadSection() {
           <div className="mb-3 w-40">
             <label
               className="form-label font-weight-bold h6 d-block"
-              for="searchKeyword"
+              htmlFor="searchKeyword"
             >
               Search Keyword
             </label>
@@ -582,7 +579,7 @@ function LeadSection() {
           <div className="mb-3 w-30 row   ">
             <label
               className="form-label font-weight-bold h6 d-block"
-              for="leadSelectSortOrder"
+              htmlFor="leadSelectSortOrder"
             >
               Select Sort Order
             </label>
@@ -593,9 +590,15 @@ function LeadSection() {
               value={status.selectedSortOrder ?? ""}
               onChange={handleSearch}
             >
-              <option key={"select"} value={""}>Select Sort Order</option>
-              <option key={"first"} value={"First"}>First</option>
-              <option key={"sec"} value={"Second"}>Second</option>
+              <option key={"select"} value={""}>
+                Select Sort Order
+              </option>
+              <option key={"first"} value={"First"}>
+                First
+              </option>
+              <option key={"sec"} value={"Second"}>
+                Second
+              </option>
               <option key={"first1"}>First</option>
             </select>
           </div>
@@ -626,7 +629,7 @@ function LeadSection() {
         <div className="container mx-0 px-0 mt-3">
           <label
             className="h6 d-block font-weight-bold "
-            for="leadSearchByMailInput"
+            htmlFor="leadSearchByMailInput"
           >
             Search By Email And Phone And Lead Id
           </label>
@@ -678,7 +681,7 @@ function LeadSection() {
         {openDownload ? (
           <div className="d-flex mt-5 px-5 border border-info shadow rounded pt-3 pb-2">
             <div className="border-1 mb-3 w-40">
-              <label className="d-block" for="fromDate">
+              <label className="d-block" htmlFor="fromDate">
                 From Date
               </label>
               <input
@@ -692,7 +695,7 @@ function LeadSection() {
               />
             </div>
             <div className="border-1 mb-3 w-40">
-              <label className="d-block" for="fromDate">
+              <label className="d-block" htmlFor="fromDate">
                 To Date
               </label>
               <input
@@ -1619,9 +1622,15 @@ function LeadSection() {
                   setassignToUser({ ...assignToUser, assignTo: e.target.value })
                 }
               >
-                <option key={"select"} value="">Select User</option>
+                <option key={"select"} value="">
+                  Select User
+                </option>
                 {state.assigUser?.map((res) => {
-                  return <option key={res.user_id} value={res.user_id}>{res.name}</option>;
+                  return (
+                    <option key={res.user_id} value={res.user_id}>
+                      {res.name}
+                    </option>
+                  );
                 })}
               </select>
             </div>
@@ -2187,7 +2196,7 @@ function LeadSection() {
         <ModalBody>
           <div className="form-group">
             <div className="">
-              <label for="policyTypeInput" className="">
+              <label htmlFor="policyTypeInput" className="">
                 Policy Type
               </label>
               <select
@@ -2203,7 +2212,7 @@ function LeadSection() {
               </select>
             </div>
             <div className="form-control border-0">
-              <label for="complaintHolderName">Complaint Holder Name</label>
+              <label htmlFor="complaintHolderName">Complaint Holder Name</label>
               <input
                 type={"text"}
                 className="form-control border"
@@ -2211,7 +2220,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="claimentName">Claimant Name</label>
+              <label htmlFor="claimentName">Claimant Name</label>
               <input
                 type={"text"}
                 className="border form-control border-dark"
@@ -2219,7 +2228,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="diseasedName">Diseased Name</label>
+              <label htmlFor="diseasedName">Diseased Name</label>
               <input
                 type={"text"}
                 className="border form-control border-dark"
@@ -2227,7 +2236,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="nomineeName">Nominee Name</label>
+              <label htmlFor="nomineeName">Nominee Name</label>
               <input
                 type={"text"}
                 className="border form-control border-dark"
@@ -2235,7 +2244,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="nameOfPrevComp">Name Of Previous Company</label>
+              <label htmlFor="nameOfPrevComp">Name Of Previous Company</label>
               <input
                 type={"text"}
                 className="border form-control border-dark"
@@ -2243,7 +2252,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="nameOfPatient">Name Of Patient</label>
+              <label htmlFor="nameOfPatient">Name Of Patient</label>
               <input
                 type={"text"}
                 className="border form-control border-dark"
@@ -2251,7 +2260,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="nameOfTpa">Name Of TPA</label>
+              <label htmlFor="nameOfTpa">Name Of TPA</label>
               <input
                 type={"text"}
                 className="border form-control border-dark"
@@ -2259,7 +2268,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="dateOfIncident">Date Of Incident</label>
+              <label htmlFor="dateOfIncident">Date Of Incident</label>
               <input
                 type={"date"}
                 className="border form-control border-dark"
@@ -2267,7 +2276,9 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="dateOfFirstInsurance">Date Of First Insurance</label>
+              <label htmlFor="dateOfFirstInsurance">
+                Date Of First Insurance
+              </label>
               <input
                 type={"date"}
                 className="border form-control border-dark"
@@ -2275,7 +2286,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="policyNumberNewCustomer">Policy Number</label>
+              <label htmlFor="policyNumberNewCustomer">Policy Number</label>
               <input
                 type={"text"}
                 className="border form-control border-dark"
@@ -2283,7 +2294,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="newCustomerNewHospital">Hospital Name</label>
+              <label htmlFor="newCustomerNewHospital">Hospital Name</label>
               <input
                 type={"text"}
                 className="border form-control border-dark"
@@ -2291,7 +2302,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="newCustomerSumInsured">Sum Insured</label>
+              <label htmlFor="newCustomerSumInsured">Sum Insured</label>
               <input
                 type={"number"}
                 className="border form-control border-dark"
@@ -2299,7 +2310,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="nameOfDisease">Name of Disease</label>
+              <label htmlFor="nameOfDisease">Name of Disease</label>
               <input
                 type={"text"}
                 className="border form-control border-dark"
@@ -2307,7 +2318,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="cashlessOrReimbursment">
+              <label htmlFor="cashlessOrReimbursment">
                 Cashless/ Reimbursement
               </label>
               <select
@@ -2340,9 +2351,15 @@ function LeadSection() {
                 placeholder="Select"
                 id="newCustomerMoreThanOnePolicy"
               >
-                <option key={"select"} value={""}>Select</option>
-                <option key={"yes"} value={"Yes"}>Yes</option>
-                <option key={"no"} value={"No"}>No</option>
+                <option key={"select"} value={""}>
+                  Select
+                </option>
+                <option key={"yes"} value={"Yes"}>
+                  Yes
+                </option>
+                <option key={"no"} value={"No"}>
+                  No
+                </option>
               </select>
             </div>
             <div className="form-control border-0">
@@ -2352,9 +2369,15 @@ function LeadSection() {
                 placeholder="Select"
                 id="newCustomerPolicyPorted"
               >
-                <option key={"select"} value={""}>Select</option>
-                <option key={"yes"} value={"Yes"}>Yes</option>
-                <option key={"no"} value={"No"}>No</option>
+                <option key={"select"} value={""}>
+                  Select
+                </option>
+                <option key={"yes"} value={"Yes"}>
+                  Yes
+                </option>
+                <option key={"no"} value={"No"}>
+                  No
+                </option>
               </select>
             </div>
             <div className="form-control border-0">
@@ -2362,13 +2385,19 @@ function LeadSection() {
                 Did You Receive Your Claim Rejection Letter?
               </label>
               <select className="form-control border" id="receiveClainRejLett">
-                <option key={"select"} value={""}>Select</option>
-                <option key={"yes"} value={"Yes"}>Yes</option>
-                <option key={"no"} value={"No"}>No</option>
+                <option key={"select"} value={""}>
+                  Select
+                </option>
+                <option key={"yes"} value={"Yes"}>
+                  Yes
+                </option>
+                <option key={"no"} value={"No"}>
+                  No
+                </option>
               </select>
             </div>
             <div className="form-control border-0">
-              <label for="newCusEvidence">Evidence</label>
+              <label htmlFor="newCusEvidence">Evidence</label>
               <input
                 className="form-control border-0"
                 type={"file"}
@@ -2378,9 +2407,15 @@ function LeadSection() {
             <div className="form-control border-0">
               <label id="prevClainHistory">Previous Claim History?</label>
               <select className="form-control border" id="prevClainHistory">
-                <option key={"select"} value={""}>Select</option>
-                <option key={"yes"} value={"Yes"}>Yes</option>
-                <option key={"no"} value={"No"}>No</option>
+                <option key={"select"} value={""}>
+                  Select
+                </option>
+                <option key={"yes"} value={"Yes"}>
+                  Yes
+                </option>
+                <option key={"no"} value={"No"}>
+                  No
+                </option>
               </select>
             </div>
             <div className="form-control border-0">
@@ -2388,9 +2423,15 @@ function LeadSection() {
                 Have You Approached Insurance Company?
               </label>
               <select className="form-control border" id="approachedIncComp">
-                <option key={"select"} value={""}>Select</option>
-                <option key={"yes"} value={"Yes"}>Yes</option>
-                <option key={"no"} value={"No"}>No</option>
+                <option key={"select"} value={""}>
+                  Select
+                </option>
+                <option key={"yes"} value={"Yes"}>
+                  Yes
+                </option>
+                <option key={"no"} value={"No"}>
+                  No
+                </option>
               </select>
             </div>
             <div className="form-control border-0">
@@ -2398,13 +2439,19 @@ function LeadSection() {
                 Have You Approached Insurance Ombudsman?
               </label>
               <select className="form-control border" id="approachedIncOmbuds">
-                <option key={"select"} value={""}>Select</option>
-                <option key={"yes"} value={"Yes"}>Yes</option>
-                <option key={"no"} value={"No"}>No</option>
+                <option key={"select"} value={""}>
+                  Select
+                </option>
+                <option key={"yes"} value={"Yes"}>
+                  Yes
+                </option>
+                <option key={"no"} value={"No"}>
+                  No
+                </option>
               </select>
             </div>
             <div className="form-control border-0">
-              <label for="newCusClaimAmtApp">Claim Amount Applied</label>
+              <label htmlFor="newCusClaimAmtApp">Claim Amount Applied</label>
               <input
                 className="form-control border"
                 type={"number"}
@@ -2412,7 +2459,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="clainAmtSettled">
+              <label htmlFor="clainAmtSettled">
                 Claim Amount Settled By Company
               </label>
               <input
@@ -2422,7 +2469,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="amtToBeFought">Amount To Be Fought</label>
+              <label htmlFor="amtToBeFought">Amount To Be Fought</label>
               <input
                 className="form-control border"
                 type={"number"}
@@ -2430,7 +2477,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="claimSattlementDate">Claim Settlement Date</label>
+              <label htmlFor="claimSattlementDate">Claim Settlement Date</label>
               <input
                 className="form-control border"
                 type={"date"}
@@ -2438,7 +2485,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="newCusReasonOfDeduction">
+              <label htmlFor="newCusReasonOfDeduction">
                 Reason Of ShortSettlement/ Deduction
               </label>
               <textarea
@@ -2450,7 +2497,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="newCusNeedToBePaid">
+              <label htmlFor="newCusNeedToBePaid">
                 Customer's Version Of Why Balance Amount Needs To Be Paid
               </label>
               <input
@@ -2464,13 +2511,19 @@ function LeadSection() {
                 Did You Receive Settlement Letter?
               </label>
               <select className="form-control border" id="receivedLetter">
-                <option key={"select"} value={""}>Select</option>
-                <option key={"yes"} value={"Yes"}>Yes</option>
-                <option key={"no"} value={"No"}>No</option>
+                <option key={"select"} value={""}>
+                  Select
+                </option>
+                <option key={"yes"} value={"Yes"}>
+                  Yes
+                </option>
+                <option key={"no"} value={"No"}>
+                  No
+                </option>
               </select>
             </div>
             <div className="form-control border-0">
-              <label for="newCusCommentBox">Comment Box</label>
+              <label htmlFor="newCusCommentBox">Comment Box</label>
               <textarea
                 rows={4}
                 className="form-control border"
@@ -2479,7 +2532,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="newCusDocSelection">Document Section</label>
+              <label htmlFor="newCusDocSelection">Document Section</label>
               <Select
                 // defaultValue={[colourOptions[2], colourOptions[3]]}
                 isMulti
@@ -2594,7 +2647,7 @@ function LeadSection() {
               <div className="table-responsive mt-3">
                 <table className=" table border">
                   <thead className="font-weight-bold bg-muted">
-                    <tr>
+                    <tr key={"heading"}>
                       <th>Status</th>
                       <th>Date</th>
                     </tr>
@@ -2603,7 +2656,7 @@ function LeadSection() {
                     {statusHistory.data?.statusHistory?.length ? (
                       statusHistory.data?.statusHistory?.map((res) => {
                         return (
-                          <tr className="">
+                          <tr key={i + res.date} className="">
                             <td>{res.currStatus}</td>
                             <td>
                               {moment(res.date).format("YYYY-MM-DD: HH:MM")}
@@ -2612,7 +2665,7 @@ function LeadSection() {
                         );
                       })
                     ) : (
-                      <tr>No Data</tr>
+                      <tr key={"noData"}>No Data</tr>
                     )}
                   </tbody>
                 </table>
@@ -2671,7 +2724,7 @@ function LeadSection() {
         <ModalBody>
           <div className="form-group">
             <div className="form-control border-0">
-              <label className="" for="leadFollowUpDate">
+              <label className="" htmlFor="leadFollowUpDate">
                 Follow Date
               </label>
               <input
@@ -2689,7 +2742,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label className="" for="leadFollowUpCommDate">
+              <label className="" htmlFor="leadFollowUpCommDate">
                 Communication Date
               </label>
               <input
@@ -2707,7 +2760,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label className="" for="leadFollowUpDes">
+              <label className="" htmlFor="leadFollowUpDes">
                 Communication Description
               </label>
               <select
@@ -2725,14 +2778,20 @@ function LeadSection() {
                 <option key={"select"} value={""}>
                   Select
                 </option>
-                <option key={"running"} value={"running"}>running</option>
-                <option key={"testing"} value={"testing"}>testing</option>
-                <option key={"other"} value={"Other"}>Other</option>
+                <option key={"running"} value={"running"}>
+                  running
+                </option>
+                <option key={"testing"} value={"testing"}>
+                  testing
+                </option>
+                <option key={"other"} value={"Other"}>
+                  Other
+                </option>
               </select>
             </div>
             {followUpObj.com_dis == "Other" ? (
               <div className="form-control border-0">
-                <label htmlFor="followUpTextarea"></label>
+                <label htmlhtmlFor="followUpTextarea"></label>
                 <textarea
                   rows={3}
                   name="followUpDesc"
@@ -2795,7 +2854,7 @@ function LeadSection() {
         <ModalBody>
           <div className="form-group">
             <div className="form-control border-0">
-              <label for="cancelLeadCommDate" className="font-weight-bold">
+              <label htmlFor="cancelLeadCommDate" className="font-weight-bold">
                 Communication Date
               </label>
               <input
@@ -2816,7 +2875,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="cancelLeadCommDesc" className="font-weight-bold">
+              <label htmlFor="cancelLeadCommDesc" className="font-weight-bold">
                 Communication Description
               </label>
               <select
@@ -2834,9 +2893,7 @@ function LeadSection() {
                   });
                 }}
               >
-                <option key={"select"}>
-                  Select Status
-                </option>
+                <option key={"select"}>Select Status</option>
                 <option key={"ringing"}>Ringing</option>
                 <option key={"testing"}>Testing</option>
                 <option key={"other"}>Other</option>
@@ -2844,7 +2901,7 @@ function LeadSection() {
               {leadCancelDetail.state?.desc === "Other" ? (
                 <div className="form-control border-0">
                   <label
-                    for="cancelLeadCommdescText"
+                    htmlFor="cancelLeadCommdescText"
                     className="font-weight-bold"
                   >
                     Description
