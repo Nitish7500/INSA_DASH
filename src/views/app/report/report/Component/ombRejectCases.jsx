@@ -7,8 +7,6 @@ import { useDispatch } from "react-redux";
 import { Collapse } from "reactstrap";
 
 function OmbRejectCases({ state, handleSection, sections }) {
-
-
   const [formData, setformData] = useState({
     omdRejectEnd: "",
     omdRejectStart: "",
@@ -43,15 +41,15 @@ function OmbRejectCases({ state, handleSection, sections }) {
       if (state.ombRejectCases?.length) {
         document.getElementById("ombRejectCasesBtn")?.click();
         setdownload(false);
-      }else{
+      } else {
         NotificationManager.error(
-            "Empty List !",
-            "No Record Found !",
-            3000,
-            null,
-            null,
-            "filled"
-          );
+          "Empty List !",
+          "No Record Found !",
+          3000,
+          null,
+          null,
+          "filled"
+        );
       }
     }
   }, [state.ombRejectCases]);
@@ -62,6 +60,7 @@ function OmbRejectCases({ state, handleSection, sections }) {
         <h4
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("OmbRejRep")}
+          id="OmbRejSecDrpDwn"
         >
           Ombudsman Rejected Cases Report Section (B2C, Agent and Partner)
         </h4>
@@ -73,6 +72,7 @@ function OmbRejectCases({ state, handleSection, sections }) {
               <div className="col-sm-3">
                 <label>Start Date</label>
                 <input
+                  id="ombRejStDt"
                   className="form-control border-bold"
                   name="omdRejectStart"
                   type={"date"}
@@ -83,6 +83,7 @@ function OmbRejectCases({ state, handleSection, sections }) {
               <div className="col-sm-3">
                 <label>End Date</label>
                 <input
+                  id="ombRejEndDt"
                   className="form-control border-bold"
                   name="omdRejectEnd"
                   type={"date"}
@@ -93,6 +94,7 @@ function OmbRejectCases({ state, handleSection, sections }) {
               <div className="col-sm-3">
                 <label>Select Report Type</label>
                 <select
+                  id="ombRejReportType"
                   className="form-control border-bold"
                   name="omdRejectType"
                   onChange={handleChange}
@@ -104,7 +106,13 @@ function OmbRejectCases({ state, handleSection, sections }) {
                 </select>
               </div>
               <div className="col-sm-3 mt-auto">
-                <button className="btn btn-primary" onClick={handleSumit}>Download</button>
+                <button
+                  className="btn btn-primary"
+                  onClick={handleSumit}
+                  id="ombRejDwnBtn"
+                >
+                  Download
+                </button>
                 <CSVLink
                   id="ombRejectCasesBtn"
                   filename="monthly-b2c"

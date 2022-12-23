@@ -7,43 +7,43 @@ import { useDispatch } from "react-redux";
 import { Collapse } from "reactstrap";
 
 function RegisteredLead({ state, sections, handleSection }) {
+  const [formData, setformData] = useState({
+    allRegisteredEnd: "",
+    allRegisteredStart: "",
+    allRegisteredType: "",
+  });
+  const [download, setdownload] = useState(false);
+  const { allRegisteredStart, allRegisteredEnd, allRegisteredType } = formData;
 
-    const [formData, setformData] = useState({
-        allRegisteredEnd:"",allRegisteredStart:"",allRegisteredType:""
-    })
-    const [download, setdownload] = useState(false)
-    const {allRegisteredStart, allRegisteredEnd, allRegisteredType} = formData
+  let dispatch = useDispatch();
+  const handleChange = (e) => {
+    setformData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-    let dispatch = useDispatch()
-    const handleChange = (e) => {
-        setformData({...formData, [e.target.name]:e.target.value})
+  const handleSumit = () => {
+    if (allRegisteredEnd && allRegisteredStart && allRegisteredType) {
+      dispatch({ type: "REGISTERED_LEAD_REPORT", state: { ...formData } });
+      setdownload(true);
+    } else {
+      NotificationManager.error(
+        "Please enter Fileds !",
+        "Fields cannot be empty !",
+        3000,
+        null,
+        null,
+        "filled"
+      );
     }
+  };
 
-
-    const handleSumit = () => {
-        if (allRegisteredEnd && allRegisteredStart && allRegisteredType) {
-            dispatch({type:"REGISTERED_LEAD_REPORT", state:{...formData}})
-            setdownload(true)
-        }else{
-            NotificationManager.error(
-                "Please enter Fileds !",
-                "Fields cannot be empty !",
-                3000,
-                null,
-                null,
-                "filled"
-            )
-        }
+  useEffect(() => {
+    if (download) {
+      if (state.regLead) {
+        document.getElementById("registeredLead")?.click();
+        setdownload(false);
+      }
     }
-
-    useEffect(() => {
-        if (download) {
-            if(state.regLead){
-                document.getElementById("registeredLead")?.click()
-                setdownload(false)
-            }
-        }
-    },[state.regLead])
+  }, [state.regLead]);
 
   return (
     <div>
@@ -51,6 +51,7 @@ function RegisteredLead({ state, sections, handleSection }) {
         <h4
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("RegLeadRep")}
+          id="monRegLeadRepDrpDwn"
         >
           Monthly Registered Lead Report Section
         </h4>
@@ -62,6 +63,7 @@ function RegisteredLead({ state, sections, handleSection }) {
               <div className="col-sm-3">
                 <label>Start Date</label>
                 <input
+                  id="regLeadStDt"
                   className="form-control border-bold"
                   name="allRegisteredStart"
                   type={"date"}
@@ -73,6 +75,7 @@ function RegisteredLead({ state, sections, handleSection }) {
               <div className="col-sm-3">
                 <label>End Date</label>
                 <input
+                  id="regLeadEndDt"
                   className="form-control border-bold"
                   name="allRegisteredEnd"
                   type={"date"}
@@ -84,6 +87,7 @@ function RegisteredLead({ state, sections, handleSection }) {
               <div className="col-sm-3">
                 <label>Select Report Type</label>
                 <select
+                  id="regLeadRepType"
                   className="form-control border-bold"
                   name="allRegisteredType"
                   onChange={handleChange}
@@ -95,7 +99,13 @@ function RegisteredLead({ state, sections, handleSection }) {
                 </select>
               </div>
               <div className="col-sm-3 mt-auto">
-                <button className="btn btn-primary" onClick={handleSumit}>Download</button>
+                <button
+                  className="btn btn-primary"
+                  onClick={handleSumit}
+                  id="regLeadSDwnBtn"
+                >
+                  Download
+                </button>
                 <CSVLink
                   id="registeredLead"
                   filename="Registered-lead"

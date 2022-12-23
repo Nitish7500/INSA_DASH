@@ -6,7 +6,7 @@ import { NotificationManager } from "components/common/react-notifications";
 
 function PaymentRep({ state, handleSection, sections }) {
   const [formData, setformData] = useState({});
-  const [open, setopen] = useState(false)
+  const [open, setopen] = useState(false);
 
   let dispatch = useDispatch();
   const handleChange = (e) => {
@@ -15,17 +15,17 @@ function PaymentRep({ state, handleSection, sections }) {
 
   const handleSerach = () => {
     if (formData.endDate && formData.startDate) {
-        setopen(true)
-        dispatch({ type: "PAYMENT_REPORT_DATA", state: { ...formData } });
-    }else{
-        NotificationManager.error(
-            "Fields cannot be empty !",
-            "",
-            3000,
-            null,
-            null,
-            "filled"
-        )
+      setopen(true);
+      dispatch({ type: "PAYMENT_REPORT_DATA", state: { ...formData } });
+    } else {
+      NotificationManager.error(
+        "Fields cannot be empty !",
+        "",
+        3000,
+        null,
+        null,
+        "filled"
+      );
     }
   };
 
@@ -52,6 +52,7 @@ function PaymentRep({ state, handleSection, sections }) {
         <h4
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("PaymentRep")}
+          id="payRepSecDrpDwn"
         >
           Payment Report Section
         </h4>
@@ -66,6 +67,7 @@ function PaymentRep({ state, handleSection, sections }) {
               <div className="col-sm-3">
                 <label>Start Date</label>
                 <input
+                  id="payRepStDt"
                   className="form-control border-bold"
                   name="startDate"
                   type={"date"}
@@ -75,6 +77,7 @@ function PaymentRep({ state, handleSection, sections }) {
               <div className="col-sm-3">
                 <label>End Date</label>
                 <input
+                  id="payRepEndDt"
                   className="form-control border-bold"
                   name="endDate"
                   type={"date"}
@@ -84,6 +87,7 @@ function PaymentRep({ state, handleSection, sections }) {
               <div className="col-sm-3">
                 <label>Select Payment Status</label>
                 <select
+                  id="payRepStatus"
                   className="form-control border-bold"
                   onChange={handleStatusChange}
                 >
@@ -98,6 +102,7 @@ function PaymentRep({ state, handleSection, sections }) {
               <div className="col-sm-3">
                 <label>Select Final Payment Status</label>
                 <select
+                  id="payRepFinalPayStatus"
                   className="form-control border-bold"
                   onChange={handlePayStatusChange}
                 >
@@ -111,45 +116,47 @@ function PaymentRep({ state, handleSection, sections }) {
               </div>
             </div>
             <div className="d-flex mt-3">
-              <button className="btn btn-primary" onClick={handleSerach}>
+              <button
+                className="btn btn-primary"
+                onClick={handleSerach}
+                id="payRepSearchBtn"
+              >
                 Search
               </button>
             </div>
             <div className="row mt-4">
               <div className="col-sm-12">
-                {
-                    open || state.payRepData.length ? 
-                <table className="table table-responsive-sm">
-                  <thead>
-                    <tr key={1} className="bg-dark text-white">
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Policy Number</th>
-                      <th>Payment Status</th>
-                      <th>Final Payment Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {state.payRepData.length ? (
-                      state.payRepData?.map((res, i) => {
-                        return (
-                          <tr key={i}>
-                            <td nowrap>{res.name}</td>
-                            <td>{res.email}</td>
-                            <td>{res.policyNumber}</td>
-                            <td>{res.paymentStatus}</td>
-                            <td>{res.finalPaymentStatus}</td>
-                          </tr>
-                        );
-                      })
-                    ) : (
-                      <tr key={Math.random()}>No Data</tr>
-                    )}
-                    <tr></tr>
-                  </tbody>
-                </table>
-                : null
-                }
+                {open || state.payRepData.length ? (
+                  <table className="table table-responsive-sm">
+                    <thead>
+                      <tr key={"payRepDataHead"} className="bg-dark text-white">
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Policy Number</th>
+                        <th>Payment Status</th>
+                        <th>Final Payment Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {state.payRepData.length ? (
+                        state.payRepData?.map((res, i) => {
+                          return (
+                            <tr key={i}>
+                              <td nowrap>{res.name}</td>
+                              <td>{res.email}</td>
+                              <td>{res.policyNumber}</td>
+                              <td>{res.paymentStatus}</td>
+                              <td>{res.finalPaymentStatus}</td>
+                            </tr>
+                          );
+                        })
+                      ) : (
+                        <tr key={Math.random()}>No Data</tr>
+                      )}
+                      <tr></tr>
+                    </tbody>
+                  </table>
+                ) : null}
               </div>
             </div>
           </div>

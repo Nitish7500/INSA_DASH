@@ -152,6 +152,7 @@ function UserReport() {
             <h4
               style={{ cursor: "pointer" }}
               onClick={() => handleSection("AddLeadR")}
+              id="addLeadDrpDwn"
             >
               Add More Leads
             </h4>
@@ -163,6 +164,7 @@ function UserReport() {
                   <div className="col-sm-3">
                     <label>Lead CSV File</label>
                     <input
+                      id="leadCsvFile"
                       className="form-control border-bold"
                       type={"file"}
                       name="lead"
@@ -171,6 +173,7 @@ function UserReport() {
                   </div>
                   <div className="col-sm-3 mt-auto">
                     <button
+                      id="uploadBtn"
                       className="btn btn-primary"
                       onClick={() => handleAddLead("lead")}
                     >
@@ -180,14 +183,16 @@ function UserReport() {
                   <div className="col-sm-3">
                     <label>Missed Call CSV File</label>
                     <input
+                      id="missedCallCsv"
                       className="form-control border-bold"
                       type={"file"}
                       name="missedCall"
                       onChange={handleAddLeadChange}
                     />
-                  </div> 
+                  </div>
                   <div className="col-sm-3 mt-auto">
                     <button
+                      id="uploadBtn2"
                       className="btn btn-primary"
                       onClick={() => handleAddLead("missedCall")}
                     >

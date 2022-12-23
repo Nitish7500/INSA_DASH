@@ -74,6 +74,7 @@ function TatReport({ sections, handleSection, state }) {
           <h4
             style={{ cursor: "pointer" }}
             onClick={() => handleSection("OmbRejRep")}
+            id="tatReportDrpDwn"
           >
             TAT Report
           </h4>
@@ -85,6 +86,7 @@ function TatReport({ sections, handleSection, state }) {
                 <div className="col-sm-3">
                   <label>Start Date</label>
                   <input
+                    id="tatRepStDt"
                     className="form-control border-bold"
                     name="tatReportStartDate"
                     type={"date"}
@@ -96,6 +98,7 @@ function TatReport({ sections, handleSection, state }) {
                 <div className="col-sm-3">
                   <label>End Date</label>
                   <input
+                    id="tatRepEndDt"
                     className="form-control border-bold"
                     name="tatReportEndDate"
                     type={"date"}
@@ -107,6 +110,7 @@ function TatReport({ sections, handleSection, state }) {
                 <div className="col-sm-3">
                   <label>Select Report Type</label>
                   <select
+                    id="tatRepRepType"
                     className="form-control border-bold"
                     name="tatStatus1"
                     value={tatStatus1}
@@ -124,6 +128,7 @@ function TatReport({ sections, handleSection, state }) {
                 <div className="col-sm-3">
                   <label>Select Report Type</label>
                   <select
+                    id="tatRepRepType2"
                     className="form-control border-bold"
                     name="tatStatus2"
                     onChange={handleChange}
@@ -139,7 +144,11 @@ function TatReport({ sections, handleSection, state }) {
                   </select>
                 </div>
                 <div className="col-sm-3 mt-auto">
-                  <button className="btn btn-primary" onClick={handleSumit}>
+                  <button
+                    className="btn btn-primary"
+                    onClick={handleSumit}
+                    id="tatRepDwnBtn"
+                  >
                     Download
                   </button>
                   <CSVLink

@@ -53,13 +53,13 @@ function MonthlyResolved({ sections, handleSection, state }) {
 
   useEffect(() => {
     if (download === "payment") {
-        console.log(state.relPaymentData)
-        if (state.relPaymentData?.length) {
-          document.getElementById("paymentCasesBtn")?.click();
-          setdownload("");
-        }
+      console.log(state.relPaymentData);
+      if (state.relPaymentData?.length) {
+        document.getElementById("paymentCasesBtn")?.click();
+        setdownload("");
       }
-  },[state.relPaymentData])
+    }
+  }, [state.relPaymentData]);
 
   return (
     <div>
@@ -67,6 +67,7 @@ function MonthlyResolved({ sections, handleSection, state }) {
         <h4
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("PayDoneRep")}
+          id="MonResolveSecDrpDwn"
         >
           Monthly Resolved and Payment Done Report Section
         </h4>
@@ -78,6 +79,7 @@ function MonthlyResolved({ sections, handleSection, state }) {
               <div className="col-sm-3">
                 <label>Start Date</label>
                 <input
+                  id="monResolveStDt"
                   className="form-control border-bold"
                   name="allResolveStart"
                   type={"date"}
@@ -92,6 +94,7 @@ function MonthlyResolved({ sections, handleSection, state }) {
               <div className="col-sm-3">
                 <label>End Date</label>
                 <input
+                  id="monResolveEndDt"
                   className="form-control border-bold"
                   name="allResolveEnd"
                   type={"date"}
@@ -105,6 +108,7 @@ function MonthlyResolved({ sections, handleSection, state }) {
               </div>
               <div className="col-sm-3 mt-auto">
                 <button
+                  id="monResolveRelCases"
                   className="btn btn-primary"
                   name="Resolved"
                   onClick={handlePayDoneRep}
@@ -120,7 +124,11 @@ function MonthlyResolved({ sections, handleSection, state }) {
                 ) : null}
               </div>
               <div className="col-sm-3 mt-auto">
-                <button className="btn btn-primary" onClick={handlePayDoneRep}>
+                <button
+                  className="btn btn-primary"
+                  onClick={handlePayDoneRep}
+                  id="monResolvePayDoneBtn"
+                >
                   Payment Done Cases
                 </button>
                 {state.relPaymentData?.length ? (

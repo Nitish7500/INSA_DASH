@@ -5,45 +5,44 @@ import { CSVLink } from "react-csv";
 import { useDispatch } from "react-redux";
 import { Collapse } from "reactstrap";
 
-function MonthlyResB2c({sections, handleSection, state}) {
+function MonthlyResB2c({ sections, handleSection, state }) {
+  const [formData, setformData] = useState({
+    resolveEnd: "",
+    resolveStart: "",
+    resolveReportType: "",
+  });
+  const [download, setdownload] = useState(false);
+  const { resolveEnd, resolveStart, resolveReportType } = formData;
 
-    
-    const [formData, setformData] = useState({
-        resolveEnd:"",resolveStart:"",resolveReportType:""
-    })
-    const [download, setdownload] = useState(false)
-    const {resolveEnd, resolveStart, resolveReportType} = formData
+  let dispatch = useDispatch();
+  const handleChange = (e) => {
+    setformData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-    let dispatch = useDispatch()
-    const handleChange = (e) => {
-        setformData({...formData, [e.target.name]:e.target.value})
+  const handleSumit = () => {
+    if (resolveEnd && resolveStart && resolveReportType) {
+      dispatch({ type: "MONTHLY_RESOLVED_B2C", state: { ...formData } });
+      setdownload(true);
+    } else {
+      NotificationManager.error(
+        "Please enter Fileds !",
+        "Fields cannot be empty !",
+        3000,
+        null,
+        null,
+        "filled"
+      );
     }
+  };
 
-
-    const handleSumit = () => {
-        if (resolveEnd && resolveStart && resolveReportType) {
-            dispatch({type:"MONTHLY_RESOLVED_B2C", state:{...formData}})
-            setdownload(true)
-        }else{
-            NotificationManager.error(
-                "Please enter Fileds !",
-                "Fields cannot be empty !",
-                3000,
-                null,
-                null,
-                "filled"
-            )
-        }
+  useEffect(() => {
+    if (download) {
+      if (state.monthlyB2C) {
+        document.getElementById("monthlyB2cBtn")?.click();
+        setdownload(false);
+      }
     }
-
-    useEffect(() => {
-        if (download) {
-            if(state.monthlyB2C){
-                document.getElementById("monthlyB2cBtn")?.click()
-                setdownload(false)
-            }
-        }
-    },[state.monthlyB2C])
+  }, [state.monthlyB2C]);
 
   return (
     <div>
@@ -51,6 +50,7 @@ function MonthlyResB2c({sections, handleSection, state}) {
         <h4
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("MonResRep")}
+          id="monRepB2c"
         >
           Monthly Resolved Report Section(B2C, Agent and Partner)
         </h4>
@@ -62,6 +62,7 @@ function MonthlyResB2c({sections, handleSection, state}) {
               <div className="col-sm-3">
                 <label>Start Date</label>
                 <input
+                  id="monRepB2cStDt"
                   className="form-control border-bold"
                   name="resolveStart"
                   value={resolveStart}
@@ -73,6 +74,7 @@ function MonthlyResB2c({sections, handleSection, state}) {
               <div className="col-sm-3">
                 <label>End Date</label>
                 <input
+                  id="monRepB2cEndDt"
                   className="form-control border-bold"
                   name="resolveEnd"
                   value={resolveEnd}
@@ -84,6 +86,7 @@ function MonthlyResB2c({sections, handleSection, state}) {
               <div className="col-sm-3">
                 <label>Select Report Type</label>
                 <select
+                  id="monRepB2cRepType"
                   className="form-control border-bold"
                   name="resolveReportType"
                   value={resolveReportType}
@@ -96,7 +99,13 @@ function MonthlyResB2c({sections, handleSection, state}) {
                 </select>
               </div>
               <div className="col-sm-3 mt-auto">
-                <button className="btn btn-primary" onClick={handleSumit}>Download</button>
+                <button
+                  className="btn btn-primary"
+                  onClick={handleSumit}
+                  id="monRepB2cDwnBtn"
+                >
+                  Download
+                </button>
                 <CSVLink
                   id="monthlyB2cBtn"
                   filename="monthly-b2c"

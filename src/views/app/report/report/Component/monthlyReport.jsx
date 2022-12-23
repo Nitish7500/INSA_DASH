@@ -44,6 +44,7 @@ function MonthlyReport({ sections, handleSection, state }) {
         <h4
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("MonthlyRep")}
+          id="MonthlyRepSecDrpDwn"
         >
           Monthly Report Section(Complaints,Agent Cases,Partner leads)
         </h4>
@@ -55,6 +56,7 @@ function MonthlyReport({ sections, handleSection, state }) {
               <div className="col-sm-3">
                 <label>Start Date</label>
                 <input
+                  id="MonRepStDt"
                   className="form-control border-bold"
                   name="startDate"
                   type={"date"}
@@ -64,6 +66,7 @@ function MonthlyReport({ sections, handleSection, state }) {
               <div className="col-sm-3">
                 <label>End Date</label>
                 <input
+                  id="MonRepEndDt"
                   className="form-control border-bold"
                   name="endDate"
                   type={"date"}
@@ -71,7 +74,11 @@ function MonthlyReport({ sections, handleSection, state }) {
                 />
               </div>
               <div className="col-sm-2 d-flex mt-4">
-                <button className="btn btn-primary" onClick={handleDownload}>
+                <button
+                  className="btn btn-primary"
+                  onClick={handleDownload}
+                  id="MonRepDwnBtn"
+                >
                   Download
                 </button>
                 {state.monthlyRepData && (

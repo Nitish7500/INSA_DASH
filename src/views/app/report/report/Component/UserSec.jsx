@@ -1,9 +1,16 @@
-import { faStreetView, faUsersViewfinder } from "@fortawesome/free-solid-svg-icons";
+import {
+  faStreetView,
+  faUsersViewfinder,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useState } from "react";
 import { Collapse } from "reactstrap";
-import { groupWiseData, statusWise, userReport } from "services/report.services";
+import {
+  groupWiseData,
+  statusWise,
+  userReport,
+} from "services/report.services";
 
 function UserSec({ sections, handleSection }) {
   const [userSecForm, setuserSecForm] = useState({ show: false });
@@ -15,31 +22,34 @@ function UserSec({ sections, handleSection }) {
 
   const handleStatusChange = (e) => {
     //status change
-    statusWise({status:e.target.value}).then(res => {
-        console.log(res)
-        setdata(res.data)
-        setuserSecForm({...userSecForm, show:true})
-    })
+    statusWise({ status: e.target.value }).then((res) => {
+      console.log(res);
+      setdata(res.data);
+      setuserSecForm({ ...userSecForm, show: true });
+    });
   };
 
   const handleGroupChange = (e) => {
     //group chnage
-    groupWiseData({group:e.target.value}).then(res => {
-        console.log(res)
-        setdata(res.data)
-        setuserSecForm({...userSecForm, show:true})
-    })
+    groupWiseData({ group: e.target.value }).then((res) => {
+      console.log(res);
+      setdata(res.data);
+      setuserSecForm({ ...userSecForm, show: true });
+    });
   };
 
-  const handleSearch = () =>{
+  const handleSearch = () => {
     if (userSecForm.userEndDate && userSecForm.userStartDate) {
-        setuserSecForm({...userSecForm, show:true})
-        userReport({startDate:userSecForm.userStartDate, endDate:userSecForm.userEndDate}).then(res => {
-            console.log(res)
-            setdata(res.data)
-        })
+      setuserSecForm({ ...userSecForm, show: true });
+      userReport({
+        startDate: userSecForm.userStartDate,
+        endDate: userSecForm.userEndDate,
+      }).then((res) => {
+        console.log(res);
+        setdata(res.data);
+      });
     }
-  }
+  };
 
   return (
     <div>
@@ -47,6 +57,7 @@ function UserSec({ sections, handleSection }) {
         <h4
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("UserRep")}
+          id="userSecDrpDwn"
         >
           User Section
         </h4>
@@ -58,6 +69,7 @@ function UserSec({ sections, handleSection }) {
               <div className="col-sm-3">
                 <label className="font-weight-bold">Start Date</label>
                 <input
+                  id="userSecStDt"
                   type={"date"}
                   className="form-control border-bold"
                   name="userStartDate"
@@ -67,6 +79,7 @@ function UserSec({ sections, handleSection }) {
               <div className="col-sm-3">
                 <label className="font-weight-bold">End Date</label>
                 <input
+                  id="userSecEndDt"
                   type={"date"}
                   className="form-control border-bold"
                   name="userEndDate"
@@ -76,6 +89,7 @@ function UserSec({ sections, handleSection }) {
               <div className="col-sm-3">
                 <label>Select Status</label>
                 <select
+                  id="userSecStatus"
                   className="form-control  border-bold"
                   name="status"
                   onChange={handleStatusChange}
@@ -87,6 +101,7 @@ function UserSec({ sections, handleSection }) {
               <div className="col-sm-3">
                 <label>Select Group</label>
                 <select
+                  id="userSecGrp"
                   className="form-control border-bold"
                   name="groupWise"
                   onChange={handleGroupChange}
@@ -100,7 +115,9 @@ function UserSec({ sections, handleSection }) {
             <div className="d-flex">
               <button
                 className="btn rounded px-4 mt-3 btn-primary mt-2"
-                onClick={handleSearch}>
+                onClick={handleSearch}
+                id="userSecSearchBtn"
+              >
                 Search
               </button>
             </div>
@@ -109,7 +126,7 @@ function UserSec({ sections, handleSection }) {
                 <div className="col-sm-12 table-responsive">
                   <table className="table table-hover">
                     <thead className="bg-dark text-white">
-                      <tr key={1}>
+                      <tr key={Math.random()}>
                         <th>Name</th>
                         <th>Email</th>
                         <th>User Id</th>
@@ -122,19 +139,26 @@ function UserSec({ sections, handleSection }) {
                       </tr>
                     </thead>
                     <tbody>
-                        {data?.map(res => {
-                            return <tr>
-                                <td>{res.name}</td>
-                                <td>{res.email}</td>
-                                <td>{res.user_id}</td>
-                                <td>{res.company_name}</td>
-                                <td>{res.mobile}</td>
-                                <td>{res.contract_status}</td>
-                                <td>{res.address}</td>
-                                <td>{res.status}</td>
-                                <td><FontAwesomeIcon icon={faUsersViewfinder} /></td>
-                            </tr>
-                        })}
+                      {data?.map((res, i) => {
+                        return (
+                          <tr key={i}>
+                            <td>{res.name}</td>
+                            <td>{res.email}</td>
+                            <td>{res.user_id}</td>
+                            <td>{res.company_name}</td>
+                            <td>{res.mobile}</td>
+                            <td>{res.contract_status}</td>
+                            <td>{res.address}</td>
+                            <td>{res.status}</td>
+                            <td>
+                              <FontAwesomeIcon
+                                icon={faUsersViewfinder}
+                                id="userSecView"
+                              />
+                            </td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>

@@ -71,6 +71,7 @@ function OmbExeRep({ sections, handleSection, state }) {
         <h4
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("OmbRep")}
+          id="ombExeDrpDwn"
         >
           Ombudsman and Ops Executive Report Section:-
         </h4>
@@ -82,6 +83,7 @@ function OmbExeRep({ sections, handleSection, state }) {
               <div className="col-sm-3">
                 <label>Start Date</label>
                 <input
+                  id="ombExeStDt"
                   className="form-control border-bold"
                   name="repStart"
                   type={"date"}
@@ -92,6 +94,7 @@ function OmbExeRep({ sections, handleSection, state }) {
               <div className="col-sm-3">
                 <label>End Date</label>
                 <input
+                  id="ombExeEndDt"
                   className="form-control border-bold"
                   name="repEnd"
                   type={"date"}
@@ -102,6 +105,7 @@ function OmbExeRep({ sections, handleSection, state }) {
               <div className="col-sm-3">
                 <label>Select Report Type</label>
                 <select
+                  id="ombExeReportType"
                   className="form-control border-bold"
                   name="reportType"
                   value={reportType}
@@ -114,6 +118,7 @@ function OmbExeRep({ sections, handleSection, state }) {
               </div>
               <div className="col-sm-3 mt-auto">
                 <button
+                  id="ombExeDwnBtn"
                   className="
                   btn btn-primary"
                   onClick={handleSubmit}
