@@ -1,5 +1,5 @@
 import React from "react";
-import { Collapse } from "reactstrap";
+import { Button, Collapse } from "reactstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -63,11 +63,23 @@ function CaseReport({ state, sections, handleSection }) {
     <div>
       <div className="container text-primary font-weight-bold py-2 bg-warning mt-2">
         <h4
+          className="d-flex"
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("CaseRep")}
           id="caseReportSecOpen"
         >
           Case Report Section
+          <div
+            className={
+              sections.includes("AgentMonRep") ? "dropup btn-group m-0 p-0" : ""
+            }
+          >
+            <Button
+              style={{ height: "20px" }}
+              color="primary"
+              className="m-0 p-0 mt-n3 dropdown-toggle-split dropdown-toggle btn table-expand"
+            ></Button>
+          </div>
         </h4>
       </div>
       <div className="container shadow">
@@ -90,6 +102,7 @@ function CaseReport({ state, sections, handleSection }) {
                   className="form-control border-bold"
                   type={"date"}
                   name="endDate"
+                  max={(new Date()).toISOString()?.split("T")[0]}
                   onChange={handleChange}
                   id="caseRepEndDt"
                 />
@@ -157,6 +170,7 @@ function CaseReport({ state, sections, handleSection }) {
                   id="caseRepSecEndDt"
                   className="form-control border-bold"
                   type={"date"}
+                  max={(new Date()).toISOString()?.split("T")[0]}
                   name="enddate"
                   onChange={handleCountChange}
                 />

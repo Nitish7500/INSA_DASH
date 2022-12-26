@@ -5,7 +5,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useState } from "react";
-import { Collapse } from "reactstrap";
+import { Button, Collapse } from "reactstrap";
 import {
   groupWiseData,
   statusWise,
@@ -55,11 +55,23 @@ function UserSec({ sections, handleSection }) {
     <div>
       <div className="container text-primary font-weight-bold py-2 bg-warning">
         <h4
+          className="d-flex"
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("UserRep")}
           id="userSecDrpDwn"
         >
           User Section
+          <div
+            className={
+              sections.includes("AgentMonRep") ? "dropup btn-group m-0 p-0" : ""
+            }
+          >
+            <Button
+              style={{ height: "20px" }}
+              color="primary"
+              className="m-0 p-0 mt-n3 dropdown-toggle-split dropdown-toggle btn table-expand"
+            ></Button>
+          </div>
         </h4>
       </div>
       <div className="container shadow">
@@ -83,6 +95,7 @@ function UserSec({ sections, handleSection }) {
                   type={"date"}
                   className="form-control border-bold"
                   name="userEndDate"
+                  max={(new Date()).toISOString()?.split("T")[0]}
                   onChange={handleUserSecChange}
                 />
               </div>
@@ -94,8 +107,12 @@ function UserSec({ sections, handleSection }) {
                   name="status"
                   onChange={handleStatusChange}
                 >
-                  <option key={"true"} value="true">True</option>
-                  <option key={"false"} value="false">false</option>
+                  <option key={"true"} value="true">
+                    True
+                  </option>
+                  <option key={"false"} value="false">
+                    false
+                  </option>
                 </select>
               </div>
               <div className="col-sm-3">
@@ -106,9 +123,15 @@ function UserSec({ sections, handleSection }) {
                   name="groupWise"
                   onChange={handleGroupChange}
                 >
-                  <option key={"advisor"} value="Advisor">Advisor</option>
-                  <option key={"user"} value="User">User</option>
-                  <option key={"admin"} value="Admin">Admin</option>
+                  <option key={"advisor"} value="Advisor">
+                    Advisor
+                  </option>
+                  <option key={"user"} value="User">
+                    User
+                  </option>
+                  <option key={"admin"} value="Admin">
+                    Admin
+                  </option>
                 </select>
               </div>
             </div>

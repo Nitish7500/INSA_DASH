@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { CSVLink } from "react-csv";
 import { useDispatch } from "react-redux";
-import { Collapse } from "reactstrap";
+import { Button, Collapse } from "reactstrap";
 
 function MonthlyResolved({ sections, handleSection, state }) {
   let dispatch = useDispatch();
@@ -65,11 +65,23 @@ function MonthlyResolved({ sections, handleSection, state }) {
     <div>
       <div className="container text-primary font-weight-bold py-2 bg-warning mt-2">
         <h4
+          className="d-flex"
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("PayDoneRep")}
           id="MonResolveSecDrpDwn"
         >
           Monthly Resolved and Payment Done Report Section
+          <div
+            className={
+              sections.includes("AgentMonRep") ? "dropup btn-group m-0 p-0" : ""
+            }
+          >
+            <Button
+              style={{ height: "20px" }}
+              color="primary"
+              className="m-0 p-0 mt-n3 dropdown-toggle-split dropdown-toggle btn table-expand"
+            ></Button>
+          </div>
         </h4>
       </div>
       <div className="container shadow">
@@ -98,6 +110,7 @@ function MonthlyResolved({ sections, handleSection, state }) {
                   className="form-control border-bold"
                   name="allResolveEnd"
                   type={"date"}
+                  max={(new Date()).toISOString()?.split("T")[0]}
                   onChange={(e) => {
                     setpayDoneRepForm({
                       ...payDoneRepForm,

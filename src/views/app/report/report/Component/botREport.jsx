@@ -4,9 +4,9 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { CSVLink } from "react-csv";
 import { useDispatch } from "react-redux";
-import { Collapse } from "reactstrap";
+import { Button, Collapse } from "reactstrap";
 
-function BotREport({ state, sections, handleSection }) {
+function BotReport({ state, sections, handleSection }) {
   // BOT_REPORT_DATA
 
   const [formData, setformData] = useState({
@@ -58,11 +58,23 @@ function BotREport({ state, sections, handleSection }) {
     <div>
       <div className="container text-primary font-weight-bold py-2 bg-warning mt-2">
         <h4
+          className="d-flex"
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("whatsRep")}
           id="WhatsBotFollowRep"
         >
-          WhatsApp Bot Follow Up Report
+          <span className="">WhatsApp Bot Follow Up Report </span>
+          <div
+            className={
+              sections.includes("AgentMonRep") ? "dropup btn-group m-0 p-0" : ""
+            }
+          >
+            <Button
+              style={{ height: "20px" }}
+              color="primary"
+              className="m-0 p-0 mt-n3 dropdown-toggle-split dropdown-toggle btn table-expand"
+            ></Button>
+          </div>
         </h4>
       </div>
       <div className="container shadow">
@@ -78,7 +90,6 @@ function BotREport({ state, sections, handleSection }) {
                   type={"date"}
                   onChange={handleChange}
                   value={botFollowUpStartDate}
-                  // onChange={(e) => {setpayDoneRepForm({...payDoneRepForm,[e.target.name]:e.target.value})}}
                 />
               </div>
               <div className="col-sm-3">
@@ -88,9 +99,9 @@ function BotREport({ state, sections, handleSection }) {
                   className="form-control border-bold"
                   name="botFollowUpEndDate"
                   type={"date"}
+                  max={(new Date()).toISOString()?.split("T")[0]}
                   onChange={handleChange}
                   value={botFollowUpEndDate}
-                  // onChange={(e) => {setpayDoneRepForm({...payDoneRepForm,[e.target.name]:e.target.value})}}
                 />
               </div>
               <div className="col-sm-3 mt-auto">
@@ -115,4 +126,4 @@ function BotREport({ state, sections, handleSection }) {
   );
 }
 
-export default BotREport;
+export default BotReport;

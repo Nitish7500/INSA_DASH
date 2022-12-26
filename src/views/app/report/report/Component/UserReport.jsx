@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Collapse } from "reactstrap";
+import { Button, Collapse } from "reactstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import LeadReport from "./leadReport";
@@ -18,7 +18,7 @@ import RegisteredLead from "./registeredLead";
 import MonthlyResB2c from "./monthlyResB2c";
 import OmbRejectCases from "./ombRejectCases";
 import TatReport from "./tatReport";
-import BotREport from "./botReport";
+import BotReport from "./botReport";
 
 function UserReport() {
   const [sections, setsections] = useState([]);
@@ -150,11 +150,25 @@ function UserReport() {
         <div>
           <div className="container text-primary font-weight-bold py-2 bg-warning mt-2">
             <h4
+              className="d-flex"
               style={{ cursor: "pointer" }}
               onClick={() => handleSection("AddLeadR")}
               id="addLeadDrpDwn"
             >
               Add More Leads
+              <div
+                className={
+                  sections.includes("AgentMonRep")
+                    ? "dropup btn-group m-0 p-0"
+                    : ""
+                }
+              >
+                <Button
+                  style={{ height: "20px" }}
+                  color="primary"
+                  className="m-0 p-0 mt-n3 dropdown-toggle-split dropdown-toggle btn table-expand"
+                ></Button>
+              </div>
             </h4>
           </div>
           <div className="container shadow">
@@ -232,7 +246,7 @@ function UserReport() {
             handleSection={handleSection}
             sections={sections}
           />
-          <BotREport
+          <BotReport
             sections={sections}
             state={state}
             handleSection={handleSection}

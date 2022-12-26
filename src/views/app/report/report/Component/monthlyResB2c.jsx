@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { CSVLink } from "react-csv";
 import { useDispatch } from "react-redux";
-import { Collapse } from "reactstrap";
+import { Button, Collapse } from "reactstrap";
 
 function MonthlyResB2c({ sections, handleSection, state }) {
   const [formData, setformData] = useState({
@@ -48,11 +48,23 @@ function MonthlyResB2c({ sections, handleSection, state }) {
     <div>
       <div className="container text-primary font-weight-bold py-2 bg-warning mt-2">
         <h4
+          className="d-flex"
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("MonResRep")}
           id="monRepB2c"
         >
           Monthly Resolved Report Section(B2C, Agent and Partner)
+          <div
+            className={
+              sections.includes("AgentMonRep") ? "dropup btn-group m-0 p-0" : ""
+            }
+          >
+            <Button
+              style={{ height: "20px" }}
+              color="primary"
+              className="m-0 p-0 mt-n3 dropdown-toggle-split dropdown-toggle btn table-expand"
+            ></Button>
+          </div>
         </h4>
       </div>
       <div className="container shadow">
@@ -77,6 +89,7 @@ function MonthlyResB2c({ sections, handleSection, state }) {
                   id="monRepB2cEndDt"
                   className="form-control border-bold"
                   name="resolveEnd"
+                  max={(new Date()).toISOString()?.split("T")[0]}
                   value={resolveEnd}
                   type={"date"}
                   onChange={handleChange}
@@ -92,10 +105,18 @@ function MonthlyResB2c({ sections, handleSection, state }) {
                   value={resolveReportType}
                   onChange={handleChange}
                 >
-                  <option key={"select"} value={""}>Select Type</option>
-                  <option key={"b2c"} value="complaint">B2C</option>
-                  <option key={"agent"} value="agent">Agent</option>
-                  <option key={"partner"} value="partner">Partner</option>
+                  <option key={"select"} value={""}>
+                    Select Type
+                  </option>
+                  <option key={"b2c"} value="complaint">
+                    B2C
+                  </option>
+                  <option key={"agent"} value="agent">
+                    Agent
+                  </option>
+                  <option key={"partner"} value="partner">
+                    Partner
+                  </option>
                 </select>
               </div>
               <div className="col-sm-3 mt-auto">

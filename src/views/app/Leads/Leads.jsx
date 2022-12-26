@@ -1905,7 +1905,7 @@ function LeadSection() {
                           </thead>
                           <tbody>
                             {
-                              state.callLogsCustomer?.objects.length ? state.callLogsCustomer?.objects?.map((res,i) => {
+                              state.callLogsCustomer?.objects?.length ? state.callLogsCustomer?.objects?.map((res,i) => {
                                 return <tr key={+i+22}>
                                     <td>{i + 1}</td>
                                     <td>{res.business_call_type}</td>

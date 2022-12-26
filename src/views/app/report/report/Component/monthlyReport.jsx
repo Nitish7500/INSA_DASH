@@ -1,5 +1,5 @@
 import React from "react";
-import { Collapse } from "reactstrap";
+import { Button, Collapse } from "reactstrap";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -42,11 +42,23 @@ function MonthlyReport({ sections, handleSection, state }) {
     <div>
       <div className="container text-primary font-weight-bold py-2 bg-warning mt-2">
         <h4
+          className="d-flex"
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("MonthlyRep")}
           id="MonthlyRepSecDrpDwn"
         >
           Monthly Report Section(Complaints,Agent Cases,Partner leads)
+          <div
+            className={
+              sections.includes("AgentMonRep") ? "dropup btn-group m-0 p-0" : ""
+            }
+          >
+            <Button
+              style={{ height: "20px" }}
+              color="primary"
+              className="m-0 p-0 mt-n3 dropdown-toggle-split dropdown-toggle btn table-expand"
+            ></Button>
+          </div>
         </h4>
       </div>
       <div className="container shadow">
@@ -69,6 +81,7 @@ function MonthlyReport({ sections, handleSection, state }) {
                   id="MonRepEndDt"
                   className="form-control border-bold"
                   name="endDate"
+                  max={(new Date()).toISOString()?.split("T")[0]}
                   type={"date"}
                   onChange={handleChange}
                 />

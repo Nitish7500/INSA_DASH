@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { CSVLink } from "react-csv";
 import { useDispatch } from "react-redux";
-import { Collapse } from "reactstrap";
+import { Button, Collapse } from "reactstrap";
 
 function OmbRejectCases({ state, handleSection, sections }) {
   const [formData, setformData] = useState({
@@ -58,11 +58,23 @@ function OmbRejectCases({ state, handleSection, sections }) {
     <div>
       <div className="container text-primary font-weight-bold py-2 bg-warning mt-2">
         <h4
+          className="d-flex"
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("OmbRejRep")}
           id="OmbRejSecDrpDwn"
         >
           Ombudsman Rejected Cases Report Section (B2C, Agent and Partner)
+          <div
+            className={
+              sections.includes("AgentMonRep") ? "dropup btn-group m-0 p-0" : ""
+            }
+          >
+            <Button
+              style={{ height: "20px" }}
+              color="primary"
+              className="m-0 p-0 mt-n3 dropdown-toggle-split dropdown-toggle btn table-expand"
+            ></Button>
+          </div>
         </h4>
       </div>
       <div className="container shadow">
@@ -77,7 +89,6 @@ function OmbRejectCases({ state, handleSection, sections }) {
                   name="omdRejectStart"
                   type={"date"}
                   onChange={handleChange}
-                  // onChange={(e) => {setpayDoneRepForm({...payDoneRepForm,[e.target.name]:e.target.value})}}
                 />
               </div>
               <div className="col-sm-3">
@@ -86,9 +97,9 @@ function OmbRejectCases({ state, handleSection, sections }) {
                   id="ombRejEndDt"
                   className="form-control border-bold"
                   name="omdRejectEnd"
+                  max={(new Date()).toISOString()?.split("T")[0]}
                   type={"date"}
                   onChange={handleChange}
-                  // onChange={(e) => {setpayDoneRepForm({...payDoneRepForm,[e.target.name]:e.target.value})}}
                 />
               </div>
               <div className="col-sm-3">
@@ -99,10 +110,18 @@ function OmbRejectCases({ state, handleSection, sections }) {
                   name="omdRejectType"
                   onChange={handleChange}
                 >
-                  <option key={"select"} value={""}>Select Type</option>
-                  <option key={"b2c"} value="complaint">B2C</option>
-                  <option key={"agent"} value="agent">Agent</option>
-                  <option key={"partner"} value="partner">Partner</option>
+                  <option key={"select"} value={""}>
+                    Select Type
+                  </option>
+                  <option key={"b2c"} value="complaint">
+                    B2C
+                  </option>
+                  <option key={"agent"} value="agent">
+                    Agent
+                  </option>
+                  <option key={"partner"} value="partner">
+                    Partner
+                  </option>
                 </select>
               </div>
               <div className="col-sm-3 mt-auto">

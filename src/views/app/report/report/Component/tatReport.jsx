@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { CSVLink } from "react-csv";
 import { useDispatch } from "react-redux";
-import { Collapse } from "reactstrap";
+import { Button, Collapse } from "reactstrap";
 
 function TatReport({ sections, handleSection, state }) {
   const [formData, setformData] = useState({
@@ -72,11 +72,25 @@ function TatReport({ sections, handleSection, state }) {
       <div>
         <div className="container text-primary font-weight-bold py-2 bg-warning mt-2">
           <h4
+            className="d-flex"
             style={{ cursor: "pointer" }}
             onClick={() => handleSection("OmbRejRep")}
             id="tatReportDrpDwn"
           >
             TAT Report
+            <div
+              className={
+                sections.includes("AgentMonRep")
+                  ? "dropup btn-group m-0 p-0"
+                  : ""
+              }
+            >
+              <Button
+                style={{ height: "20px" }}
+                color="primary"
+                className="m-0 p-0 mt-n3 dropdown-toggle-split dropdown-toggle btn table-expand"
+              ></Button>
+            </div>
           </h4>
         </div>
         <div className="container shadow">
@@ -92,7 +106,6 @@ function TatReport({ sections, handleSection, state }) {
                     type={"date"}
                     value={tatReportStartDate}
                     onChange={handleChange}
-                    // onChange={(e) => {setpayDoneRepForm({...payDoneRepForm,[e.target.name]:e.target.value})}}
                   />
                 </div>
                 <div className="col-sm-3">
@@ -102,9 +115,9 @@ function TatReport({ sections, handleSection, state }) {
                     className="form-control border-bold"
                     name="tatReportEndDate"
                     type={"date"}
+                    max={(new Date()).toISOString()?.split("T")[0]}
                     value={tatReportEndDate}
                     onChange={handleChange}
-                    // onChange={(e) => {setpayDoneRepForm({...payDoneRepForm,[e.target.name]:e.target.value})}}
                   />
                 </div>
                 <div className="col-sm-3">
@@ -116,13 +129,21 @@ function TatReport({ sections, handleSection, state }) {
                     value={tatStatus1}
                     onChange={handleChange}
                   >
-                    <option key={"null"} value={""}>Select Status</option>
+                    <option key={"null"} value={""}>
+                      Select Status
+                    </option>
                     {state.status?.map((res) => {
                       return <option key={res.name}>{res.name}</option>;
                     })}
-                    <option key={"1"} value="complaint">B2C</option>
-                    <option key={"2"} value="agent">Agent</option>
-                    <option key={"3"} value="partner">Partner</option>
+                    <option key={"1"} value="complaint">
+                      B2C
+                    </option>
+                    <option key={"2"} value="agent">
+                      Agent
+                    </option>
+                    <option key={"3"} value="partner">
+                      Partner
+                    </option>
                   </select>
                 </div>
                 <div className="col-sm-3">
@@ -134,13 +155,21 @@ function TatReport({ sections, handleSection, state }) {
                     onChange={handleChange}
                     value={tatStatus2}
                   >
-                    <option key={"status2"} value={""}>Select Status</option>
+                    <option key={"status2"} value={""}>
+                      Select Status
+                    </option>
                     {state.status?.map((res) => {
                       return <option key={res.name}>{res.name}</option>;
                     })}
-                    <option key={"11"} value="complaint">B2C</option>
-                    <option key={"12"} value="agent">Agent</option>
-                    <option key={"14"} value="partner">Partner</option>
+                    <option key={"11"} value="complaint">
+                      B2C
+                    </option>
+                    <option key={"12"} value="agent">
+                      Agent
+                    </option>
+                    <option key={"14"} value="partner">
+                      Partner
+                    </option>
                   </select>
                 </div>
                 <div className="col-sm-3 mt-auto">

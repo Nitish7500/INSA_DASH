@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Collapse } from "reactstrap";
+import { Button, Collapse } from "reactstrap";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { NotificationManager } from "components/common/react-notifications";
@@ -97,12 +97,23 @@ function AgentCasesMon({ sections, handleSection, state }) {
     <div>
       <div className="container text-primary font-weight-bold py-2 bg-warning mt-2">
         <h4
-          className=""
+          className="d-flex"
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("AgentMonRep")}
           id="agentMonthlyReport"
         >
           Agent Cases Monthly Report Section
+          <div
+            className={
+              sections.includes("AgentMonRep") ? "dropup btn-group m-0 p-0" : ""
+            }
+          >
+            <Button
+              style={{ height: "20px" }}
+              color="primary"
+              className="m-0 p-0 mt-n3 dropdown-toggle-split dropdown-toggle btn table-expand"
+            ></Button>
+          </div>
         </h4>
       </div>
       <div className="container shadow">
@@ -129,6 +140,7 @@ function AgentCasesMon({ sections, handleSection, state }) {
                   name="agentEnd"
                   type={"date"}
                   onChange={handleChnage}
+                  max={(new Date()).toISOString()?.split("T")[0]}
                   id="agentEndDt"
                 />
               </div>
@@ -226,6 +238,7 @@ function AgentCasesMon({ sections, handleSection, state }) {
                   className="form-control border-bold"
                   name="toDate"
                   type={"date"}
+                  max={(new Date()).toISOString()?.split("T")[0]}
                   onChange={handleChnage}
                 />
               </div>

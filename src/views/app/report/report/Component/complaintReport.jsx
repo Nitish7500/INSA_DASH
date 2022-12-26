@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Collapse } from "reactstrap";
+import { Button, Collapse } from "reactstrap";
 import { useDispatch } from "react-redux";
 import { NotificationManager } from "components/common/react-notifications";
 import { useEffect } from "react";
@@ -82,11 +82,23 @@ function ComplaintReport({ sections, handleSection, state }) {
     <div>
       <div className="container text-primary font-weight-bold py-2 bg-warning mt-2">
         <h4
+          className="d-flex"
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("ComRep")}
           id="comRepDrpDown"
         >
           Complaint Report Section
+          <div
+            className={
+              sections.includes("AgentMonRep") ? "dropup btn-group m-0 p-0" : ""
+            }
+          >
+            <Button
+              style={{ height: "20px" }}
+              color="primary"
+              className="m-0 p-0 mt-n3 dropdown-toggle-split dropdown-toggle btn table-expand"
+            ></Button>
+          </div>
         </h4>
       </div>
       <div className="container shadow">
@@ -108,6 +120,7 @@ function ComplaintReport({ sections, handleSection, state }) {
                 <label>End Date</label>
                 <input
                   id="comRepEndDt"
+                  max={(new Date()).toISOString()?.split("T")[0]}
                   className="form-control border-bold"
                   name="complaintEnd"
                   type={"date"}

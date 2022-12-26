@@ -1,5 +1,5 @@
 import React from "react";
-import { Collapse } from "reactstrap";
+import { Button, Collapse } from "reactstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { NotificationManager } from "components/common/react-notifications";
@@ -91,11 +91,23 @@ function LeadReport({ handleSection, sections, state }) {
     <div>
       <div className="container text-primary font-weight-bold py-2 bg-warning mt-2">
         <h4
+          className="d-flex"
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("LeadRep")}
           id="leadSecDrpDwn"
         >
           Lead Section
+          <div
+            className={
+              sections.includes("AgentMonRep") ? "dropup btn-group m-0 p-0" : ""
+            }
+          >
+            <Button
+              style={{ height: "20px" }}
+              color="primary"
+              className="m-0 p-0 mt-n3 dropdown-toggle-split dropdown-toggle btn table-expand"
+            ></Button>
+          </div>
         </h4>
       </div>
       <div>
@@ -121,6 +133,7 @@ function LeadReport({ handleSection, sections, state }) {
                   id="leadRepEndDt"
                   className="form-control border-bold"
                   type={"date"}
+                  max={(new Date()).toISOString()?.split("T")[0]}
                   name="enddate"
                   onChange={handleCountChange}
                 />
@@ -237,6 +250,7 @@ function LeadReport({ handleSection, sections, state }) {
                     id="leadRepScEndDt"
                     className="form-control border-bold"
                     name="leadEnd"
+                    max={(new Date()).toISOString()?.split("T")[0]}
                     type={"date"}
                     onChange={handleCountChange}
                   />

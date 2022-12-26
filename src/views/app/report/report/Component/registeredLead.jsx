@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { CSVLink } from "react-csv";
 import { useDispatch } from "react-redux";
-import { Collapse } from "reactstrap";
+import { Button, Collapse } from "reactstrap";
 
 function RegisteredLead({ state, sections, handleSection }) {
   const [formData, setformData] = useState({
@@ -49,11 +49,23 @@ function RegisteredLead({ state, sections, handleSection }) {
     <div>
       <div className="container text-primary font-weight-bold py-2 bg-warning mt-2">
         <h4
+          className="d-flex"
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("RegLeadRep")}
           id="monRegLeadRepDrpDwn"
         >
           Monthly Registered Lead Report Section
+          <div
+            className={
+              sections.includes("AgentMonRep") ? "dropup btn-group m-0 p-0" : ""
+            }
+          >
+            <Button
+              style={{ height: "20px" }}
+              color="primary"
+              className="m-0 p-0 mt-n3 dropdown-toggle-split dropdown-toggle btn table-expand"
+            ></Button>
+          </div>
         </h4>
       </div>
       <div className="container shadow">
@@ -78,6 +90,7 @@ function RegisteredLead({ state, sections, handleSection }) {
                   id="regLeadEndDt"
                   className="form-control border-bold"
                   name="allRegisteredEnd"
+                  max={(new Date()).toISOString()?.split("T")[0]}
                   type={"date"}
                   value={allRegisteredEnd}
                   onChange={handleChange}
@@ -93,9 +106,15 @@ function RegisteredLead({ state, sections, handleSection }) {
                   onChange={handleChange}
                   value={allRegisteredType}
                 >
-                  <option key={"select"} value={""}>Select Type</option>
-                  <option key={"leadCreation"} value="leadCreation">Lead Creation</option>
-                  <option key={"leadMovement"} value="leadMovement">Lead Movement</option>
+                  <option key={"select"} value={""}>
+                    Select Type
+                  </option>
+                  <option key={"leadCreation"} value="leadCreation">
+                    Lead Creation
+                  </option>
+                  <option key={"leadMovement"} value="leadMovement">
+                    Lead Movement
+                  </option>
                 </select>
               </div>
               <div className="col-sm-3 mt-auto">

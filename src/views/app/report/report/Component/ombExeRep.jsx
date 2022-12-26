@@ -1,6 +1,6 @@
 import { NotificationManager } from "components/common/react-notifications";
 import React from "react";
-import { Collapse } from "reactstrap";
+import { Button, Collapse } from "reactstrap";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -69,11 +69,23 @@ function OmbExeRep({ sections, handleSection, state }) {
     <div>
       <div className="container text-primary font-weight-bold py-2 bg-warning mt-2">
         <h4
+          className="d-flex"
           style={{ cursor: "pointer" }}
           onClick={() => handleSection("OmbRep")}
           id="ombExeDrpDwn"
         >
-          Ombudsman and Ops Executive Report Section:-
+          Ombudsman and Ops Executive Report Section
+          <div
+            className={
+              sections.includes("AgentMonRep") ? "dropup btn-group m-0 p-0" : ""
+            }
+          >
+            <Button
+              style={{ height: "20px" }}
+              color="primary"
+              className="m-0 p-0 mt-n3 dropdown-toggle-split dropdown-toggle btn table-expand"
+            ></Button>
+          </div>
         </h4>
       </div>
       <div className="container shadow">
@@ -97,6 +109,7 @@ function OmbExeRep({ sections, handleSection, state }) {
                   id="ombExeEndDt"
                   className="form-control border-bold"
                   name="repEnd"
+                  max={(new Date()).toISOString()?.split("T")[0]}
                   type={"date"}
                   value={repEnd}
                   onChange={handleChange}
@@ -111,9 +124,15 @@ function OmbExeRep({ sections, handleSection, state }) {
                   value={reportType}
                   onChange={handleChange}
                 >
-                  <option key={"select"} value={""}>Select Report Type</option>
-                  <option key={"omb"} value="Ombudsman">Ombudsman</option>
-                  <option key={"opsExe"} value="Ops">Ops Executive</option>
+                  <option key={"select"} value={""}>
+                    Select Report Type
+                  </option>
+                  <option key={"omb"} value="Ombudsman">
+                    Ombudsman
+                  </option>
+                  <option key={"opsExe"} value="Ops">
+                    Ops Executive
+                  </option>
                 </select>
               </div>
               <div className="col-sm-3 mt-auto">
