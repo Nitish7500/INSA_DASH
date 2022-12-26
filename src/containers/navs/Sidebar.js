@@ -386,6 +386,7 @@ class Sidebar extends Component {
                           </a>
                         ) : (
                           <NavLink
+                          id={item.id}
                             to={item.to}
                             onClick={(e) => this.openSubMenu(e, item)}
                             data-flag={item.id}

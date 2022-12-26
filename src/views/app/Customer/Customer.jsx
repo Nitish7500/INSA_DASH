@@ -215,6 +215,7 @@ function Customer() {
                         <span
                           className="mr-2"
                           style={{ cursor: "pointer" }}
+                          id={"customerViewPass"}
                           onClick={() => {
                             setviewPassword(true);
                             dispatch({
@@ -327,6 +328,7 @@ function Customer() {
                 type={"text"}
                 value={viewPasswordObj.serviceRate}
                 name="serviceRate"
+                id="serviceRateInp"
                 onChange={(e) => {
                   setviewPasswordObj({
                     ...viewPasswordObj,
@@ -363,6 +365,7 @@ function Customer() {
         <ModalFooter>
           <div className="d-flex justify-content-end">
             <button
+            id="closeBtn"
               className="btn btn-danger rounded"
               onClick={() => {
                 setviewGamil(false);

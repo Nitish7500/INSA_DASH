@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable no-use-before-define */
-import React, { useState } from 'react';
-import { injectIntl } from 'react-intl';
+import React, { useState } from "react";
+import { injectIntl } from "react-intl";
 
 import {
   UncontrolledDropdown,
@@ -10,28 +10,28 @@ import {
   DropdownToggle,
   DropdownMenu,
   Input,
-} from 'reactstrap';
+} from "reactstrap";
 
-import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
 import {
   menuHiddenBreakpoint,
   searchPath,
   isDarkSwitchActive,
   adminRoot,
-} from 'constants/defaultValues';
-import { MobileMenuIcon, MenuIcon } from 'components/svg';
-import { getCurrentUser, getDirection, setDirection } from 'helpers/Utils';
+} from "constants/defaultValues";
+import { MobileMenuIcon, MenuIcon } from "components/svg";
+import { getCurrentUser, getDirection, setDirection } from "helpers/Utils";
 import {
   setContainerClassnames,
   clickOnMobileMenu,
   logoutUser,
   changeLocale,
-} from 'redux/actions';
+} from "redux/actions";
 
-import TopnavNotifications from './Topnav.Notifications';
-import TopnavDarkSwitch from './Topnav.DarkSwitch';
-import { capitalizeFirstLetter } from 'helpers/CommonHelper';
+import TopnavNotifications from "./Topnav.Notifications";
+import TopnavDarkSwitch from "./Topnav.DarkSwitch";
+import { capitalizeFirstLetter } from "helpers/CommonHelper";
 
 const TopNav = ({
   intl,
@@ -46,12 +46,11 @@ const TopNav = ({
   changeLocaleAction,
 }) => {
   const [isInFullScreen, setIsInFullScreen] = useState(false);
-  const [searchKeyword, setSearchKeyword] = useState('');
-
+  const [searchKeyword, setSearchKeyword] = useState("");
 
   const search = () => {
     history.push(`${searchPath}?key=${searchKeyword}`);
-    setSearchKeyword('');
+    setSearchKeyword("");
   };
 
   const handleChangeLocale = (_locale, direction) => {
@@ -80,22 +79,22 @@ const TopNav = ({
   const handleSearchIconClick = (e) => {
     if (window.innerWidth < menuHiddenBreakpoint) {
       let elem = e.target;
-      if (!e.target.classList.contains('search')) {
-        if (e.target.parentElement.classList.contains('search')) {
+      if (!e.target.classList.contains("search")) {
+        if (e.target.parentElement.classList.contains("search")) {
           elem = e.target.parentElement;
         } else if (
-          e.target.parentElement.parentElement.classList.contains('search')
+          e.target.parentElement.parentElement.classList.contains("search")
         ) {
           elem = e.target.parentElement.parentElement;
         }
       }
 
-      if (elem.classList.contains('mobile-view')) {
+      if (elem.classList.contains("mobile-view")) {
         search();
-        elem.classList.remove('mobile-view');
+        elem.classList.remove("mobile-view");
         removeEventsSearch();
       } else {
-        elem.classList.add('mobile-view');
+        elem.classList.add("mobile-view");
         addEventsSearch();
       }
     } else {
@@ -109,39 +108,39 @@ const TopNav = ({
     if (
       e.target &&
       e.target.classList &&
-      (e.target.classList.contains('navbar') ||
-        e.target.classList.contains('simple-icon-magnifier'))
+      (e.target.classList.contains("navbar") ||
+        e.target.classList.contains("simple-icon-magnifier"))
     ) {
       isSearchClick = true;
-      if (e.target.classList.contains('simple-icon-magnifier')) {
+      if (e.target.classList.contains("simple-icon-magnifier")) {
         search();
       }
     } else if (
       e.target.parentElement &&
       e.target.parentElement.classList &&
-      e.target.parentElement.classList.contains('search')
+      e.target.parentElement.classList.contains("search")
     ) {
       isSearchClick = true;
     }
 
     if (!isSearchClick) {
-      const input = document.querySelector('.mobile-view');
-      if (input && input.classList) input.classList.remove('mobile-view');
+      const input = document.querySelector(".mobile-view");
+      if (input && input.classList) input.classList.remove("mobile-view");
       removeEventsSearch();
-      setSearchKeyword('');
+      setSearchKeyword("");
     }
   };
 
   const removeEventsSearch = () => {
-    document.removeEventListener('click', handleDocumentClickSearch, true);
+    document.removeEventListener("click", handleDocumentClickSearch, true);
   };
 
   const addEventsSearch = () => {
-    document.addEventListener('click', handleDocumentClickSearch, true);
+    document.addEventListener("click", handleDocumentClickSearch, true);
   };
 
   const handleSearchInputKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       search();
     }
   };
@@ -171,7 +170,7 @@ const TopNav = ({
     }
     setIsInFullScreen(!isFS);
   };
- 
+
   const handleLogout = () => {
     logoutUserAction(history);
   };
@@ -180,8 +179,8 @@ const TopNav = ({
     e.preventDefault();
 
     setTimeout(() => {
-      const event = document.createEvent('HTMLEvents');
-      event.initEvent('resize', false, false);
+      const event = document.createEvent("HTMLEvents");
+      event.initEvent("resize", false, false);
       window.dispatchEvent(event);
     }, 350);
     setContainerClassnamesAction(
@@ -199,13 +198,13 @@ const TopNav = ({
   const { messages } = intl;
 
   //logged in user data
-  const loggedInUser = getCurrentUser()?getCurrentUser().data:null;
-
+  const loggedInUser = getCurrentUser() ? getCurrentUser().data : null;
 
   return (
     <nav className="navbar fixed-top">
       <div className="d-flex align-items-center navbar-left">
         <NavLink
+          id="navLinkSideBar"
           to="#"
           location={{}}
           className="menu-button d-none d-md-block"
@@ -223,9 +222,8 @@ const TopNav = ({
         >
           <MobileMenuIcon />
         </NavLink>
-
       </div>
-      
+
       <NavLink className="navbar-logo" to={adminRoot}>
         <span className="logo d-none d-xs-block" />
         <span className="logo-mobile d-block d-xs-none" />
@@ -251,13 +249,23 @@ const TopNav = ({
         <div className="user d-inline-block">
           <UncontrolledDropdown className="dropdown-menu-right">
             <DropdownToggle className="p-0" color="empty">
-              <span className="name mr-1">{capitalizeFirstLetter(loggedInUser ? (loggedInUser.name ? loggedInUser.name : "") : "")}</span>
+              <span className="name mr-1">
+                {capitalizeFirstLetter(
+                  loggedInUser
+                    ? loggedInUser.name
+                      ? loggedInUser.name
+                      : ""
+                    : ""
+                )}
+              </span>
               <span>
                 <img alt="Profile" src="/assets/img/profiles/user.png" />
               </span>
             </DropdownToggle>
             <DropdownMenu className="mt-3" left="true">
-              <DropdownItem>{loggedInUser ? loggedInUser.email : ""}</DropdownItem>
+              <DropdownItem>
+                {loggedInUser ? loggedInUser.email : ""}
+              </DropdownItem>
               <DropdownItem>Account</DropdownItem>
               <DropdownItem divider />
               <DropdownItem onClick={() => handleLogout()}>

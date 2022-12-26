@@ -892,9 +892,9 @@ const DefaultDashboard = ({ intl, match }) => {
                   <div className="container">
                     <div className="row">
                       {data.leadExports?.length &&
-                        data.leadExports?.map((res) => {
+                        data.leadExports?.map((res, i) => {
                           return (
-                            <DashboardCard name={res.name} value={res.count} />
+                            <DashboardCard key={res.name + i} name={res.name} value={res.count} />
                           );
                         })}
                     </div>
@@ -932,9 +932,9 @@ const DefaultDashboard = ({ intl, match }) => {
                   <div className="container">
                     <div className="row">
                       {data.bucketCount?.length &&
-                        data.bucketCount.map((res) => {
+                        data.bucketCount.map((res, i) => {
                           return (
-                            <DashboardCard name={res.Name} value={res.Total} />
+                            <DashboardCard key={+i + 600} name={res.Name} value={res.Total} />
                           );
                         })}
                     </div>
@@ -1055,17 +1055,17 @@ const DefaultDashboard = ({ intl, match }) => {
               <div className="container">
                 <div className="row">
                   {data.complaintDashboard ? (
-                    Object.entries(data.complaintDashboard)?.map((res) => {
-                      return <DashboardCard name={res[0]} value={res[1]} />;
+                    Object.entries(data.complaintDashboard)?.map((res,i) => {
+                      return <DashboardCard key={i + 500} name={res[0]} value={res[1]} />;
                     })
                   ) : (
-                    <tr
+                    <div
                       key={"noData000"}
                       className="text-center"
                       style={{ margin: "auto" }}
                     >
                       No Data
-                    </tr>
+                    </div>
                   )}
                 </div>
               </div>
@@ -1417,7 +1417,7 @@ const DefaultDashboard = ({ intl, match }) => {
                         })
                       ) : (
                         <tr className="text-center" key={"noData"}>
-                          No Data
+                          <td colSpan={5}>No Data</td>
                         </tr>
                       )}
                     </tbody>
@@ -2414,7 +2414,7 @@ const DefaultDashboard = ({ intl, match }) => {
                           );
                         })
                       ) : (
-                        <tr key={"noData"}>No Data</tr>
+                        <tr key={"noData"}><td colSpan={6}>No Data</td></tr>
                       )}
                     </tbody>
                   </table>
@@ -2655,7 +2655,7 @@ const DefaultDashboard = ({ intl, match }) => {
                           );
                         })
                       ) : (
-                        <tr key={"noData"}>No Data</tr>
+                        <tr key={"noData"}><td colSpan={6}>No Data</td></tr>
                       )}
                     </tbody>
                   </table>
@@ -3101,7 +3101,7 @@ const DefaultDashboard = ({ intl, match }) => {
                         })
                       ) : (
                         <tr key={"noData"} className="text-center">
-                          No Data
+                          <td colSpan={13}>No Data</td>
                         </tr>
                       )}
                     </tbody>
@@ -3195,7 +3195,7 @@ const DefaultDashboard = ({ intl, match }) => {
                         })
                       ) : (
                         <tr key={"noData88"} className="text-center">
-                          No Data
+                          <td colSpan={12}>No Data</td>
                         </tr>
                       )}
                     </tbody>
@@ -3286,7 +3286,7 @@ const DefaultDashboard = ({ intl, match }) => {
                         })
                       ) : (
                         <tr key={"noData"} className="text-center">
-                          No Data
+                          <td colSpan={13}>No Data</td>
                         </tr>
                       )}
                     </tbody>
@@ -3379,7 +3379,7 @@ const DefaultDashboard = ({ intl, match }) => {
                         })
                       ) : (
                         <tr key={"noData"} className="text-center">
-                          No Data
+                          <td colSpan={13}>No Data</td>
                         </tr>
                       )}
                     </tbody>
@@ -3446,7 +3446,7 @@ const DefaultDashboard = ({ intl, match }) => {
                         })
                       ) : (
                         <tr key={"noData"} className="text-center">
-                          No Data
+                          <td colSpan={6}>No Data</td>
                         </tr>
                       )}
                     </tbody>
@@ -3516,7 +3516,7 @@ const DefaultDashboard = ({ intl, match }) => {
                         )
                       ) : (
                         <tr key={"noData"} className="text-center">
-                          No Data
+                          <td colSpan={6}>No Data</td>
                         </tr>
                       )}
                     </tbody>
@@ -3656,7 +3656,7 @@ const DefaultDashboard = ({ intl, match }) => {
                         })
                       ) : (
                         <tr key={"noData"} className="text-center">
-                          No Data
+                          <td colSpan={13}>No Data</td>
                         </tr>
                       )}
                     </tbody>
@@ -3743,7 +3743,7 @@ const DefaultDashboard = ({ intl, match }) => {
                         })
                       ) : (
                         <tr key={"noData"} className="text-center">
-                          No Data
+                          <td colSpan={12}>No Data</td>
                         </tr>
                       )}
                     </tbody>

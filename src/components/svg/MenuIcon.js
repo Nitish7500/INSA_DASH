@@ -1,9 +1,10 @@
-import React from 'react';
+import React from "react";
 
 const MenuIcon = () => {
   return (
     <>
       <svg
+        id="menuIconconOne"
         className="main"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 9 17"
@@ -13,6 +14,7 @@ const MenuIcon = () => {
         <rect x="0.48" y="15.5" width="7" height="1" />
       </svg>
       <svg
+        id="menuIconTwo"
         className="sub"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 18 17"
