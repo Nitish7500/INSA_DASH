@@ -202,7 +202,7 @@ function Users() {
     dispatch({ type: "USER_GET_STATUS_BUCKET" });
     dispatch({ type: "USER_GET_ASSIGN_USER" });
     dispatch({ type: "GET_ASSIGN_LEGAL_EXECUTIVE" });
-    dispatch({ type: "USER_GET_LEGAL_SUBEXECUTIVE" });
+    dispatch({ type: "USER_GET_LEGAL_SUBEXECUTIVE" }); 
   }, []);
 
   useEffect(() => {
