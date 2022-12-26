@@ -278,7 +278,7 @@ const DefaultDashboard = ({ intl, match }) => {
               {data.states?.length
                 ? data.states?.map((x) => {
                     return (
-                      <option key={x.name} value={x.name}>
+                      <option id={`stateArr${x}`} key={x.name} value={x.name}>
                         {x.name}
                       </option>
                     );
@@ -303,7 +303,7 @@ const DefaultDashboard = ({ intl, match }) => {
               </option>
               {ombudsmanStatusList?.map((res) => {
                 return (
-                  <option key={res?.toString()} value={res}>
+                  <option id={`StsArr${res}`} key={res?.toString()} value={res}>
                     {res}
                   </option>
                 );
@@ -317,6 +317,7 @@ const DefaultDashboard = ({ intl, match }) => {
           <div className="text-dark px-3 py-3">
             <span
               className="h6 px-3 letter-spacing rounded py-2 font-weight-bold"
+              id="leadMainHeading"
               onClick={(e) => {
                 handleNavClick(e);
                 leadCollapse("leadSection");
@@ -328,6 +329,7 @@ const DefaultDashboard = ({ intl, match }) => {
           <div className="text-dark px-3 py-3">
             <span
               className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
+              id="RegMainHeading"
               onClick={(e) => {
                 handleNavClick(e);
                 leadCollapse("registration");
@@ -339,6 +341,7 @@ const DefaultDashboard = ({ intl, match }) => {
           <div className="text-dark px-3 py-3">
             <span
               className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
+              id="ResMainHeading"
               onClick={(e) => {
                 handleNavClick(e);
                 leadCollapse("resolution");
@@ -350,6 +353,7 @@ const DefaultDashboard = ({ intl, match }) => {
           <div className="text-dark px-3 py-3">
             <span
               className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
+              id="legalMainHeading"
               onClick={(e) => {
                 handleNavClick(e);
                 leadCollapse("legal");
@@ -361,6 +365,7 @@ const DefaultDashboard = ({ intl, match }) => {
           <div className="text-dark px-3 py-3">
             <span
               className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
+              id="ombdMainHeading"
               onClick={(e) => {
                 handleNavClick(e);
                 leadCollapse("ombudsman");
@@ -372,6 +377,7 @@ const DefaultDashboard = ({ intl, match }) => {
           <div className="text-dark px-3 py-3">
             <span
               className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
+              id="mailingMainHeading"
               onClick={(e) => {
                 handleNavClick(e);
                 leadCollapse("mailing");
@@ -952,6 +958,7 @@ const DefaultDashboard = ({ intl, match }) => {
               <ul className="d-flex list-unstyled flex-xl-row flex-md-row flex-sm-column">
                 <li className="mr-3">
                   <button
+                    id="regSecComDashBtn"
                     className="m-0 btn btn-primary rounded"
                     color="primary"
                     onClick={() => {
@@ -969,6 +976,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-danger rounded"
                     color="primary"
+                    id="regSecB2cBtn"
                     onClick={() => {
                       regSectionHandler("regB2C");
                       dispatch({
@@ -982,6 +990,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 </li>
                 <li className="mr-3">
                   <button
+                    id="regSecB2cCases"
                     className="m-0 btn btn-dark rounded"
                     color="primary"
                     onClick={() => {
@@ -1004,6 +1013,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-success rounded"
                     color="primary"
+                    id="regSecPartBtn"
                     onClick={() => {
                       regSectionHandler("regPartner");
                       dispatch({
@@ -1030,6 +1040,7 @@ const DefaultDashboard = ({ intl, match }) => {
               <div className="bg-primary mb-3 p-1 d-flex justify-content-between">
                 <h1 className="m-0">Complaint Dashboard </h1>
                 <button
+                  id="regSecRef"
                   className="btn btn-warning py-0"
                   onClick={() => {
                     dispatch({
@@ -1048,7 +1059,13 @@ const DefaultDashboard = ({ intl, match }) => {
                       return <DashboardCard name={res[0]} value={res[1]} />;
                     })
                   ) : (
-                    <tr key={"noData000"} className="text-center" style={{ margin: "auto" }}>No Data</tr>
+                    <tr
+                      key={"noData000"}
+                      className="text-center"
+                      style={{ margin: "auto" }}
+                    >
+                      No Data
+                    </tr>
                   )}
                 </div>
               </div>
@@ -1066,6 +1083,7 @@ const DefaultDashboard = ({ intl, match }) => {
               <div className="bg-primary mb-3 p-1 d-flex justify-content-between">
                 <h1 className="m-0">B2C Registration Section </h1>
                 <button
+                  id="regB2cRegBtn"
                   className="btn btn-warning py-1"
                   onClick={() => {
                     dispatch({
@@ -1332,7 +1350,13 @@ const DefaultDashboard = ({ intl, match }) => {
                       </div>
                     </>
                   ) : (
-                    <h4 key={"noData999"} style={{ margin: "auto" }} className="text-center">No Data</h4>
+                    <h4
+                      key={"noData999"}
+                      style={{ margin: "auto" }}
+                      className="text-center"
+                    >
+                      No Data
+                    </h4>
                   )}
                 </div>
               </div>
@@ -1350,6 +1374,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <h1 className="m-0">B2C Registration Cases(Monthly) </h1>
                 <button
                   className="btn btn-warning py-1"
+                  id="regB2cCasesRefresh"
                   onClick={() => {
                     dispatch({
                       type: "B2C_REGISTRATION_CASES",
@@ -1391,7 +1416,9 @@ const DefaultDashboard = ({ intl, match }) => {
                           );
                         })
                       ) : (
-                        <tr className="text-center" key={"noData"}>No Data</tr>
+                        <tr className="text-center" key={"noData"}>
+                          No Data
+                        </tr>
                       )}
                     </tbody>
                   </table>
@@ -1412,6 +1439,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   Partner Registration Dashboard(Monthly){" "}
                 </h1>
                 <button
+                  id="regPartRegBtn"
                   className="btn btn-warning py-1"
                   onClick={() => {
                     dispatch({
@@ -1544,6 +1572,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="ResolutionB2cDash"
                     onClick={() => {
                       resolutionSectionHandler("resolutionOne");
                       dispatch({
@@ -1559,6 +1588,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="resolutionPartnerDashBtn"
                     onClick={() => {
                       resolutionSectionHandler("resolutionTwo");
                       dispatch({
@@ -1574,6 +1604,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="resolutionB2cSattledBtn"
                     onClick={() => {
                       resolutionSectionHandler("resolutionThree");
                       dispatch({
@@ -1594,6 +1625,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="resolutionPartSattledBtn"
                     onClick={() => {
                       resolutionSectionHandler("resolutionFour");
                       dispatch({
@@ -1614,6 +1646,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="resolutionInvoiceBtn"
                     onClick={() => {
                       resolutionSectionHandler("resolutionFive");
                       dispatch({
@@ -1634,6 +1667,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="resolutionPartnerInvoiceBtn"
                     onClick={() => {
                       resolutionSectionHandler("resolutionSix");
                       dispatch({
@@ -1668,6 +1702,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <h1 className="m-0 p-0 py-1">B2C Resolution Dashboard </h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="b2cResolutionSecRef"
                   onClick={() => {
                     dispatch({
                       type: "B2C_RESOLUTION",
@@ -2037,6 +2072,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <h1 className="m-o p-0">Partner Resolution Dashboard </h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="partnerResolutionRef"
                   onClick={() => {
                     dispatch({
                       type: "PARTNER_RESOLUTION",
@@ -2279,6 +2315,7 @@ const DefaultDashboard = ({ intl, match }) => {
 
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="regB2cCasesRef"
                   onClick={() => {
                     dispatch({
                       type: "B2C_SATTLED",
@@ -2399,6 +2436,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <h1 className="m-o p-0">Partner Sattled Cases(Monthly) </h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="regPartnerReg"
                   onClick={() => {
                     dispatch({
                       type: "PARTNER_SATTLED_CASES",
@@ -2491,6 +2529,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <h1 className="m-o p-0">B2C Invoice Cases(Monthly) </h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="regPartnerRegRef"
                   onClick={() => {
                     dispatch({
                       type: "B2C_INVOICE_RAISED",
@@ -2637,6 +2676,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <h1 className="m-o p-0">Partner Invoice Cases(Monthly) </h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="regPartnerRegRef"
                   onClick={() => {
                     dispatch({
                       type: "PARTNER_INVOICE",
@@ -2739,6 +2779,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="legalSecAllCasesBtn"
                     onClick={() => {
                       handleLegalSection("legalOne");
                       dispatch({
@@ -2765,6 +2806,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <h1 className="m-o p-0">Partner Dashboard(All Cases)</h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="legalPartnerDashRef"
                   onClick={() => {
                     dispatch({
                       type: "LEGAL_PARTNER_DASHBOARD",
@@ -2861,6 +2903,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="legalSecB2cOmbMonBtn"
                     onClick={() => {
                       ombudsmanHandler("ombudsmanOne");
                       dispatch({
@@ -2876,6 +2919,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="legalSecPartnerOmbMonBtn"
                     onClick={() => {
                       ombudsmanHandler("ombudsmanTwo");
                       dispatch({
@@ -2891,6 +2935,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="legalSecB2cOmbYearlyBtn"
                     onClick={() => {
                       ombudsmanHandler("ombudsmanThree");
                       dispatch({
@@ -2911,6 +2956,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="legalSecPartnerOmbYearlyBtn"
                     onClick={() => {
                       ombudsmanHandler("ombudsmanFour");
                       dispatch({
@@ -2931,6 +2977,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="legalResendB2cMonCases"
                     onClick={() => {
                       ombudsmanHandler("ombudsmanFive");
                       dispatch({
@@ -2951,6 +2998,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="legalResendPartnerMon"
                     onClick={() => {
                       ombudsmanHandler("ombudsmanSix");
                       dispatch({
@@ -2983,6 +3031,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <h1 className="m-o p-0">B2C Ombudsman Dashboard(Monthly) </h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="legalPartnerDashRef"
                   onClick={() => {
                     dispatch({
                       type: "B2C_OMBUDSMAN_COUNT",
@@ -3076,6 +3125,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 </h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="regB2cRefBtn"
                   onClick={() => {
                     dispatch({
                       type: "PARTNER_OMBUDSMAN_COUNT",
@@ -3144,7 +3194,9 @@ const DefaultDashboard = ({ intl, match }) => {
                           );
                         })
                       ) : (
-                        <tr key={"noData88"} className="text-center">No Data</tr>
+                        <tr key={"noData88"} className="text-center">
+                          No Data
+                        </tr>
                       )}
                     </tbody>
                   </table>
@@ -3163,6 +3215,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <h1 className="m-o p-0">New Ombudsman Count(B2C)(Yearly) </h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="newOmbCountRefBtn"
                   onClick={() => {
                     dispatch({
                       type: "NEW_OMBUDSMAN_COUNT_B2C",
@@ -3255,6 +3308,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 </h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="newOmbCountYearly"
                   onClick={() => {
                     dispatch({
                       type: "NEW_OMBUDSMAN_COUNT_PARTNER",
@@ -3346,6 +3400,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 </h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="b2cResendCasesRefBtn"
                   onClick={() => {
                     dispatch({
                       type: "OMBUDSMAN_RESEND_CASES_B2C",
@@ -3413,6 +3468,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 </h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="partnerResendCasesRef"
                   onClick={() => {
                     dispatch({
                       type: "OMBUDSMAN_RESEND_CASES_PARTNER",
@@ -3487,6 +3543,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="b2cMailingCount"
                     onClick={() => {
                       mailingHandler("mailingOne");
                       dispatch({
@@ -3501,6 +3558,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <li className="mr-3">
                   <button
                     className="m-0 btn btn-primary rounded"
+                    id="partnerMailingCountMon"
                     color="primary"
                     onClick={() => {
                       mailingHandler("mailingTwo");
@@ -3528,6 +3586,7 @@ const DefaultDashboard = ({ intl, match }) => {
 
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="b2cMainlingDashRef"
                   onClick={() => {
                     dispatch({
                       type: "B2C_MAILING_COUNT",
@@ -3614,6 +3673,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <h1 className="m-o p-0">Partner Mailing Dashboard(Monthly) </h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="partnerMailingDashMonRef"
                   onClick={() => {
                     dispatch({
                       type: "PARTNER_MAILING_COUNT",
