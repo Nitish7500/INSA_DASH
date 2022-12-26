@@ -19,6 +19,7 @@ import MonthlyResB2c from "./monthlyResB2c";
 import OmbRejectCases from "./ombRejectCases";
 import TatReport from "./tatReport";
 import BotReport from "./botReport";
+// import BotReport from "./botReport";
 
 function UserReport() {
   const [sections, setsections] = useState([]);
