@@ -6,7 +6,7 @@ import { CSVLink } from "react-csv";
 import { useDispatch } from "react-redux";
 import { Button, Collapse } from "reactstrap";
 
-function BotReport({ state, sections, handleSection }) {
+export default function BotReport({ state, sections, handleSection }) {
   // BOT_REPORT_DATA
 
   const [formData, setformData] = useState({
@@ -125,5 +125,3 @@ function BotReport({ state, sections, handleSection }) {
     </div>
   );
 }
-
-export default BotReport;
