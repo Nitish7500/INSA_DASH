@@ -317,7 +317,7 @@ function Customer() {
                         </div>
                       </div>
                     </td>
-                  </tr>
+                  </tr> 
                 )}
               </tbody>
             </table>

@@ -7,19 +7,20 @@ let initialState = {
     legalExecutive:[],
     legalSubExecutive:[],
     message:"",
-    userUpdateMessage:""
+    userUpdateMessage:"",
+    loding:false
 }
 
 export default function(state=initialState, action){
     switch (action.type) {
         case USERS_GET_LIST:
-            return {...state}
+            return {...state, loading:true}
 
         case USERS_GET_LIST_SUCCESS:
-            return {...state, userData:action.data}
+            return {...state, userData:action.data, loading:false}
 
         case USERS_GET_LIST_FAILED:
-            return {...state, message:action.message}
+            return {...state, message:action.message, loading:false}
 
         case USER_GET_STATUS_BUCKET:
             return {...state}

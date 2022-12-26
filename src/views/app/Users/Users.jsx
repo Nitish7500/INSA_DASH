@@ -21,7 +21,7 @@ function Users() {
   const [legalSubExecutiveArr, setlegalSubExecutiveArr] = useState([]);
   const [userBucket, setuserBucket] = useState([]);
   const [legalExecutiveTeam, setlegalExecutiveTeam] = useState([]);
-  const [currentPage, setcurrentPage] = useState(1)
+  const [currentPage, setcurrentPage] = useState(1);
   const [formData, setformData] = useState({
     name: "",
     email: "",
@@ -202,12 +202,12 @@ function Users() {
     dispatch({ type: "USER_GET_STATUS_BUCKET" });
     dispatch({ type: "USER_GET_ASSIGN_USER" });
     dispatch({ type: "GET_ASSIGN_LEGAL_EXECUTIVE" });
-    dispatch({ type: "USER_GET_LEGAL_SUBEXECUTIVE" }); 
+    dispatch({ type: "USER_GET_LEGAL_SUBEXECUTIVE" });
   }, []);
 
   useEffect(() => {
     dispatch({ type: "USERS_GET_LIST", state: { page: currentPage } });
-  },[currentPage])
+  }, [currentPage]);
 
   const {
     name,
@@ -350,81 +350,100 @@ function Users() {
                 </tr>
               </thead>
               <tbody>
-                {state.userData?.pageOfItems?.map((res, i) => {
-                  return (
-                    <tr key={i}>
-                      <td>{res.name}</td>
-                      <td>{res.email}</td>
-                      <td>{res.user_id}</td>
-                      <td>{res.group}</td>
-                      <td>{res.expert}</td>
-                      <td>{res.legalExpert}</td>
-                      <td>{res.legalExecutive}</td>
-                      <td>{res.third_party}</td>
-                      <td>{res.company_name}</td>
-                      <td>{res.mobile}</td>
-                      <td>{}</td>
-                      <td>{res.status ? "Active" : "Non-Active"}</td>
-                      {/* <td>{"view"}</td> */}
-                      <td
-                        id={`userAddEdit${i}`}
-                        onClick={() => {
-                          setuserEditData(res);
-                          seteditUser(true);
-                          setaddUser(true);
-                        }}
-                      >
-                        <FontAwesomeIcon
-                          id={`userAddEditIcon${i}`}
-                          icon={faPencil}
-                          size="lg"
-                          color="#9c27b0"
-                          style={{ cursor: "pointer" }}
-                        />
-                      </td>
-                      <td
-                        onClick={() => {
-                          setshowPasswordModal(true);
-                          setcurrentUser(res);
-                        }}
-                        id={`userAddEditPass${i}`}
-                      >
-                        <FontAwesomeIcon
-                          id={`userAddEditPassIcon${i}`}
-                          icon={faShield}
-                          size="lg"
-                          style={{ cursor: "pointer" }}
-                        />
-                      </td>
-                    </tr>
-                  );
-                })}
+                {state.loading ? (
+                  <tr className="text-center">
+                    <td colSpan={15}>
+                      <div className="py-3">
+                        <div
+                          className="spinner-border text-center"
+                          role="status"
+                        >
+                          <span className="sr-only">Loading...</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                ) : state.userData?.pageOfItems?.length ? (
+                  state.userData?.pageOfItems?.map((res, i) => {
+                    return (
+                      <tr key={i}>
+                        <td>{res.name}</td>
+                        <td>{res.email}</td>
+                        <td>{res.user_id}</td>
+                        <td>{res.group}</td>
+                        <td>{res.expert}</td>
+                        <td>{res.legalExpert}</td>
+                        <td>{res.legalExecutive}</td>
+                        <td>{res.third_party}</td>
+                        <td>{res.company_name}</td>
+                        <td>{res.mobile}</td>
+                        <td>{}</td>
+                        <td>{res.status ? "Active" : "Non-Active"}</td>
+                        {/* <td>{"view"}</td> */}
+                        <td
+                          id={`userAddEdit${i}`}
+                          onClick={() => {
+                            setuserEditData(res);
+                            seteditUser(true);
+                            setaddUser(true);
+                          }}
+                        >
+                          <FontAwesomeIcon
+                            id={`userAddEditIcon${i}`}
+                            icon={faPencil}
+                            size="lg"
+                            color="#9c27b0"
+                            style={{ cursor: "pointer" }}
+                          />
+                        </td>
+                        <td
+                          onClick={() => {
+                            setshowPasswordModal(true);
+                            setcurrentUser(res);
+                          }}
+                          id={`userAddEditPass${i}`}
+                        >
+                          <FontAwesomeIcon
+                            id={`userAddEditPassIcon${i}`}
+                            icon={faShield}
+                            size="lg"
+                            style={{ cursor: "pointer" }}
+                          />
+                        </td>
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <tr className="text-center">
+                    <th colSpan={15}>No Data</th>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
         </div>
         {console.log(state?.userData?.pager?.totalItems)}
-      <div className="d-flex justify-content-center mt-4">
-        <ReactPaginate
-          breakLabel="..."
-          nextLabel="next >"
-          onPageChange={(e) => setcurrentPage(e.selected)}
-          pageClassName="page-item"
-          pageLinkClassName="page-link"
-          previousClassName="page-item"
-          previousLinkClassName="page-link"
-          nextClassName="page-item"
-          nextLinkClassName="page-link"
-          breakClassName="page-item"
-          breakLinkClassName="page-link"
-          containerClassName="pagination"
-          activeClassName="active"
-          pageRangeDisplayed={5}
-          pageCount={Math.ceil(state.userData?.pager?.totalItems/40)}
-          previousLabel="< previous"
-          renderOnZeroPageCount={null}
-        />
-      </div>
+        <div className="d-flex justify-content-center mt-4">
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel="next >"
+            onPageChange={(e) => setcurrentPage(e.selected)}
+            pageClassName="page-item"
+            pageLinkClassName="page-link"
+            previousClassName="page-item"
+            previousLinkClassName="page-link"
+            nextClassName="page-item"
+            nextLinkClassName="page-link"
+            breakClassName="page-item"
+            breakLinkClassName="page-link"
+            containerClassName="pagination"
+            activeClassName="active"
+            pageRangeDisplayed={5}
+            pageCount={Math.ceil(state.userData?.pager?.totalItems / 40)}
+            previousLabel="< previous"
+            renderOnZeroPageCount={null}
+          />
+        </div>
       </div>
       {/* --------------------------------> Add OR Edit User Modal */}
       <Modal
