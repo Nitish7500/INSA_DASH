@@ -80,7 +80,7 @@ function TatReport({ sections, handleSection, state }) {
             TAT Report
             <div
               className={
-                sections.includes("AgentMonRep")
+                sections.includes("OmbRejRep")
                   ? "dropup btn-group m-0 p-0"
                   : ""
               }
@@ -88,8 +88,8 @@ function TatReport({ sections, handleSection, state }) {
               <Button
                 style={{ height: "20px" }}
                 color="primary"
-                className="m-0 p-0 mt-n3 dropdown-toggle-split dropdown-toggle btn table-expand"
-              ></Button>
+                className={`m-0 p-0 ${sections.includes("OmbRejRep") ? "mt-n1" : "mt-n3"}  dropdown-toggle-split dropdown-toggle btn table-expand`}
+                ></Button>
             </div>
           </h4>
         </div>

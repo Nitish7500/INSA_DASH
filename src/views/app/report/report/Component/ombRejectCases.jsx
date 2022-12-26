@@ -66,13 +66,13 @@ function OmbRejectCases({ state, handleSection, sections }) {
           Ombudsman Rejected Cases Report Section (B2C, Agent and Partner)
           <div
             className={
-              sections.includes("AgentMonRep") ? "dropup btn-group m-0 p-0" : ""
+              sections.includes("OmbRejRep") ? "dropup btn-group m-0 p-0" : ""
             }
           >
             <Button
               style={{ height: "20px" }}
               color="primary"
-              className="m-0 p-0 mt-n3 dropdown-toggle-split dropdown-toggle btn table-expand"
+              className={`m-0 p-0 ${sections.includes("OmbRejRep") ? "mt-n1" : "mt-n3"}  dropdown-toggle-split dropdown-toggle btn table-expand`}
             ></Button>
           </div>
         </h4>

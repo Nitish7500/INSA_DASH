@@ -67,13 +67,13 @@ function ComplaintMonRep({ sections, handleSection, state }) {
           Complaint Monthly Report Section
           <div
             className={
-              sections.includes("AgentMonRep") ? "dropup btn-group m-0 p-0" : ""
+              sections.includes("ComMonthlyRep") ? "dropup btn-group m-0 p-0" : ""
             }
           >
             <Button
               style={{ height: "20px" }}
               color="primary"
-              className="m-0 p-0 mt-n3 dropdown-toggle-split dropdown-toggle btn table-expand"
+              className={`m-0 p-0 ${sections.includes("ComMonthlyRep") ? "mt-n1" : "mt-n3"}  dropdown-toggle-split dropdown-toggle btn table-expand`}
             ></Button>
           </div>
         </h4>

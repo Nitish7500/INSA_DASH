@@ -158,7 +158,7 @@ function UserReport() {
               Add More Leads
               <div
                 className={
-                  sections.includes("AgentMonRep")
+                  sections.includes("AddLeadR")
                     ? "dropup btn-group m-0 p-0"
                     : ""
                 }
@@ -166,8 +166,8 @@ function UserReport() {
                 <Button
                   style={{ height: "20px" }}
                   color="primary"
-                  className="m-0 p-0 mt-n3 dropdown-toggle-split dropdown-toggle btn table-expand"
-                ></Button>
+                  className={`m-0 p-0 ${sections.includes("AddLeadR") ? "mt-n1" : "mt-n3"}  dropdown-toggle-split dropdown-toggle btn table-expand`}
+                  ></Button>
               </div>
             </h4>
           </div>

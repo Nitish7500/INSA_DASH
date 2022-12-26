@@ -63,13 +63,13 @@ function UserSec({ sections, handleSection }) {
           User Section
           <div
             className={
-              sections.includes("AgentMonRep") ? "dropup btn-group m-0 p-0" : ""
+              sections.includes("UserRep") ? "dropup btn-group m-0 p-0" : ""
             }
           >
             <Button
               style={{ height: "20px" }}
               color="primary"
-              className="m-0 p-0 mt-n3 dropdown-toggle-split dropdown-toggle btn table-expand"
+              className={`m-0 p-0 ${sections.includes("UserRep") ? "mt-n1" : "mt-n3"} dropdown-toggle-split dropdown-toggle btn table-expand`}
             ></Button>
           </div>
         </h4>
