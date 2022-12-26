@@ -779,15 +779,15 @@ function LeadSection() {
           </div>
         </div>
 
-        {state.leadDataByStatus?.list
-          ? state.leadDataByStatus?.list?.map((res, i) => {
+        {state.leadDataByStatus?.list && !state.loading
+          ? state.leadDataByStatus?.list?.length ? state.leadDataByStatus?.list?.map((res, i) => {
               return (
                 <div key={i+100}>
                   {/* {
           [1,2,3,4].map((res,i) => {
             return <> */}
                   <div className="d-flex" key={i}>
-                    <div className="d-flex bg-warning shadow px-3 py-3 w-auto mt-2">
+                    <div className="d-flex bg-light shadow-lg px-3 py-3 w-auto mt-2">
                       <div className="" style={{ width: "100px" }}>
                         <span
                           className="cardCell font-weight-bold th-column mx-0"
@@ -1563,10 +1563,13 @@ function LeadSection() {
                       </div>
                     </Collapse>
                   </div>
+                  {console.log(state)}
                 </div>
               );
-            })
-          : ""}
+            }) : <div className="text-center my-3"><span className="h5">No Leads !</span></div>
+          : <div className="text-center py-5"><div className="spinner-border text-center" role="status">
+          <span className="sr-only">Loading...</span>
+        </div></div>}
       </div>
 
       <div className="d-flex justify-content-center mt-4">
@@ -2666,7 +2669,7 @@ function LeadSection() {
                   </thead>
                   <tbody>
                     {statusHistory.data?.statusHistory?.length ? (
-                      statusHistory.data?.statusHistory?.map((res) => {
+                      statusHistory.data?.statusHistory?.map((res,i) => {
                         return (
                           <tr key={i + res.date} className="">
                             <td>{res.currStatus}</td>

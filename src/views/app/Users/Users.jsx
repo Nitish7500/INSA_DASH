@@ -6,6 +6,7 @@ import { Modal, ModalBody, ModalHeader } from "reactstrap";
 import Select from "react-select";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faShield } from "@fortawesome/free-solid-svg-icons";
+import ReactPaginate from "react-paginate";
 
 function Users() {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ function Users() {
   const [legalSubExecutiveArr, setlegalSubExecutiveArr] = useState([]);
   const [userBucket, setuserBucket] = useState([]);
   const [legalExecutiveTeam, setlegalExecutiveTeam] = useState([]);
+  const [currentPage, setcurrentPage] = useState(1)
   const [formData, setformData] = useState({
     name: "",
     email: "",
@@ -197,12 +199,15 @@ function Users() {
   }, [editUser, userEditData]);
 
   useEffect(() => {
-    dispatch({ type: "USERS_GET_LIST", state: { page: 1 } });
     dispatch({ type: "USER_GET_STATUS_BUCKET" });
     dispatch({ type: "USER_GET_ASSIGN_USER" });
     dispatch({ type: "GET_ASSIGN_LEGAL_EXECUTIVE" });
     dispatch({ type: "USER_GET_LEGAL_SUBEXECUTIVE" });
   }, []);
+
+  useEffect(() => {
+    dispatch({ type: "USERS_GET_LIST", state: { page: currentPage } });
+  },[currentPage])
 
   const {
     name,
@@ -398,6 +403,28 @@ function Users() {
             </table>
           </div>
         </div>
+        {console.log(state?.userData?.pager?.totalItems)}
+      <div className="d-flex justify-content-center mt-4">
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel="next >"
+          onPageChange={(e) => setcurrentPage(e.selected)}
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          previousClassName="page-item"
+          previousLinkClassName="page-link"
+          nextClassName="page-item"
+          nextLinkClassName="page-link"
+          breakClassName="page-item"
+          breakLinkClassName="page-link"
+          containerClassName="pagination"
+          activeClassName="active"
+          pageRangeDisplayed={5}
+          pageCount={Math.ceil(state.userData?.pager?.totalItems/40)}
+          previousLabel="< previous"
+          renderOnZeroPageCount={null}
+        />
+      </div>
       </div>
       {/* --------------------------------> Add OR Edit User Modal */}
       <Modal

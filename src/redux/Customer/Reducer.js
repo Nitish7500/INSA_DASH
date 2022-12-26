@@ -36,26 +36,27 @@ const initialState = {
   issuerDoc: [],
   selfDoc: [],
   userDoc: [],
+  loading:""
 };
 export default (state = initialState, action) => {
   switch (action.type) {
     case CUSTOMER_GET_USER_LIST:
-      return { ...state };
+      return { ...state, loading:true };
 
     case CUSTOMER_GET_USER_LIST_SUCCESS:
-      return { ...state, userList: action.data };
+      return { ...state, userList: action.data, loading:false };
 
     case CUSTOMER_GET_USER_LIST_FAILED:
-      return { ...state };
+      return { ...state, loading:false };
 
     case CUSTOMER_FILTER_DATA:
-      return { ...state };
+      return { ...state, loading:true};
 
     case CUSTOMER_FILTER_DATA_SUCCESS:
-      return { ...state, userList: action.data };
+      return { ...state, userList: action.data , loading:false};
 
     case CUSTOMER_FILTER_DATA_FAILED:
-      return { ...state, message: action.message };
+      return { ...state, message: action.message, loading:false };
 
     case CUSTOMER_VIEW_PASSWORD:
       return { ...state };

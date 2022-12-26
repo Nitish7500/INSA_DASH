@@ -86,6 +86,17 @@ function Customer() {
     setviewPassword(false);
   };
 
+  const handleClear = () => {
+    dispatch({
+      type: "CUSTOMER_GET_USER_LIST",
+      state: { pageIndex: currentPage, pageSize: pageSize },
+    });
+    setfilterData({
+      keyword: "",
+      selectedSortOrder: "",
+    });
+  };
+
   return (
     <div className="bg-inherit pt-5">
       <div className="w-95 d-flex justify-content-center">
@@ -146,16 +157,36 @@ function Customer() {
                     <option key={"select"} value={""}>
                       Select Sort Order
                     </option>
-                    <option key={"ascFirst"} value={"firstName:ASC"}>ASC First Name</option>
-                    <option key={"descFirst"} value={"firstName:DESC"}>DESC First Name</option>
-                    <option key={"ascLast"} value={"lastName:ASC"}>ASC Last Name</option>
-                    <option key={"descLast"} value={"lastName:DESC"}>DESC Last Name</option>
-                    <option key={"ascEmail"} value={"email:ASC"}>ASC Email</option>
-                    <option key={"descEmail"} value={"email:DESC"}>DESC Email</option>
-                    <option key={"ascPhone"} value={"phone:ASC"}>ASC Phone</option>
-                    <option key={"descPhone"} value={"phone:DESC"}>DESC Phone</option>
-                    <option key={"ascCreated"} value={"createdAt:ASC"}>ASC Created At</option>
-                    <option key={"descCreatedAt"} value={"createdAt:DESC"}>DESC Created At</option>
+                    <option key={"ascFirst"} value={"firstName:ASC"}>
+                      ASC First Name
+                    </option>
+                    <option key={"descFirst"} value={"firstName:DESC"}>
+                      DESC First Name
+                    </option>
+                    <option key={"ascLast"} value={"lastName:ASC"}>
+                      ASC Last Name
+                    </option>
+                    <option key={"descLast"} value={"lastName:DESC"}>
+                      DESC Last Name
+                    </option>
+                    <option key={"ascEmail"} value={"email:ASC"}>
+                      ASC Email
+                    </option>
+                    <option key={"descEmail"} value={"email:DESC"}>
+                      DESC Email
+                    </option>
+                    <option key={"ascPhone"} value={"phone:ASC"}>
+                      ASC Phone
+                    </option>
+                    <option key={"descPhone"} value={"phone:DESC"}>
+                      DESC Phone
+                    </option>
+                    <option key={"ascCreated"} value={"createdAt:ASC"}>
+                      ASC Created At
+                    </option>
+                    <option key={"descCreatedAt"} value={"createdAt:DESC"}>
+                      DESC Created At
+                    </option>
                   </select>
                   {/* <input className="form-control border" id="customer" /> */}
                 </div>
@@ -165,12 +196,7 @@ function Customer() {
                   <button
                     className="btn btn-warning mr-2"
                     id="customerBtnClear"
-                    onClick={() => {
-                      setfilterData({
-                        keyword: "",
-                        selectedSortOrder: "",
-                      });
-                    }}
+                    onClick={handleClear}
                   >
                     CLEAR
                   </button>
@@ -199,74 +225,100 @@ function Customer() {
                 </tr>
               </thead>
               <tbody>
-                {state.userList?.list?.map((res, i) => {
-                  return (
-                    <tr key={i}>
-                      <td>{i + 1 + currentPage * itemsPerPage}</td>
-                      <td>{res.name}</td>
-                      <td>{res.email}</td>
-                      <td>{moment(res.loginAt).format("YYYY-MM-DD HH:MM")}</td>
-                      <td>{res.phone}</td>
-                      <th
-                        onClick={() => {
-                          setCurrentData(res);
-                        }}
-                      >
-                        <span
-                          className="mr-2"
-                          style={{ cursor: "pointer" }}
-                          id={"customerViewPass"}
-                          onClick={() => {
-                            setviewPassword(true);
-                            dispatch({
-                              type: "CUSTOMER_VIEW_PASSWORD",
-                              state: { id: res._id },
-                            });
-                          }}
-                        >
-                          <FontAwesomeIcon
-                            icon={faEye}
-                            color="blue"
-                            size="lg"
-                          />
-                        </span>
-                        <span
-                          className="mr-2"
-                          style={{ cursor: "pointer" }}
-                          onClick={() => {
-                            history.push({
-                              pathname: `/app/digilocker/${res._id}`,
-                              state: res,
-                            });
-                          }}
-                        >
-                          <FontAwesomeIcon
-                            icon={faLock}
-                            color="blue"
-                            size="lg"
-                          />
-                        </span>
-                        <span
-                          className=""
-                          style={{ cursor: "pointer" }}
-                          onClick={() => {
-                            dispatch({
-                              type: "CUSTOMER_GMAIL_READ",
-                              state: { email: res.email },
-                            });
-                            setviewGamil(true);
-                          }}
-                        >
-                          <FontAwesomeIcon
-                            icon={faEnvelope}
-                            color="blue"
-                            size="lg"
-                          />
-                        </span>
-                      </th>
+                {!state.loading ? (
+                  state.userList?.list?.length ? (
+                    state.userList?.list?.map((res, i) => {
+                      return (
+                        <tr key={i}>
+                          <td>{i + 1 + currentPage * itemsPerPage}</td>
+                          <td>{res.name}</td>
+                          <td>{res.email}</td>
+                          <td>
+                            {moment(res.loginAt).format("YYYY-MM-DD HH:MM") !==
+                            "Invalid date"
+                              ? moment(res.loginAt).format("YYYY-MM-DD HH:MM")
+                              : "Never Logged in"}
+                          </td>
+                          <td>{res.phone}</td>
+                          <th
+                            onClick={() => {
+                              setCurrentData(res);
+                            }}
+                          >
+                            <span
+                              className="mr-2"
+                              style={{ cursor: "pointer" }}
+                              id={"customerViewPass"}
+                              onClick={() => {
+                                setviewPassword(true);
+                                dispatch({
+                                  type: "CUSTOMER_VIEW_PASSWORD",
+                                  state: { id: res._id },
+                                });
+                              }}
+                            >
+                              <FontAwesomeIcon
+                                icon={faEye}
+                                color="blue"
+                                size="lg"
+                              />
+                            </span>
+                            <span
+                              className="mr-2"
+                              style={{ cursor: "pointer" }}
+                              onClick={() => {
+                                history.push({
+                                  pathname: `/app/digilocker/${res._id}`,
+                                  state: res,
+                                });
+                              }}
+                            >
+                              <FontAwesomeIcon
+                                icon={faLock}
+                                color="blue"
+                                size="lg"
+                              />
+                            </span>
+                            <span
+                              className=""
+                              style={{ cursor: "pointer" }}
+                              onClick={() => {
+                                dispatch({
+                                  type: "CUSTOMER_GMAIL_READ",
+                                  state: { email: res.email },
+                                });
+                                setviewGamil(true);
+                              }}
+                            >
+                              <FontAwesomeIcon
+                                icon={faEnvelope}
+                                color="blue"
+                                size="lg"
+                              />
+                            </span>
+                          </th>
+                        </tr>
+                      );
+                    })
+                  ) : (
+                    <tr className="text-center h4">
+                      <td colSpan={6}>No User</td>
                     </tr>
-                  );
-                })}
+                  )
+                ) : (
+                  <tr className="text-center">
+                    <td colSpan={10}>
+                      <div className="py-3">
+                        <div
+                          className="spinner-border text-center"
+                          role="status"
+                        >
+                          <span className="sr-only">Loading...</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -365,7 +417,7 @@ function Customer() {
         <ModalFooter>
           <div className="d-flex justify-content-end">
             <button
-            id="closeBtn"
+              id="closeBtn"
               className="btn btn-danger rounded"
               onClick={() => {
                 setviewGamil(false);

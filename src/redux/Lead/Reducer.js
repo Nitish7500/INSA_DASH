@@ -77,6 +77,7 @@ const initialState = {
   callLogsCustomer: {},
   policyType: [],
   complaintType: [],
+  loading:false,
 };
 
 export default (state = initialState, action) => {
@@ -109,13 +110,13 @@ export default (state = initialState, action) => {
       return { ...state, message: action.message };
 
     case LEAD_DATA_WITH_STATUS:
-      return { ...state };
+      return { ...state, loading:true };
 
     case LEAD_DATA_WITH_STATUS_SUCCESS:
-      return { ...state, leadDataByStatus: action.data, message:action.message ? action.message :"Successfully Done !" };
+      return { ...state,loading:false, leadDataByStatus: action.data, message:action.message ? action.message :"Successfully Done !" };
 
     case LEAD_DATA_WITH_STATUS_FAILED:
-      return { ...state, message: action.message };
+      return { ...state,loading:false, message: action.message };
 
     case LEAD_USERS:
       return { ...state };
