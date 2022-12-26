@@ -63,7 +63,6 @@ export default function OmbudsmanForm({
       return x;
     });
     temp = temp.slice(0, comCouCount.length);
-    console.log(temp);
     setcomCurNumArr(temp);
   }, [comCurNumForm, comCouCount]);
 
@@ -72,7 +71,6 @@ export default function OmbudsmanForm({
       return x;
     });
     temp = temp.slice(0, comCurDate.length);
-    console.log(temp);
     setcomCurDateArr(temp);
   }, [comCurDate]);
 
@@ -118,20 +116,20 @@ export default function OmbudsmanForm({
                   <input
                     id="OmbFrmComDate"
                     type="date"
-                    class="form-control"
+                    className="form-control"
                     value={details.ombudsman_c_date}
                     name="ombudsman_c_date"
                     placeholder="Ombudsman Complaint Date..."
                     disabled
                   />
                 </div>
-                <div class="col-sm-4">
+                <div className="col-sm-4">
                   <label>Complaint Courier Recent Date</label>
-                  <div class="input-group">
+                  <div className="input-group">
                     <input
                       id="OmbFrmComCurRecDate"
                       type="date"
-                      class="form-control"
+                      className="form-control"
                       value={details.ombudsman_doc_date}
                       name="ombudsman_doc_date"
                       onChange={handleFormChange}
@@ -144,7 +142,7 @@ export default function OmbudsmanForm({
                   <input
                     id="OmbFrmComCurRecNo"
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     value={details.courier_number_doc}
                     name="courier_number_doc"
                     onChange={handleFormChange}
@@ -152,13 +150,13 @@ export default function OmbudsmanForm({
                 </div>
               </div>
               <div className="row mt-4 pt-5">
-                <div class="col-sm-4">
+                <div className="col-sm-4">
                   <label>Complaint Form Pushed Date</label>
-                  <div class="input-group">
+                  <div className="input-group">
                     <input
                       id="OmbFrmComFormPushedDt"
                       type="date"
-                      class="form-control"
+                      className="form-control"
                       value={details.complainFormSendDate}
                       name="complainFormSendDate"
                       onChange={handleFormChange}
@@ -166,12 +164,13 @@ export default function OmbudsmanForm({
                     />
                   </div>
                 </div>
-                <div class="col-sm-4">
+                <div className="col-sm-4">
                   <label>Complaint Courier Numbers</label>
                   <br />
                   {comCouCount?.map((res, i) => {
                     return (
                       <input
+                      key={i+199}
                         id={`OmbFrmComCurNoBtn${i}`}
                         className="form-control"
                         name={`courierNumberDocArr${i}`}
@@ -189,7 +188,7 @@ export default function OmbudsmanForm({
                   <button
                     id="OmbFrmComCurNoBtn"
                     type="button"
-                    class="btn btn-secondary btn-sm m-2  py-0 px-1"
+                    className="btn btn-secondary btn-sm m-2  py-0 px-1"
                     onClick={() => {
                       setcomCouCount([...comCouCount, +comCouCount + 1]);
                     }}
@@ -199,7 +198,7 @@ export default function OmbudsmanForm({
                   <button
                     id="OmbFrmComCurBtnDel"
                     type="button"
-                    class="btn btn-danger btn-sm m-2 py-0 px-1"
+                    className="btn btn-danger btn-sm m-2 py-0 px-1"
                     onClick={() => {
                       setcomCouCount(
                         comCouCount.length > 1
@@ -211,16 +210,15 @@ export default function OmbudsmanForm({
                     Del
                   </button>
                 </div>
-                <div class="col-sm-4">
+                <div className="col-sm-4">
                   <label>Ombudsman Complaint Number</label>
-                  <div class="input-group">
+                  <div className="input-group">
                     <input
                       id="OmbFrmOmbComNo"
                       type="text"
-                      class="form-control"
+                      className="form-control"
                       value={details.oc_number}
                       name="oc_number"
-                      formControlName="oc_number"
                     />
                   </div>
                 </div>
@@ -235,6 +233,7 @@ export default function OmbudsmanForm({
                   {comCurDate?.map((res, i) => {
                     return (
                       <input
+                      key={i+1000}
                         id="OmbFrmCompCurDt"
                         className="form-control"
                         type={"date"}
@@ -252,7 +251,7 @@ export default function OmbudsmanForm({
                   <button
                     id="OmbFrmComCurDateBtn"
                     type="button"
-                    class="btn btn-secondary btn-sm m-2 py-0 px-1"
+                    className="btn btn-secondary btn-sm m-2 py-0 px-1"
                     onClick={() => {
                       setcomCurDate([...comCurDate, +comCurDate + 1]);
                     }}
@@ -262,7 +261,7 @@ export default function OmbudsmanForm({
                   <button
                     id="OmbFrmComCurDateBtnDel"
                     type="button"
-                    class="btn btn-danger btn-sm m-2 py-0 px-1"
+                    className="btn btn-danger btn-sm m-2 py-0 px-1"
                     onClick={() => {
                       setcomCurDate(
                         comCurDate.length > 1
@@ -287,7 +286,7 @@ export default function OmbudsmanForm({
               <input
                 id="OmbFrm6APushedDt"
                 type="date"
-                class="form-control"
+                className="form-control"
                 value={details.form6APushedDate}
                 name="form6APushedDate"
                 onChange={handleFormChange}
@@ -299,7 +298,7 @@ export default function OmbudsmanForm({
               <input
                 id="OmbFrm6ARecDt"
                 type="date"
-                class="form-control"
+                className="form-control"
                 value={details.VIAFormUploadedDate}
                 name="VIAFormUploadedDate"
                 onChange={handleFormChange}
@@ -311,7 +310,7 @@ export default function OmbudsmanForm({
               <input
                 id="OmbFrm6ASubbDt"
                 type="date"
-                class="form-control"
+                className="form-control"
                 value={details.ombudsman_submit_date}
                 name="ombudsman_submit_date"
                 onChange={handleFormChange}
@@ -323,11 +322,10 @@ export default function OmbudsmanForm({
               <input
                 id="OmbFrm6ACurDate"
                 type="date"
-                class="form-control"
+                className="form-control"
                 value={details.courier_date}
                 name="courier_date"
                 onChange={handleFormChange}
-                formControlName="courier_date"
                 disabled
               />
             </div>
@@ -338,36 +336,35 @@ export default function OmbudsmanForm({
               <input
                 id="OmbFrm6ACurNo"
                 type="text"
-                class="form-control"
+                className="form-control"
                 value={details.courier_number}
                 name="courier_number"
                 onChange={handleFormChange}
               />
             </div>
-            <div class="col-sm-3 d-flex">
+            <div className="col-sm-3 d-flex">
               <label>Form 6A through mail</label>
-              <div class="ml-3 mt-1">
+              <div className="ml-3 mt-1">
                 <input
                   id="OmbFrm6AThrMail"
                   type="checkbox"
                   name="form6AMail"
-                  class="form-control"
+                  className="form-control"
                   onChange={handleFormChange}
                   checked={details.form6AMail}
                 />
               </div>
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Ombudsman Location</label>
               <select
                 id="OmbFrmObmLoc"
                 type="text"
-                class="form-control"
-                formControlName="stateName"
+                className="form-control"
                 value={details.stateName}
               >
                 {ombudsmanLocation.map((item) => (
-                  <option value={item.value}>{item.label}</option>
+                  <option key={item.value} value={item.value}>{item.label}</option>
                 ))}
               </select>
             </div>
@@ -378,7 +375,7 @@ export default function OmbudsmanForm({
               <input
                 id="ombReqSentRecDate"
                 type="date"
-                class="form-control"
+                className="form-control"
                 value={details.ombudsmanRequirementSentDate}
                 onChange={handleFormChange}
                 name="ombudsmanRequirementSentDate"
@@ -389,7 +386,7 @@ export default function OmbudsmanForm({
               <button
                 id="OmbFrmComCurDateBtn"
                 type="button"
-                class="btn btn-secondary btn-sm m-2 py-0 px-1"
+                className="btn btn-secondary btn-sm m-2 py-0 px-1"
                 onClick={() => {
                   setcomCurDate([...comCurDate, +comCurDate + 1]);
                 }}
@@ -399,7 +396,7 @@ export default function OmbudsmanForm({
               <button
                 id="OmbFrmComCurDateBtnDel"
                 type="button"
-                class="btn btn-danger btn-sm m-2 py-0 px-1"
+                className="btn btn-danger btn-sm m-2 py-0 px-1"
                 onClick={() => {
                   setcomCurDate(
                     comCurDate.length > 1
@@ -433,7 +430,7 @@ export default function OmbudsmanForm({
               <input
                 id="ombudsmanCourierNumber"
                 type="text"
-                class="form-control"
+                className="form-control"
                 value={details.ombudsmanCourierNumber}
                 name="ombudsmanCourierNumber"
                 onChange={handleFormChange}
@@ -444,7 +441,7 @@ export default function OmbudsmanForm({
               <input
                 id="requirementPushDate"
                 type="date"
-                class="form-control"
+                className="form-control"
                 value={details.requirementPushDate}
                 name="requirementPushDate"
                 onChange={handleFormChange}
@@ -457,11 +454,11 @@ export default function OmbudsmanForm({
           <div className="row mt-4">
             <div className="col-sm-3">
               <label>Date 1st</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="OmbFrmDatefst"
                   type="datetime-local"
-                  class="form-control"
+                  className="form-control"
                   value={details.omb_first_date}
                   name="omb_first_date"
                   onChange={handleFormChange}
@@ -470,11 +467,11 @@ export default function OmbudsmanForm({
             </div>
             <div className="col-sm-3">
               <label>Date 2nd</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="OmbFrmDateSec"
                   type="datetime-local"
-                  class="form-control"
+                  className="form-control"
                   value={details.omb_sec_date}
                   name="omb_sec_date"
                   onChange={handleFormChange}
@@ -486,7 +483,7 @@ export default function OmbudsmanForm({
               <input
                 id="OmbFromExpCusDt"
                 type="date"
-                class="form-control"
+                className="form-control"
                 value={details.expert_customer_date}
                 name="expert_customer_date"
                 onChange={handleFormChange}
@@ -496,27 +493,27 @@ export default function OmbudsmanForm({
               <label>Hearing Comment</label>
               <select
                 id="OmbFromHeaComm"
-                class="form-control"
+                className="form-control"
                 value={details.hearingComment}
                 name="hearingComment"
                 onChange={handleFormChange}
               >
-                <option value="">Select Type</option>
-                <option value="RefundAccepted">Refund Accepted</option>
-                <option value="SinglePayAccepted">Single Pay Accepted</option>
-                <option value="SinglePayAdditionalPayment">
+                <option key={"select"} value="">Select Type</option>
+                <option key={"Refund"} value="RefundAccepted">Refund Accepted</option>
+                <option key={"SinglePay"} value="SinglePayAccepted">Single Pay Accepted</option>
+                <option key={"SingPayAdd"} value="SinglePayAdditionalPayment">
                   Single Pay with additional Payment
                 </option>
-                <option value="SinglePaySomeRefund">
+                <option key={"SPR"} value="SinglePaySomeRefund">
                   Single Pay with Some Refund
                 </option>
-                <option value="ClaimPayable">Claim Payable</option>
-                <option value="ClaimPayableInterest">
+                <option key={"claimPay"} value="ClaimPayable">Claim Payable</option>
+                <option key={"claimPayInt"} value="ClaimPayableInterest">
                   Claim Payable with Interest
                 </option>
-                <option value="ClaimRejected">Claim is rejected</option>
-                <option value="RefundRejected">Refund is Rejected</option>
-                <option value="DecisionPending">Decision Pending</option>
+                <option key={"claimRej"} value="ClaimRejected">Claim is rejected</option>
+                <option key={"refuncdRej"} value="RefundRejected">Refund is Rejected</option>
+                <option key={"desPen"} value="DecisionPending">Decision Pending</option>
               </select>
             </div>
           </div>
@@ -525,35 +522,35 @@ export default function OmbudsmanForm({
               <label>Called Customer or Not to Check Reward Status</label>
               <select
                 id="OmbFromCheckSts"
-                class="form-control"
+                className="form-control"
                 value={details.check_status}
                 name="check_status"
                 onChange={handleFormChange}
               >
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option key={"yes"} value="Yes">Yes</option>
+                <option key={"no"} value="No">No</option>
               </select>
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Ombudsman Reward Date</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="OmbFromOmbRewDt"
                   type="date"
-                  class="form-control"
+                  className="form-control"
                   value={details.omd_reward_date}
                   name="omd_reward_date"
                   onChange={handleFormChange}
                 />
               </div>
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Ombudsman Award Non Compliance Sent Date</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="OmbFromOmbNonComDt"
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   value={details.omdNonComplianceDate}
                   name="omdNonComplianceDate"
                   onChange={handleFormChange}
@@ -572,7 +569,7 @@ export default function OmbudsmanForm({
                 onChange={handleFormChange}
               >
                 {resolutionType.map((item) => (
-                  <option value={item.value}>{item.label}</option>
+                  <option key={item.value} value={item.value}>{item.label}</option>
                 ))}
               </select>
             </div>
@@ -605,7 +602,7 @@ export default function OmbudsmanForm({
                   <input
                     id="OmbFromRefundSingClm"
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     value={details.refundSingleClaim}
                     name="refundSingleClaim"
                     onChange={handleFormChange}
@@ -630,7 +627,7 @@ export default function OmbudsmanForm({
                   <input
                     id="OmbFromPayRefInt"
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     value={details.paymentRefundInt}
                     name="paymentRefundInt"
                     onChange={handleFormChange}
@@ -646,17 +643,17 @@ export default function OmbudsmanForm({
               <label>Ombudsman Pending Reason</label>
               <select
                 id="OmbFromPendReason"
-                class="form-control"
+                className="form-control"
                 name="ombudsmanPendingReason"
                 onChange={handleFormChange}
                 value={details.ombudsmanPendingReason}
               >
-                <option value="">Select Type</option>
-                <option value="mailPendingFromCustomerEnd">
+                <option key={"select"} value="">Select Type</option>
+                <option key={"MPCS"} value="mailPendingFromCustomerEnd">
                   Mail Pending from Customer's Side
                 </option>
-                <option value="escalationPending">Escalation Pending</option>
-                <option value="documentPending">Document Pending</option>
+                <option key={"escPen"} value="escalationPending">Escalation Pending</option>
+                <option key={"docPen"} value="documentPending">Document Pending</option>
               </select>
             </div>
             <div className="col-sm-3">
@@ -664,7 +661,7 @@ export default function OmbudsmanForm({
               <input
                 type="text"
                 id="OmbFromRefSinClm"
-                class="form-control"
+                className="form-control"
                 value={details.refundSingleClaim}
                 name="refundSingleClaim"
                 onChange={handleFormChange}
@@ -672,7 +669,7 @@ export default function OmbudsmanForm({
             </div>
           </div>
           <div className="row mt-4">
-            <div class="col-sm-12">
+            <div className="col-sm-12">
               <label>Ombudsman Pending Reason Listing</label>
               <textarea
                 id="OmbFromOmbPenReaLis"
@@ -681,7 +678,7 @@ export default function OmbudsmanForm({
                 name="ombudsmanPendingReasonListing"
                 onChange={handleFormChange}
                 value={details.ombudsmanPendingReasonListing}
-                class="form-control"
+                className="form-control"
               ></textarea>
             </div>
           </div>

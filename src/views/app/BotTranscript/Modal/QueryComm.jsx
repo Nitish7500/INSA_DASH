@@ -42,7 +42,7 @@ function QueryComm({isOpen, onClose, botTranscriptId}) {
           <div className="form-group">
             <textarea
             placeholder="Enter Comment"
-              autofocus
+              autoFocus
               className="form-control"
               id="exampleFormControlTextarea1"
               rows={4}
@@ -73,9 +73,9 @@ function QueryComm({isOpen, onClose, botTranscriptId}) {
             <hr />
             {state ? (
               state?.communicationData?.map(
-                (res) => {
+                (res,i) => {
                   return (
-                    <div className="row">
+                    <div className="row" key={i+99}>
                       <div className="col-sm-6">
                         <span className="h5">{res.comment}</span>
                         <hr />

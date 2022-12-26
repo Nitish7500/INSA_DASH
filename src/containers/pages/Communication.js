@@ -12,7 +12,6 @@ function Communication() {
   const { state } = location;
   const dispatch = useDispatch();
   const storage = useSelector((state) => state.complaint);
-  console.log(state);
 
   const [open, setOpen] = useState(false);
   const [comment, setComment] = useState({
@@ -104,7 +103,7 @@ function Communication() {
         <div>
           <table className="table">
             <thead>
-              <tr>
+              <tr key={"heading00"}>
                 <th>Communication Date</th>
                 <th>Communication By</th>
                 <th>Description</th>
@@ -114,12 +113,13 @@ function Communication() {
             <tbody>
               {storage.comments[0]?.communication?.map((res,i) => {
                 return (
-                  <tr key={i}>
+                  <tr key={i + 77}>
                     <td>{res.com_date}</td>
                     <td>{res.com_by}</td>
                     <td>{res.com_dis}</td>
                     <td>
                       <FontAwesomeIcon
+                      key={i+66}
                         id="complaintEditIcon"
                         icon={faPencil}
                         className="text-primary"
@@ -222,7 +222,7 @@ function Communication() {
                         state: [{ ...comment }],
                       })
                     : null;
-                  console.log(comment);
+                  // console.log(comment);
                   setOpen(false);
                 }}
               >

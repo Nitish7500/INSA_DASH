@@ -126,7 +126,7 @@ export default function NonResponsive({ heading, details }) {
                 // onBlur={handleBlur}
               >
                 {nonResponsiveCustomerFlow.map((item) => (
-                  <option value={item.value}>{item.label}</option>
+                  <option key={item.value} value={item.value}>{item.label}</option>
                 ))}
               </select>
             </div>
@@ -148,7 +148,7 @@ export default function NonResponsive({ heading, details }) {
               <h4>All Calling Count History</h4>
               <table className="table table-responsive-sm table-bordered mt-3">
                 <thead className="bg-dark text-white">
-                  <tr>
+                  <tr key={"allCallingHistory"}>
                     <th>First Called Date</th>
                     <th>Mailing Omd Counter</th>
                     <th>Calling Counter</th>
@@ -156,7 +156,7 @@ export default function NonResponsive({ heading, details }) {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr key={"2Row"}>
                     <td>
                       {moment(nonResData.firstCalledDate).format("YYYY_MM_DD")}
                     </td>
@@ -171,7 +171,7 @@ export default function NonResponsive({ heading, details }) {
               <h4>All Called Dates</h4>
               <table className="table table-responsive-sm table-bordered mt-3">
                 <thead className="bg-dark text-white">
-                  <tr>
+                  <tr key={"AllCalledDates"}>
                     <th>Called Date</th>
                     <th>Called By</th>
                     <th>Comment By</th>

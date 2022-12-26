@@ -1,12 +1,8 @@
 //igms section nested form
 
-import { Colxx } from 'components/common/CustomBootstrap'
-import { FormikCheckbox, FormikCustomCheckboxGroup, FormikCustomRadioGroup, FormikDatePicker } from 'containers/form-validations/FormikFields'
-import { Field, Formik } from 'formik'
 import * as Yup from 'yup';
 import React, { useState } from 'react'
 import { Button, Card, CardBody, CustomInput, Form, FormGroup, Input, Label, Modal, ModalBody, Row } from 'reactstrap'
-import { formatDate } from 'helpers/CommonHelper';
 import moment from 'moment';
 
 export default function IGMSForm ({ heading, details, complaintId, handleFormChange }) {
@@ -47,7 +43,6 @@ export default function IGMSForm ({ heading, details, complaintId, handleFormCha
                         </div>
                         <div className='col-sm-3'>
                             <label>IGMS Date</label>
-                            {console.log(details.IGMS_date)}
                             <input id='igmsData' className='form-control' type={"date"} name="IGMS_date" value={details.IGMS_date ? moment(details.IGMS_date).format("YYYY-MM-DD") : ""} onChange={handleFormChange} />
                         </div>
                         <div className='col-sm-3'>
@@ -64,13 +59,13 @@ export default function IGMSForm ({ heading, details, complaintId, handleFormCha
                             <label>IGMS Done By</label>
                             <select id='igmsDoneBy' className='form-control' name="IGMS_Done"  value={details.IGMS_Done} onChange={handleFormChange} >
                                 
-                                <option value="PAN-No">Pan No.</option>
-                                <option value="Mobile-No">Mobile No.</option>
-                                <option value="LandLine-No">Landline No.</option>
-                                <option value="Voter-ID-No">Voter ID card number</option>
-                                <option value="Ration-Card-No">Ration Card No.</option>
-                                <option value="Passport-No">Passport No.</option>
-                                <option value="DOB">Date of Birth</option>
+                                <option key={"panNo"} value="PAN-No">Pan No.</option>
+                                <option key={"moNo"} value="Mobile-No">Mobile No.</option>
+                                <option key={"landLine"} value="LandLine-No">Landline No.</option>
+                                <option key={"voterId"} value="Voter-ID-No">Voter ID card number</option>
+                                <option key={"RationCard"} value="Ration-Card-No">Ration Card No.</option>
+                                <option key={"passportNo"} value="Passport-No">Passport No.</option>
+                                <option key={"DOB"} value="DOB">Date of Birth</option>
                             </select>
                         </div>
                         <div className='col-sm-3'>
@@ -78,32 +73,32 @@ export default function IGMSForm ({ heading, details, complaintId, handleFormCha
                             <input
                             id='igmsFstResDate'
                           type="date"
-                          class="form-control"
+                          className="form-control"
                           value={details.response_date_igms ? moment(details.response_date_igms).format("YYYY-MM-DD") : ""}
                           name="response_date_igms"
                           onChange={handleFormChange}
                         />
                         </div>
-                        <div class="col-sm-3">
+                        <div className="col-sm-3">
                       <label>Second Response date from IGMS</label>
-                      <div class="input-group">
+                      <div className="input-group">
                         <input
                         id='igmsSecDate'
                           type="date"
-                          class="form-control"
+                          className="form-control"
                           value={details.response_date_igms1 ? moment(details.response_date_igms1).format("YYYY-MM-DD") : ""}
                           name="response_date_igms1"
                           onChange={handleFormChange}
                         />
                       </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div className="col-sm-3">
                       <label>IGMS Escalation Date</label>
-                      <div class="input-group">
+                      <div className="input-group">
                         <input
                         id='igmsEscDate'
                           type="date"
-                          class="form-control"
+                          className="form-control"
                           value={details.escalation_date ? moment(details.escalation_date).format("YYYY-MM-DD") : ""}
                           name="escalation_date"
                           onChange={handleFormChange}
@@ -113,13 +108,13 @@ export default function IGMSForm ({ heading, details, complaintId, handleFormCha
                     </div>
                     </div>
                     <div className='row mt-4'>
-                    <div class="col-sm-3 d-flex">
+                    <div className="col-sm-3 d-flex">
                       <label>Response Received</label>
-                      <div class=" ml-3 mt-1">
+                      <div className=" ml-3 mt-1">
                         <input
                         id='igmsResRec'
                           type="checkbox"
-                          class="form-control"
+                          className="form-control"
                           value={details.igmsResponseReceived}
                           name="igmsResponseReceived"
                           onChange={handleFormChange}
@@ -127,13 +122,13 @@ export default function IGMSForm ({ heading, details, complaintId, handleFormCha
                         />
                       </div>
                     </div>
-                    <div class="col-sm-3 d-flex">
+                    <div className="col-sm-3 d-flex">
                       <label>Requirement Received</label>
-                      <div class="ml-3 mt-1">
+                      <div className="ml-3 mt-1">
                         <input
                         id='igmsReqRec'
                           type="checkbox"
-                          class="form-control"
+                          className="form-control"
                           value={details.igmsRequirementReceived}
                           name="igmsRequirementReceived"
                           onChange={handleFormChange}
@@ -143,14 +138,14 @@ export default function IGMSForm ({ heading, details, complaintId, handleFormCha
                     </div>
                     </div>
                     <div className='row mt-4'>
-                    <div class="col-sm-12">
+                    <div className="col-sm-12">
                       <label>IGMS Content</label>
-                      <div class="input-group">
+                      <div className="input-group">
                         <textarea
                         rows={5}
                         id="igmsContent"
                           type="textarea"
-                          class="form-control"
+                          className="form-control"
                           value={details.igms_content}
                           name="igms_content"
                           onChange={handleFormChange}
@@ -159,15 +154,15 @@ export default function IGMSForm ({ heading, details, complaintId, handleFormCha
                       </div>
                     </div>
                     </div>
-                    <div class="row mt-4">
-                    <div class="col-sm-12">
+                    <div className="row mt-4">
+                    <div className="col-sm-12">
                       <label>Response Data From IGMS</label>
-                      <div class="input-group">
+                      <div className="input-group">
                         <textarea
                         rows={5}
                         id="igmsResData"
                           type="textarea"
-                          class="form-control"
+                          className="form-control"
                           value={details.response_data_igms}
                           name="response_date_igms"
                           onChange={handleFormChange}
@@ -176,15 +171,15 @@ export default function IGMSForm ({ heading, details, complaintId, handleFormCha
                       </div>
                     </div>
                   </div>
-                  <div class="row mt-4">
-                    <div class="col-sm-12">
+                  <div className="row mt-4">
+                    <div className="col-sm-12">
                       <label>Second Response Data From IGMS</label>
-                      <div class="input-group">
+                      <div className="input-group">
                         <textarea
                         rows={5}
                         id="igmSecRes"
                           type="textarea"
-                          class="form-control"
+                          className="form-control"
                           value={details.response_data2_igms}
                           name="response_data2_igms"
                           onChange={handleFormChange}

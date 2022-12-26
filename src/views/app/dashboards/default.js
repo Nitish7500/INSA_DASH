@@ -60,7 +60,7 @@ const DefaultDashboard = ({ intl, match }) => {
 
   const data = useSelector((state) => state.bucket);
   const dispatch = useDispatch();
-  console.log(data);
+  // console.log(data);
   const leadCollapse = (e) => {
     if (e == collapse) {
       setCollapse("");
@@ -180,11 +180,13 @@ const DefaultDashboard = ({ intl, match }) => {
         Welcome <span className="text-warning">{user.data?.userType}</span> !
       </h1>
       <p>Work in Progress...</p>
-      <div className="bg-light shadow pt-3" style={{borderRadius:"5px"}}>
-      <div className="container m-2 mb-4 ">
-        <div className="row align-items-start">
+      <div className="bg-light shadow pt-3" style={{ borderRadius: "5px" }}>
+        {/* <div className="container m-2 mb-4"> */}
+        <div className="row align-items-start mr-auto ml-auto">
           <div className="col-sm">
-            <label className="d-block">Select Executive:-</label>
+            <label className="d-block font-weight-bold">
+              Select Executive:-
+            </label>
             <select
               className="form-control border-0"
               id="ex1"
@@ -198,31 +200,41 @@ const DefaultDashboard = ({ intl, match }) => {
                 });
               }}
             >
-              <option selected>--All--</option>
+              <option key={"select"}>--All--</option>
               {data.activeUsers?.length
                 ? data.activeUsers?.map((res) => {
-                    return <option value={res.user_id}>{res.name}</option>;
+                    return (
+                      <option key={res.user_id} value={res.user_id}>
+                        {res.name}
+                      </option>
+                    );
                   })
                 : null}
             </select>
           </div>
           <div className="col-sm">
-            <label className="d-block">Daily/Monthly/Yearly</label>
+            <label className="d-block font-weight-bold">
+              Daily/Monthly/Yearly
+            </label>
             <select
               className="form-control border-0"
               id="ex2"
               name="dateWise"
               onChange={handleDateWiseChange}
             >
-              <option value={"Daily"}>Daily</option>
-              <option value={"Monthly"} selected>
+              <option key={"daily"} value={"Daily"}>
+                Daily
+              </option>
+              <option key={"monthly"} value={"Monthly"}>
                 Monthly
               </option>
-              <option value={"Yearly"}>Yearly</option>
+              <option key={"yearly"} value={"Yearly"}>
+                Yearly
+              </option>
             </select>
           </div>
           <div className="col-md">
-            <label className="d-block">Start Date</label>
+            <label className="d-block font-weight-bold">Start Date</label>
             <input
               className="form-control input-lg pt-2 border-0"
               id="ex3"
@@ -233,7 +245,7 @@ const DefaultDashboard = ({ intl, match }) => {
             />
           </div>
           <div className="col-md">
-            <label className="d-block">End Date</label>
+            <label className="d-block font-weight-bold">End Date</label>
             <input
               className="form-control border-0"
               id="ex4"
@@ -244,7 +256,9 @@ const DefaultDashboard = ({ intl, match }) => {
             />
           </div>
           <div className="col-md-6 col-lg-6 col-xl">
-            <label className="d-block">Ombudsman Location</label>
+            <label className="d-block font-weight-bold">
+              Ombudsman Location
+            </label>
             <select
               className="form-control border-0"
               id="ex5"
@@ -255,19 +269,25 @@ const DefaultDashboard = ({ intl, match }) => {
                 setOmbObj({ ...ombObj, [e.target.name]: e.target.value });
               }}
             >
-              <option selected disabled>
+              <option key={"select"} value={""}>
                 Select Location
               </option>
-              <option value={"All"}>--All--</option>
+              <option key={"all"} value={"All"}>
+                --All--
+              </option>
               {data.states?.length
                 ? data.states?.map((x) => {
-                    return <option value={x.name}>{x.name}</option>;
+                    return (
+                      <option id={`stateArr${x}`} key={x.name} value={x.name}>
+                        {x.name}
+                      </option>
+                    );
                   })
                 : null}
             </select>
           </div>
           <div className="col-md-6 col-lg-6 col-xl">
-            <label className="d-block">Ombudsman Status</label>
+            <label className="d-block font-weight-bold">Ombudsman Status</label>
             <select
               className="form-control border-0"
               id="ex6"
@@ -278,85 +298,95 @@ const DefaultDashboard = ({ intl, match }) => {
                 setOmbObj({ ...ombObj, [e.target.name]: e.target.value });
               }}
             >
-              <option selected disabled>
+              <option key={"select"} value={""}>
                 Select Status
               </option>
               {ombudsmanStatusList?.map((res) => {
-                return <option value={res}>{res}</option>;
+                return (
+                  <option id={`StsArr${res}`} key={res?.toString()} value={res}>
+                    {res}
+                  </option>
+                );
               })}
             </select>
           </div>
         </div>
-      </div>
-      {/* <hr /> */}
-      <div className="d-flex justify-content-between w-100 bg-white px-5 my-5">
-        <div className="text-dark px-3 py-3">
-          <span
-            className="h6 px-3 letter-spacing rounded py-2 font-weight-bold"
-            onClick={(e) => {
-              handleNavClick(e);
-              leadCollapse("leadSection");
-            }}
-          >
-            LEAD
-          </span>
+        {/* </div> */}
+        {/* <hr /> */}
+        <div className="d-flex justify-content-between  flex-wrap bg-white px-5 my-5">
+          <div className="text-dark px-3 py-3">
+            <span
+              className="h6 px-3 letter-spacing rounded py-2 font-weight-bold"
+              id="leadMainHeading"
+              onClick={(e) => {
+                handleNavClick(e);
+                leadCollapse("leadSection");
+              }}
+            >
+              LEAD
+            </span>
+          </div>
+          <div className="text-dark px-3 py-3">
+            <span
+              className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
+              id="RegMainHeading"
+              onClick={(e) => {
+                handleNavClick(e);
+                leadCollapse("registration");
+              }}
+            >
+              REGISTRATION
+            </span>
+          </div>
+          <div className="text-dark px-3 py-3">
+            <span
+              className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
+              id="ResMainHeading"
+              onClick={(e) => {
+                handleNavClick(e);
+                leadCollapse("resolution");
+              }}
+            >
+              RESOLUTION
+            </span>
+          </div>
+          <div className="text-dark px-3 py-3">
+            <span
+              className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
+              id="legalMainHeading"
+              onClick={(e) => {
+                handleNavClick(e);
+                leadCollapse("legal");
+              }}
+            >
+              LEGAL
+            </span>
+          </div>
+          <div className="text-dark px-3 py-3">
+            <span
+              className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
+              id="ombdMainHeading"
+              onClick={(e) => {
+                handleNavClick(e);
+                leadCollapse("ombudsman");
+              }}
+            >
+              OMBUDSMAN
+            </span>
+          </div>
+          <div className="text-dark px-3 py-3">
+            <span
+              className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
+              id="mailingMainHeading"
+              onClick={(e) => {
+                handleNavClick(e);
+                leadCollapse("mailing");
+              }}
+            >
+              MAILING
+            </span>
+          </div>
         </div>
-        <div className="text-dark px-3 py-3">
-          <span
-            className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
-            onClick={(e) => {
-              handleNavClick(e);
-              leadCollapse("registration");
-            }}
-          >
-            REGISTRATION
-          </span>
-        </div>
-        <div className="text-dark px-3 py-3">
-          <span
-            className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
-            onClick={(e) => {
-              handleNavClick(e);
-              leadCollapse("resolution");
-            }}
-          >
-            RESOLUTION
-          </span>
-        </div>
-        <div className="text-dark px-3 py-3">
-          <span
-            className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
-            onClick={(e) => {
-              handleNavClick(e);
-              leadCollapse("legal");
-            }} 
-          >
-            LEGAL
-          </span>
-        </div>
-        <div className="text-dark px-3 py-3">
-          <span
-            className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
-            onClick={(e) => {
-              handleNavClick(e);
-              leadCollapse("ombudsman");
-            }}
-          >
-            OMBUDSMAN
-          </span>
-        </div>
-        <div className="text-dark px-3 py-3">
-          <span
-            className="h6 px-3 letter-spacing rounded font-weight-bold py-2"
-            onClick={(e) => {
-              handleNavClick(e);
-              leadCollapse("mailing");
-            }}
-          >
-            MAILING
-          </span>
-        </div>
-      </div>
       </div>
       <div>
         {/* <button
@@ -527,10 +557,7 @@ const DefaultDashboard = ({ intl, match }) => {
           <Card className="" style={{ backgroundColor: "inherit" }}>
             <CardBody>
               <div>
-                <div
-                  className="mx-auto text-light mb-2"
-                  style={{ width: "75%" }}
-                >
+                <div className="mx-auto text-light mb-2">
                   <div className="p-2 bg-primary mb-3 p-2 d-flex flex-wrap justify-content-between">
                     <h2 className="p-0 m-0 font-weight-light pl-2 py-1">
                       All Lead Buckets
@@ -633,10 +660,7 @@ const DefaultDashboard = ({ intl, match }) => {
           <Card className="" style={{ backgroundColor: "inherit" }}>
             <CardBody>
               <div>
-                <div
-                  className="mx-auto text-light mb-2"
-                  style={{ width: "75%" }}
-                >
+                <div className="mx-auto text-light mb-2">
                   <div className="p-2 bg-primary mb-3 p-2 d-flex justify-content-between">
                     <h2 className="p-0 m-0 font-weight-light pl-2 py-1">
                       Today's Lead Buckets
@@ -739,10 +763,7 @@ const DefaultDashboard = ({ intl, match }) => {
           <Card className="" style={{ backgroundColor: "inherit" }}>
             <CardBody>
               <div>
-                <div
-                  className="mx-auto text-light mb-2"
-                  style={{ width: "75%" }}
-                >
+                <div className="mx-auto text-light mb-2">
                   <div className="p-2 bg-primary mb-3 p-2 d-flex justify-content-between">
                     <h2 className="p-0 m-0 font-weight-light pl-2 py-1">
                       Leads Marketing Channel Dashboard(Monthly)
@@ -845,10 +866,7 @@ const DefaultDashboard = ({ intl, match }) => {
           <Card className="" style={{ backgroundColor: "inherit" }}>
             <CardBody>
               <div>
-                <div
-                  className="mx-auto text-light mb-2"
-                  style={{ width: "75%" }}
-                >
+                <div className="mx-auto text-light mb-2">
                   <div className="p-2 bg-primary mb-3 p-2 d-flex justify-content-between">
                     <h2 className="p-0 m-0 font-weight-light pl-2 py-1">
                       Leads Experts Dashboard
@@ -874,9 +892,9 @@ const DefaultDashboard = ({ intl, match }) => {
                   <div className="container">
                     <div className="row">
                       {data.leadExports?.length &&
-                        data.leadExports?.map((res) => {
+                        data.leadExports?.map((res, i) => {
                           return (
-                            <DashboardCard name={res.name} value={res.count} />
+                            <DashboardCard key={res.name + i} name={res.name} value={res.count} />
                           );
                         })}
                     </div>
@@ -892,10 +910,7 @@ const DefaultDashboard = ({ intl, match }) => {
           <Card className="" style={{ backgroundColor: "inherit" }}>
             <CardBody>
               <div>
-                <div
-                  className="mx-auto text-light mb-2"
-                  style={{ width: "75%" }}
-                >
+                <div className="mx-auto text-light mb-2">
                   <div className="p-2 bg-primary mb-3 p-2 d-flex justify-content-between">
                     <h2 className="p-0 m-0 font-weight-light pl-2 py-1">
                       Buckets Count
@@ -917,9 +932,9 @@ const DefaultDashboard = ({ intl, match }) => {
                   <div className="container">
                     <div className="row">
                       {data.bucketCount?.length &&
-                        data.bucketCount.map((res) => {
+                        data.bucketCount.map((res, i) => {
                           return (
-                            <DashboardCard name={res.Name} value={res.Total} />
+                            <DashboardCard key={+i + 600} name={res.Name} value={res.Total} />
                           );
                         })}
                     </div>
@@ -943,6 +958,7 @@ const DefaultDashboard = ({ intl, match }) => {
               <ul className="d-flex list-unstyled flex-xl-row flex-md-row flex-sm-column">
                 <li className="mr-3">
                   <button
+                    id="regSecComDashBtn"
                     className="m-0 btn btn-primary rounded"
                     color="primary"
                     onClick={() => {
@@ -960,6 +976,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-danger rounded"
                     color="primary"
+                    id="regSecB2cBtn"
                     onClick={() => {
                       regSectionHandler("regB2C");
                       dispatch({
@@ -973,6 +990,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 </li>
                 <li className="mr-3">
                   <button
+                    id="regSecB2cCases"
                     className="m-0 btn btn-dark rounded"
                     color="primary"
                     onClick={() => {
@@ -995,6 +1013,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-success rounded"
                     color="primary"
+                    id="regSecPartBtn"
                     onClick={() => {
                       regSectionHandler("regPartner");
                       dispatch({
@@ -1021,6 +1040,7 @@ const DefaultDashboard = ({ intl, match }) => {
               <div className="bg-primary mb-3 p-1 d-flex justify-content-between">
                 <h1 className="m-0">Complaint Dashboard </h1>
                 <button
+                  id="regSecRef"
                   className="btn btn-warning py-0"
                   onClick={() => {
                     dispatch({
@@ -1035,11 +1055,17 @@ const DefaultDashboard = ({ intl, match }) => {
               <div className="container">
                 <div className="row">
                   {data.complaintDashboard ? (
-                    Object.entries(data.complaintDashboard)?.map((res) => {
-                      return <DashboardCard name={res[0]} value={res[1]} />;
+                    Object.entries(data.complaintDashboard)?.map((res,i) => {
+                      return <DashboardCard key={i + 500} name={res[0]} value={res[1]} />;
                     })
                   ) : (
-                    <h2 style={{ margin: "auto" }}>No Data</h2>
+                    <div
+                      key={"noData000"}
+                      className="text-center"
+                      style={{ margin: "auto" }}
+                    >
+                      No Data
+                    </div>
                   )}
                 </div>
               </div>
@@ -1057,6 +1083,7 @@ const DefaultDashboard = ({ intl, match }) => {
               <div className="bg-primary mb-3 p-1 d-flex justify-content-between">
                 <h1 className="m-0">B2C Registration Section </h1>
                 <button
+                  id="regB2cRegBtn"
                   className="btn btn-warning py-1"
                   onClick={() => {
                     dispatch({
@@ -1171,7 +1198,7 @@ const DefaultDashboard = ({ intl, match }) => {
                       <div className="overflow-auto">
                         <table className="table text-center table-borderless font-weight-bold">
                           <thead className="bg-primary">
-                            <tr>
+                            <tr key={"heading"}>
                               <th colSpan={4}>Life Insurance</th>
                               <th colSpan={3}>General Insurance</th>
                               <th colSpan={3}>Health Insurance</th>
@@ -1179,7 +1206,10 @@ const DefaultDashboard = ({ intl, match }) => {
                             </tr>
                           </thead>
                           <tbody>
-                            <tr style={{ backgroundColor: "#e0ecf4" }}>
+                            <tr
+                              key={"heading2"}
+                              style={{ backgroundColor: "#e0ecf4" }}
+                            >
                               <td>Marketing Channel</td>
                               <td>Cases</td>
                               <td>Claim Amount</td>
@@ -1194,7 +1224,7 @@ const DefaultDashboard = ({ intl, match }) => {
                               <td>Claim Amount</td>
                               <td>Customers</td>
                             </tr>
-                            <tr>
+                            <tr key={"row3"}>
                               <td style={{ backgroundColor: "#e0ecf4" }}>
                                 IVR
                               </td>
@@ -1211,7 +1241,7 @@ const DefaultDashboard = ({ intl, match }) => {
                               <td>-</td>
                               <td>-</td>
                             </tr>
-                            <tr>
+                            <tr key={"row4"}>
                               <td style={{ backgroundColor: "#e0ecf4" }}>
                                 Direct
                               </td>
@@ -1228,7 +1258,7 @@ const DefaultDashboard = ({ intl, match }) => {
                               <td>-</td>
                               <td>-</td>
                             </tr>
-                            <tr>
+                            <tr key={"row5"}>
                               <td style={{ backgroundColor: "#e0ecf4" }}>
                                 WhatsApp
                               </td>
@@ -1245,7 +1275,7 @@ const DefaultDashboard = ({ intl, match }) => {
                               <td>-</td>
                               <td>-</td>
                             </tr>
-                            <tr>
+                            <tr key={"row6"}>
                               <td style={{ backgroundColor: "#e0ecf4" }}>
                                 Chatbot
                               </td>
@@ -1262,7 +1292,7 @@ const DefaultDashboard = ({ intl, match }) => {
                               <td>-</td>
                               <td>-</td>
                             </tr>
-                            <tr>
+                            <tr key={"row7"}>
                               <td style={{ backgroundColor: "#e0ecf4" }}>
                                 Whitegrape
                               </td>
@@ -1279,7 +1309,7 @@ const DefaultDashboard = ({ intl, match }) => {
                               <td>-</td>
                               <td>-</td>
                             </tr>
-                            <tr>
+                            <tr key={"row8"}>
                               <td style={{ backgroundColor: "#e0ecf4" }}>
                                 Organic
                               </td>
@@ -1296,7 +1326,7 @@ const DefaultDashboard = ({ intl, match }) => {
                               <td>-</td>
                               <td>-</td>
                             </tr>
-                            <tr>
+                            <tr key={"row9"}>
                               <td style={{ backgroundColor: "#e0ecf4" }}>
                                 Insa Website
                               </td>
@@ -1320,7 +1350,13 @@ const DefaultDashboard = ({ intl, match }) => {
                       </div>
                     </>
                   ) : (
-                    <h2 style={{ margin: "auto" }}>No Data</h2>
+                    <h4
+                      key={"noData999"}
+                      style={{ margin: "auto" }}
+                      className="text-center"
+                    >
+                      No Data
+                    </h4>
                   )}
                 </div>
               </div>
@@ -1338,6 +1374,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <h1 className="m-0">B2C Registration Cases(Monthly) </h1>
                 <button
                   className="btn btn-warning py-1"
+                  id="regB2cCasesRefresh"
                   onClick={() => {
                     dispatch({
                       type: "B2C_REGISTRATION_CASES",
@@ -1359,7 +1396,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <div className="row">
                   <table className="table table-borderless font-weight-bold">
                     <thead className="bg-primary">
-                      <tr>
+                      <tr key={"heading"}>
                         <th>S.No</th>
                         <th>Name</th>
                         <th>Policy Number</th>
@@ -1370,7 +1407,7 @@ const DefaultDashboard = ({ intl, match }) => {
                       {data.b2cRegistrationCases?.sendData ? (
                         data.b2cRegistrationCases?.sendData?.map((res, i) => {
                           return (
-                            <tr>
+                            <tr key={i}>
                               <td>{i + 1}</td>
                               <td>{res.name}</td>
                               <td>{res.policyNumber}</td>
@@ -1379,7 +1416,9 @@ const DefaultDashboard = ({ intl, match }) => {
                           );
                         })
                       ) : (
-                        <tr>No Data</tr>
+                        <tr className="text-center" key={"noData"}>
+                          <td colSpan={5}>No Data</td>
+                        </tr>
                       )}
                     </tbody>
                   </table>
@@ -1400,6 +1439,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   Partner Registration Dashboard(Monthly){" "}
                 </h1>
                 <button
+                  id="regPartRegBtn"
                   className="btn btn-warning py-1"
                   onClick={() => {
                     dispatch({
@@ -1532,6 +1572,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="ResolutionB2cDash"
                     onClick={() => {
                       resolutionSectionHandler("resolutionOne");
                       dispatch({
@@ -1547,6 +1588,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="resolutionPartnerDashBtn"
                     onClick={() => {
                       resolutionSectionHandler("resolutionTwo");
                       dispatch({
@@ -1562,6 +1604,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="resolutionB2cSattledBtn"
                     onClick={() => {
                       resolutionSectionHandler("resolutionThree");
                       dispatch({
@@ -1582,6 +1625,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="resolutionPartSattledBtn"
                     onClick={() => {
                       resolutionSectionHandler("resolutionFour");
                       dispatch({
@@ -1602,6 +1646,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="resolutionInvoiceBtn"
                     onClick={() => {
                       resolutionSectionHandler("resolutionFive");
                       dispatch({
@@ -1622,6 +1667,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="resolutionPartnerInvoiceBtn"
                     onClick={() => {
                       resolutionSectionHandler("resolutionSix");
                       dispatch({
@@ -1656,6 +1702,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <h1 className="m-0 p-0 py-1">B2C Resolution Dashboard </h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="b2cResolutionSecRef"
                   onClick={() => {
                     dispatch({
                       type: "B2C_RESOLUTION",
@@ -1794,7 +1841,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <div className="overflow-auto">
                     <table className="table text-center table-borderless font-weight-bold">
                       <thead className="bg-primary">
-                        <tr>
+                        <tr key={"heading"}>
                           <th colSpan={4}>Life Insurance</th>
                           <th colSpan={3}>General Insurance</th>
                           <th colSpan={3}>Health Insurance</th>
@@ -1802,7 +1849,10 @@ const DefaultDashboard = ({ intl, match }) => {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr style={{ backgroundColor: "#e0ecf4" }}>
+                        <tr
+                          key={"heading2"}
+                          style={{ backgroundColor: "#e0ecf4" }}
+                        >
                           <td>Marketing Channel</td>
                           <td>Cases</td>
                           <td>Claim Amount</td>
@@ -1817,7 +1867,7 @@ const DefaultDashboard = ({ intl, match }) => {
                           <td>Claim Amount</td>
                           <td>Customers</td>
                         </tr>
-                        <tr>
+                        <tr key={"row3"}>
                           <td style={{ backgroundColor: "#e0ecf4" }}>IVR</td>
                           <td>-</td>
                           <td>-</td>
@@ -1832,7 +1882,7 @@ const DefaultDashboard = ({ intl, match }) => {
                           <td>-</td>
                           <td>-</td>
                         </tr>
-                        <tr>
+                        <tr key={"row4"}>
                           <td style={{ backgroundColor: "#e0ecf4" }}>Direct</td>
                           <td>-</td>
                           <td>-</td>
@@ -1847,7 +1897,7 @@ const DefaultDashboard = ({ intl, match }) => {
                           <td>-</td>
                           <td>-</td>
                         </tr>
-                        <tr>
+                        <tr key={"row5"}>
                           <td style={{ backgroundColor: "#e0ecf4" }}>
                             WhatsApp
                           </td>
@@ -1864,7 +1914,7 @@ const DefaultDashboard = ({ intl, match }) => {
                           <td>-</td>
                           <td>-</td>
                         </tr>
-                        <tr>
+                        <tr key={"row1"}>
                           <td style={{ backgroundColor: "#e0ecf4" }}>
                             Chatbot
                           </td>
@@ -1881,7 +1931,7 @@ const DefaultDashboard = ({ intl, match }) => {
                           <td>-</td>
                           <td>-</td>
                         </tr>
-                        <tr>
+                        <tr key={"row8"}>
                           <td style={{ backgroundColor: "#e0ecf4" }}>
                             Whitegrape
                           </td>
@@ -1898,7 +1948,7 @@ const DefaultDashboard = ({ intl, match }) => {
                           <td>-</td>
                           <td>-</td>
                         </tr>
-                        <tr>
+                        <tr key={"row9"}>
                           <td style={{ backgroundColor: "#e0ecf4" }}>
                             Organic
                           </td>
@@ -1915,7 +1965,7 @@ const DefaultDashboard = ({ intl, match }) => {
                           <td>-</td>
                           <td>-</td>
                         </tr>
-                        <tr>
+                        <tr key={"row10"}>
                           <td style={{ backgroundColor: "#e0ecf4" }}>
                             Insa Website
                           </td>
@@ -1932,7 +1982,7 @@ const DefaultDashboard = ({ intl, match }) => {
                           <td>{data.b2cRegistration?.claimCase}</td>
                           <td>-</td>
                         </tr>
-                        <tr>
+                        <tr key={"row11"}>
                           <td style={{ backgroundColor: "#e0ecf4" }}>
                             Resolution Level
                           </td>
@@ -1949,7 +1999,7 @@ const DefaultDashboard = ({ intl, match }) => {
                           <td>{data.b2cRegistration?.claimCase}</td>
                           <td>-</td>
                         </tr>
-                        <tr>
+                        <tr key={"row12"}>
                           <td style={{ backgroundColor: "#e0ecf4" }}>
                             Company Level
                           </td>
@@ -1966,7 +2016,7 @@ const DefaultDashboard = ({ intl, match }) => {
                           <td>{data.b2cRegistration?.claimCase}</td>
                           <td>-</td>
                         </tr>
-                        <tr>
+                        <tr key={"row13"}>
                           <td style={{ backgroundColor: "#e0ecf4" }}>
                             Ombudsman Level
                           </td>
@@ -1983,7 +2033,7 @@ const DefaultDashboard = ({ intl, match }) => {
                           <td>{data.b2cRegistration?.claimCase}</td>
                           <td>-</td>
                         </tr>
-                        <tr>
+                        <tr key={"row14"}>
                           <td style={{ backgroundColor: "#e0ecf4" }}>
                             Legal Level
                           </td>
@@ -2022,6 +2072,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <h1 className="m-o p-0">Partner Resolution Dashboard </h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="partnerResolutionRef"
                   onClick={() => {
                     dispatch({
                       type: "PARTNER_RESOLUTION",
@@ -2165,7 +2216,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <div className="overflow-auto">
                     <table className="table text-center table-borderless font-weight-bold">
                       <thead className="bg-primary">
-                        <tr>
+                        <tr key={"heading1"}>
                           <th colSpan={4}>Life Insurance</th>
                           <th colSpan={3}>General Insurance</th>
                           <th colSpan={3}>Health Insurance</th>
@@ -2173,7 +2224,10 @@ const DefaultDashboard = ({ intl, match }) => {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr style={{ backgroundColor: "#e0ecf4" }}>
+                        <tr
+                          key={"heading2"}
+                          style={{ backgroundColor: "#e0ecf4" }}
+                        >
                           <td>Marketing Channel</td>
                           <td>Cases</td>
                           <td>Claim Amount</td>
@@ -2188,7 +2242,7 @@ const DefaultDashboard = ({ intl, match }) => {
                           <td>Claim Amount</td>
                           <td>Customers</td>
                         </tr>
-                        <tr>
+                        <tr key={"row1"}>
                           <td style={{ backgroundColor: "#e0ecf4" }}>
                             Company Level
                           </td>
@@ -2205,7 +2259,7 @@ const DefaultDashboard = ({ intl, match }) => {
                           <td>{data.b2cRegistration?.claimCase}</td>
                           <td>-</td>
                         </tr>
-                        <tr>
+                        <tr key={"row2"}>
                           <td style={{ backgroundColor: "#e0ecf4" }}>
                             Ombudsman Level
                           </td>
@@ -2222,7 +2276,7 @@ const DefaultDashboard = ({ intl, match }) => {
                           <td>{data.b2cRegistration?.claimCase}</td>
                           <td>-</td>
                         </tr>
-                        <tr>
+                        <tr key={"row3"}>
                           <td style={{ backgroundColor: "#e0ecf4" }}>
                             Legal Level
                           </td>
@@ -2261,6 +2315,7 @@ const DefaultDashboard = ({ intl, match }) => {
 
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="regB2cCasesRef"
                   onClick={() => {
                     dispatch({
                       type: "B2C_SATTLED",
@@ -2335,7 +2390,7 @@ const DefaultDashboard = ({ intl, match }) => {
 
                   <table className="table table-borderless font-weight-bold">
                     <thead className="bg-primary">
-                      <tr>
+                      <tr key={"heading"}>
                         <th>S.No</th>
                         <th>Name</th>
                         <th>Policy Number</th>
@@ -2348,7 +2403,7 @@ const DefaultDashboard = ({ intl, match }) => {
                       {data.b2cSattled?.sendData ? (
                         data.b2cSattled?.sendData.map((res, i) => {
                           return (
-                            <tr>
+                            <tr key={"row1"}>
                               <td>{i + 1}</td>
                               <td>{res.name}</td>
                               <td>{res.policyNumber}</td>
@@ -2359,7 +2414,7 @@ const DefaultDashboard = ({ intl, match }) => {
                           );
                         })
                       ) : (
-                        <tr>No Data</tr>
+                        <tr key={"noData"}><td colSpan={6}>No Data</td></tr>
                       )}
                     </tbody>
                   </table>
@@ -2381,6 +2436,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <h1 className="m-o p-0">Partner Sattled Cases(Monthly) </h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="regPartnerReg"
                   onClick={() => {
                     dispatch({
                       type: "PARTNER_SATTLED_CASES",
@@ -2473,6 +2529,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <h1 className="m-o p-0">B2C Invoice Cases(Monthly) </h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="regPartnerRegRef"
                   onClick={() => {
                     dispatch({
                       type: "B2C_INVOICE_RAISED",
@@ -2574,7 +2631,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   />
                   <table className="table table-borderless font-weight-bold">
                     <thead className="bg-primary">
-                      <tr>
+                      <tr key={"heading"}>
                         <th>S.No</th>
                         <th>Name</th>
                         <th>Policy Number</th>
@@ -2587,7 +2644,7 @@ const DefaultDashboard = ({ intl, match }) => {
                       {data.b2cInvoiceRaised?.sendData ? (
                         data.b2cInvoiceRaised?.sendData?.map((res, i) => {
                           return (
-                            <tr>
+                            <tr key={i}>
                               <td>{i + 1}</td>
                               <td>{res.name}</td>
                               <td>{res.policyNumber}</td>
@@ -2598,7 +2655,7 @@ const DefaultDashboard = ({ intl, match }) => {
                           );
                         })
                       ) : (
-                        <tr>No Data</tr>
+                        <tr key={"noData"}><td colSpan={6}>No Data</td></tr>
                       )}
                     </tbody>
                   </table>
@@ -2619,6 +2676,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <h1 className="m-o p-0">Partner Invoice Cases(Monthly) </h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="regPartnerRegRef"
                   onClick={() => {
                     dispatch({
                       type: "PARTNER_INVOICE",
@@ -2721,6 +2779,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="legalSecAllCasesBtn"
                     onClick={() => {
                       handleLegalSection("legalOne");
                       dispatch({
@@ -2747,6 +2806,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <h1 className="m-o p-0">Partner Dashboard(All Cases)</h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="legalPartnerDashRef"
                   onClick={() => {
                     dispatch({
                       type: "LEGAL_PARTNER_DASHBOARD",
@@ -2843,6 +2903,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="legalSecB2cOmbMonBtn"
                     onClick={() => {
                       ombudsmanHandler("ombudsmanOne");
                       dispatch({
@@ -2858,6 +2919,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="legalSecPartnerOmbMonBtn"
                     onClick={() => {
                       ombudsmanHandler("ombudsmanTwo");
                       dispatch({
@@ -2873,6 +2935,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="legalSecB2cOmbYearlyBtn"
                     onClick={() => {
                       ombudsmanHandler("ombudsmanThree");
                       dispatch({
@@ -2893,6 +2956,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="legalSecPartnerOmbYearlyBtn"
                     onClick={() => {
                       ombudsmanHandler("ombudsmanFour");
                       dispatch({
@@ -2913,6 +2977,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="legalResendB2cMonCases"
                     onClick={() => {
                       ombudsmanHandler("ombudsmanFive");
                       dispatch({
@@ -2933,6 +2998,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="legalResendPartnerMon"
                     onClick={() => {
                       ombudsmanHandler("ombudsmanSix");
                       dispatch({
@@ -2965,6 +3031,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <h1 className="m-o p-0">B2C Ombudsman Dashboard(Monthly) </h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="legalPartnerDashRef"
                   onClick={() => {
                     dispatch({
                       type: "B2C_OMBUDSMAN_COUNT",
@@ -2984,7 +3051,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <div className="row">
                   <table className="table table-borderless">
                     <thead className="bg-primary">
-                      <tr className="bg-primary text-center">
+                      <tr key={"heading"} className="bg-primary text-center">
                         <th colSpan={4}>Life Insurance</th>
                         <th colSpan={3}>General Insurance</th>
                         <th colSpan={3}>Health Insurance</th>
@@ -2992,7 +3059,10 @@ const DefaultDashboard = ({ intl, match }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr style={{ backgroundColor: "#DAEEF3" }}>
+                      <tr
+                        key={"heading2"}
+                        style={{ backgroundColor: "#DAEEF3" }}
+                      >
                         <th>Status</th>
                         <th>Cases</th>
                         <th>Claim Amount</th>
@@ -3008,9 +3078,9 @@ const DefaultDashboard = ({ intl, match }) => {
                         <th>Customers</th>
                       </tr>
                       {data?.b2cOmbudsmanCount ? (
-                        data?.b2cOmbudsmanCount?.map((res) => {
+                        data?.b2cOmbudsmanCount?.map((res, i) => {
                           return (
-                            <tr>
+                            <tr key={i}>
                               <th style={{ backgroundColor: "#DAEEF3" }}>
                                 {res.status}
                               </th>
@@ -3030,7 +3100,9 @@ const DefaultDashboard = ({ intl, match }) => {
                           );
                         })
                       ) : (
-                        <tr className="text-center">No Data</tr>
+                        <tr key={"noData"} className="text-center">
+                          <td colSpan={13}>No Data</td>
+                        </tr>
                       )}
                     </tbody>
                   </table>
@@ -3053,6 +3125,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 </h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="regB2cRefBtn"
                   onClick={() => {
                     dispatch({
                       type: "PARTNER_OMBUDSMAN_COUNT",
@@ -3072,7 +3145,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <div className="row">
                   <table className="table table-borderless">
                     <thead className="bg-primary">
-                      <tr className="bg-primary text-center">
+                      <tr key={"heading"} className="bg-primary text-center">
                         <th colSpan={4}>Life Insurance</th>
                         <th colSpan={3}>General Insurance</th>
                         <th colSpan={3}>Health Insurance</th>
@@ -3080,7 +3153,10 @@ const DefaultDashboard = ({ intl, match }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr style={{ backgroundColor: "#DAEEF3" }}>
+                      <tr
+                        key={"heading2"}
+                        style={{ backgroundColor: "#DAEEF3" }}
+                      >
                         <th>Status</th>
                         <th>Cases</th>
                         <th>Claim Amount</th>
@@ -3096,9 +3172,9 @@ const DefaultDashboard = ({ intl, match }) => {
                         <th>Customers</th>
                       </tr>
                       {data?.partnerOmbudsmanCount ? (
-                        data?.partnerOmbudsmanCount?.map((res) => {
+                        data?.partnerOmbudsmanCount?.map((res, i) => {
                           return (
-                            <tr>
+                            <tr key={i}>
                               <th style={{ backgroundColor: "#DAEEF3" }}>
                                 {res.status}
                               </th>
@@ -3118,7 +3194,9 @@ const DefaultDashboard = ({ intl, match }) => {
                           );
                         })
                       ) : (
-                        <tr className="text-center">No Data</tr>
+                        <tr key={"noData88"} className="text-center">
+                          <td colSpan={12}>No Data</td>
+                        </tr>
                       )}
                     </tbody>
                   </table>
@@ -3137,6 +3215,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <h1 className="m-o p-0">New Ombudsman Count(B2C)(Yearly) </h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="newOmbCountRefBtn"
                   onClick={() => {
                     dispatch({
                       type: "NEW_OMBUDSMAN_COUNT_B2C",
@@ -3157,7 +3236,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <div className="row">
                   <table className="table table-borderless">
                     <thead className="bg-primary">
-                      <tr className="bg-primary text-center">
+                      <tr key={"heading1"} className="bg-primary text-center">
                         <th colSpan={4}>Life Insurance</th>
                         <th colSpan={3}>General Insurance</th>
                         <th colSpan={3}>Health Insurance</th>
@@ -3165,7 +3244,10 @@ const DefaultDashboard = ({ intl, match }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr style={{ backgroundColor: "#DAEEF3" }}>
+                      <tr
+                        key={"heading2"}
+                        style={{ backgroundColor: "#DAEEF3" }}
+                      >
                         <th>Status</th>
                         <th>Cases</th>
                         <th>Claim Amount</th>
@@ -3181,9 +3263,9 @@ const DefaultDashboard = ({ intl, match }) => {
                         <th>Customers</th>
                       </tr>
                       {data?.newB2COmbudsmanCount ? (
-                        data?.newB2COmbudsmanCount?.map((res) => {
+                        data?.newB2COmbudsmanCount?.map((res, i) => {
                           return (
-                            <tr>
+                            <tr key={i}>
                               <th style={{ backgroundColor: "#DAEEF3" }}>
                                 {res.status}
                               </th>
@@ -3203,7 +3285,9 @@ const DefaultDashboard = ({ intl, match }) => {
                           );
                         })
                       ) : (
-                        <tr className="text-center">No Data</tr>
+                        <tr key={"noData"} className="text-center">
+                          <td colSpan={13}>No Data</td>
+                        </tr>
                       )}
                     </tbody>
                   </table>
@@ -3224,6 +3308,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 </h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="newOmbCountYearly"
                   onClick={() => {
                     dispatch({
                       type: "NEW_OMBUDSMAN_COUNT_PARTNER",
@@ -3244,7 +3329,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <div className="row">
                   <table className="table table-borderless">
                     <thead className="bg-primary">
-                      <tr className="bg-primary text-center">
+                      <tr key={"heading1"} className="bg-primary text-center">
                         <th colSpan={4}>Life Insurance</th>
                         <th colSpan={3}>General Insurance</th>
                         <th colSpan={3}>Health Insurance</th>
@@ -3252,7 +3337,10 @@ const DefaultDashboard = ({ intl, match }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr style={{ backgroundColor: "#DAEEF3" }}>
+                      <tr
+                        key={"heading2"}
+                        style={{ backgroundColor: "#DAEEF3" }}
+                      >
                         <th>Status</th>
                         <th>Cases</th>
                         <th>Claim Amount</th>
@@ -3268,9 +3356,9 @@ const DefaultDashboard = ({ intl, match }) => {
                         <th>Customers</th>
                       </tr>
                       {data?.nerPartnerOmbudsmanCount ? (
-                        data?.nerPartnerOmbudsmanCount?.map((res) => {
+                        data?.nerPartnerOmbudsmanCount?.map((res, i) => {
                           return (
-                            <tr>
+                            <tr key={i}>
                               <th style={{ backgroundColor: "#DAEEF3" }}>
                                 {res.status}
                               </th>
@@ -3290,7 +3378,9 @@ const DefaultDashboard = ({ intl, match }) => {
                           );
                         })
                       ) : (
-                        <tr className="text-center">No Data</tr>
+                        <tr key={"noData"} className="text-center">
+                          <td colSpan={13}>No Data</td>
+                        </tr>
                       )}
                     </tbody>
                   </table>
@@ -3310,6 +3400,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 </h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="b2cResendCasesRefBtn"
                   onClick={() => {
                     dispatch({
                       type: "OMBUDSMAN_RESEND_CASES_B2C",
@@ -3330,7 +3421,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <div className="row">
                   <table className="table table-borderless">
                     <thead className="bg-primary">
-                      <tr className="bg-primary text-center">
+                      <tr key={"heading1"} className="bg-primary text-center">
                         <th>S.No</th>
                         <th>Name</th>
                         <th>Policy Number</th>
@@ -3343,7 +3434,7 @@ const DefaultDashboard = ({ intl, match }) => {
                       {data?.resendB2CCases ? (
                         Object.entries(data.resendB2CCases)?.map((res, i) => {
                           return (
-                            <tr>
+                            <tr key={i}>
                               <td>{i + 1}</td>
                               <td>{res[1]?.name}</td>
                               <td>{res[1]?.policyNumber}</td>
@@ -3354,7 +3445,9 @@ const DefaultDashboard = ({ intl, match }) => {
                           );
                         })
                       ) : (
-                        <tr className="text-center">No Data</tr>
+                        <tr key={"noData"} className="text-center">
+                          <td colSpan={6}>No Data</td>
+                        </tr>
                       )}
                     </tbody>
                   </table>
@@ -3375,6 +3468,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 </h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="partnerResendCasesRef"
                   onClick={() => {
                     dispatch({
                       type: "OMBUDSMAN_RESEND_CASES_PARTNER",
@@ -3395,7 +3489,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <div className="row">
                   <table className="table table-borderless">
                     <thead className="bg-primary">
-                      <tr className="bg-primary text-center">
+                      <tr key={"heading1"} className="bg-primary text-center">
                         <th>S.No</th>
                         <th>Name</th>
                         <th>Policy Number</th>
@@ -3409,7 +3503,7 @@ const DefaultDashboard = ({ intl, match }) => {
                         Object.entries(data.resendPartnerCases)?.map(
                           (res, i) => {
                             return (
-                              <tr>
+                              <tr key={i}>
                                 <td>{i + 1}</td>
                                 <td>{res[1]?.name}</td>
                                 <td>{res[1]?.policyNumber}</td>
@@ -3421,7 +3515,9 @@ const DefaultDashboard = ({ intl, match }) => {
                           }
                         )
                       ) : (
-                        <tr className="text-center">No Data</tr>
+                        <tr key={"noData"} className="text-center">
+                          <td colSpan={6}>No Data</td>
+                        </tr>
                       )}
                     </tbody>
                   </table>
@@ -3447,6 +3543,7 @@ const DefaultDashboard = ({ intl, match }) => {
                   <button
                     className="m-0 btn btn-primary rounded"
                     color="primary"
+                    id="b2cMailingCount"
                     onClick={() => {
                       mailingHandler("mailingOne");
                       dispatch({
@@ -3461,6 +3558,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <li className="mr-3">
                   <button
                     className="m-0 btn btn-primary rounded"
+                    id="partnerMailingCountMon"
                     color="primary"
                     onClick={() => {
                       mailingHandler("mailingTwo");
@@ -3488,6 +3586,7 @@ const DefaultDashboard = ({ intl, match }) => {
 
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="b2cMainlingDashRef"
                   onClick={() => {
                     dispatch({
                       type: "B2C_MAILING_COUNT",
@@ -3507,7 +3606,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <div className="row">
                   <table className="table table-borderless">
                     <thead className="bg-primary">
-                      <tr className="bg-primary text-center">
+                      <tr key={"heading1"} className="bg-primary text-center">
                         <th colSpan={4}>Life Insurance</th>
                         <th colSpan={3}>General Insurance</th>
                         <th colSpan={3}>Health Insurance</th>
@@ -3515,7 +3614,10 @@ const DefaultDashboard = ({ intl, match }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr style={{ backgroundColor: "#DAEEF3" }}>
+                      <tr
+                        key={"heading2"}
+                        style={{ backgroundColor: "#DAEEF3" }}
+                      >
                         <th>Status</th>
                         <th>Cases</th>
                         <th>Claim Amount</th>
@@ -3531,9 +3633,9 @@ const DefaultDashboard = ({ intl, match }) => {
                         <th>Customers</th>
                       </tr>
                       {data?.b2cMailingCount ? (
-                        data?.b2cMailingCount?.map((res) => {
+                        data?.b2cMailingCount?.map((res, i) => {
                           return (
-                            <tr>
+                            <tr key={i}>
                               <th style={{ backgroundColor: "#DAEEF3" }}>
                                 {res.status}
                               </th>
@@ -3553,7 +3655,9 @@ const DefaultDashboard = ({ intl, match }) => {
                           );
                         })
                       ) : (
-                        <tr className="text-center">No Data</tr>
+                        <tr key={"noData"} className="text-center">
+                          <td colSpan={13}>No Data</td>
+                        </tr>
                       )}
                     </tbody>
                   </table>
@@ -3569,6 +3673,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <h1 className="m-o p-0">Partner Mailing Dashboard(Monthly) </h1>
                 <button
                   className="btn btn-warning py-1 h-50 mt-auto mb-auto"
+                  id="partnerMailingDashMonRef"
                   onClick={() => {
                     dispatch({
                       type: "PARTNER_MAILING_COUNT",
@@ -3588,7 +3693,7 @@ const DefaultDashboard = ({ intl, match }) => {
                 <div className="row">
                   <table className="table table-borderless">
                     <thead className="bg-primary">
-                      <tr className="bg-primary text-center">
+                      <tr key={"heading1"} className="bg-primary text-center">
                         <th colSpan={4}>Life Insurance</th>
                         <th colSpan={3}>General Insurance</th>
                         <th colSpan={3}>Health Insurance</th>
@@ -3596,7 +3701,10 @@ const DefaultDashboard = ({ intl, match }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr style={{ backgroundColor: "#DAEEF3" }}>
+                      <tr
+                        key={"heading2"}
+                        style={{ backgroundColor: "#DAEEF3" }}
+                      >
                         <th>Status</th>
                         <th>Cases</th>
                         <th>Claim Amount</th>
@@ -3612,9 +3720,9 @@ const DefaultDashboard = ({ intl, match }) => {
                         <th>Customers</th>
                       </tr>
                       {data?.partnerMailingCount ? (
-                        data?.partnerMailingCount?.map((res) => {
+                        data?.partnerMailingCount?.map((res, i) => {
                           return (
-                            <tr>
+                            <tr key={i}>
                               <th style={{ backgroundColor: "#DAEEF3" }}>
                                 {res.status}
                               </th>
@@ -3634,7 +3742,9 @@ const DefaultDashboard = ({ intl, match }) => {
                           );
                         })
                       ) : (
-                        <tr className="text-center">No Data</tr>
+                        <tr key={"noData"} className="text-center">
+                          <td colSpan={12}>No Data</td>
+                        </tr>
                       )}
                     </tbody>
                   </table>

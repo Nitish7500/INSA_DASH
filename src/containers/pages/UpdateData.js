@@ -368,12 +368,12 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                 id="UpdateDetail1"
                 onChange={handleOptionBased}
               >
-                <option value={""}>Select Section</option>
-                <option value="userWise">Policy Wise</option>
-                <option value="nameWise">Name Wise</option>
-                <option value="statusWise">Status Wise</option>
-                <option value="companyWise">Company Wise</option>
-                <option value="nameCompanyWise">Name And Company Wise</option>
+                <option key={"select"} value={""}>Select Section</option>
+                <option key={"policyWise"} value="userWise">Policy Wise</option>
+                <option key={"nameWise"} value="nameWise">Name Wise</option>
+                <option key={"statusWise"} value="statusWise">Status Wise</option>
+                <option key={"comWise"} value="companyWise">Company Wise</option>
+                <option key={"name&comWise"} value="nameCompanyWise">Name And Company Wise</option>
               </select>
             </div>
             <div className="mt-3">
@@ -403,19 +403,19 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                 name="sectionType"
                 onChange={handleChangeSectionType}
               >
-                <option value={""}>Select Section</option>
-                <option value="statusSection">Status Section</option>
-                <option value="docUploadSection">
+                <option key={"select"} value={""}>Select Section</option>
+                <option key={"status"} value="statusSection">Status Section</option>
+                <option key={"docUplSec"} value="docUploadSection">
                   Document Upload Section
                 </option>
-                <option value="mailingSection">Mailing Section</option>
-                <option value="igmsSection">IGMS Section</option>
-                <option value="ombudsmanSection">Ombudsman Section</option>
-                <option value="legalSection">Legal Section</option>
-                <option value="resolutionSection">Resolution Section</option>
-                <option value="ombudsmanFollow">Ombudsman Follow</option>
-                <option value="mailingFollow">Mailing Follow</option>
-                <option value={"bulkAssignment"}>Bulk Assignment</option>
+                <option key={"mailingSec"} value="mailingSection">Mailing Section</option>
+                <option key={"igms"} value="igmsSection">IGMS Section</option>
+                <option key={"ombSec"} value="ombudsmanSection">Ombudsman Section</option>
+                <option key={"legalSec"} value="legalSection">Legal Section</option>
+                <option key={"resSec"} value="resolutionSection">Resolution Section</option>
+                <option key={"obmFollSec"} value="ombudsmanFollow">Ombudsman Follow</option>
+                <option key={"mFollow"} value="mailingFollow">Mailing Follow</option>
+                <option key={"bulkAss"} value={"bulkAssignment"}>Bulk Assignment</option>
               </select>
             </div>
             {sectionType ? (
@@ -436,9 +436,9 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                           });
                         }}
                       >
-                        <option value={""}>Select Status</option>
+                        <option key={"select"} value={""}>Select Status</option>
                         {state.statusBucket?.map((res) => {
-                          return <option value={res}>{res}</option>;
+                          return <option key={res} value={res}>{res}</option>;
                         })}
                       </select>
                     </div>
@@ -452,19 +452,19 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <label className="font-weight-bold">
                           Company Response Document
                         </label>
-                        <div class="input-group">
-                          <div class="custom-file">
+                        <div className="input-group">
+                          <div className="custom-file">
                             <input
                               type="file"
                               onChange={handleDocUploadSec}
-                              class="custom-file-input"
+                              className="custom-file-input"
                               id="inputGroupFile01"
                               name="CompanyResponse"
                               aria-describedby="inputGroupFileAddon01"
                             />
                             <label
-                              class="custom-file-label"
-                              for="inputGroupFile01"
+                              className="custom-file-label"
+                              htmlFor="inputGroupFile01"
                             >
                               Choose file
                             </label>
@@ -475,19 +475,19 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <label className="font-weight-bold">
                           IGMS Documents
                         </label>
-                        <div class="input-group">
-                          <div class="custom-file">
+                        <div className="input-group">
+                          <div className="custom-file">
                             <input
                               type="file"
                               onChange={handleDocUploadSec}
-                              class="custom-file-input"
+                              className="custom-file-input"
                               id="inputGroupFile02"
                               name="IGMSdoc"
                               aria-describedby="inputGroupFileAddon01"
                             />
                             <label
-                              class="custom-file-label"
-                              for="inputGroupFile02"
+                              className="custom-file-label"
+                              htmlFor="inputGroupFile02"
                             >
                               Choose file
                             </label>
@@ -498,19 +498,19 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <label className="font-weight-bold">
                           Award Rejected Documents:
                         </label>
-                        <div class="input-group">
-                          <div class="custom-file">
+                        <div className="input-group">
+                          <div className="custom-file">
                             <input
                               type="file"
                               onChange={handleDocUploadSec}
-                              class="custom-file-input"
+                              className="custom-file-input"
                               id="inputGroupFile03"
                               name="IGMSdoc"
                               aria-describedby="inputGroupFileAddon01"
                             />
                             <label
-                              class="custom-file-label"
-                              for="inputGroupFile03"
+                              className="custom-file-label"
+                              htmlFor="inputGroupFile03"
                             >
                               Choose file
                             </label>
@@ -521,19 +521,19 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <label className="font-weight-bold">
                           Ombudsman Requirement Documents
                         </label>
-                        <div class="input-group">
-                          <div class="custom-file">
+                        <div className="input-group">
+                          <div className="custom-file">
                             <input
                               type="file"
                               onChange={handleDocUploadSec}
-                              class="custom-file-input"
+                              className="custom-file-input"
                               id="inputGroupFile04"
                               name="IGMSdoc"
                               aria-describedby="inputGroupFileAddon01"
                             />
                             <label
-                              class="custom-file-label"
-                              for="inputGroupFile04"
+                              className="custom-file-label"
+                              htmlFor="inputGroupFile04"
                             >
                               Choose file
                             </label>
@@ -544,19 +544,19 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <label className="font-weight-bold">
                           Complaint form Courier Receipt:
                         </label>
-                        <div class="input-group">
-                          <div class="custom-file">
+                        <div className="input-group">
+                          <div className="custom-file">
                             <input
                               type="file"
                               onChange={handleDocUploadSec}
-                              class="custom-file-input"
+                              className="custom-file-input"
                               id="inputGroupFile05"
                               name="IGMSdoc"
                               aria-describedby="inputGroupFileAddon01"
                             />
                             <label
-                              class="custom-file-label"
-                              for="inputGroupFile05"
+                              className="custom-file-label"
+                              htmlFor="inputGroupFile05"
                             >
                               Choose file
                             </label>
@@ -567,19 +567,19 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <label className="font-weight-bold">
                           Form 6A Courier Receipt:
                         </label>
-                        <div class="input-group">
-                          <div class="custom-file">
+                        <div className="input-group">
+                          <div className="custom-file">
                             <input
                               type="file"
                               onChange={handleDocUploadSec}
-                              class="custom-file-input"
+                              className="custom-file-input"
                               id="inputGroupFile06"
                               name="IGMSdoc"
                               aria-describedby="inputGroupFileAddon01"
                             />
                             <label
-                              class="custom-file-label"
-                              for="inputGroupFile06"
+                              className="custom-file-label"
+                              htmlFor="inputGroupFile06"
                             >
                               Choose file
                             </label>
@@ -590,19 +590,19 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <label className="font-weight-bold">
                           Ombudsman Requiremnt Document:
                         </label>
-                        <div class="input-group">
-                          <div class="custom-file">
+                        <div className="input-group">
+                          <div className="custom-file">
                             <input
                               type="file"
                               onChange={handleDocUploadSec}
-                              class="custom-file-input"
+                              className="custom-file-input"
                               id="inputGroupFile07"
                               name="IGMSdoc"
                               aria-describedby="inputGroupFileAddon01"
                             />
                             <label
-                              class="custom-file-label"
-                              for="inputGroupFile07"
+                              className="custom-file-label"
+                              htmlFor="inputGroupFile07"
                             >
                               Choose file
                             </label>
@@ -613,19 +613,19 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                         <label className="font-weight-bold">
                           Form 6A Document:
                         </label>
-                        <div class="input-group">
-                          <div class="custom-file">
+                        <div className="input-group">
+                          <div className="custom-file">
                             <input
                               type="file"
                               onChange={handleDocUploadSec}
-                              class="custom-file-input"
+                              className="custom-file-input"
                               id="inputGroupFile08"
                               name="IGMSdoc"
                               aria-describedby="inputGroupFileAddon01"
                             />
                             <label
-                              class="custom-file-label"
-                              for="inputGroupFile08"
+                              className="custom-file-label"
+                              htmlFor="inputGroupFile08"
                             >
                               Choose file
                             </label>
@@ -648,9 +648,9 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             id="mailingSection01"
                             onChange={handleMailingSecObj}
                           >
-                            <option value={""}>Select </option>
-                            <option value={"Yes"}>Yes</option>
-                            <option value={"No"}>No</option>
+                            <option key={"select"} value={""}>Select </option>
+                            <option key={"yes"} value={"Yes"}>Yes</option>
+                            <option key={"no"} value={"No"}>No</option>
                           </select>
                         </div>
                         <div className="col-sm-4">
@@ -732,11 +732,11 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             id="mailingSection8"
                             onChange={handleMailingSecObj}
                           >
-                            <option value="Rejection">Rejection</option>
-                            <option value="Requirement">Requirement</option>
-                            <option value="No Response">No Response</option>
-                            <option value="Resolution">Resolution</option>
-                            <option value="Mail Id To Be Registered">
+                            <option key={"rej"} value="Rejection">Rejection</option>
+                            <option key={"req"} value="Requirement">Requirement</option>
+                            <option key={"resp"} value="No Response">No Response</option>
+                            <option key={"reso"} value="Resolution">Resolution</option>
+                            <option key={"mail"} value="Mail Id To Be Registered">
                               Mail Id To Be Registered
                             </option>
                           </select>
@@ -791,11 +791,11 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             id="mailingSection13"
                             onChange={handleMailingSecObj}
                           >
-                            <option value="Rejection">Rejection</option>
-                            <option value="Requirement">Requirement</option>
-                            <option value="No Response">No Response</option>
-                            <option value="Resolution">Resolution</option>
-                            <option value="Mail Id To Be Registered">
+                            <option key={"rej"} value="Rejection">Rejection</option>
+                            <option key={"req"} value="Requirement">Requirement</option>
+                            <option key={"resp"} value="No Response">No Response</option>
+                            <option key={"reso"} value="Resolution">Resolution</option>
+                            <option key={"mail"} value="Mail Id To Be Registered">
                               Mail Id To Be Registered
                             </option>
                           </select>
@@ -810,9 +810,9 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                                 name="isRequirement"
                                 onChange={handleMailingSecObj}
                               >
-                                <option value={""}>Select </option>
-                                <option value={"Yes"}>Yes</option>
-                                <option value={"No"}>No</option>
+                                <option key={"select"} value={""}>Select </option>
+                                <option key={"yes"} value={"Yes"}>Yes</option>
+                                <option key={"no"} value={"No"}>No</option>
                               </select>
                             </div>
                             {mailingSecObj.isRequirement === "Yes" ? (
@@ -873,9 +873,9 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                                 name="isRequirementReverted"
                                 onChange={handleMailingSecObj}
                               >
-                                <option value={""}>Select </option>
-                                <option value={"Yes"}>Yes</option>
-                                <option value={"No"}>No</option>
+                                <option key={"select"} value={""}>Select </option>
+                                <option key={"yes"} value={"Yes"}>Yes</option>
+                                <option key={"no"} value={"No"}>No</option>
                               </select>
                             </div>
                             {mailingSecObj.isRequirementReverted == "Yes" ? (
@@ -934,9 +934,9 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                                 name="is_draft_mail_send"
                                 onChange={handleMailingSecObj}
                               >
-                                <option value={""}>Select </option>
-                                <option value={"Yes"}>Yes</option>
-                                <option value={"No"}>No</option>
+                                <option key={"select"} value={""}>Select </option>
+                                <option key={"yes"} value={"Yes"}>Yes</option>
+                                <option key={"no"} value={"No"}>No</option>
                               </select>
                             </div>
                             {mailingSecObj.is_draft_mail_send === "Yes" ? (
@@ -995,9 +995,9 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                                 id="mailingSection17"
                                 onChange={handleMailingSecObj}
                               >
-                                <option value={""}>Select </option>
-                                <option value={"Yes"}>Yes</option>
-                                <option value={"No"}>No</option>
+                                <option key={"select"} value={""}>Select </option>
+                                <option key={"yes"} value={"Yes"}>Yes</option>
+                                <option key={"no"} value={"No"}>No</option>
                               </select>
                             </div>
                             {mailingSecObj.is_acknowledgement === "Yes" ? (
@@ -1056,9 +1056,9 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                                 name="response_company"
                                 onChange={handleMailingSecObj}
                               >
-                                <option value={""}>Select </option>
-                                <option value={"Yes"}>Yes</option>
-                                <option value={"No"}>No</option>
+                                <option key={"select"} value={""}>Select </option>
+                                <option key={"yes"} value={"Yes"}>Yes</option>
+                                <option key={"no"} value={"No"}>No</option>
                               </select>
                             </div>
                             {mailingSecObj.response_company === "Yes" ? (
@@ -1116,9 +1116,9 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                                 name="reminder_first"
                                 onChange={handleMailingSecObj}
                               >
-                                <option value={""}>Select </option>
-                                <option value={"Yes"}>Yes</option>
-                                <option value={"No"}>No</option>
+                                <option key={"select"} value={""}>Select </option>
+                                <option key={"yes"} value={"Yes"}>Yes</option>
+                                <option key={"no"} value={"No"}>No</option>
                               </select>
                             </div>
                             {mailingSecObj.reminder_first ? (
@@ -1176,9 +1176,9 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                                 id="mailingSection20"
                                 onChange={handleMailingSecObj}
                               >
-                                <option value={""}>Select </option>
-                                <option value={"Yes"}>Yes</option>
-                                <option value={"No"}>No</option>
+                                <option key={"select"} value={""}>Select </option>
+                                <option key={"yes"} value={"Yes"}>Yes</option>
+                                <option key={"no"} value={"No"}>No</option>
                               </select>
                             </div>
                             {mailingSecObj.escalation_first === "Yes" ? (
@@ -1253,9 +1253,9 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                                 name="response_company2"
                                 onChange={handleMailingSecObj}
                               >
-                                <option value={""}>Select </option>
-                                <option value={"Yes"}>Yes</option>
-                                <option value={"No"}>No</option>
+                                <option key={"select"} value={""}>Select </option>
+                                <option key={"yes"} value={"Yes"}>Yes</option>
+                                <option key={"no"} value={"No"}>No</option>
                               </select>
                             </div>
                             {mailingSecObj.response_company2 === "Yes" ? (
@@ -1313,9 +1313,9 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                                 name="reminder_second"
                                 onChange={handleMailingSecObj}
                               >
-                                <option value={""}>Select </option>
-                                <option value={"Yes"}>Yes</option>
-                                <option value={"No"}>No</option>
+                                <option key={"select"} value={""}>Select </option>
+                                <option key={"yes"} value={"Yes"}>Yes</option>
+                                <option key={"no"} value={"No"}>No</option>
                               </select>
                             </div>
                             {mailingSecObj.reminder_second === "Yes" ? (
@@ -1523,18 +1523,18 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             className="form-control border-bold"
                             name="IGMS_Done"
                           >
-                            <option value="">--Select--</option>
-                            <option value="PAN-No">Pan No.</option>
-                            <option value="Mobile-No">Mobile No.</option>
-                            <option value="LandLine-No">Landline No.</option>
-                            <option value="Voter-ID-No">
+                            <option key={"select"} value="">--Select--</option>
+                            <option key={"pan"} value="PAN-No">Pan No.</option>
+                            <option key={"moNo"} value="Mobile-No">Mobile No.</option>
+                            <option key={"ladLineNo"} value="LandLine-No">Landline No.</option>
+                            <option key={"voterNo"} value="Voter-ID-No">
                               Voter ID card number
                             </option>
-                            <option value="Ration-Card-No">
+                            <option key={"rationNo"} value="Ration-Card-No">
                               Ration Card No.
                             </option>
-                            <option value="Passport-No">Passport No.</option>
-                            <option value="DOB">Date of Birth</option>
+                            <option key={"passNo"} value="Passport-No">Passport No.</option>
+                            <option key={"dob"} value="DOB">Date of Birth</option>
                           </select>
                         </div>
                         {igmsObj.IGMS_Done ? (
@@ -1627,9 +1627,9 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             className="form-control border-bold"
                             name="call_form6A"
                           >
-                            <option value={""}>Select</option>
-                            <option value={"Yes"}>YES</option>
-                            <option value={"No"}>NO</option>
+                            <option key={"select"} value={""}>Select</option>
+                            <option key={"yes"} value={"Yes"}>YES</option>
+                            <option key={"no"} value={"No"}>NO</option>
                           </select>
                         </div>
                         <div className="col-sm-4">
@@ -1640,9 +1640,9 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             className="form-control border-bold"
                             name="form6A_receive"
                           >
-                            <option value={""}>Select</option>
-                            <option value={"Yes"}>YES</option>
-                            <option value={"No"}>NO</option>
+                            <option key={"select"} value={""}>Select</option>
+                            <option key={"yes"} value={"Yes"}>YES</option>
+                            <option key={"no"} value={"No"}>NO</option>
                           </select>
                         </div>
                         <div className="col-sm-4">
@@ -1704,10 +1704,10 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             className="form-control border-bold"
                             name="stateName"
                           >
-                            <option value={""}>Select State</option>
+                            <option key={"select"} value={""}>Select State</option>
                             {state.states?.map((res) => {
                               return (
-                                <option value={res.name}>{res.name}</option>
+                                <option key={res.name} value={res.name}>{res.name}</option>
                               );
                             })}
                           </select>
@@ -1731,9 +1731,9 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             className="form-control border-bold"
                             name="call_Hearing"
                           >
-                            <option value={""}>Select</option>
-                            <option value={"Yes"}>YES</option>
-                            <option value={"No"}>NO</option>
+                            <option key={"select"} value={""}>Select</option>
+                            <option key={"yes"} value={"Yes"}>YES</option>
+                            <option key={"no"} value={"No"}>NO</option>
                           </select>
                         </div>
                         <div className="col-sm-4">
@@ -1744,9 +1744,9 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             className="form-control border-bold"
                             name="hearing_receive"
                           >
-                            <option value={""}>Select</option>
-                            <option value={"Yes"}>YES</option>
-                            <option value={"No"}>NO</option>
+                            <option key={"select"} value={""}>Select</option>
+                            <option key={"yes"} value={"Yes"}>YES</option>
+                            <option key={"no"} value={"No"}>NO</option>
                           </select>
                         </div>
                         <div className="col-sm-4">
@@ -1820,9 +1820,9 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             className="form-control border-bold"
                             name="check_status"
                           >
-                            <option value={""}>Select</option>
-                            <option value={"Yes"}>YES</option>
-                            <option value={"No"}>NO</option>
+                            <option key={"select"} value={""}>Select</option>
+                            <option key={"yes"} value={"Yes"}>YES</option>
+                            <option key={"no"} value={"No"}>NO</option>
                           </select>
                         </div>
 
@@ -1847,27 +1847,27 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             className="form-control border-bold"
                             name="rewardType"
                           >
-                            <option value="">Select Type</option>
-                            <option value="RefundAccepted">
+                            <option key={"select"} value="">Select Type</option>
+                            <option key={"refAcc"} value="RefundAccepted">
                               Refund Accepted
                             </option>
-                            <option value="SinglePayAccepted">
+                            <option key={"singlePayAcc"} value="SinglePayAccepted">
                               Single Pay Accepted
                             </option>
-                            <option value="SinglePayAdditionalPayment">
+                            <option key={"singlePayAddPay"} value="SinglePayAdditionalPayment">
                               Single Pay with additional Payment
                             </option>
-                            <option value="SinglePaySomeRefund">
+                            <option key={"singleRef"} value="SinglePaySomeRefund">
                               Single Pay with Some Refund
                             </option>
-                            <option value="ClaimPayable">Claim Payable</option>
-                            <option value="ClaimPayableInterest">
+                            <option key={"claimPay"} value="ClaimPayable">Claim Payable</option>
+                            <option key={"claimInt"} value="ClaimPayableInterest">
                               Claim Payable with Interest
                             </option>
-                            <option value="ClaimRejected">
+                            <option key={"claimRej"} value="ClaimRejected">
                               Claim is rejected
                             </option>
-                            <option value="RefundRejected">
+                            <option key={"refRej"} value="RefundRejected">
                               Refund is Rejected
                             </option>
                           </select>
@@ -1889,9 +1889,9 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             className="form-control border-bold"
                             name="legal_notice"
                           >
-                            <option value={""}>Select</option>
-                            <option value={"Yes"}>YES</option>
-                            <option value={"No"}>NO</option>
+                            <option key={"select"} value={""}>Select</option>
+                            <option key={"yes"} value={"Yes"}>YES</option>
+                            <option key={"no"} value={"No"}>NO</option>
                           </select>
                         </div>
                         <div className="col-sm-4 mt-3">
@@ -1987,9 +1987,9 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             name="consumerCourtLocation"
                             onChange={handlelegalSecChange}
                           >
-                            <option value={""}>Select Location</option>
+                            <option key={"select"} value={""}>Select Location</option>
                             {customerCourtLoc?.map((res) => {
-                              return <option value={res}>{res}</option>;
+                              return <option key={res} value={res}>{res}</option>;
                             })}
                           </select>
                         </div>
@@ -2125,27 +2125,27 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             onChange={handleresolutionSecChange}
                             name="rewardType"
                           >
-                            <option value="">Select Type</option>
-                            <option value="RefundAccepted">
+                            <option key={"select"} value="">Select Type</option>
+                            <option key={"refAdd"} value="RefundAccepted">
                               Refund Accepted
                             </option>
-                            <option value="SinglePayAccepted">
+                            <option key={"singlePayAcc"} value="SinglePayAccepted">
                               Single Pay Accepted
                             </option>
-                            <option value="SinglePayAdditionalPayment">
+                            <option key={"SinglePayAddPay"} value="SinglePayAdditionalPayment">
                               Single Pay with additional Payment
                             </option>
-                            <option value="SinglePaySomeRefund">
+                            <option key={"singleSomeRef"} value="SinglePaySomeRefund">
                               Single Pay with Some Refund
                             </option>
-                            <option value="ClaimPayable">Claim Payable</option>
+                            <option key={"claimPay"} value="ClaimPayable">Claim Payable</option>
                             <option value="ClaimPayableInterest">
                               Claim Payable with Interest
                             </option>
-                            <option value="ClaimRejected">
+                            <option key={"claimIns"} value="ClaimRejected">
                               Claim is rejected
                             </option>
-                            <option value="RefundRejected">
+                            <option key={"refRej"} value="RefundRejected">
                               Refund is Rejected
                             </option>
                           </select>
@@ -2426,10 +2426,10 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             });
                           }}
                         >
-                          <option value={""}>Select the User</option>
+                          <option key={"select"} value={""}>Select the User</option>
                           {state.allInsa?.map((res) => {
                             return (
-                              <option value={res.user_id}>{res.name}</option>
+                              <option key={res.user_id} value={res.user_id}>{res.name}</option>
                             );
                           })}
                         </select>
@@ -2447,28 +2447,28 @@ function UpdateData({ updateData, setupdateData, complaint }) {
                             });
                           }}
                         >
-                          <option value={""}>Select Assignment</option>
-                          <option value="assign_to">Assign To</option>
-                          <option value="assignToCompanyIGMS">
+                          <option key={"select"} value={""}>Select Assignment</option>
+                          <option key={"assignTo"} value="assign_to">Assign To</option>
+                          <option key={"assignExe"} value="assignToCompanyIGMS">
                             Assign To Mailing Executive
                           </option>
-                          <option value="assignToIGMS">Assign To IGMS</option>
-                          <option value="assignToOmbudsman">
+                          <option key={"assignIgms"} value="assignToIGMS">Assign To IGMS</option>
+                          <option key={"assignOmb"} value="assignToOmbudsman">
                             Assign To Ombudsman
                           </option>
-                          <option value="assignToOmbudsmanHead">
+                          <option key={"assignOmbHead"} value="assignToOmbudsmanHead">
                             Assign To Ombudsman Head
                           </option>
-                          <option value="assign_to_legalExpert">
+                          <option key={"asssignToLegalExe"} value="assign_to_legalExpert">
                             Assign To Legal Expert
                           </option>
-                          <option value="assign_to_expert">
+                          <option key={"assignExe"} value="assign_to_expert">
                             Assign To Expert
                           </option>
-                          <option value="assignToLegalExecutive">
+                          <option key={"assignLegalExe"} value="assignToLegalExecutive">
                             Assign To Legal Executive
                           </option>
-                          <option value="assigned_internal_legal_executive">
+                          <option key={"assignIntAdv"} value="assigned_internal_legal_executive">
                             Assign To Internal Legal Advocate
                           </option>
                         </select>

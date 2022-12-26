@@ -10,7 +10,7 @@ import { faPencil, faShield } from "@fortawesome/free-solid-svg-icons";
 function Users() {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.user);
-  console.log(state);
+  // console.log(state);
 
   const [addUser, setaddUser] = useState(false);
   const [editUser, seteditUser] = useState(false);
@@ -307,6 +307,7 @@ function Users() {
             </div>
             <div>
               <button
+                id="UseraddBtn"
                 className="btn btn-success mr-3 py-1 mt-2"
                 onClick={() => {
                   setaddUser(true);
@@ -325,7 +326,7 @@ function Users() {
           <div className="table-responsive mt-5">
             <table className="table">
               <thead>
-                <tr>
+                <tr key={"tableHead"}>
                   <th>Name</th>
                   <th>Email</th>
                   <th>User Id</th>
@@ -338,7 +339,7 @@ function Users() {
                   <th>Phone</th>
                   <th>Address</th>
                   <th>Status</th>
-                  <th>View</th>
+                  {/* <th>View</th> */}
                   <th>Action</th>
                   <th>Password Change</th>
                 </tr>
@@ -346,7 +347,7 @@ function Users() {
               <tbody>
                 {state.userData?.pageOfItems?.map((res, i) => {
                   return (
-                    <tr>
+                    <tr key={i}>
                       <td>{res.name}</td>
                       <td>{res.email}</td>
                       <td>{res.user_id}</td>
@@ -359,7 +360,7 @@ function Users() {
                       <td>{res.mobile}</td>
                       <td>{}</td>
                       <td>{res.status ? "Active" : "Non-Active"}</td>
-                      <td>{"view"}</td>
+                      {/* <td>{"view"}</td> */}
                       <td
                         id={`userAddEdit${i}`}
                         onClick={() => {
@@ -369,6 +370,7 @@ function Users() {
                         }}
                       >
                         <FontAwesomeIcon
+                          id={`userAddEditIcon${i}`}
                           icon={faPencil}
                           size="lg"
                           color="#9c27b0"
@@ -383,6 +385,7 @@ function Users() {
                         id={`userAddEditPass${i}`}
                       >
                         <FontAwesomeIcon
+                          id={`userAddEditPassIcon${i}`}
                           icon={faShield}
                           size="lg"
                           style={{ cursor: "pointer" }}
@@ -410,9 +413,9 @@ function Users() {
             <div className="form-group d-flex flex-wrap">
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className="form-control border-0 font-weight-bold"
-                  htmlFor="userFormName"
+                  htmlhtmlFor="userFormName"
                 >
                   Name
                 </label>
@@ -429,9 +432,9 @@ function Users() {
               <hr />
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className="form-control border-0 font-weight-bold"
-                  htmlFor="userFormEmail"
+                  htmlhtmlFor="userFormEmail"
                 >
                   Email
                 </label>
@@ -447,9 +450,9 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormNumber"
+                  htmlhtmlFor="userFormNumber"
                 >
                   Mobile Number
                 </label>
@@ -464,9 +467,9 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormGender"
+                  htmlhtmlFor="userFormGender"
                 >
                   Gender
                 </label>
@@ -477,19 +480,23 @@ function Users() {
                   value={gender}
                   name="gender"
                 >
-                  <option value={""} selected disabled>
+                  <option key={"1"} value={""}>
                     {" "}
                     Select Gender
                   </option>
-                  <option value={"Male"}>Male</option>
-                  <option value={"Female"}>Female</option>
+                  <option key={"male"} value={"Male"}>
+                    Male
+                  </option>
+                  <option key={"female"} value={"Female"}>
+                    Female
+                  </option>
                 </select>
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormProfileInfo"
+                  htmlhtmlFor="userFormProfileInfo"
                 >
                   Profile Information
                 </label>
@@ -505,9 +512,9 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormUserType"
+                  htmlhtmlFor="userFormUserType"
                 >
                   User Type
                 </label>
@@ -518,19 +525,23 @@ function Users() {
                   value={group}
                   name="group"
                 >
-                  <option value={""} selected disabled>
+                  <option key={"select"} value={""}>
                     {" "}
                     Select User Type
                   </option>
-                  <option value={"User"}>User</option>
-                  <option value={"Admin"}>Admin</option>
+                  <option key={"user"} value={"User"}>
+                    User
+                  </option>
+                  <option key={"admin"} value={"Admin"}>
+                    Admin
+                  </option>
                 </select>
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormUserStatus"
+                  htmlhtmlFor="userFormUserStatus"
                 >
                   User Status
                 </label>
@@ -541,19 +552,23 @@ function Users() {
                   value={status}
                   name="status"
                 >
-                  <option value={""} selected disabled>
+                  <option key={"user"} value={""}>
                     {" "}
                     Select User Status
                   </option>
-                  <option value={"true"}>True</option>
-                  <option value={"false"}>False</option>
+                  <option key={"true"} value={"true"}>
+                    True
+                  </option>
+                  <option key={"false"} value={"false"}>
+                    False
+                  </option>
                 </select>
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormUserInAnyPolicy"
+                  htmlhtmlFor="userFormUserInAnyPolicy"
                 >
                   Experts In Any Policy Type
                 </label>
@@ -564,44 +579,56 @@ function Users() {
                   value={expert}
                   name="expert"
                 >
-                  <option value={""} selected disabled>
+                  <option key={"expert"} value={""}>
                     {" "}
                     Select Exprt Type
                   </option>
-                  <option value={"true"}>True</option>
-                  <option value={"false"}>False</option>
+                  <option key={"true"} value={"true"}>
+                    True
+                  </option>
+                  <option key={"false"} value={"false"}>
+                    False
+                  </option>
                 </select>
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormUserInAnyPolicy"
+                  htmlhtmlFor="userFormUserInAnyPolicy"
                 >
                   Policy Type
                 </label>
                 <select
                   onChange={handleChange}
                   id="userFormUserInAnyPolicy"
-                  className="from-controle border w-100 py-2 border-bold" 
+                  className="from-controle border w-100 py-2 border-bold"
                   value={expert_policy_type}
                   name="expert_policy_type"
                 >
-                  <option value={""} selected disabled>
+                  <option key={"insurance"} value={""}>
                     {" "}
                     Select Insurance Type
                   </option>
-                  <option value="General Insurance">General Insurance</option>
-                  <option value="Health Insurance">Health Insurance</option>
-                  <option value="Life Insurance">Life Insurance</option>
-                  <option value="NA">NA</option>
+                  <option key={"GI"} value="General Insurance">
+                    General Insurance
+                  </option>
+                  <option key={"HI"} value="Health Insurance">
+                    Health Insurance
+                  </option>
+                  <option key={"LI"} value="Life Insurance">
+                    Life Insurance
+                  </option>
+                  <option key={"NA"} value="NA">
+                    NA
+                  </option>
                 </select>
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormUserExpertType"
+                  htmlhtmlFor="userFormUserExpertType"
                 >
                   Expert Type
                 </label>
@@ -612,18 +639,22 @@ function Users() {
                   value={expertType}
                   name="expertType"
                 >
-                  <option value="" selected disabled>
+                  <option key={"Option"} value="">
                     Select Option
                   </option>
-                  <option value="Contract Based">Contract Based</option>
-                  <option value="Permanent">Permanent</option>
+                  <option key={"CB"} value="Contract Based">
+                    Contract Based
+                  </option>
+                  <option key={"Per"} value="Permanent">
+                    Permanent
+                  </option>
                 </select>
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormExpertPer"
+                  htmlhtmlFor="userFormExpertPer"
                 >
                   Expert Percentage
                 </label>
@@ -640,9 +671,9 @@ function Users() {
 
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormBankName"
+                  htmlhtmlFor="userFormBankName"
                 >
                   Bank Name
                 </label>
@@ -658,7 +689,7 @@ function Users() {
               <div className="form-control border-0">
                 <label
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormAccountNo"
+                  htmlhtmlFor="userFormAccountNo"
                 >
                   Account Number
                 </label>
@@ -673,9 +704,9 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormBranch"
+                  htmlhtmlFor="userFormBranch"
                 >
                   Branch
                 </label>
@@ -690,7 +721,10 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}} className="form-control border-0" htmlFor="userFormIFSC">
+                  style={{ fontSize: "1rem" }}
+                  className="form-control border-0"
+                  htmlhtmlFor="userFormIFSC"
+                >
                   IFSC Code
                 </label>
                 <input
@@ -704,9 +738,9 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormPanNo"
+                  htmlhtmlFor="userFormPanNo"
                 >
                   PAN Number
                 </label>
@@ -721,9 +755,9 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormLegalExpert"
+                  htmlhtmlFor="userFormLegalExpert"
                 >
                   Legal Expert
                 </label>
@@ -734,19 +768,23 @@ function Users() {
                   value={legalExpert}
                   name="legalExpert"
                 >
-                  <option value={""} selected disabled>
+                  <option key={"Legal"} value={""}>
                     {" "}
                     Select Legal Expert
                   </option>
-                  <option value={"True"}>True</option>
-                  <option value={"False"}>False</option>
+                  <option key={"true"} value={"True"}>
+                    True
+                  </option>
+                  <option key={"false"} value={"False"}>
+                    False
+                  </option>
                 </select>
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className=" font-weight-bold form-control border-0"
-                  htmlFor="userFormLegalExecutive"
+                  htmlhtmlFor="userFormLegalExecutive"
                 >
                   Legal Executive
                 </label>
@@ -757,19 +795,24 @@ function Users() {
                   value={legalExecutive?.toString()}
                   name="legalExecutive"
                 >
-                  <option value={""} selected disabled>
+                  <option key={"legalExe"} value={""}>
                     {" "}
                     Select Legal Executive
                   </option>
-                  <option value={"True"}>True</option>
-                  <option value={"False"}>False</option>
+                  <option key={"true"} value={"True"}>
+                    True
+                  </option>
+                  <option key={"false"} value={"False"}>
+                    False
+                  </option>
                 </select>
               </div>
-              {console.log(legalExecutiveArr)}
               {legalExecutive == "True" || legalExecutive == true ? (
                 <div className="form-control border-0">
                   <label
-                  style={{fontSize:"1rem"}} className="font-weight-bold">
+                    style={{ fontSize: "1rem" }}
+                    className="font-weight-bold"
+                  >
                     Select Legal Executive
                   </label>
                   <Select
@@ -789,9 +832,9 @@ function Users() {
               {legalExecutive == "False" || legalExecutive === false ? (
                 <div className="form-control border-0">
                   <label
-                  style={{fontSize:"1rem"}}
+                    style={{ fontSize: "1rem" }}
                     className="form-control border-0 font-weight-bold"
-                    htmlFor="userFormLegalSubExecutive"
+                    htmlhtmlFor="userFormLegalSubExecutive"
                   >
                     Legal Sub-Executive
                   </label>
@@ -802,12 +845,16 @@ function Users() {
                     value={legalSubExecutive?.toString()}
                     name="legalSubExecutive"
                   >
-                    <option value={""} selected disabled>
+                    <option key={"sib-exe"} value={""}>
                       {" "}
                       Select Legal Sub-Executive
                     </option>
-                    <option value={"True"}>True</option>
-                    <option value={"False"}>False</option>
+                    <option key={"true"} value={"True"}>
+                      True
+                    </option>
+                    <option key={"fasle"} value={"False"}>
+                      False
+                    </option>
                   </select>
                 </div>
               ) : null}
@@ -818,7 +865,9 @@ function Users() {
               (legalSubExecutive === "True" || legalSubExecutive === true) ? (
                 <div className="form-control border-0">
                   <label
-                  style={{fontSize:"1rem"}} className="font-weight-bold">
+                    style={{ fontSize: "1rem" }}
+                    className="font-weight-bold"
+                  >
                     Select Legal Sub-Executive
                   </label>
                   <select
@@ -829,7 +878,11 @@ function Users() {
                     value={legalSubExecutiveLead}
                   >
                     {legalSubExecutiveArr?.map((res) => {
-                      return <option value={res.value}>{res.label}</option>;
+                      return (
+                        <option key={res.value} value={res.value}>
+                          {res.label}
+                        </option>
+                      );
                     })}
                   </select>
                 </div>
@@ -837,9 +890,9 @@ function Users() {
 
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className="form-control border-0 font-weight-bold"
-                  htmlFor="userFormUserTypeSelect"
+                  htmlhtmlFor="userFormUserTypeSelect"
                 >
                   User Type
                 </label>
@@ -850,23 +903,35 @@ function Users() {
                   value={userOperations}
                   name="userOperations"
                 >
-                  <option value={""} selected disabled>
+                  <option key={"userType"} value={""}>
                     {" "}
                     Select User Type
                   </option>
-                  <option value="Calling">Calling</option>
-                  <option value="Mailing">Mailing</option>
-                  <option value="Ombudsman">Ombudsman</option>
-                  <option value="Legal">Legal</option>
-                  <option value="ThirdParty">Third Party</option>
-                  <option value="IGMS Intern">IGMS Intern</option>
+                  <option key={"calling"} value="Calling">
+                    Calling
+                  </option>
+                  <option key={"mailing"} value="Mailing">
+                    Mailing
+                  </option>
+                  <option key={"omb"} value="Ombudsman">
+                    Ombudsman
+                  </option>
+                  <option key={"legal"} value="Legal">
+                    Legal
+                  </option>
+                  <option key={"TP"} value="ThirdParty">
+                    Third Party
+                  </option>
+                  <option key={"II"} value="IGMS Intern">
+                    IGMS Intern
+                  </option>
                 </select>
               </div>
               <div className="form-control border-0">
                 <label
-                  style={{fontSize:"1rem"}}
+                  style={{ fontSize: "1rem" }}
                   className="form-control border-0 font-weight-bold"
-                  htmlFor="userFormUserTypeSelect"
+                  htmlhtmlFor="userFormUserTypeSelect"
                 >
                   User Handle Case Type
                 </label>
@@ -874,12 +939,15 @@ function Users() {
                   <div className="form-control border-0">
                     <label
                       className="font-weight-bold"
-                      htmlFor="userFormLeadSelect"
+                      htmlhtmlFor="userFormLeadSelect"
                     >
                       {" "}
                       Lead
                     </label>
                     <input
+                      onChange={() => {
+                        null;
+                      }}
                       onClick={handleChange}
                       type={"checkbox"}
                       className="form-control border"
@@ -891,12 +959,15 @@ function Users() {
                   <div className="form-control border-0">
                     <label
                       className="font-weight-bold"
-                      htmlFor="userFormLeadSelect"
+                      htmlhtmlFor="userFormLeadSelect"
                     >
                       {" "}
                       Agent Type
                     </label>
                     <input
+                      onChange={() => {
+                        null;
+                      }}
                       onClick={handleChange}
                       type={"checkbox"}
                       className="form-control border"
@@ -908,12 +979,15 @@ function Users() {
                   <div className="form-control border-0">
                     <label
                       className="font-weight-bold"
-                      htmlFor="userFormLeadSelect"
+                      htmlhtmlFor="userFormLeadSelect"
                     >
                       {" "}
                       Policy Cases
                     </label>
                     <input
+                      onChange={() => {
+                        null;
+                      }}
                       onClick={handleChange}
                       type={"checkbox"}
                       className="form-control border"
@@ -925,12 +999,15 @@ function Users() {
                   <div className="form-control border-0">
                     <label
                       className="font-weight-bold"
-                      htmlFor="userFormLeadSelect"
+                      htmlhtmlFor="userFormLeadSelect"
                     >
                       {" "}
                       Filter Cases
                     </label>
                     <input
+                      onChange={() => {
+                        null;
+                      }}
                       onClick={handleChange}
                       type={"checkbox"}
                       className="form-control border"
@@ -942,12 +1019,15 @@ function Users() {
                   <div className="form-control border-0">
                     <label
                       className="font-weight-bold"
-                      htmlFor="userFormLeadSelect"
+                      htmlhtmlFor="userFormLeadSelect"
                     >
                       {" "}
                       Partner Cases
                     </label>
                     <input
+                      onChange={() => {
+                        null;
+                      }}
                       onClick={handleChange}
                       type={"checkbox"}
                       className="form-control border"
@@ -959,12 +1039,15 @@ function Users() {
                   <div className="form-control border-0">
                     <label
                       className="font-weight-bold"
-                      htmlFor="userFormLeadSelect"
+                      htmlhtmlFor="userFormLeadSelect"
                     >
                       {" "}
                       Third Party
                     </label>
                     <input
+                      onChange={() => {
+                        null;
+                      }}
                       onClick={handleChange}
                       type={"checkbox"}
                       className="form-control border"
@@ -979,7 +1062,7 @@ function Users() {
               <div className="form-control border-0">
                 <label
                   className="form-control border-0 font-weight-bold"
-                  htmlFor="userFormUserTypeSelect"
+                  htmlhtmlFor="userFormUserTypeSelect"
                 >
                   User Handle IGMS Case Type
                 </label>
@@ -987,12 +1070,15 @@ function Users() {
                   <div className="form-control border-0">
                     <label
                       className="font-weight-bold"
-                      htmlFor="userFormLeadSelect"
+                      htmlhtmlFor="userFormLeadSelect"
                     >
                       {" "}
                       Complaint
                     </label>
                     <input
+                      onChange={() => {
+                        null;
+                      }}
                       onClick={handleChange}
                       type={"checkbox"}
                       className="form-control border"
@@ -1004,12 +1090,15 @@ function Users() {
                   <div className="form-control border-0">
                     <label
                       className="font-weight-bold"
-                      htmlFor="userFormLeadSelect"
+                      htmlhtmlFor="userFormLeadSelect"
                     >
                       {" "}
                       Agent Cases
                     </label>
                     <input
+                      onChange={() => {
+                        null;
+                      }}
                       onClick={handleChange}
                       type={"checkbox"}
                       className="form-control border"
@@ -1021,12 +1110,15 @@ function Users() {
                   <div className="form-control border-0">
                     <label
                       className="font-weight-bold"
-                      htmlFor="userFormLeadSelect"
+                      htmlhtmlFor="userFormLeadSelect"
                     >
                       {" "}
                       Partner Cases{" "}
                     </label>
                     <input
+                      onChange={() => {
+                        null;
+                      }}
                       onClick={handleChange}
                       type={"checkbox"}
                       className="form-control border"
@@ -1039,8 +1131,10 @@ function Users() {
               </div>
 
               <div className="form-control border-0">
-                <label className="form-control border-0 font-weight-bold " 
-                  style={{fontSize:"1rem"}} >
+                <label
+                  className="form-control border-0 font-weight-bold "
+                  style={{ fontSize: "1rem" }}
+                >
                   User Handle Bucket Type
                 </label>
                 <div className="form-control border">
@@ -1062,8 +1156,8 @@ function Users() {
               <div className="form-control border-0">
                 <label
                   className="form-control border-0 font-weight-bold display-5"
-                  style={{fontSize:"1rem"}}
-                  htmlFor="userFormPassword"
+                  style={{ fontSize: "1rem" }}
+                  htmlhtmlFor="userFormPassword"
                 >
                   Password
                 </label>
@@ -1116,6 +1210,7 @@ function Users() {
             <div className="form-group">
               <div className="form-control border-0">
                 <input
+                  id="cahngePassInp"
                   className="form-control border"
                   disabled
                   value={currentUser?.user_id}
@@ -1123,6 +1218,7 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <input
+                  id="changePassName"
                   className="form-control border"
                   disabled
                   value={currentUser.name}
@@ -1130,6 +1226,7 @@ function Users() {
               </div>
               <div className="form-control border-0">
                 <input
+                  id="changePassPass"
                   className="form-control border"
                   onChange={(e) => {
                     setnewPassword(e.target.value);
@@ -1138,6 +1235,7 @@ function Users() {
               </div>
               <div className="d-flex justify-content-center">
                 <button
+                  id="changePassClose"
                   className="btn btn-danger rounded mr-2"
                   onClick={() => {
                     setshowPasswordModal(false);
@@ -1147,6 +1245,7 @@ function Users() {
                 </button>
                 <button
                   className="btn btn-primary rounded"
+                  id="changePassUpdate"
                   onClick={() => {
                     dispatch({
                       type: "USER_UPDATE_PASSWORD",

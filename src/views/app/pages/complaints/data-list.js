@@ -92,6 +92,8 @@ const DataListPages = ({ match }) => {
     console.log(e.target.value)
     if (e.target.value) {
       setSearch(e.target.value)
+    }else{
+      setSearch("")
     }
   }
 

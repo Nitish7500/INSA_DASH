@@ -382,17 +382,18 @@ class Sidebar extends Component {
                           >
                             <i className={item.icon} />{' '}
                             {/* <IntlMessages id={item.label} /> */}
-                            <span>{item.label}</span>
+                            <span className='font-weight-bold'>{item.label}</span>
                           </a>
                         ) : (
                           <NavLink
+                          id={item.id}
                             to={item.to}
                             onClick={(e) => this.openSubMenu(e, item)}
                             data-flag={item.id}
                           >
                             <i className={item.icon} />{' '}
                             {/* <IntlMessages id={item.label} /> */}
-                            <span>{item.label}</span>
+                            <span className='font-weight-bold'>{item.label}</span>
                           </NavLink>
                         )}
                       </NavItem>

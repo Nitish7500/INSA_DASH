@@ -27,7 +27,7 @@ function Customer() {
     keyword: "",
     selectedSortOrder: "",
   });
-  console.log(state);
+  // console.log(state);
 
   const [currentData, setCurrentData] = useState({});
   const [viewPassword, setviewPassword] = useState(false);
@@ -39,7 +39,7 @@ function Customer() {
   const [viewGamil, setviewGamil] = useState(false);
 
   useEffect(() => {
-    console.log(state.viewPassword);
+    // console.log(state.viewPassword);
     setviewPasswordObj({
       pass: state.viewPassword?.pwdStr,
       serviceRate: state.viewPassword?.serviceRate,
@@ -66,7 +66,7 @@ function Customer() {
   }, [currentPage]);
 
   const handleFilter = () => {
-    console.log(filterData);
+    // console.log(filterData);
     dispatch({
       type: "CUSTOMER_FILTER_DATA",
       state: { pageIndex: currentPage, pageSize: pageSize, ...filterData },
@@ -101,7 +101,7 @@ function Customer() {
           }}
         >
           <span className="h5">User List</span>
-          <span className="h6">List of available users</span>
+          <span className="h6 d-block mt-1">List of available users</span>
         </div>
       </div>
 
@@ -109,10 +109,10 @@ function Customer() {
         className="bg-white shadow p-3 mb-5 bg-white"
         style={{ borderRadius: "5px" }}
       >
-        <div className="container mt-4">
-          <div className="container">
+        <div className="mx-3 mt-4">
+          <div className="container m-0 p-0 mb-3">
             <div className="row">
-              <div className="col-lg-4">
+              <div className="col-lg-4 px-0">
                 <div className="form-control border-0">
                   <input
                     className="form-control border"
@@ -143,19 +143,19 @@ function Customer() {
                       });
                     }}
                   >
-                    <option value={""} selected disabled>
+                    <option key={"select"} value={""}>
                       Select Sort Order
                     </option>
-                    <option value={"firstName:ASC"}>ASC First Name</option>
-                    <option value={"firstName:DESC"}>DESC First Name</option>
-                    <option value={"lastName:ASC"}>ASC Last Name</option>
-                    <option value={"lastName:DESC"}>DESC Last Name</option>
-                    <option value={"email:ASC"}>ASC Email</option>
-                    <option value={"email:DESC"}>DESC Email</option>
-                    <option value={"phone:ASC"}>ASC Phone</option>
-                    <option value={"phone:DESC"}>DESC Phone</option>
-                    <option value={"createdAt:ASC"}>ASC Created At</option>
-                    <option value={"createdAt:DESC"}>DESC Created At</option>
+                    <option key={"ascFirst"} value={"firstName:ASC"}>ASC First Name</option>
+                    <option key={"descFirst"} value={"firstName:DESC"}>DESC First Name</option>
+                    <option key={"ascLast"} value={"lastName:ASC"}>ASC Last Name</option>
+                    <option key={"descLast"} value={"lastName:DESC"}>DESC Last Name</option>
+                    <option key={"ascEmail"} value={"email:ASC"}>ASC Email</option>
+                    <option key={"descEmail"} value={"email:DESC"}>DESC Email</option>
+                    <option key={"ascPhone"} value={"phone:ASC"}>ASC Phone</option>
+                    <option key={"descPhone"} value={"phone:DESC"}>DESC Phone</option>
+                    <option key={"ascCreated"} value={"createdAt:ASC"}>ASC Created At</option>
+                    <option key={"descCreatedAt"} value={"createdAt:DESC"}>DESC Created At</option>
                   </select>
                   {/* <input className="form-control border" id="customer" /> */}
                 </div>
@@ -189,7 +189,7 @@ function Customer() {
           <div className="table-responsive">
             <table className="table">
               <thead className="" style={{ fontSize: "16px" }}>
-                <tr>
+                <tr key={"heading"}>
                   <th>ID</th>
                   <th>Name</th>
                   <th>Email</th>
@@ -201,7 +201,7 @@ function Customer() {
               <tbody>
                 {state.userList?.list?.map((res, i) => {
                   return (
-                    <tr>
+                    <tr key={i}>
                       <td>{i + 1 + currentPage * itemsPerPage}</td>
                       <td>{res.name}</td>
                       <td>{res.email}</td>
@@ -215,6 +215,7 @@ function Customer() {
                         <span
                           className="mr-2"
                           style={{ cursor: "pointer" }}
+                          id={"customerViewPass"}
                           onClick={() => {
                             setviewPassword(true);
                             dispatch({
@@ -249,7 +250,6 @@ function Customer() {
                           className=""
                           style={{ cursor: "pointer" }}
                           onClick={() => {
-                            console.log(currentData);
                             dispatch({
                               type: "CUSTOMER_GMAIL_READ",
                               state: { email: res.email },
@@ -328,6 +328,7 @@ function Customer() {
                 type={"text"}
                 value={viewPasswordObj.serviceRate}
                 name="serviceRate"
+                id="serviceRateInp"
                 onChange={(e) => {
                   setviewPasswordObj({
                     ...viewPasswordObj,
@@ -364,6 +365,7 @@ function Customer() {
         <ModalFooter>
           <div className="d-flex justify-content-end">
             <button
+            id="closeBtn"
               className="btn btn-danger rounded"
               onClick={() => {
                 setviewGamil(false);

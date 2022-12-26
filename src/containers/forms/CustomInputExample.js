@@ -6,7 +6,7 @@ const CustomInputExample = () => {
   return (
     <Form>
       <FormGroup>
-        <Label for="exCustomCheckbox">
+        <Label htmlFor="exCustomCheckbox">
           <IntlMessages id="form-components.checkboxes" />
         </Label>
         <div>
@@ -29,7 +29,7 @@ const CustomInputExample = () => {
         </div>
       </FormGroup>
       <FormGroup>
-        <Label for="exCustomRadio">
+        <Label htmlFor="exCustomRadio">
           <IntlMessages id="form-components.radios" />
         </Label>
         <div>
@@ -54,7 +54,7 @@ const CustomInputExample = () => {
         </div>
       </FormGroup>
       <FormGroup>
-        <Label for="exCustomInline">
+        <Label htmlFor="exCustomInline">
           <IntlMessages id="form-components.inline" />
         </Label>
         <div>

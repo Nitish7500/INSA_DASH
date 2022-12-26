@@ -23,7 +23,6 @@ function EditLead({ lead, seteditPage, getData }) {
 
   const dispatch = useDispatch();
   const state = useSelector((state) => state.leadReducer);
-  console.log(state, lead);
 
   useEffect(() => {
     dispatch({
@@ -105,7 +104,7 @@ function EditLead({ lead, seteditPage, getData }) {
                   style={{ border: "2px solid #f3f3f3", borderStyle: "dotted" }}
                   disabled
                 >
-                  <option>PENDING</option>
+                  <option key={"pending"}>PENDING</option>
                 </select>
               </div>
             </div>
@@ -176,7 +175,7 @@ function EditLead({ lead, seteditPage, getData }) {
                   id="editLeadPolicyType"
                 >
                   {state.policyType?.map((res) => {
-                    return <option value={res._id}>{res.name}</option>;
+                    return <option key={res._id} value={res._id}>{res.name}</option>;
                   })}
                   <option></option>
                 </select>
@@ -192,7 +191,7 @@ function EditLead({ lead, seteditPage, getData }) {
                   className="form-control border"
                 >
                   {state.complaintType?.map((res) => {
-                    return <option value={res._id}>{res.name}</option>;
+                    return <option key={res._id} value={res._id}>{res.name}</option>;
                   })}
                 </select>
               </div>

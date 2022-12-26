@@ -141,16 +141,16 @@ export default function ResolutionForm({
               <label>Resoloution</label>
               <select
                 id="resolutionSelect"
-                class="form-control"
+                className="form-control"
                 name="requirementReceived"
                 onChange={handleFormChange}
                 value={details.requirementReceived}
               >
-                <option value="" selected>
+                <option key={"Select"} value="">
                   Select Type
                 </option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option key={"yes"} value="Yes">Yes</option>
+                <option key={"no"} value="No">No</option>
               </select>
             </div>
             <div className="col-sm-3">
@@ -180,26 +180,26 @@ export default function ResolutionForm({
               <label>Resolution Type</label>
               <select
                 id="resolutionResType"
-                class="form-control"
+                className="form-control"
                 name="rewardType"
                 onChange={handleFormChange}
                 value={details.rewardType}
               >
-                <option value="">Select Type</option>
-                <option value="RefundAccepted">Refund Accepted</option>
-                <option value="SinglePayAccepted">Single Pay Accepted</option>
-                <option value="SinglePayAdditionalPayment">
+                <option key={"select"} value="">Select Type</option>
+                <option key={"RefAcc"} value="RefundAccepted">Refund Accepted</option>
+                <option key={"SingPayAcc"} value="SinglePayAccepted">Single Pay Accepted</option>
+                <option key={"SinPayAdd"} value="SinglePayAdditionalPayment">
                   Single Pay with additional Payment
                 </option>
-                <option value="SinglePaySomeRefund">
+                <option key={"singlePaySome"} value="SinglePaySomeRefund">
                   Single Pay with Some Refund
                 </option>
-                <option value="ClaimPayable">Claim Payable</option>
-                <option value="ClaimPayableInterest">
+                <option key={"calimPay"} value="ClaimPayable">Claim Payable</option>
+                <option key={"claimPayInt"} value="ClaimPayableInterest">
                   Claim Payable with Interest
                 </option>
-                <option value="ClaimRejected">Claim is rejected</option>
-                <option value="RefundRejected">Refund is Rejected</option>
+                <option key={"claimRej"} value="ClaimRejected">Claim is rejected</option>
+                <option key={"refRej"} value="RefundRejected">Refund is Rejected</option>
               </select>
             </div>
             {details.rewardType ? (
@@ -232,7 +232,7 @@ export default function ResolutionForm({
                     <input
                       id="resolutionRefundClaim"
                       type="text"
-                      class="form-control"
+                      className="form-control"
                       value={details.refundSingleClaim}
                       name="refundSingleClaim"
                       onChange={handleFormChange}
@@ -257,7 +257,7 @@ export default function ResolutionForm({
                     <input
                       id="resolutionPayRefAmt"
                       type="text"
-                      class="form-control"
+                      className="form-control"
                       value={details.paymentRefundInt}
                       name="paymentRefundInt"
                       onChange={handleFormChange}
@@ -292,7 +292,6 @@ export default function ResolutionForm({
             </div>
             <div className="col-sm-3">
               <label>Resolution Proof Download</label> <br />
-              <a>
                 <a
                   id="resolutionDwn"
                   href={`${awsUrl}upload/IGMS_Award_document/${details.userId?._id}}`}
@@ -302,7 +301,6 @@ export default function ResolutionForm({
                 >
                   <FontAwesomeIcon icon={faDownload} />
                 </a>
-              </a>
             </div>
           </div>
         </div>

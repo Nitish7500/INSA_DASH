@@ -48,12 +48,12 @@ const AvailityBasic = () => {
             label="Option"
             errorMessage="Please select an option!"
           >
-            <option value="0" />
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+            <option key={"0"} value="0" />
+            <option key={"1"}>1</option>
+            <option key={"2"}>2</option>
+            <option key={"3"}>3</option>
+            <option key={"4"}>4</option>
+            <option key={"5"}>5</option>
           </AvField>
 
           <AvGroup>

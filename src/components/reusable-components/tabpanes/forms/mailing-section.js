@@ -90,10 +90,7 @@ export default function MailingSectionForm({
     draftSharedDate,
     reminderSentDate,
   } = details;
-  console.log(
-    "===============================>",
-    moment(complaint_escalation_date).toISOString()
-  );
+
   const complaintDate =
     complaint_date != undefined ? formatDate(complaint_date) : null;
   const firstResponseDateFromCompany =
@@ -125,66 +122,63 @@ export default function MailingSectionForm({
     <Card>
       <CardBody>
         <h2 className="mb-4">{heading}</h2>
-        {console.log(details)}
         <div className="container mb-5 pb-5">
           <div className="row">
             <div className="col-sm-3">
               <label>Customer ID is Register</label>
               <select
                 id="mailingCusReg"
-                class="form-control"
+                className="form-control"
                 value={details.service_id}
                 name="service_id"
-                formControlName="service_id"
                 onChange={handleFormChange}
               >
-                <option value={""}> Select</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option key={"select"} value={""}> Select</option>
+                <option key={"yes"} value="Yes">Yes</option>
+                <option key={"no"} value="No">No</option>
               </select>
             </div>
             <div className="col-sm-3">
               <label>Complaint Number</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="mailingComNo"
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   value={details.complaint_number}
                   name="complaint_number"
                   onChange={handleFormChange}
                 />
               </div>
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Choose Date Type -</label>
-              <div class="input-group">
+              <div className="input-group">
                 <select
                   id="mailingdtType"
-                  class="form-control"
+                  className="form-control"
                   value={details.selectDate}
                   name="selectDate"
-                  formControlName="sample"
                 >
-                  <option value={""}>Select Type</option>
-                  <option value="compDate">Complaint Date</option>
-                  <option value="respDate">
+                  <option key={"SelectType"} value={""}>Select Type</option>
+                  <option key={"ComDate"} value="compDate">Complaint Date</option>
+                  <option key={"FDate"} value="respDate">
                     First Response Date from Company
                   </option>
-                  <option value="secRespDate">
+                  <option key={"SDate"} value="secRespDate">
                     Second Response Date from Company
                   </option>
-                  <option value="compEsclDate">
+                  <option key={"EscDate"} value="compEsclDate">
                     Escalation Date Sent to Company
                   </option>
-                  <option value="reqRaisedDate">Requirement Raised Date</option>
-                  <option value="reqRevertDate">
+                  <option key={"reqRaisedDt"} value="reqRaisedDate">Requirement Raised Date</option>
+                  <option key={"reqREv"} value="reqRevertDate">
                     Requirement Reverted Date
                   </option>
-                  <option value="firstRemSentDate">
+                  <option key={"FRemDate"} value="firstRemSentDate">
                     First Reminder Sent Date
                   </option>
-                  <option value="secRemSentDate">
+                  <option key={"secSentDate"} value="secRemSentDate">
                     Second Reminder Sent Date
                   </option>
                 </select>
@@ -192,12 +186,12 @@ export default function MailingSectionForm({
             </div>
             <div className="col-sm-3">
               <label>First Response Date from Company</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="mailingResDtCom"
                   type="date"
-                  class="form-control"
-                  value="caseone.response_date_company"
+                  className="form-control"
+                  value={details.response_date_company}
                   name="response_date_company"
                   onChange={handleFormChange}
                   placeholder="Response Date..."
@@ -211,7 +205,7 @@ export default function MailingSectionForm({
               <input
                 id="mailingREsEscDt"
                 type="date"
-                class="form-control"
+                className="form-control"
                 value={details.complaint_escalation_date}
                 name="complaint_escalation_date"
                 onChange={handleFormChange}
@@ -223,7 +217,7 @@ export default function MailingSectionForm({
               <input
                 id="mailingReqDate"
                 type="date"
-                class="form-control"
+                className="form-control"
                 value={details.requirementRaisedDate}
                 name="requirementRaisedDate"
                 onChange={handleFormChange}
@@ -235,7 +229,7 @@ export default function MailingSectionForm({
               <input
                 id="mailingReqRevDate"
                 type="date"
-                class="form-control"
+                className="form-control"
                 value={details.requirementRevertedDate}
                 name="requirementRevertedDate"
                 onChange={handleFormChange}
@@ -247,7 +241,7 @@ export default function MailingSectionForm({
               <input
                 id="mailingReqSentDt"
                 type="date"
-                class="form-control"
+                className="form-control"
                 value={details.requirementSentDate}
                 name="requirementSentDate"
                 onChange={handleFormChange}
@@ -261,7 +255,7 @@ export default function MailingSectionForm({
               <input
                 id="mailingRemSentDate"
                 type="date"
-                class="form-control"
+                className="form-control"
                 value={details?.reminderSentDate}
                 name="reminderSentDate"
                 onChange={handleFormChange}
@@ -272,25 +266,25 @@ export default function MailingSectionForm({
               <label>Draft Mail Sent by customer or Not</label>
               <select
                 id="mailingDetailDraftSend"
-                class="form-control"
+                className="form-control"
                 value={details.is_draft_mail_send}
                 onChange={handleFormChange}
                 name="is_draft_mail_send"
               >
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option key={"yes"} value="Yes">Yes</option>
+                <option key={"no"} value="No">No</option>
               </select>
             </div>
             <div className="col-sm-3">
               <label>Draft shared with the customer</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="mailingdraftShareBool"
                   type="checkbox"
                   name="draftSharedBool"
-                  class="form-control"
+                  className="form-control"
                   onChange={handleFormChange}
-                  value={details?.draftSharedBool}
+                  checked={details?.draftSharedBool}
                 />
               </div>
             </div>
@@ -299,7 +293,7 @@ export default function MailingSectionForm({
               <input
                 id="mailingdftSharedDt"
                 type="date"
-                class="form-control"
+                className="form-control"
                 value={details?.draftSharedDate}
                 name="draftSharedDate"
                 //   onChange={handleFormChange}
@@ -313,28 +307,28 @@ export default function MailingSectionForm({
               <label>Requirement Mail Sent By Company</label>
               <select
                 id="mailingisReq"
-                class="form-control"
+                className="form-control"
                 value={details.isRequirement}
                 name="isRequirement"
                 onChange={handleFormChange}
               >
-                <optio value={""}></optio>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option key={""} value={""}>Select</option>
+                <option key={"yes"} value="Yes">Yes</option>
+                <option key={"no"} value="No">No</option>
               </select>
             </div>
             <div className="col-sm-3">
               <label>Requirement Mail Revert Sent By Customer</label>
               <select
                 id="mailingisReqRecv"
-                class="form-control"
+                className="form-control"
                 value={details.isRequirementReverted}
                 name="isRequirementReverted"
                 onChange={handleFormChange}
               >
-                <optio value={""}></optio>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option key={"select"} value={""}>Select</option>
+                <option key={"yes"} value="Yes">Yes</option>
+                <option key={"no"} value="No">No</option>
               </select>
             </div>
           </div>
@@ -345,74 +339,74 @@ export default function MailingSectionForm({
               <label>First Response from Company</label>
               <select
                 id="mailingResComp"
-                class="form-control"
+                className="form-control"
                 value={details.response_company}
                 name="response_company"
                 onChange={handleFormChange}
                 disabled
               >
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option key={"yes"} value="Yes">Yes</option>
+                <option key={"no"} value="No">No</option>
               </select>
             </div>
             <div className="col-sm3">
               <label>Reminder Mail Sent to Company</label>
               <select
                 id="mailingremFst"
-                class="form-control"
+                className="form-control"
                 value={details.reminder_first}
                 name="reminder_first"
                 onChange={handleFormChange}
               >
-                <option value={""}></option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option key={"select"} value={""}>Select</option>
+                <option key={"yes"} value="Yes">Yes</option>
+                <option key={"no"} value="No">No</option>
               </select>
             </div>
             <div className="col-sm-3">
               <label>Complaint delay reason</label>
               <select
                 id="mailingComDelReason"
-                class="form-control"
+                className="form-control"
                 value={details.complaintDelayReason}
                 name="complaintDelayReason"
                 onChange={handleFormChange}
               >
-                <option value={""}>Select Delay Reason</option>
-                <option value="Customer not responding">
+                <option key={"Select"} value={""}>Select Delay Reason</option>
+                <option key={"cusNRes"} value="Customer not responding">
                   Customer not responding
                 </option>
-                <option value="Customer responding but not doing the mail">
+                <option key={"CusRes"} value="Customer responding but not doing the mail">
                   Customer responding but not doing the mail
                 </option>
-                <option value="Customer is not fulfilling the requirements raised by the company">
+                <option key={"Cus2"} value="Customer is not fulfilling the requirements raised by the company">
                   Customer is not fulfilling the requirements raised by the
                   company
                 </option>
-                <option value="Company/Hospital is not fulfilling the requirements.">
+                <option key={"cus3"} value="Company/Hospital is not fulfilling the requirements.">
                   Company/Hospital is not fulfilling the requirements.
                 </option>
-                <option value="Customer is not fulfilling the requirements raised by the executive">
+                <option key={"cus4"} value="Customer is not fulfilling the requirements raised by the executive">
                   Customer is not fulfilling the requirements raised by the
                   executive
                 </option>
-                <option value="Not getting the approval from expert end">
+                <option key={"noGetting"} value="Not getting the approval from expert end">
                   Not getting the approval from expert end
                 </option>
-                <option value="Others">Others</option>
+                <option key={"others"} value="Others">Others</option>
               </select>
             </div>
             <div className="col-sm-3">
               <label>First Escalation Sent or Not</label>
               <select
                 id="mailingEscFst"
-                class="form-control"
+                className="form-control"
                 value={details.escalation_first}
                 name="escalation_first"
                 onChange={handleFormChange}
               >
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option key={"yes"} value="Yes">Yes</option>
+                <option key={"no"} value="No">No</option>
               </select>
             </div>
           </div>
@@ -423,9 +417,8 @@ export default function MailingSectionForm({
                 id="mailingEscShrB"
                 type="checkbox"
                 name="escalationSharedBool"
-                class="form-control"
-                formControlName="escalationSharedBool"
-                value={details.escalationSharedBool}
+                className="form-control"
+                checked={details.escalationSharedBool}
                 onChange={handleFormChange}
               />
             </div>
@@ -433,14 +426,14 @@ export default function MailingSectionForm({
               <label>Requirement Mail Revert Sent By Customer</label>
               <select
                 id="mailingisReqRev"
-                class="form-control"
+                className="form-control"
                 value={details.isRequirementReverted}
                 name="isRequirementReverted"
                 onChange={handleFormChange}
               >
-                <option value={""}></option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option key={"Select"} value={""}></option>
+                <option key={"yes"} value="Yes">Yes</option>
+                <option key={"no"} value="No">No</option>
               </select>
             </div>
           </div>
@@ -451,29 +444,29 @@ export default function MailingSectionForm({
               <label>Second Response from Company</label>
               <select
                 id="mailingResComp2"
-                class="form-control"
+                className="form-control"
                 value={details.response_company2}
                 name="response_company2"
                 onChange={handleFormChange}
                 disabled
               >
-                <option value={""}></option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option key={"select"} value={""}>Select</option>
+                <option key={"yes"} value="Yes">Yes</option>
+                <option key={"no"} value="No">No</option>
               </select>
             </div>
             <div className="col-sm-3">
               <label>Reminder Mail Sent to Company</label>
               <select
                 id="mailingRemSec"
-                class="form-control"
+                className="form-control"
                 value={details.reminder_second}
                 name="reminder_second"
                 onChange={handleFormChange}
               >
-                <option value={""}></option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option key={"select"} value={""}>Select</option>
+                <option key={"yes"} value="Yes">Yes</option>
+                <option key={"no"} value="No">No</option>
               </select>
             </div>
             <div className="col-sm-3">
@@ -481,7 +474,7 @@ export default function MailingSectionForm({
               <input
                 id="mailingRemSndDt"
                 type="date"
-                class="form-control"
+                className="form-control"
                 value={details.reminderSentDate}
                 name="reminderSentDate"
                 onChange={handleFormChange}

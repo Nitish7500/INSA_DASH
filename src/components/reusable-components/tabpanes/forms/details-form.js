@@ -106,10 +106,8 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
   let leadId = lead ? lead._id : "";
   let userId = user ? user._id : "";
 
-  // console.log(details);
 
   let date = new Date(parseInt(user?.dob?.substr(6)));
-  // console.log(date);
 
   //getting all states (ombudsman state locations and districts)
   useEffect(() => {
@@ -121,7 +119,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
         setdistricts(dis.district);
         setStates(data);
       } catch (error) {
-        console.log("States", error);
+        // console.log("States", error);
       }
       setIsLoaded(true);
     };
@@ -133,7 +131,6 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
         const { data } = await getPolicyTypes();
         setPolicyTypes(data);
       } catch (error) {
-        console.log("Policy Types ", error);
       }
       setIsLoaded(true);
     };
@@ -289,7 +286,6 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
 
   const getLeadData = async () => {
     try {
-      console.log(details.leadId);
       const { data } = await fetchLead(details.leadId?._id);
       // setInsuranceCompanies(data);
       // console.log(insuranceCompanies);
@@ -563,7 +559,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 // onBlur={handleBlur}
               >
                 {education.map((level) => (
-                  <option value={level.value}>{level.label}</option>
+                  <option key={level.value} value={level.value}>{level.label}</option>
                 ))}
               </select>
             </div>
@@ -571,7 +567,6 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
           <div className="row mt-4">
             <div className="col-sm-3">
               <label>DOB</label>
-              {console.log(moment.unix(details.dob).format("YYYY-MM-DD"),moment(details.dob).format("YYYY-MM-DD"))}
               <input
                 id="compDetailsDob"
                 className="form-control"
@@ -602,13 +597,13 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 onChange={handleFormChange}
                 // onBlur={handleBlur}
               >
-                <option value="">Select a state..</option>
+                <option key={"state"} value="">Select a state..</option>
                 {states?.map((res) => {
                   // console.log(res)
-                  return <option value={res.name}>{res.name}</option>;
+                  return <option key={res.name} value={res.name}>{res.name}</option>;
                 })}
-                <option value="Bihar">Bihar</option>
-                <option value="2">2</option>
+                <option key={"bihar"} value="Bihar">Bihar</option>
+                <option key={"2"} value="2">2</option>
               </select>
             </div>
             <div className="col-sm-3">
@@ -621,9 +616,9 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 onChange={handleFormChange}
                 // onBlur={handleBlur}
               >
-                <option value="">Select District</option>
+                <option key={"district"} value="">Select District</option>
                 {districts?.map((res) => {
-                  return <option>{res}</option>;
+                  return <option key={"res"}>{res}</option>;
                 })}
               </select>
             </div>
@@ -640,7 +635,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 // onBlur={handleBlur}
               >
                 {occupation.map((key) => (
-                  <option value={key.value}>{key.label}</option>
+                  <option key={key.value} value={key.value}>{key.label}</option>
                 ))}
               </select>
             </div>
@@ -650,6 +645,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 id="compDetailsNominee"
                 name="nominee"
                 value={details.nominee}
+                onChange={handleFormChange}
               />
             </div>
             <div className="col-sm-3">
@@ -712,7 +708,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
               >
                 {policyTypes.map((policyType) => {
                   return (
-                    <option value={policyType._id}>{policyType.name}</option>
+                    <option key={policyType._id} value={policyType._id}>{policyType.name}</option>
                   );
                 })}
               </select>
@@ -730,7 +726,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 // onBlur={handleBlur}
               >
                 {complaintTypes.map((type) => (
-                  <option value={type._id}>{type.name}</option>
+                  <option key={type} value={type._id}>{type.name}</option>
                 ))}
               </select>
             </div>
@@ -745,7 +741,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 //   onBlur={handleBlur}
               >
                 {insuranceCompanies.map((insuranceCompany) => (
-                  <option value={insuranceCompany._id}>
+                  <option key={insuranceCompany._id} value={insuranceCompany._id}>
                     {insuranceCompany.name}
                   </option>
                 ))}
@@ -762,7 +758,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 //   onBlur={handleBlur}
               >
                 {policyTypes?.map((key) => (
-                  <option value={key._id}>{key.name}</option>
+                  <option key={key._id} value={key._id}>{key.name}</option>
                 ))}
               </select>
             </div>
@@ -777,7 +773,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 //   onBlur={handleBlur}
               >
                 {claimRejectionTypes.map((type) => (
-                  <option value={type.value}>{type.label}</option>
+                  <option key={type.value} value={type.value}>{type.label}</option>
                 ))}
               </select>
             </div>
@@ -794,7 +790,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 //   onBlur={handleBlur}
               >
                 {realtionships.map((key) => (
-                  <option value={key.value}>{key.label}</option>
+                  <option key={key.value} value={key.value}>{key.label}</option>
                 ))}
               </select>
             </div>
@@ -809,31 +805,33 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 //   onBlur={handleBlur}
               >
                 {movementOfCase.map((movement) => (
-                  <option value={movement.value}>{movement.label}</option>
+                  <option key={movement.value} value={movement.value}>{movement.label}</option>
                 ))}
               </select>
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Assign To</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="compDetailsAssignTo"
                   type="text"
                   name="userName"
-                  class="form-control"
+                  className="form-control"
+                  onChange={handleFormChange}
                   value={details.assign_to ? details.assign_to : "-"}
                   disabled
                 />
               </div>
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Assign To Expert</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="compDetailsAssignExp"
                   type="text"
                   name="userName"
-                  class="form-control"
+                  className="form-control"
+                  onChange={handleFormChange}
                   value="{{ caseone.assign_to_expert ? caseone.assign_to_expert : '--' }}"
                   disabled
                 />
@@ -841,14 +839,15 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
             </div>
           </div>
           <div className="row mt-4">
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Assign To Company/IGMS</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="compDetailsCom/IGMS"
                   type="text"
                   name="userName"
-                  class="form-control"
+                  className="form-control"
+                  onChange={handleFormChange}
                   value={
                     details.assignToCompanyIGMS
                       ? details.assignToCompanyIGMS
@@ -858,14 +857,15 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 />
               </div>
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Assign To Ombudsman</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="compDetailsOmb"
                   type="text"
                   name="userName"
-                  class="form-control"
+                  className="form-control"
+                  onChange={handleFormChange}
                   value={
                     details.assignToOmbudsman ? details.assignToOmbudsman : "--"
                   }
@@ -873,14 +873,15 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 />
               </div>
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Assign To Legal Executive</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="compDetailsAssignLeg"
                   type="text"
                   name="userName"
-                  class="form-control"
+                  className="form-control"
+                  onChange={handleFormChange}
                   value={
                     details.assignedLegalExecutive
                       ? details.assignedLegalExecutive
@@ -890,14 +891,15 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 />
               </div>
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Assign To Legal Sub Executive</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="compDetailsAssignSub"
                   type="text"
                   name="userName"
-                  class="form-control"
+                  className="form-control"
+                  onChange={handleFormChange}
                   value={
                     details.assignedLegalSubExecutive
                       ? details.assignedLegalSubExecutive
@@ -907,27 +909,29 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 />
               </div>
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Lead Number</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="compDetailsLeadNo"
                   type="text"
                   name="userId"
-                  class="form-control"
+                  className="form-control"
+                  onChange={handleFormChange}
                   value={details.leadId ? details.leadId.leadId : "--"}
                   disabled
                 />
               </div>
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Status</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="compDetailsStatus"
                   type="text"
                   name="currentStatus"
-                  class="form-control"
+                  className="form-control"
+                  onChange={handleFormChange}
                   value={details.status ? details.status : "--"}
                   disabled
                 />
@@ -941,6 +945,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 id="compDetailsDoorNo"
                 className="form-control"
                 name="DoorNo/Bldg/Name/Floor"
+                onChange={handleFormChange}
                 value={
                   details.wholeAddress["DoorNo/Bldg/Name/Floor"]
                     ? details.wholeAddress["DoorNo/Bldg/Name/Floor"]
@@ -954,6 +959,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 id="compDetailsStreet"
                 className="form-control"
                 name="DoorNo/Bldg/Name/Floor"
+                onChange={handleFormChange}
                 value={
                   details.wholeAddress["Street/Area"]
                     ? details.wholeAddress["Street/Area"]
@@ -967,6 +973,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 id="compDetailsCity"
                 className="form-control"
                 name="DoorNo/Bldg/Name/Floor"
+                onChange={handleFormChange}
                 value={
                   details.wholeAddress["City/Town/Panchayath/Village"]
                     ? details.wholeAddress["City/Town/Panchayath/Village"]
@@ -980,6 +987,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 id="compDetailsTaluk"
                 className="form-control"
                 name="DoorNo/Bldg/Name/Floor"
+                onChange={handleFormChange}
                 value={
                   details.wholeAddress["Taluk/Tehsil"]
                     ? details.wholeAddress["Taluk/Tehsil"]
@@ -995,6 +1003,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 id="compDetailsGenerated"
                 className="form-control"
                 name="DoorNo/Bldg/Name/Floor"
+                onChange={handleFormChange}
                 value={
                   details.wholeAddress["address"]
                     ? details.wholeAddress["address"]
@@ -1002,40 +1011,39 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
                 }
               />
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Covid Complaint Check</label>
-              <div class="input-group">
+              <div className="input-group">
                 <label>Is it a Covid Complaint</label>
                 <input
                   id="compDetailsCovid"
                   type="checkbox"
                   name="covidCheck"
-                  class="form-control"
-                  formControlName="covidCheck"
+                  className="form-control"
                   onChange={handleFormChange}
                 />
               </div>
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Service Complaint Check</label>
-              <div class="input-group">
+              <div className="input-group">
                 <label>As a Service Complaint or not</label>
                 <input
                   id="compDetailsSer"
                   type="checkbox"
                   name="asAServiceCheck"
-                  class="form-control"
-                  formControlName="asAServiceCheck"
+                  className="form-control"
                   onChange={handleFormChange}
                 />
               </div>
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Assign To Internal Legal Executive</label>
               <input
                 id="compDetailsIntLeg"
                 type="text"
-                class="form-control"
+                className="form-control"
+                onChange={handleFormChange}
                 value={
                   details.assigned_internal_legal_executive
                     ? details.assigned_internal_legal_executive
@@ -1066,7 +1074,7 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
               <label>Email ID</label>
               <input
                 id="compDetailsEmail2"
-                class="form-control"
+                className="form-control"
                 type="text"
                 name="executive_created_email"
                 value={details.executive_created_email}
@@ -1077,19 +1085,19 @@ export default function DetailsForm({ heading, details, handleFormChange }) {
               <label>Password</label>
               <input
                 id="compDetailsPass"
-                class="form-control"
+                className="form-control"
                 type="password"
                 name="password"
                 value={details.password}
                 onChange={handleFormChange}
               />
             </div>
-            <div class="col-sm-3">
+            <div className="col-sm-3">
               <label>Approved Claim Amount</label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   id="compDetailsApvAmt"
-                  class="form-control"
+                  className="form-control"
                   type="text"
                   name="actualRefundAmount"
                   value={details.actualRefundAmount}

@@ -76,7 +76,7 @@ function AssignToOmb({ isOpen, onClose, details }) {
                 >
                   <option value={""}>Select User</option>
                   {ombdData?.map((res) => {
-                    return <option value={res.user_id}>{res.name}</option>;
+                    return <option key={res.user_id} value={res.user_id}>{res.name}</option>;
                   })}
                 </select>
               </div>

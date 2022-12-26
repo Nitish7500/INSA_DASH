@@ -21,7 +21,7 @@ function CommunicationHistory() {
   const dispatch = useDispatch();
   const history = useHistory()
   const state = useSelector((state) => state.leadReducer);
-  console.log(location, state);
+  // console.log(location, state);
   const { name, email, phone, leadId, communication, _id } = location.state;
 
   useEffect(() => {
@@ -104,7 +104,7 @@ function CommunicationHistory() {
           <div className="table">
             <table>
               <thead>
-                <tr>
+                <tr key={"headingComHis"}>
                   <th>Communication Date</th>
                   <th>Communication By</th>
                   <th>Description</th>
@@ -114,9 +114,9 @@ function CommunicationHistory() {
               </thead>
               <tbody>
                 {state?.fetchedLead?.communication?.length ? (
-                  state?.fetchedLead?.communication.map((res) => {
+                  state?.fetchedLead?.communication.map((res,i) => {
                     return (
-                      <tr>
+                      <tr key={+i+55}>
                         <td>{res?.com_date}</td>
                         <td>{res?.com_by}</td>
                         <td>{res?.com_dis}</td>
@@ -138,7 +138,7 @@ function CommunicationHistory() {
                     );
                   })
                 ) : (
-                  <tr>
+                  <tr key={"noDataCommHis"}>
                     <td>No Data</td>
                   </tr>
                 )}

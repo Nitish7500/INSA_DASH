@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import AppLayout from "layout/AppLayout";
 import Pages from "./pages";
 import Customer from "./Customer/Customer";
+import Report from "./report";
 // import BotTranscript from './BotTranscript';
 // import { ProtectedRoute, UserRole } from 'helpers/authHelper';
 
@@ -46,6 +47,10 @@ const App = ({ match }) => {
             <Route
               path={`${match.url}/pages`}
               render={(props) => <Pages {...props} />}
+            />
+            <Route
+              path={`${match.url}/report`}
+              render={(props) => <Report {...props} />}
             />
             <Redirect
               exact

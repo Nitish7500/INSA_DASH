@@ -69,7 +69,7 @@ export default function SetStatus({isOpen, onClose, insuranceId}) {
                         let index = item[1];
                         return (index.map((option) => {
                             return (
-                                <option value={option}>{capitalizeEachWordInString(option)}</option>
+                                <option key={option} value={option}>{capitalizeEachWordInString(option)}</option>
                             )
                         }))
                     })}

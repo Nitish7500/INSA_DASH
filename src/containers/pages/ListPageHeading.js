@@ -74,7 +74,7 @@ const ListPageHeading = ({
   const downloadCustReport = async () => {
     try {
       const {message, success} = await downloadCustomerReport();
-      setItems(message, success);
+      setItems(message, success); 
       console.log('items', items)
       if (success === true) {
         NotificationManager.success(
@@ -147,7 +147,7 @@ const ListPageHeading = ({
                     name="keyword"
                     id="search"
                     placeholder={messages['menu.search']}
-                    onChange={handleSearch}
+                    onInput={handleSearch}
                     className={'py-2'}
                   />
                 </div>

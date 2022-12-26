@@ -91,7 +91,7 @@ export default function AddComplaint({isOpen, onClose, leadId, userId, details }
                 <div className="mt-3">
                     <div className="flex-sb">
                         <FormGroup className='my-3'>
-                            <Label for="companyresponse">User CSV File :</Label>
+                            <Label htmlFor="companyresponse">User CSV File :</Label>
                             <Input id="companyresponse" type="file" name="userCSV" onChange={handleChange} />
                         </FormGroup>
                         <Button id='btn1Upload' color='secondary' onClick={() => {handleUploadUserFile("User")}}>
@@ -102,7 +102,7 @@ export default function AddComplaint({isOpen, onClose, leadId, userId, details }
                 <div className="mb-3">
                     <div className="flex-sb">
                         <FormGroup className='my-3'>
-                            <Label for="companyresponse">Complaint CSV File :</Label>
+                            <Label htmlFor="companyresponse">Complaint CSV File :</Label>
                             <Input id="companyresponse" name="complaint" type="file" onChange={handleChange} />
                         </FormGroup>
                         <Button id='btn2Upload' color='secondary' onClick={() => {handleUploadUserFile("Complaint")}}>
@@ -113,17 +113,17 @@ export default function AddComplaint({isOpen, onClose, leadId, userId, details }
                 <div className="text-center mt-4 mb-3">
                     <Table bordered striped>
                         <thead>
-                            <tr>
+                            <tr key={"firstKey"}>
                                 <th>Username</th>
                                 <th>ID</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr key={"secondKey"}>
                                 <th scope="row">1</th>
                                 <td>{leadId}</td>
                             </tr>
-                            <tr>
+                            <tr key={"thirdKey"}>
                                 <th scope="row">1</th>
                                 <td>{userId}</td>
                             </tr>

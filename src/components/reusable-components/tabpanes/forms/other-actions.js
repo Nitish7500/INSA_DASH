@@ -436,7 +436,7 @@ export default function OtherActions({ heading, complaintId }) {
                     onChange={handleSMReminderMail}
                   >
                     {selectReminderType.map((level) => (
-                      <option value={level.value}>{level.label}</option>
+                      <option key={level.value} value={level.value}>{level.label}</option>
                     ))}
                   </select>
                 </div>
@@ -465,14 +465,14 @@ export default function OtherActions({ heading, complaintId }) {
                     <label>Select Template:-</label>
                     <select
                       id="othActRemMailF"
-                      class="form-control"
+                      className="form-control"
                       name="mailingTemplateSelect"
                       value={reminderMailForm.mailingTemplateSelect}
                       onChange={handleSMReminderMail}
                     >
-                      <option value="mailing_reminder">Template-1</option>
-                      <option value="mailing_reminder2">Template-2</option>
-                      <option value="mailing_reminder3">Template-3</option>
+                      <option key={"temp1"} value="mailing_reminder">Template-1</option>
+                      <option key={"temp2"} value="mailing_reminder2">Template-2</option>
+                      <option key={"temp3"} value="mailing_reminder3">Template-3</option>
                     </select>
                   </div>
                 </div>
@@ -876,7 +876,7 @@ export default function OtherActions({ heading, complaintId }) {
                   {/* <ModalBody>
                     <h3 className="text-muted text-thin">Lead ID : </h3>
                     <FormGroup className="my-3">
-                      <Label for="companyresponse">
+                      <Label htmlFor="companyresponse">
                         Company Response Documents :
                       </Label>
                       <Input
@@ -886,11 +886,11 @@ export default function OtherActions({ heading, complaintId }) {
                       />
                     </FormGroup>
                     <FormGroup className="my-3">
-                      <Label for="igms">IGMS Documents :</Label>
+                      <Label htmlFor="igms">IGMS Documents :</Label>
                       <Input id="igms" name="igmsDoc" type="file" />
                     </FormGroup>
                     <FormGroup className="my-3">
-                      <Label for="awardrejected">
+                      <Label htmlFor="awardrejected">
                         Award Rejected Documents :
                       </Label>
                       <Input
@@ -900,13 +900,13 @@ export default function OtherActions({ heading, complaintId }) {
                       />
                     </FormGroup>
                     <FormGroup className="my-3">
-                      <Label for="ombudsman">
+                      <Label htmlFor="ombudsman">
                         Ombudsman Requirement Documents :
                       </Label>
                       <Input id="ombudsman" name="ombudsmanDoc" type="file" />
                     </FormGroup>
                     <FormGroup className="my-3">
-                      <Label for="courier">
+                      <Label htmlFor="courier">
                         Complaint form Courier Receipt :
                       </Label>
                       <Input
@@ -916,7 +916,7 @@ export default function OtherActions({ heading, complaintId }) {
                       />
                     </FormGroup>
                     <FormGroup className="my-3">
-                      <Label for="form6a">Form 6A Courier Receipt :</Label>
+                      <Label htmlFor="form6a">Form 6A Courier Receipt :</Label>
                       <Input
                         id="form6a"
                         name="form6aCourierReceiptDoc"
@@ -1012,7 +1012,7 @@ export default function OtherActions({ heading, complaintId }) {
                 <label>Select Template </label>
                 <select
                   id="othActTemp"
-                  class="form-control border-bold"
+                  className="form-control border-bold"
                   name="mailingTemplateSelect"
                   value={mulMailRemOpen.mailingTemplateSelect}
                   onChange={(e) => {
@@ -1022,9 +1022,9 @@ export default function OtherActions({ heading, complaintId }) {
                     });
                   }}
                 >
-                  <option value="mailing_reminder">Template-1</option>
-                  <option value="mailing_reminder2">Template-2</option>
-                  <option value="mailing_reminder3">Template-3</option>
+                  <option key={"temp1"} value="mailing_reminder">Template-1</option>
+                  <option key={"temp2"} value="mailing_reminder2">Template-2</option>
+                  <option key={"temp3"} value="mailing_reminder3">Template-3</option>
                 </select>
               </div>
             </div>

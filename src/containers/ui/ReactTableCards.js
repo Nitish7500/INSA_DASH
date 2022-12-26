@@ -44,7 +44,7 @@ function Table({ columns, data, divided = false, defaultPageSize = 6 }) {
       >
         <thead>
           {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
+            <tr  key={"heading"} {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column, columnIndex) => (
                 <th
                   key={`th_${columnIndex}`}
@@ -69,7 +69,7 @@ function Table({ columns, data, divided = false, defaultPageSize = 6 }) {
           {page.map((row) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()}>
+              <tr key={Math.random()} {...row.getRowProps()}>
                 {row.cells.map((cell, cellIndex) => (
                   <td
                     key={`td_${cellIndex}`}

@@ -66,7 +66,7 @@ function ReminderTrackCom({ isOpen, onClose, details }) {
                 <label>Select Reminder Type</label>
                 <select
                   id="remTrackSelect"
-                  class="form-control border-bold"
+                  className="form-control border-bold"
                   name="reminderType"
                   value={reminderType}
                   onChange={(e) => {
@@ -76,16 +76,16 @@ function ReminderTrackCom({ isOpen, onClose, details }) {
                     });
                   }}
                 >
-                  <option value={""}>Select</option>
-                  <option value="Single">Single</option>
-                  <option value="Multiple">Multiple</option>
+                  <option key={"select"} value={""}>Select</option>
+                  <option key={"single"} value="Single">Single</option>
+                  <option key={"multiple"} value="Multiple">Multiple</option>
                 </select>
               </div>
               <div className="col-sm-5">
                 <label>Select Reminder</label>
                 <select
                   id="remTrackSelect2"
-                  class="form-control border-bold"
+                  className="form-control border-bold"
                   name="reminder"
                   value={reminder}
                   onChange={(e) => {
@@ -95,9 +95,9 @@ function ReminderTrackCom({ isOpen, onClose, details }) {
                     });
                   }}
                 >
-                  <option value={""}>Select</option>
-                  <option value="nonResponsive">Non Responsive</option>
-                  <option value="outOfReach">Out Of Reach</option>
+                  <option key={"select"} value={""}>Select</option>
+                  <option key={"nonRes"} value="nonResponsive">Non Responsive</option>
+                  <option key={"outRea"} value="outOfReach">Out Of Reach</option>
                 </select>
               </div>
               <div className="col-sm-2">
@@ -116,7 +116,7 @@ function ReminderTrackCom({ isOpen, onClose, details }) {
           <div className="table mt-5 w-90 ml-auto mr-auto">
             <table className="table table-bordered table-responsive-sm">
               <thead>
-                <tr className="bg-dark text-white">
+                <tr className="bg-dark text-white" key={"firstKey"}>
                   <th>Updated By</th>
                   <th>Reminder Sent Date</th>
                 </tr>
@@ -133,7 +133,7 @@ function ReminderTrackCom({ isOpen, onClose, details }) {
                     })
                   : ""}
                 {!data.length && (
-                  <tr className="text-center">
+                  <tr key={"noData"} className="text-center">
                     <td colSpan={2}>
                       <h4>No Data</h4>
                     </td>

@@ -32,17 +32,17 @@ export default function StatusHistory({isOpen, onClose, details}) {
                 {/* <h3 className="text-muted text-thin">User Details</h3> */}
                 <Table borderless>
                     <thead>
-                        <tr>
+                        <tr key={"userId"}>
                             <th>ID</th>
                             <td>{ userId?._id }</td>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr key={"userName"}>
                             <th scope="row">Name</th>
                             <td>{ userId?.name }</td>
                         </tr>
-                        <tr>
+                        <tr key={"3"}>
                             <th scope="row">Email</th>
                             <td>{ email }</td>
                         </tr>
@@ -50,17 +50,17 @@ export default function StatusHistory({isOpen, onClose, details}) {
                 </Table>
                 <Table bordered>
                     <thead>
-                        <tr>
+                        <tr key={"head"}>
                             <th>Status</th>
                             <th>Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr key={"name"}>
                             <td scope="row">Name</td>
                             <td>{ userId?.name }</td>
                         </tr>
-                        <tr>
+                        <tr key={"email"}>
                             <td scope="row">Email</td>
                             <td>{ email }</td>
                         </tr>

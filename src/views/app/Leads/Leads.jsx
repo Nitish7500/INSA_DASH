@@ -38,6 +38,7 @@ import {
   Collapse,
   Card,
   CardBody,
+  Row,
 } from "reactstrap";
 import { Redirect, useHistory } from "react-router-dom";
 import Select from "react-select";
@@ -46,6 +47,7 @@ import EditLead from "./EditLead";
 import ReactPaginate from "react-paginate";
 import AssignToUser from "./Modal/AssignToUser";
 import { NotificationManager } from "components/common/react-notifications";
+import AssignToExpert from "./Modal/AssignToExpert";
 
 // import
 
@@ -73,6 +75,8 @@ function LeadSection() {
     assignTo: "",
     id: "",
   });
+
+  const [currentLeadDetail, setcurrentLeadDetail] = useState({});
 
   const [openAcceptLead, setopenAcceptLead] = useState(false);
   const [singleLeadData, setsingleLeadData] = useState({});
@@ -180,9 +184,9 @@ function LeadSection() {
         null,
         null,
         "filled"
-      )
+      );
     }
-  },[state.message, state.leadDataByStatus])
+  }, [state.message, state.leadDataByStatus]);
 
   useEffect(() => {
     dispatch({ type: "LEAD_ASSIGN_USER" });
@@ -211,9 +215,7 @@ function LeadSection() {
   };
 
   const handleSearch = (e) => {
-    console.log(e.target.name, e.target.value);
     setStatus({ ...status, [e.target.name]: e.target.value });
-    console.log(status);
   };
 
   const createExcel = () => {
@@ -222,7 +224,7 @@ function LeadSection() {
   };
 
   useEffect(() => {
-    console.log(document.getElementById("csvDownloadBTN")?.click());
+    document.getElementById("csvDownloadBTN")?.click();
   }, [state.leadReportData, downloadCound]);
 
   const commHistoryHandler = (currentLead) => {
@@ -240,17 +242,27 @@ function LeadSection() {
     setcurrentPage(event.selected);
   };
 
+  const [openOptions, setopenOptions] = useState([]);
+
+  const handleShowOption = (item) => {
+    if (openOptions.includes(item)) {
+      let temp = openOptions.filter((res) => res !== item);
+      setopenOptions(temp);
+    } else {
+      setopenOptions([...openOptions, item]);
+    }
+  };
+
   return editPage ? (
     <EditLead lead={currLead} seteditPage={seteditPage} getData={getData} />
   ) : (
     <div className="bg-inherit pt-5">
-      <div className="w-95 d-flex justify-content-center">
+      <div className="w-95 d-flex  justify-content-center">
         <div
           className=" text-white b-2 h-20 pl-4 pt-2 d-flex bg-white shadow d-flex flex-wrap"
           style={{
             // background: "`linear-gradient(60deg, #2B009F, #100052)",
             borderRadius: "5px",
-            width: "97%",
             marginTop: "-25px",
             marginBottom: "-25px",
             paddingBottom: "-17px",
@@ -542,22 +554,22 @@ function LeadSection() {
         </div>
       </div>
       <div
-        className="bg-white shadow p-3 mb-5 bg-white"
+        className=" py-3 mb-5"
         style={{ borderRadius: "5px" }}
         id="leadSearcDiv"
       >
-        <div className="d-flex mt-5 container">
+        <div className="d-flex mt-5 container mx-0 px-0 ">
           <div className="mb-3 w-40">
             <label
               className="form-label font-weight-bold h6 d-block"
-              for="searchKeyword"
+              htmlFor="searchKeyword"
             >
               Search Keyword
             </label>
             <input
               onChange={handleSearch}
               name="keyword"
-              className="w-80 py-2 border border-dark"
+              className="w-80 py-2 border border-dark pl-3"
               type={"text"}
               id="searchKeyword"
               placeholder="Search Keyword"
@@ -567,7 +579,7 @@ function LeadSection() {
           <div className="mb-3 w-30 row   ">
             <label
               className="form-label font-weight-bold h6 d-block"
-              for="leadSelectSortOrder"
+              htmlFor="leadSelectSortOrder"
             >
               Select Sort Order
             </label>
@@ -578,15 +590,21 @@ function LeadSection() {
               value={status.selectedSortOrder ?? ""}
               onChange={handleSearch}
             >
-              <option value={""}>Select Sort Order</option>
-              <option value={"First"}>First</option>
-              <option value={"Second"}>Second</option>
-              <option>First</option>
+              <option key={"select"} value={""}>
+                Select Sort Order
+              </option>
+              <option key={"first"} value={"First"}>
+                First
+              </option>
+              <option key={"sec"} value={"Second"}>
+                Second
+              </option>
+              <option key={"first1"}>First</option>
             </select>
           </div>
           <div className=" d-block h-20 mt-auto mb-auto ml-auto mr-auto">
             <button
-              className="btn btn-success mr-3 rounded"
+              className="btn btn-warning mr-3 rounded"
               id="leadInputClear"
               onClick={() => {
                 setStatus({ status: "PENDING" });
@@ -595,7 +613,7 @@ function LeadSection() {
               Clear
             </button>
             <button
-              className="btn btn-warning"
+              className="btn btn-primary rounded"
               id="leadSearchBtn"
               onClick={() => {
                 dispatch({
@@ -608,15 +626,15 @@ function LeadSection() {
             </button>
           </div>
         </div>
-        <div className="container">
+        <div className="container mx-0 px-0 mt-3">
           <label
-            className="h6 d-block font-weight-bold"
-            for="leadSearchByMailInput"
+            className="h6 d-block font-weight-bold "
+            htmlFor="leadSearchByMailInput"
           >
             Search By Email And Phone And Lead Id
           </label>
           <input
-            className="w-40 py-1"
+            className="w-40 py-1 pl-2 border-bold"
             id="leadSearchByMailInput"
             type={"text"}
             placeholder="Search By Email And Phone And Lead Id"
@@ -625,7 +643,7 @@ function LeadSection() {
             }}
           />
           <button
-            className="btn btn-success rounded ml-3 mr-5"
+            className="btn btn-primary rounded ml-3 mr-5"
             id="leadSearchBymailBtn"
             onClick={() => {
               dispatch({
@@ -638,7 +656,7 @@ function LeadSection() {
           </button>
           <div className="d-inline ml-5" id="leadRefreshDownloadSection">
             <button
-              className="btn btn-success rounded mr-5"
+              className="btn btn-primary rounded mr-5"
               id="leadRefresh"
               onClick={() => {
                 dispatch({
@@ -663,7 +681,7 @@ function LeadSection() {
         {openDownload ? (
           <div className="d-flex mt-5 px-5 border border-info shadow rounded pt-3 pb-2">
             <div className="border-1 mb-3 w-40">
-              <label className="d-block" for="fromDate">
+              <label className="d-block" htmlFor="fromDate">
                 From Date
               </label>
               <input
@@ -677,7 +695,7 @@ function LeadSection() {
               />
             </div>
             <div className="border-1 mb-3 w-40">
-              <label className="d-block" for="fromDate">
+              <label className="d-block" htmlFor="fromDate">
                 To Date
               </label>
               <input
@@ -714,35 +732,166 @@ function LeadSection() {
             ) : null}
           </div>
         ) : null}
-        <div className="table-responsive mt-4 px-3" id="leadTableSection">
-          <table className="table table-bordered" id="leadTable">
-            <thead>
-              <tr className="">
-                <th>S.No</th>
-                <th className="w-20">Action</th>
-                <th>Lead Id</th>
-                <th>OTP Verified</th>
-                <th>Name</th>
-                <th>Email Id</th>
-                <th>Mobile</th>
-                <th>Policy Type</th>
-                <th>Complaint Type</th>
-                <th>Assign To</th>
-                <th>Expert To</th>
-                <th>SRC | MED | CPN</th>
-                <th>Lead Time</th>
-              </tr>
-            </thead>
-            <tbody>
-              {state.leadDataByStatus?.list ? (
-                state.leadDataByStatus?.list?.map((res, i) => {
-                  return (
-                    <tr id="leadTableRow">
-                      <td className="font-weight-bold" id="leadTableCellOne">
-                        {i + 1 + currentPage * itemsPerPage}
-                      </td>
-                      <td id="leadTableRowCellTwo"> 
-                        <div style={{width:"260px"}} className="pl-2">
+      </div>
+
+      <div className="overflow-auto d-flex w-auto flex-column">
+        <div className="d-flex ">
+          <div className="d-flex bg-primary px-3 py-3 w-auto">
+            <div className="" style={{ width: "100px" }}>
+              <span className="font-weight-bold">S.No</span>
+            </div>
+            <div className="" style={{ width: "150px" }}>
+              <span className="font-weight-bold">Action</span>
+            </div>
+            <div className="" style={{ width: "200px" }}>
+              <span className="font-weight-bold">Lead Id</span>
+            </div>
+            <div className="" style={{ width: "150px" }}>
+              <span className="font-weight-bold">OTP Varified</span>
+            </div>
+            <div className="" style={{ width: "250px" }}>
+              <span className="font-weight-bold">Name</span>
+            </div>
+            <div className="" style={{ width: "250px" }}>
+              <span className="font-weight-bold">Email Id</span>
+            </div>
+            <div className="" style={{ width: "250px" }}>
+              <span className="font-weight-bold">Mobile</span>
+            </div>
+            <div className="" style={{ width: "250px" }}>
+              <span className="font-weight-bold">Policy Type</span>
+            </div>
+            <div className="" style={{ width: "250px" }}>
+              <span className="font-weight-bold">Complaint Type</span>
+            </div>
+            <div className="" style={{ width: "250px" }}>
+              <span className="font-weight-bold">Assign To</span>
+            </div>
+            <div className="" style={{ width: "250px" }}>
+              <span className="font-weight-bold">Expert To</span>
+            </div>
+            <div className="" style={{ width: "250px" }}>
+              <span className="font-weight-bold">SRC | MED | CPN</span>
+            </div>
+            <div className="" style={{ width: "250px" }}>
+              <span className="font-weight-bold">Lead Time</span>
+            </div>
+          </div>
+        </div>
+
+        {state.leadDataByStatus?.list
+          ? state.leadDataByStatus?.list?.map((res, i) => {
+              return (
+                <div key={i+100}>
+                  {/* {
+          [1,2,3,4].map((res,i) => {
+            return <> */}
+                  <div className="d-flex" key={i}>
+                    <div className="d-flex bg-warning shadow px-3 py-3 w-auto mt-2">
+                      <div className="" style={{ width: "100px" }}>
+                        <span
+                          className="cardCell font-weight-bold th-column mx-0"
+                          style={{ width: "100px" }}
+                        >
+                          {i + 1 + currentPage * itemsPerPage}
+                        </span>
+                      </div>
+                      <div
+                        className=""
+                        style={{ width: "150px", marginTop: "-5px" }}
+                      >
+                        <span
+                          className="cardCell font-weight-bold th-column m-0"
+                          style={{ cursor: "pointer" }}
+                          onClick={() => handleShowOption(`option${i}`)}
+                        >
+                          <div
+                            className={
+                              openOptions.includes(`option${i}`)
+                                ? "dropup btn-group m-0 p-0"
+                                : ""
+                            }
+                          >
+                            <Button
+                              style={{ height: "20px" }}
+                              color="primary"
+                              className="m-0 p-0 dropdown-toggle-split dropdown-toggle btn table-expand"
+                            ></Button>
+                          </div>
+                        </span>
+                      </div>
+                      <div className="" style={{ width: "200px" }}>
+                        <span className="cardCell font-weight-bold th-column m-0">
+                          {res.leadId}
+                        </span>
+                      </div>
+
+                      <div className="" style={{ width: "150px" }}>
+                        <span className="cardCell m-0 font-weight-bold  th-column">
+                          {res.isPhoneVerified ? "YES" : "NO"}
+                        </span>
+                      </div>
+
+                      <div className="" style={{ width: "250px" }}>
+                        <p className="cardCell font-weight-bold th-column m-0">
+                          {res.name}
+                        </p>
+                      </div>
+
+                      <div className="" style={{ width: "250px" }}>
+                        <p className="cardCell font-weight-bold th-column m-0">
+                          {res.email}
+                        </p>
+                      </div>
+
+                      <div className="" style={{ width: "250px" }}>
+                        <p className="cardCell font-weight-bold th-column m-0">
+                          {res.phone}
+                        </p>
+                      </div>
+
+                      <div className="" style={{ width: "250px" }}>
+                        <p className="cardCell font-weight-bold th-column m-0">
+                          {res.policyTypeId?.name}
+                        </p>
+                      </div>
+
+                      <div className="" style={{ width: "250px" }}>
+                        <p className="cardCell font-weight-bold th-column m-0">
+                          {res.complaintTypeId?.name}
+                        </p>
+                      </div>
+
+                      <div className="" style={{ width: "250px" }}>
+                        <p className="cardCell font-weight-bold th-column m-0">
+                          {res.assign_to}
+                        </p>
+                      </div>
+
+                      <div className="" style={{ width: "250px" }}>
+                        <p className="cardCell font-weight-bold th-column m-0">
+                          {res.assign_to_expert ? res.assign_to_expert : "--"}
+                        </p>
+                      </div>
+                      <div className="" style={{ width: "250px" }}>
+                        <p className="cardCell font-weight-bold th-column m-0">
+                          {res.src} || {res.med} || {res.cpn}
+                        </p>
+                      </div>
+
+                      <div className="" style={{ width: "250px" }}>
+                        <p className="cardCell font-weight-bold th-column m-0">
+                          {moment
+                            .unix(res.createdAt)
+                            .format("DD MM YYYY : HH MM SS")}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <Collapse isOpen={openOptions.includes(`option${i}`)}>
+                      <div className=" bg-light px-4 ">
+                        <div className="pl-2 d-flex justify-content-between">
                           <button
                             className="btn btn-inherit m-0 p-0 mr-2"
                             id="leadCallCustomer"
@@ -828,11 +977,7 @@ function LeadSection() {
                             id="leadAE"
                             onClick={() => {
                               setopenExpertAssign(true);
-                              setassignToExpert({
-                                ...assignToExpert,
-                                assignTo: res.expert_to,
-                                id: res._id,
-                              });
+                              setcurrentLeadDetail(res);
                             }}
                           >
                             <div className="position-relative py-3">
@@ -1415,64 +1560,37 @@ function LeadSection() {
                             </div>
                           </button>{" "}
                         </div>
-                      </td>
-                      <td id="leadTableRowCellThree">{res.leadId}</td>
-                      <td id="leadTableRowCellFour">
-                        {res.isPhoneVerified ? "YES" : "NO"}
-                      </td>
-                      <td id="leadTableRowCellFive">{res.name}</td>
-                      <td id="leadTableRowCellSix">{res.email}</td>
-                      <td id="leadTableRowCellSeven">{res.phone}</td>
-                      <td id="leadTableRowCellEight">
-                        {res.policyTypeId?.name}
-                      </td>
-                      <td id="leadTableRowCellNine">
-                        {res.complaintTypeId?.name}
-                      </td>
-                      <td id="leadTableRowCellTen">{res.assign_to}</td>
-                      <td id="leadTableRowCellEleven">
-                        {res.assign_to_expert ? res.assign_to_expert : "--"}
-                      </td>
-                      <td id="leadTableRowCellTwelve">
-                        {res.src} || {res.med} || {res.cpn}
-                      </td>
-                      {/* {console.log(moment.unix(res.createdAt).format("DD MM YYYY : HH MM SS")  )} */}
-                      <td id="leadTableRowCeellThirteen">
-                        {moment
-                          .unix(res.createdAt)
-                          .format("DD MM YYYY : HH MM SS")}
-                      </td>
-                    </tr>
-                  );
-                })
-              ) : (
-                <tr>No Data</tr>
-              )}
-            </tbody>
-          </table>
-          <div className="d-flex justify-content-center">
-            <ReactPaginate
-              breakLabel="..."
-              nextLabel="next >"
-              onPageChange={handlePageClick}
-              pageClassName="page-item"
-              pageLinkClassName="page-link"
-              previousClassName="page-item"
-              previousLinkClassName="page-link"
-              nextClassName="page-item"
-              nextLinkClassName="page-link"
-              breakClassName="page-item"
-              breakLinkClassName="page-link"
-              containerClassName="pagination"
-              activeClassName="active"
-              pageRangeDisplayed={5}
-              pageCount={pageCount}
-              previousLabel="< previous"
-              renderOnZeroPageCount={null}
-            />
-          </div>
-        </div>
+                      </div>
+                    </Collapse>
+                  </div>
+                </div>
+              );
+            })
+          : ""}
       </div>
+
+      <div className="d-flex justify-content-center mt-4">
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel="next >"
+          onPageChange={handlePageClick}
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          previousClassName="page-item"
+          previousLinkClassName="page-link"
+          nextClassName="page-item"
+          nextLinkClassName="page-link"
+          breakClassName="page-item"
+          breakLinkClassName="page-link"
+          containerClassName="pagination"
+          activeClassName="active"
+          pageRangeDisplayed={5}
+          pageCount={pageCount}
+          previousLabel="< previous"
+          renderOnZeroPageCount={null}
+        />
+      </div>
+
       {/* --------------------------> Modal */}
 
       {/* -------------------------------------> Assign to user */}
@@ -1504,9 +1622,15 @@ function LeadSection() {
                   setassignToUser({ ...assignToUser, assignTo: e.target.value })
                 }
               >
-                <option disabled>Select User</option>
+                <option key={"select"} value="">
+                  Select User
+                </option>
                 {state.assigUser?.map((res) => {
-                  return <option value={res.user_id}>{res.name}</option>;
+                  return (
+                    <option key={res.user_id} value={res.user_id}>
+                      {res.name}
+                    </option>
+                  );
                 })}
               </select>
             </div>
@@ -1545,77 +1669,13 @@ function LeadSection() {
         </ModalBody>
       </Modal>
       {/*-------------------------------------> Assign To Exprt */}
-      <Modal
-        id="leadAssignToExpertModal"
+      <AssignToExpert
         isOpen={openExpertAssign}
-        toggle={() => {
+        onClose={() => {
           setopenExpertAssign(false);
         }}
-        size=""
-      >
-        <ModalHeader
-          className="py-3 text-primary"
-          toggle={() => {
-            setopenExpertAssign(false);
-          }}
-        >
-          Lead Assign to Expert
-        </ModalHeader>
-        <ModalBody>
-          <span className="h6">Policy Number</span>
-          <div className="container">
-            <div className="row">
-              <select
-                id="assignExpertModal"
-                value={assignToExpert.assignTo}
-                className="w-80 mt-3 py-2"
-                onChange={(e) =>
-                  setassignToExpert({
-                    ...assignToExpert,
-                    assignTo: e.target.value,
-                  })
-                }
-              >
-                <option disabled>Select User</option>
-                {state.assigUser?.map((res) => {
-                  return <option value={res.user_id}>{res.name}</option>;
-                })}
-              </select>
-            </div>
-            <div className="mt-3 d-flex justify-content-center">
-              <button
-                id="closeAssignExpertModal"
-                className="btn btn-danger rounded mr-2"
-                onClick={() => setopenExpertAssign(false)}
-              >
-                Close
-              </button>
-              <button
-                id="saveAssignExpertBtn"
-                className="btn btn-primary rounded ml-2"
-                onClick={() => {
-                  setopenExpertAssign(false);
-                  dispatch({
-                    type: "LEAD_ASSIGN_EXPERT_SAVE",
-                    state: assignToExpert,
-                  });
-                  dispatch({
-                    type: "LEAD_DATA_WITH_STATUS",
-                    state: {
-                      status: "PENDING",
-                      pageIndex: 0,
-                      pageSize: 50,
-                      keyword: "",
-                    },
-                  });
-                }}
-              >
-                Save
-              </button>
-            </div>
-          </div>
-        </ModalBody>
-      </Modal>
+        details={currentLeadDetail}
+      />
 
       {/* ---------------> Confirm Accept Lead */}
       <Modal
@@ -1756,9 +1816,6 @@ function LeadSection() {
       >
         <ModalHeader
           className="py-3 text-primary"
-          toggle={() => {
-            setcustomerCallLogs(false);
-          }}
         >
           Call Logs For Customers
         </ModalHeader>
@@ -1816,17 +1873,17 @@ function LeadSection() {
                 {" "}
                 <span>Call Logs For :- </span>{" "}
                 <span>{callLogCustomer.customer_number}</span>{" "}
-                <sapn>{"<"}</sapn>
+                <span>{"<"}</span>
               </div>
               <Collapse
                 isOpen={callLogAccordion}
-                toggle={(id) => {
+                onClick={(id) => {
                   setcallLogAccordion(!callLogAccordion);
-                  setcallLogCustomer({
-                    startTime: "",
-                    endTime: "",
-                    customer_number: "",
-                  });
+                  // setcallLogCustomer({
+                  //   startTime: "",
+                  //   endTime: "",
+                  //   customer_number: "",
+                  // });
                 }}
                 className="bg-info"
               >
@@ -1836,16 +1893,31 @@ function LeadSection() {
                       <div className="table">
                         <table>
                           <thead>
-                            <tr className="bg-light">
+                            <tr key={"headingcallLog"} className="bg-light">
                               <th>S. No</th>
                               <th>Call Type</th>
                               <th>Call Start Time</th>
+                              <th>Agent Name</th>
                               <th>Call Duration</th>
                               <th>Recording play/pause</th>
                               <th>Recording Download</th>
                             </tr>
                           </thead>
-                          <tbody>{}</tbody>
+                          <tbody>
+                            {
+                              state.callLogsCustomer?.objects?.length ? state.callLogsCustomer?.objects?.map((res,i) => {
+                                return <tr key={+i+22}>
+                                    <td>{i + 1}</td>
+                                    <td>{res.business_call_type}</td>
+                                    <td>{res.start_time}</td>
+                                    <td>{res.agent_name}</td>
+                                    <td>{res.call_duration}</td>
+                                    <td>{"Play pause"}</td>
+                                    <td>Download</td>
+                                </tr>
+                              }) : <tr className="text-center" key={"noDataForCallLog"}><span className="text-center">No Data</span></tr>
+                            }
+                          </tbody>
                         </table>
                       </div>
                     </div>
@@ -1859,7 +1931,7 @@ function LeadSection() {
                 className="btn btn-danger rounded mr-2"
                 onClick={() => setcustomerCallLogs(false)}
               >
-                No
+                CLOSE
               </button>
             </div>
           </div>
@@ -2136,23 +2208,23 @@ function LeadSection() {
         <ModalBody>
           <div className="form-group">
             <div className="">
-              <label for="policyTypeInput" className="">
+              <label htmlFor="policyTypeInput" className="">
                 Policy Type
               </label>
               <select
                 className="form-control border-0 border"
                 id="policyTypeInput"
               >
-                <option>NA</option>
-                <option>Individual</option>
-                <option>Family Floater</option>
-                <option>Group</option>
-                <option>Bank</option>
-                <option>Card</option>
+                <option key={"na"}>NA</option>
+                <option key={"individual"}>Individual</option>
+                <option key={"family"}>Family Floater</option>
+                <option key={"group"}>Group</option>
+                <option key={"bank"}>Bank</option>
+                <option key={"card"}>Card</option>
               </select>
             </div>
             <div className="form-control border-0">
-              <label for="complaintHolderName">Complaint Holder Name</label>
+              <label htmlFor="complaintHolderName">Complaint Holder Name</label>
               <input
                 type={"text"}
                 className="form-control border"
@@ -2160,7 +2232,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="claimentName">Claimant Name</label>
+              <label htmlFor="claimentName">Claimant Name</label>
               <input
                 type={"text"}
                 className="border form-control border-dark"
@@ -2168,7 +2240,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="diseasedName">Diseased Name</label>
+              <label htmlFor="diseasedName">Diseased Name</label>
               <input
                 type={"text"}
                 className="border form-control border-dark"
@@ -2176,7 +2248,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="nomineeName">Nominee Name</label>
+              <label htmlFor="nomineeName">Nominee Name</label>
               <input
                 type={"text"}
                 className="border form-control border-dark"
@@ -2184,7 +2256,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="nameOfPrevComp">Name Of Previous Company</label>
+              <label htmlFor="nameOfPrevComp">Name Of Previous Company</label>
               <input
                 type={"text"}
                 className="border form-control border-dark"
@@ -2192,7 +2264,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="nameOfPatient">Name Of Patient</label>
+              <label htmlFor="nameOfPatient">Name Of Patient</label>
               <input
                 type={"text"}
                 className="border form-control border-dark"
@@ -2200,7 +2272,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="nameOfTpa">Name Of TPA</label>
+              <label htmlFor="nameOfTpa">Name Of TPA</label>
               <input
                 type={"text"}
                 className="border form-control border-dark"
@@ -2208,7 +2280,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="dateOfIncident">Date Of Incident</label>
+              <label htmlFor="dateOfIncident">Date Of Incident</label>
               <input
                 type={"date"}
                 className="border form-control border-dark"
@@ -2216,7 +2288,9 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="dateOfFirstInsurance">Date Of First Insurance</label>
+              <label htmlFor="dateOfFirstInsurance">
+                Date Of First Insurance
+              </label>
               <input
                 type={"date"}
                 className="border form-control border-dark"
@@ -2224,7 +2298,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="policyNumberNewCustomer">Policy Number</label>
+              <label htmlFor="policyNumberNewCustomer">Policy Number</label>
               <input
                 type={"text"}
                 className="border form-control border-dark"
@@ -2232,7 +2306,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="newCustomerNewHospital">Hospital Name</label>
+              <label htmlFor="newCustomerNewHospital">Hospital Name</label>
               <input
                 type={"text"}
                 className="border form-control border-dark"
@@ -2240,7 +2314,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="newCustomerSumInsured">Sum Insured</label>
+              <label htmlFor="newCustomerSumInsured">Sum Insured</label>
               <input
                 type={"number"}
                 className="border form-control border-dark"
@@ -2248,7 +2322,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="nameOfDisease">Name of Disease</label>
+              <label htmlFor="nameOfDisease">Name of Disease</label>
               <input
                 type={"text"}
                 className="border form-control border-dark"
@@ -2256,16 +2330,16 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="cashlessOrReimbursment">
+              <label htmlFor="cashlessOrReimbursment">
                 Cashless/ Reimbursement
               </label>
               <select
                 className="form-control border"
                 id="cashlessOrReimbursment"
               >
-                <option>NA</option>
-                <option>Cashless</option>
-                <option>Reimbursment is Applied</option>
+                <option key={"na"}>NA</option>
+                <option key={"cashless"}>Cashless</option>
+                <option key={"reim"}>Reimbursment is Applied</option>
               </select>
             </div>
             <div className="form-control border-0">
@@ -2289,9 +2363,15 @@ function LeadSection() {
                 placeholder="Select"
                 id="newCustomerMoreThanOnePolicy"
               >
-                <option value={""}>Select</option>
-                <option value={"Yes"}>Yes</option>
-                <option value={"No"}>No</option>
+                <option key={"select"} value={""}>
+                  Select
+                </option>
+                <option key={"yes"} value={"Yes"}>
+                  Yes
+                </option>
+                <option key={"no"} value={"No"}>
+                  No
+                </option>
               </select>
             </div>
             <div className="form-control border-0">
@@ -2301,9 +2381,15 @@ function LeadSection() {
                 placeholder="Select"
                 id="newCustomerPolicyPorted"
               >
-                <option value={""}>Select</option>
-                <option value={"Yes"}>Yes</option>
-                <option value={"No"}>No</option>
+                <option key={"select"} value={""}>
+                  Select
+                </option>
+                <option key={"yes"} value={"Yes"}>
+                  Yes
+                </option>
+                <option key={"no"} value={"No"}>
+                  No
+                </option>
               </select>
             </div>
             <div className="form-control border-0">
@@ -2311,13 +2397,19 @@ function LeadSection() {
                 Did You Receive Your Claim Rejection Letter?
               </label>
               <select className="form-control border" id="receiveClainRejLett">
-                <option value={""}>Select</option>
-                <option value={"Yes"}>Yes</option>
-                <option value={"No"}>No</option>
+                <option key={"select"} value={""}>
+                  Select
+                </option>
+                <option key={"yes"} value={"Yes"}>
+                  Yes
+                </option>
+                <option key={"no"} value={"No"}>
+                  No
+                </option>
               </select>
             </div>
             <div className="form-control border-0">
-              <label for="newCusEvidence">Evidence</label>
+              <label htmlFor="newCusEvidence">Evidence</label>
               <input
                 className="form-control border-0"
                 type={"file"}
@@ -2327,9 +2419,15 @@ function LeadSection() {
             <div className="form-control border-0">
               <label id="prevClainHistory">Previous Claim History?</label>
               <select className="form-control border" id="prevClainHistory">
-                <option value={""}>Select</option>
-                <option value={"Yes"}>Yes</option>
-                <option value={"No"}>No</option>
+                <option key={"select"} value={""}>
+                  Select
+                </option>
+                <option key={"yes"} value={"Yes"}>
+                  Yes
+                </option>
+                <option key={"no"} value={"No"}>
+                  No
+                </option>
               </select>
             </div>
             <div className="form-control border-0">
@@ -2337,9 +2435,15 @@ function LeadSection() {
                 Have You Approached Insurance Company?
               </label>
               <select className="form-control border" id="approachedIncComp">
-                <option value={""}>Select</option>
-                <option value={"Yes"}>Yes</option>
-                <option value={"No"}>No</option>
+                <option key={"select"} value={""}>
+                  Select
+                </option>
+                <option key={"yes"} value={"Yes"}>
+                  Yes
+                </option>
+                <option key={"no"} value={"No"}>
+                  No
+                </option>
               </select>
             </div>
             <div className="form-control border-0">
@@ -2347,13 +2451,19 @@ function LeadSection() {
                 Have You Approached Insurance Ombudsman?
               </label>
               <select className="form-control border" id="approachedIncOmbuds">
-                <option value={""}>Select</option>
-                <option value={"Yes"}>Yes</option>
-                <option value={"No"}>No</option>
+                <option key={"select"} value={""}>
+                  Select
+                </option>
+                <option key={"yes"} value={"Yes"}>
+                  Yes
+                </option>
+                <option key={"no"} value={"No"}>
+                  No
+                </option>
               </select>
             </div>
             <div className="form-control border-0">
-              <label for="newCusClaimAmtApp">Claim Amount Applied</label>
+              <label htmlFor="newCusClaimAmtApp">Claim Amount Applied</label>
               <input
                 className="form-control border"
                 type={"number"}
@@ -2361,7 +2471,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="clainAmtSettled">
+              <label htmlFor="clainAmtSettled">
                 Claim Amount Settled By Company
               </label>
               <input
@@ -2371,7 +2481,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="amtToBeFought">Amount To Be Fought</label>
+              <label htmlFor="amtToBeFought">Amount To Be Fought</label>
               <input
                 className="form-control border"
                 type={"number"}
@@ -2379,7 +2489,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="claimSattlementDate">Claim Settlement Date</label>
+              <label htmlFor="claimSattlementDate">Claim Settlement Date</label>
               <input
                 className="form-control border"
                 type={"date"}
@@ -2387,7 +2497,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="newCusReasonOfDeduction">
+              <label htmlFor="newCusReasonOfDeduction">
                 Reason Of ShortSettlement/ Deduction
               </label>
               <textarea
@@ -2399,7 +2509,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="newCusNeedToBePaid">
+              <label htmlFor="newCusNeedToBePaid">
                 Customer's Version Of Why Balance Amount Needs To Be Paid
               </label>
               <input
@@ -2413,13 +2523,19 @@ function LeadSection() {
                 Did You Receive Settlement Letter?
               </label>
               <select className="form-control border" id="receivedLetter">
-                <option value={""}>Select</option>
-                <option value={"Yes"}>Yes</option>
-                <option value={"No"}>No</option>
+                <option key={"select"} value={""}>
+                  Select
+                </option>
+                <option key={"yes"} value={"Yes"}>
+                  Yes
+                </option>
+                <option key={"no"} value={"No"}>
+                  No
+                </option>
               </select>
             </div>
             <div className="form-control border-0">
-              <label for="newCusCommentBox">Comment Box</label>
+              <label htmlFor="newCusCommentBox">Comment Box</label>
               <textarea
                 rows={4}
                 className="form-control border"
@@ -2428,7 +2544,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="newCusDocSelection">Document Section</label>
+              <label htmlFor="newCusDocSelection">Document Section</label>
               <Select
                 // defaultValue={[colourOptions[2], colourOptions[3]]}
                 isMulti
@@ -2543,7 +2659,7 @@ function LeadSection() {
               <div className="table-responsive mt-3">
                 <table className=" table border">
                   <thead className="font-weight-bold bg-muted">
-                    <tr>
+                    <tr key={"headingStatusHistory"}>
                       <th>Status</th>
                       <th>Date</th>
                     </tr>
@@ -2552,7 +2668,7 @@ function LeadSection() {
                     {statusHistory.data?.statusHistory?.length ? (
                       statusHistory.data?.statusHistory?.map((res) => {
                         return (
-                          <tr className="">
+                          <tr key={i + res.date} className="">
                             <td>{res.currStatus}</td>
                             <td>
                               {moment(res.date).format("YYYY-MM-DD: HH:MM")}
@@ -2561,7 +2677,7 @@ function LeadSection() {
                         );
                       })
                     ) : (
-                      <tr>No Data</tr>
+                      <tr key={"noData"}>No Data</tr>
                     )}
                   </tbody>
                 </table>
@@ -2620,7 +2736,7 @@ function LeadSection() {
         <ModalBody>
           <div className="form-group">
             <div className="form-control border-0">
-              <label className="" for="leadFollowUpDate">
+              <label className="" htmlFor="leadFollowUpDate">
                 Follow Date
               </label>
               <input
@@ -2638,7 +2754,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label className="" for="leadFollowUpCommDate">
+              <label className="" htmlFor="leadFollowUpCommDate">
                 Communication Date
               </label>
               <input
@@ -2656,7 +2772,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label className="" for="leadFollowUpDes">
+              <label className="" htmlFor="leadFollowUpDes">
                 Communication Description
               </label>
               <select
@@ -2671,17 +2787,23 @@ function LeadSection() {
                   })
                 }
               >
-                <option selected disabled value={""}>
+                <option key={"select"} value={""}>
                   Select
                 </option>
-                <option value={"running"}>running</option>
-                <option value={"testing"}>testing</option>
-                <option value={"Other"}>Other</option>
+                <option key={"running"} value={"running"}>
+                  running
+                </option>
+                <option key={"testing"} value={"testing"}>
+                  testing
+                </option>
+                <option key={"other"} value={"Other"}>
+                  Other
+                </option>
               </select>
             </div>
             {followUpObj.com_dis == "Other" ? (
               <div className="form-control border-0">
-                <label htmlFor="followUpTextarea"></label>
+                <label htmlhtmlFor="followUpTextarea"></label>
                 <textarea
                   rows={3}
                   name="followUpDesc"
@@ -2744,7 +2866,7 @@ function LeadSection() {
         <ModalBody>
           <div className="form-group">
             <div className="form-control border-0">
-              <label for="cancelLeadCommDate" className="font-weight-bold">
+              <label htmlFor="cancelLeadCommDate" className="font-weight-bold">
                 Communication Date
               </label>
               <input
@@ -2765,7 +2887,7 @@ function LeadSection() {
               />
             </div>
             <div className="form-control border-0">
-              <label for="cancelLeadCommDesc" className="font-weight-bold">
+              <label htmlFor="cancelLeadCommDesc" className="font-weight-bold">
                 Communication Description
               </label>
               <select
@@ -2783,17 +2905,15 @@ function LeadSection() {
                   });
                 }}
               >
-                <option selected disabled>
-                  Select Status
-                </option>
-                <option>Ringing</option>
-                <option>Testing</option>
-                <option>Other</option>
+                <option key={"select"}>Select Status</option>
+                <option key={"ringing"}>Ringing</option>
+                <option key={"testing"}>Testing</option>
+                <option key={"other"}>Other</option>
               </select>
               {leadCancelDetail.state?.desc === "Other" ? (
                 <div className="form-control border-0">
                   <label
-                    for="cancelLeadCommdescText"
+                    htmlFor="cancelLeadCommdescText"
                     className="font-weight-bold"
                   >
                     Description
@@ -2887,7 +3007,7 @@ function LeadSection() {
           <sapn className="alert-primary">Documents Upload</sapn>
         </ModalHeader>
         <ModalBody>
-          <div class="alert alert-dark" role="alert">
+          <div className="alert alert-dark" role="alert">
             This is a dark alert—check it out!
           </div>
         </ModalBody>
