@@ -250,7 +250,7 @@ function UserReport() {
           <BotReport
             sections={sections}
             state={state}
-            handleSection={handleSection}
+            handleSection={handleSection} 
           />
           <div></div>
         </div>
