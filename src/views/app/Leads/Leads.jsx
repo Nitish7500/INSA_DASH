@@ -782,11 +782,11 @@ function LeadSection() {
         {state.leadDataByStatus?.list
           ? state.leadDataByStatus?.list?.map((res, i) => {
               return (
-                <>
+                <div key={i+100}>
                   {/* {
           [1,2,3,4].map((res,i) => {
             return <> */}
-                  <div className="d-flex">
+                  <div className="d-flex" key={i}>
                     <div className="d-flex bg-warning shadow px-3 py-3 w-auto mt-2">
                       <div className="" style={{ width: "100px" }}>
                         <span
@@ -1563,7 +1563,7 @@ function LeadSection() {
                       </div>
                     </Collapse>
                   </div>
-                </>
+                </div>
               );
             })
           : ""}
@@ -1816,9 +1816,6 @@ function LeadSection() {
       >
         <ModalHeader
           className="py-3 text-primary"
-          toggle={() => {
-            setcustomerCallLogs(false);
-          }}
         >
           Call Logs For Customers
         </ModalHeader>
@@ -1876,17 +1873,17 @@ function LeadSection() {
                 {" "}
                 <span>Call Logs For :- </span>{" "}
                 <span>{callLogCustomer.customer_number}</span>{" "}
-                <sapn>{"<"}</sapn>
+                <span>{"<"}</span>
               </div>
               <Collapse
                 isOpen={callLogAccordion}
-                toggle={(id) => {
+                onClick={(id) => {
                   setcallLogAccordion(!callLogAccordion);
-                  setcallLogCustomer({
-                    startTime: "",
-                    endTime: "",
-                    customer_number: "",
-                  });
+                  // setcallLogCustomer({
+                  //   startTime: "",
+                  //   endTime: "",
+                  //   customer_number: "",
+                  // });
                 }}
                 className="bg-info"
               >
@@ -1896,16 +1893,31 @@ function LeadSection() {
                       <div className="table">
                         <table>
                           <thead>
-                            <tr className="bg-light">
+                            <tr key={"headingcallLog"} className="bg-light">
                               <th>S. No</th>
                               <th>Call Type</th>
                               <th>Call Start Time</th>
+                              <th>Agent Name</th>
                               <th>Call Duration</th>
                               <th>Recording play/pause</th>
                               <th>Recording Download</th>
                             </tr>
                           </thead>
-                          <tbody>{}</tbody>
+                          <tbody>
+                            {
+                              state.callLogsCustomer?.objects.length ? state.callLogsCustomer?.objects?.map((res,i) => {
+                                return <tr key={+i+22}>
+                                    <td>{i + 1}</td>
+                                    <td>{res.business_call_type}</td>
+                                    <td>{res.start_time}</td>
+                                    <td>{res.agent_name}</td>
+                                    <td>{res.call_duration}</td>
+                                    <td>{"Play pause"}</td>
+                                    <td>Download</td>
+                                </tr>
+                              }) : <tr className="text-center" key={"noDataForCallLog"}><span className="text-center">No Data</span></tr>
+                            }
+                          </tbody>
                         </table>
                       </div>
                     </div>
@@ -1919,7 +1931,7 @@ function LeadSection() {
                 className="btn btn-danger rounded mr-2"
                 onClick={() => setcustomerCallLogs(false)}
               >
-                No
+                CLOSE
               </button>
             </div>
           </div>
@@ -2647,7 +2659,7 @@ function LeadSection() {
               <div className="table-responsive mt-3">
                 <table className=" table border">
                   <thead className="font-weight-bold bg-muted">
-                    <tr key={"heading"}>
+                    <tr key={"headingStatusHistory"}>
                       <th>Status</th>
                       <th>Date</th>
                     </tr>
